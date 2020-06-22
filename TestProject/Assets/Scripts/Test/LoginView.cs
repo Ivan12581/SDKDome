@@ -120,11 +120,16 @@ public class LoginView : MonoBehaviour
             int state = int.Parse(dataDict["state"]);
             if (state == 1)
             {
+                //第一次授权登陆
                 OutputTop.text += "\n" + dataDict["token"];
                 Debug.Log("Build url calling ---------------------");
                 //  StartCoroutine(LoginTest(BuildUrl(dataDict["token"])));
                 NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"], dataDict["identityTokenStr"]);
                 //NetworkManager.gi.ConnectAuth_Login(dataDict["token"]);
+            }
+            else if (state == 2) {
+                //identityTokenStr 为空
+                NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"], dataDict["identityTokenStr"]);
             }
             else
             {

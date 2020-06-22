@@ -20,7 +20,11 @@
 
 @end
 
-@implementation UnitySignInWithApple
+@implementation UnitySignInWithApple{
+	NSString *accountName = @"TWuserIdentifier";
+    NSString *forService = @"com.elex.girlsthrone.tw";
+    NSString *password = nil;
+}
 struct UserInfo
 {
     const char * userId;
@@ -364,9 +368,6 @@ typedef NS_ENUM(NSInteger, MsgID)
 
 //sign in with Apple 入口
 -(void)signin{
-    NSString *accountName = @"TWuserIdentifier";
-    NSString *forService = @"com.elex.girlsthrone.tw";
-    NSString *userIdentifier = nil;
     //从Keychain中读取userIdentifier
     if (![SSKeychain passwordForService:forService account:accountName]) {
        NSLog(@ "--没有userIdentifier 说明之前没有登录过--需要请求授权--");
@@ -384,9 +385,14 @@ typedef NS_ENUM(NSInteger, MsgID)
 //开始注册登录自己的游戏服务器
 -(void)toGameLogin{
      NSLog(@ "--开始注册登录自己的游戏服务器--");
+	[self SendMessageToUnity: eLogin DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",userIdentifier,@"user", @"",@"identityTokenStr"nil]];
 }
 
 -(void)InitSDK{
+	accountName = @"TWuserIdentifier";
+    forService = @"com.elex.girlsthrone.tw";
+    userIdentifier = nil;
+	
     NSLog(@"-ios--InitSDK----");
   //  [self signin];
 //      [self authenticateLocalPlayer];
