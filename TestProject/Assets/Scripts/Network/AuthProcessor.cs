@@ -174,6 +174,22 @@ namespace celia.game
             // 状态变化
             state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_CHALLENGE));
         }
+        public void LoginApple(string user, string identityTokenStr)
+        {
+            loginType = LoginType.Apple;
+            //I = user;
+            //p = identityTokenStr;
+            c2a_logon_apple pkt = new c2a_logon_apple();
+            //c2a_logon_challenge pkt = new c2a_logon_challenge();
+            pkt.UserIdentifier = user;
+            pkt.IdentityToken = identityTokenStr;
+
+            
+           // NetworkManager.gi.SendPkt(AuthMsgID.AuthMsgC2ALogonChallenge, pkt);
+            NetworkManager.gi.SendPkt(AuthMsgID.AuthMsgC2ALogonApple, pkt);
+            // 状态变化
+            state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_CHALLENGE));
+        }
         public static byte[] BigInteger2ByteArray(BigInteger v)
         {
             byte[] result = v.ToByteArray();
