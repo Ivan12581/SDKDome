@@ -21,9 +21,9 @@
 @end
 
 @implementation UnitySignInWithApple{
-	NSString *accountName = @"TWuserIdentifier";
-    NSString *forService = @"com.elex.girlsthrone.tw";
-    NSString *password = nil;
+    NSString *accountName;
+    NSString *forService;
+    NSString *userIdentifier;
 }
 struct UserInfo
 {
@@ -385,13 +385,13 @@ typedef NS_ENUM(NSInteger, MsgID)
 //开始注册登录自己的游戏服务器
 -(void)toGameLogin{
      NSLog(@ "--开始注册登录自己的游戏服务器--");
-	[self SendMessageToUnity: eLogin DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",userIdentifier,@"user", @"",@"identityTokenStr"nil]];
+	[self SendMessageToUnity: eLogin DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",userIdentifier,@"user", @"",@"identityTokenStr",nil]];
 }
 
 -(void)InitSDK{
 	accountName = @"TWuserIdentifier";
     forService = @"com.elex.girlsthrone.tw";
-    userIdentifier = nil;
+    userIdentifier = @"nil";
 	
     NSLog(@"-ios--InitSDK----");
   //  [self signin];
@@ -409,10 +409,10 @@ typedef NS_ENUM(NSInteger, MsgID)
 
 }
 
-#pragma mark -- 支付
+/* #pragma mark -- 支付
 -(void)Pay: (const char *) jsonString{
 
-}
+} */
 
 #pragma mark -- 上报数据
 -(void)UploadInfo:(const char*) jsonData{
@@ -444,9 +444,9 @@ extern "C"
     void cSwitch(){
         [(UnitySignInWithApple*)[UIApplication sharedApplication].delegate Switch];
     }
-    void cPay(const char* jsonString){
+/*     void cPay(const char* jsonString){
         [(UnitySignInWithApple*)[UIApplication sharedApplication].delegate Pay:jsonString];
-    }
+    } */
     void cUpLoadInfo(const char* jsonString){
         [(UnitySignInWithApple*)[UIApplication sharedApplication].delegate UploadInfo:jsonString];
     }

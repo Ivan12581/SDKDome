@@ -154,6 +154,11 @@
 -(void)Init{
     
 }
+#pragma mark -- 支付
+-(void)Pay: (const char *) jsonString{
+        NSLog(@"---支付---");
+}
+
 //监听购买结果
 -(void)addListener{
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
@@ -165,3 +170,15 @@
 
 
 @end
+
+IMPL_APP_CONTROLLER_SUBCLASS (PayInApple)
+
+extern "C"
+{
+
+    void cPay(const char* jsonString){
+        [(PayInApple*)[UIApplication sharedApplication].delegate Pay:jsonString];
+    }
+
+}
+
