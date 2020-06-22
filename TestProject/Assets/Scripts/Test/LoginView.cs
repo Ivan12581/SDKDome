@@ -73,7 +73,7 @@ public class LoginView : MonoBehaviour
                     Debug.Log("Build url calling ---------------------");
                   //  StartCoroutine(LoginTest(BuildUrl(dataDict["token"])));
 
-                      NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"],dataDict["identityTokenStr"]);
+                      //NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"],dataDict["identityTokenStr"]);
                 }
                 else
                 {
@@ -123,8 +123,8 @@ public class LoginView : MonoBehaviour
                 OutputTop.text += "\n" + dataDict["token"];
                 Debug.Log("Build url calling ---------------------");
                 //  StartCoroutine(LoginTest(BuildUrl(dataDict["token"])));
-
-                NetworkManager.gi.ConnectAuth_Login(dataDict["token"]);
+                NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"], dataDict["identityTokenStr"]);
+                //NetworkManager.gi.ConnectAuth_Login(dataDict["token"]);
             }
             else
             {
