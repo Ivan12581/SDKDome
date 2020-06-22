@@ -229,7 +229,7 @@ typedef NS_ENUM(NSInteger, MsgID)
         //[YostarKeychain save:KEYCHAIN_IDENTIFIER(@"userIdentifier") data:user];
         [self saveUserInKeychain:user];
         
-        [self SendMessageToUnity: eLogin DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",user,@"user",givenName,@"givenName",familyName,@"familyName",email,@"email",identityTokenStr,@"identityTokenStr",authorizationCodeStr,@"authorizationCodeStr",nil]];
+        [self SendMessageToUnity: eLogin DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",user,@"user",givenName,@"givenName",familyName,@"familyName",email,@"email",identityTokenStr,@"token",authorizationCodeStr,@"authorizationCodeStr",nil]];
         
     }else if ([authorization.credential isKindOfClass:[ASPasswordCredential class]]){
             NSLog(@"----这个获取的是iCloud记录的账号密码---------->");
@@ -388,7 +388,7 @@ typedef NS_ENUM(NSInteger, MsgID)
 
 -(void)InitSDK{
     NSLog(@"-ios--InitSDK----");
-    [self signin];
+  //  [self signin];
 //      [self authenticateLocalPlayer];
     //登录之前先observeAuthticationState
 //    [self observeAuthticationState];

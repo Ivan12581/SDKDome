@@ -28,26 +28,32 @@ public static partial class AuthReflection {
           "ASgOMhAuQWNjb3VudE9wUmVzdWx0IicKE2MyYV9sb2dvbl9jaGFsbGVuZ2US",
           "EAoIdXNlcm5hbWUYASABKAkiLgoNYTJjX2xvZ29uX2FzaxISCgpwdWJsaWNf",
           "a2V5GAEgASgJEgkKAXMYAiABKAkiKAoPYzJhX2xvZ29uX3Byb29mEgkKAUEY",
-          "ASABKAkSCgoCTTEYAiABKAkidwoNYTJjX2xvZ29uX3JlcBIgCgZyZXN1bHQY",
-          "ASABKA4yEC5BY2NvdW50T3BSZXN1bHQSEAoIdXNlcm5hbWUYAiABKAkSEgoK",
-          "YWNjb3VudF9pZBgDIAEoDRIMCgRndWlkGAQgASgNEhAKCHNka19jb2RlGAUg",
-          "ASgFIiwKEGEyY19sb2dvbl9yZWdpb24SCgoCaXAYASABKAkSDAoEcG9ydBgC",
-          "IAEoDSJoCg1jMmFfbG9nb25fc2RrEg4KBmFwcF9pZBgBIAEoCRIOCgZjY2hf",
-          "aWQYAiABKAkSFAoMYWNjZXNzX3Rva2VuGAMgASgJEg8KB2FwcF9rZXkYBCAB",
-          "KAkSEAoIc2RrX3R5cGUYBSABKAkiIwoPYzJhX2xvZ29uX3N1cGVyEhAKCHVz",
-          "ZXJuYW1lGAIgASgJKsYBCg9BY2NvdW50T3BSZXN1bHQSDAoIQU9SX05VTEwQ",
-          "ABIKCgZBT1JfT0sQARIVChFBT1JfTkFNRV9UT09fTE9ORxACEhkKFUFPUl9Q",
-          "QVNTX1dST05HX0xFTkdUSBADEhoKFkFPUl9OQU1FX0FMUkVBRFlfRVhJU1QQ",
-          "BBIWChJBT1JfTkFNRV9OT1RfRVhJU1QQBRIZChVBT1JfREJfSU5URVJOQUxf",
-          "RVJST1IQBhIYChRBT1JfUEFTU19XUk9OR19FUlJPUhAHKr8CCglBdXRoTXNn",
-          "SUQSEQoNQVVUSF9NU0dfTlVMTBAAEh8KGUFVVEhfTVNHX0MyQV9SRUdJU1RF",
-          "Ul9SRVEQydwDEh8KGUFVVEhfTVNHX0EyQ19SRUdJU1RFUl9SRVAQytwDEiIK",
-          "HEFVVEhfTVNHX0MyQV9MT0dPTl9DSEFMTEVOR0UQseQDEhwKFkFVVEhfTVNH",
-          "X0EyQ19MT0dPTl9BU0sQsuQDEh4KGEFVVEhfTVNHX0MyQV9MT0dPTl9QUk9P",
-          "RhCz5AMSHAoWQVVUSF9NU0dfQTJDX0xPR09OX1JFUBC05AMSHwoZQVVUSF9N",
-          "U0dfQTJDX0xPR09OX1JFR0lPThC15AMSHAoWQVVUSF9NU0dfQzJBX0xPR09O",
-          "X1NESxC25AMSHgoYQVVUSF9NU0dfQzJBX0xPR09OX1NVUEVSELjkA2IGcHJv",
-          "dG8z"));
+          "ASABKAkSCgoCTTEYAiABKAkisAEKDWEyY19sb2dvbl9yZXASIAoGcmVzdWx0",
+          "GAEgASgOMhAuQWNjb3VudE9wUmVzdWx0EhAKCHVzZXJuYW1lGAIgASgJEhIK",
+          "CmFjY291bnRfaWQYAyABKA0SDAoEZ3VpZBgEIAEoDRIQCghzZGtfY29kZRgF",
+          "IAEoBRILCgNhZ2UYBiABKAUSFQoNaXNfaWRlbnRpZmllZBgHIAEoCBITCgt1",
+          "bmxvY2tfdGltZRgIIAEoAyJCChBhMmNfbG9nb25fcmVnaW9uEgoKAmlwGAEg",
+          "ASgJEgwKBHBvcnQYAiABKA0SFAoMaHR0cF9hZGRyZXNzGAMgASgJInkKDWMy",
+          "YV9sb2dvbl9zZGsSDwoHb3Blbl9pZBgBIAEoCRIOCgZhcHBfaWQYAiABKAkS",
+          "DgoGY2NoX2lkGAMgASgJEhQKDGFjY2Vzc190b2tlbhgEIAEoCRIPCgdhcHBf",
+          "a2V5GAUgASgJEhAKCHNka190eXBlGAYgASgJIkIKD2MyYV9sb2dvbl9hcHBs",
+          "ZRIXCg91c2VyX2lkZW50aWZpZXIYASABKAkSFgoOaWRlbnRpdHlfdG9rZW4Y",
+          "AiABKAkiIwoPYzJhX2xvZ29uX3N1cGVyEhAKCHVzZXJuYW1lGAIgASgJKo0C",
+          "Cg9BY2NvdW50T3BSZXN1bHQSDAoIQU9SX05VTEwQABIKCgZBT1JfT0sQARIV",
+          "ChFBT1JfTkFNRV9UT09fTE9ORxACEhkKFUFPUl9QQVNTX1dST05HX0xFTkdU",
+          "SBADEhoKFkFPUl9OQU1FX0FMUkVBRFlfRVhJU1QQBBIWChJBT1JfTkFNRV9O",
+          "T1RfRVhJU1QQBRIZChVBT1JfREJfSU5URVJOQUxfRVJST1IQBhIYChRBT1Jf",
+          "UEFTU19XUk9OR19FUlJPUhAHEhQKEEFPUl9JRF9PVVRfUkFOR0UQCBIWChJB",
+          "T1JfQUNDT1VOVF9MT0NLRUQQCRIXChNBT1JfU1ZDX01BSU5URU5BTkNFEAoq",
+          "3wIKCUF1dGhNc2dJRBIRCg1BVVRIX01TR19OVUxMEAASHwoZQVVUSF9NU0df",
+          "QzJBX1JFR0lTVEVSX1JFURDJ3AMSHwoZQVVUSF9NU0dfQTJDX1JFR0lTVEVS",
+          "X1JFUBDK3AMSIgocQVVUSF9NU0dfQzJBX0xPR09OX0NIQUxMRU5HRRCx5AMS",
+          "HAoWQVVUSF9NU0dfQTJDX0xPR09OX0FTSxCy5AMSHgoYQVVUSF9NU0dfQzJB",
+          "X0xPR09OX1BST09GELPkAxIcChZBVVRIX01TR19BMkNfTE9HT05fUkVQELTk",
+          "AxIfChlBVVRIX01TR19BMkNfTE9HT05fUkVHSU9OELXkAxIcChZBVVRIX01T",
+          "R19DMkFfTE9HT05fU0RLELbkAxIeChhBVVRIX01TR19DMkFfTE9HT05fU1VQ",
+          "RVIQuOQDEh4KGEFVVEhfTVNHX0MyQV9MT0dPTl9BUFBMRRC65ANiBnByb3Rv",
+          "Mw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::AccountOpResult), typeof(global::AuthMsgID), }, new pbr::GeneratedClrTypeInfo[] {
@@ -56,9 +62,10 @@ public static partial class AuthReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::c2a_logon_challenge), global::c2a_logon_challenge.Parser, new[]{ "Username" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::a2c_logon_ask), global::a2c_logon_ask.Parser, new[]{ "PublicKey", "S" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::c2a_logon_proof), global::c2a_logon_proof.Parser, new[]{ "A", "M1" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::a2c_logon_rep), global::a2c_logon_rep.Parser, new[]{ "Result", "Username", "AccountId", "Guid", "SdkCode" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::a2c_logon_region), global::a2c_logon_region.Parser, new[]{ "Ip", "Port" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::c2a_logon_sdk), global::c2a_logon_sdk.Parser, new[]{ "AppId", "CchId", "AccessToken", "AppKey", "SdkType" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::a2c_logon_rep), global::a2c_logon_rep.Parser, new[]{ "Result", "Username", "AccountId", "Guid", "SdkCode", "Age", "IsIdentified", "UnlockTime" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::a2c_logon_region), global::a2c_logon_region.Parser, new[]{ "Ip", "Port", "HttpAddress" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::c2a_logon_sdk), global::c2a_logon_sdk.Parser, new[]{ "OpenId", "AppId", "CchId", "AccessToken", "AppKey", "SdkType" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::c2a_logon_apple), global::c2a_logon_apple.Parser, new[]{ "UserIdentifier", "IdentityToken" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::c2a_logon_super), global::c2a_logon_super.Parser, new[]{ "Username" }, null, null, null)
         }));
   }
@@ -71,13 +78,46 @@ public static partial class AuthReflection {
 /// </summary>
 public enum AccountOpResult {
   [pbr::OriginalName("AOR_NULL")] AorNull = 0,
+  /// <summary>
+  /// 成功
+  /// </summary>
   [pbr::OriginalName("AOR_OK")] AorOk = 1,
+  /// <summary>
+  /// 名字太长
+  /// </summary>
   [pbr::OriginalName("AOR_NAME_TOO_LONG")] AorNameTooLong = 2,
+  /// <summary>
+  /// 密码长度异常
+  /// </summary>
   [pbr::OriginalName("AOR_PASS_WRONG_LENGTH")] AorPassWrongLength = 3,
+  /// <summary>
+  /// 名字已存在
+  /// </summary>
   [pbr::OriginalName("AOR_NAME_ALREADY_EXIST")] AorNameAlreadyExist = 4,
+  /// <summary>
+  /// 名字不存在
+  /// </summary>
   [pbr::OriginalName("AOR_NAME_NOT_EXIST")] AorNameNotExist = 5,
+  /// <summary>
+  /// 数据库内部错误
+  /// </summary>
   [pbr::OriginalName("AOR_DB_INTERNAL_ERROR")] AorDbInternalError = 6,
+  /// <summary>
+  /// 密码错误
+  /// </summary>
   [pbr::OriginalName("AOR_PASS_WRONG_ERROR")] AorPassWrongError = 7,
+  /// <summary>
+  /// id范围越界
+  /// </summary>
+  [pbr::OriginalName("AOR_ID_OUT_RANGE")] AorIdOutRange = 8,
+  /// <summary>
+  /// 账号被锁
+  /// </summary>
+  [pbr::OriginalName("AOR_ACCOUNT_LOCKED")] AorAccountLocked = 9,
+  /// <summary>
+  /// 服务维护中
+  /// </summary>
+  [pbr::OriginalName("AOR_SVC_MAINTENANCE")] AorSvcMaintenance = 10,
 }
 
 /// <summary>
@@ -124,6 +164,10 @@ public enum AuthMsgID {
   /// 无密码登录
   /// </summary>
   [pbr::OriginalName("AUTH_MSG_C2A_LOGON_SUPER")] AuthMsgC2ALogonSuper = 62008,
+  /// <summary>
+  /// Apple登录
+  /// </summary>
+  [pbr::OriginalName("AUTH_MSG_C2A_LOGON_APPLE")] AuthMsgC2ALogonApple = 62010,
 }
 
 #endregion
@@ -972,6 +1016,9 @@ public sealed partial class a2c_logon_rep : pb::IMessage<a2c_logon_rep> {
     accountId_ = other.accountId_;
     guid_ = other.guid_;
     sdkCode_ = other.sdkCode_;
+    age_ = other.age_;
+    isIdentified_ = other.isIdentified_;
+    unlockTime_ = other.unlockTime_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -983,6 +1030,9 @@ public sealed partial class a2c_logon_rep : pb::IMessage<a2c_logon_rep> {
   /// <summary>Field number for the "result" field.</summary>
   public const int ResultFieldNumber = 1;
   private global::AccountOpResult result_ = 0;
+  /// <summary>
+  /// 登陆结果(登陆失败不一定能收到)
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public global::AccountOpResult Result {
     get { return result_; }
@@ -994,6 +1044,9 @@ public sealed partial class a2c_logon_rep : pb::IMessage<a2c_logon_rep> {
   /// <summary>Field number for the "username" field.</summary>
   public const int UsernameFieldNumber = 2;
   private string username_ = "";
+  /// <summary>
+  /// 账号名
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public string Username {
     get { return username_; }
@@ -1005,6 +1058,9 @@ public sealed partial class a2c_logon_rep : pb::IMessage<a2c_logon_rep> {
   /// <summary>Field number for the "account_id" field.</summary>
   public const int AccountIdFieldNumber = 3;
   private uint accountId_;
+  /// <summary>
+  /// 账号id
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public uint AccountId {
     get { return accountId_; }
@@ -1016,6 +1072,9 @@ public sealed partial class a2c_logon_rep : pb::IMessage<a2c_logon_rep> {
   /// <summary>Field number for the "guid" field.</summary>
   public const int GuidFieldNumber = 4;
   private uint guid_;
+  /// <summary>
+  /// auth guid
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public uint Guid {
     get { return guid_; }
@@ -1027,11 +1086,56 @@ public sealed partial class a2c_logon_rep : pb::IMessage<a2c_logon_rep> {
   /// <summary>Field number for the "sdk_code" field.</summary>
   public const int SdkCodeFieldNumber = 5;
   private int sdkCode_;
+  /// <summary>
+  /// 平台sdk返回码
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public int SdkCode {
     get { return sdkCode_; }
     set {
       sdkCode_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "age" field.</summary>
+  public const int AgeFieldNumber = 6;
+  private int age_;
+  /// <summary>
+  /// 年龄
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int Age {
+    get { return age_; }
+    set {
+      age_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "is_identified" field.</summary>
+  public const int IsIdentifiedFieldNumber = 7;
+  private bool isIdentified_;
+  /// <summary>
+  /// 是否实名
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool IsIdentified {
+    get { return isIdentified_; }
+    set {
+      isIdentified_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "unlock_time" field.</summary>
+  public const int UnlockTimeFieldNumber = 8;
+  private long unlockTime_;
+  /// <summary>
+  /// 解锁时间(0:永久封号)
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public long UnlockTime {
+    get { return unlockTime_; }
+    set {
+      unlockTime_ = value;
     }
   }
 
@@ -1053,6 +1157,9 @@ public sealed partial class a2c_logon_rep : pb::IMessage<a2c_logon_rep> {
     if (AccountId != other.AccountId) return false;
     if (Guid != other.Guid) return false;
     if (SdkCode != other.SdkCode) return false;
+    if (Age != other.Age) return false;
+    if (IsIdentified != other.IsIdentified) return false;
+    if (UnlockTime != other.UnlockTime) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -1064,6 +1171,9 @@ public sealed partial class a2c_logon_rep : pb::IMessage<a2c_logon_rep> {
     if (AccountId != 0) hash ^= AccountId.GetHashCode();
     if (Guid != 0) hash ^= Guid.GetHashCode();
     if (SdkCode != 0) hash ^= SdkCode.GetHashCode();
+    if (Age != 0) hash ^= Age.GetHashCode();
+    if (IsIdentified != false) hash ^= IsIdentified.GetHashCode();
+    if (UnlockTime != 0L) hash ^= UnlockTime.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -1097,6 +1207,18 @@ public sealed partial class a2c_logon_rep : pb::IMessage<a2c_logon_rep> {
       output.WriteRawTag(40);
       output.WriteInt32(SdkCode);
     }
+    if (Age != 0) {
+      output.WriteRawTag(48);
+      output.WriteInt32(Age);
+    }
+    if (IsIdentified != false) {
+      output.WriteRawTag(56);
+      output.WriteBool(IsIdentified);
+    }
+    if (UnlockTime != 0L) {
+      output.WriteRawTag(64);
+      output.WriteInt64(UnlockTime);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -1119,6 +1241,15 @@ public sealed partial class a2c_logon_rep : pb::IMessage<a2c_logon_rep> {
     }
     if (SdkCode != 0) {
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(SdkCode);
+    }
+    if (Age != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(Age);
+    }
+    if (IsIdentified != false) {
+      size += 1 + 1;
+    }
+    if (UnlockTime != 0L) {
+      size += 1 + pb::CodedOutputStream.ComputeInt64Size(UnlockTime);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -1145,6 +1276,15 @@ public sealed partial class a2c_logon_rep : pb::IMessage<a2c_logon_rep> {
     }
     if (other.SdkCode != 0) {
       SdkCode = other.SdkCode;
+    }
+    if (other.Age != 0) {
+      Age = other.Age;
+    }
+    if (other.IsIdentified != false) {
+      IsIdentified = other.IsIdentified;
+    }
+    if (other.UnlockTime != 0L) {
+      UnlockTime = other.UnlockTime;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -1175,6 +1315,18 @@ public sealed partial class a2c_logon_rep : pb::IMessage<a2c_logon_rep> {
         }
         case 40: {
           SdkCode = input.ReadInt32();
+          break;
+        }
+        case 48: {
+          Age = input.ReadInt32();
+          break;
+        }
+        case 56: {
+          IsIdentified = input.ReadBool();
+          break;
+        }
+        case 64: {
+          UnlockTime = input.ReadInt64();
           break;
         }
       }
@@ -1210,6 +1362,7 @@ public sealed partial class a2c_logon_region : pb::IMessage<a2c_logon_region> {
   public a2c_logon_region(a2c_logon_region other) : this() {
     ip_ = other.ip_;
     port_ = other.port_;
+    httpAddress_ = other.httpAddress_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -1221,6 +1374,9 @@ public sealed partial class a2c_logon_region : pb::IMessage<a2c_logon_region> {
   /// <summary>Field number for the "ip" field.</summary>
   public const int IpFieldNumber = 1;
   private string ip_ = "";
+  /// <summary>
+  /// logic ip
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public string Ip {
     get { return ip_; }
@@ -1232,11 +1388,28 @@ public sealed partial class a2c_logon_region : pb::IMessage<a2c_logon_region> {
   /// <summary>Field number for the "port" field.</summary>
   public const int PortFieldNumber = 2;
   private uint port_;
+  /// <summary>
+  /// logic 端口
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public uint Port {
     get { return port_; }
     set {
       port_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "http_address" field.</summary>
+  public const int HttpAddressFieldNumber = 3;
+  private string httpAddress_ = "";
+  /// <summary>
+  /// logic_http 地址ip:port
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string HttpAddress {
+    get { return httpAddress_; }
+    set {
+      httpAddress_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
     }
   }
 
@@ -1255,6 +1428,7 @@ public sealed partial class a2c_logon_region : pb::IMessage<a2c_logon_region> {
     }
     if (Ip != other.Ip) return false;
     if (Port != other.Port) return false;
+    if (HttpAddress != other.HttpAddress) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -1263,6 +1437,7 @@ public sealed partial class a2c_logon_region : pb::IMessage<a2c_logon_region> {
     int hash = 1;
     if (Ip.Length != 0) hash ^= Ip.GetHashCode();
     if (Port != 0) hash ^= Port.GetHashCode();
+    if (HttpAddress.Length != 0) hash ^= HttpAddress.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -1284,6 +1459,10 @@ public sealed partial class a2c_logon_region : pb::IMessage<a2c_logon_region> {
       output.WriteRawTag(16);
       output.WriteUInt32(Port);
     }
+    if (HttpAddress.Length != 0) {
+      output.WriteRawTag(26);
+      output.WriteString(HttpAddress);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -1297,6 +1476,9 @@ public sealed partial class a2c_logon_region : pb::IMessage<a2c_logon_region> {
     }
     if (Port != 0) {
       size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Port);
+    }
+    if (HttpAddress.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(HttpAddress);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -1315,6 +1497,9 @@ public sealed partial class a2c_logon_region : pb::IMessage<a2c_logon_region> {
     if (other.Port != 0) {
       Port = other.Port;
     }
+    if (other.HttpAddress.Length != 0) {
+      HttpAddress = other.HttpAddress;
+    }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
 
@@ -1332,6 +1517,10 @@ public sealed partial class a2c_logon_region : pb::IMessage<a2c_logon_region> {
         }
         case 16: {
           Port = input.ReadUInt32();
+          break;
+        }
+        case 26: {
+          HttpAddress = input.ReadString();
           break;
         }
       }
@@ -1365,6 +1554,7 @@ public sealed partial class c2a_logon_sdk : pb::IMessage<c2a_logon_sdk> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public c2a_logon_sdk(c2a_logon_sdk other) : this() {
+    openId_ = other.openId_;
     appId_ = other.appId_;
     cchId_ = other.cchId_;
     accessToken_ = other.accessToken_;
@@ -1378,8 +1568,22 @@ public sealed partial class c2a_logon_sdk : pb::IMessage<c2a_logon_sdk> {
     return new c2a_logon_sdk(this);
   }
 
+  /// <summary>Field number for the "open_id" field.</summary>
+  public const int OpenIdFieldNumber = 1;
+  private string openId_ = "";
+  /// <summary>
+  /// 账号名
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string OpenId {
+    get { return openId_; }
+    set {
+      openId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
   /// <summary>Field number for the "app_id" field.</summary>
-  public const int AppIdFieldNumber = 1;
+  public const int AppIdFieldNumber = 2;
   private string appId_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public string AppId {
@@ -1390,7 +1594,7 @@ public sealed partial class c2a_logon_sdk : pb::IMessage<c2a_logon_sdk> {
   }
 
   /// <summary>Field number for the "cch_id" field.</summary>
-  public const int CchIdFieldNumber = 2;
+  public const int CchIdFieldNumber = 3;
   private string cchId_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public string CchId {
@@ -1401,8 +1605,11 @@ public sealed partial class c2a_logon_sdk : pb::IMessage<c2a_logon_sdk> {
   }
 
   /// <summary>Field number for the "access_token" field.</summary>
-  public const int AccessTokenFieldNumber = 3;
+  public const int AccessTokenFieldNumber = 4;
   private string accessToken_ = "";
+  /// <summary>
+  /// 登陆令牌
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public string AccessToken {
     get { return accessToken_; }
@@ -1412,7 +1619,7 @@ public sealed partial class c2a_logon_sdk : pb::IMessage<c2a_logon_sdk> {
   }
 
   /// <summary>Field number for the "app_key" field.</summary>
-  public const int AppKeyFieldNumber = 4;
+  public const int AppKeyFieldNumber = 5;
   private string appKey_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public string AppKey {
@@ -1423,8 +1630,11 @@ public sealed partial class c2a_logon_sdk : pb::IMessage<c2a_logon_sdk> {
   }
 
   /// <summary>Field number for the "sdk_type" field.</summary>
-  public const int SdkTypeFieldNumber = 5;
+  public const int SdkTypeFieldNumber = 6;
   private string sdkType_ = "";
+  /// <summary>
+  /// login_url中sdk key
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public string SdkType {
     get { return sdkType_; }
@@ -1446,6 +1656,7 @@ public sealed partial class c2a_logon_sdk : pb::IMessage<c2a_logon_sdk> {
     if (ReferenceEquals(other, this)) {
       return true;
     }
+    if (OpenId != other.OpenId) return false;
     if (AppId != other.AppId) return false;
     if (CchId != other.CchId) return false;
     if (AccessToken != other.AccessToken) return false;
@@ -1457,6 +1668,7 @@ public sealed partial class c2a_logon_sdk : pb::IMessage<c2a_logon_sdk> {
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override int GetHashCode() {
     int hash = 1;
+    if (OpenId.Length != 0) hash ^= OpenId.GetHashCode();
     if (AppId.Length != 0) hash ^= AppId.GetHashCode();
     if (CchId.Length != 0) hash ^= CchId.GetHashCode();
     if (AccessToken.Length != 0) hash ^= AccessToken.GetHashCode();
@@ -1475,24 +1687,28 @@ public sealed partial class c2a_logon_sdk : pb::IMessage<c2a_logon_sdk> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public void WriteTo(pb::CodedOutputStream output) {
-    if (AppId.Length != 0) {
+    if (OpenId.Length != 0) {
       output.WriteRawTag(10);
+      output.WriteString(OpenId);
+    }
+    if (AppId.Length != 0) {
+      output.WriteRawTag(18);
       output.WriteString(AppId);
     }
     if (CchId.Length != 0) {
-      output.WriteRawTag(18);
+      output.WriteRawTag(26);
       output.WriteString(CchId);
     }
     if (AccessToken.Length != 0) {
-      output.WriteRawTag(26);
+      output.WriteRawTag(34);
       output.WriteString(AccessToken);
     }
     if (AppKey.Length != 0) {
-      output.WriteRawTag(34);
+      output.WriteRawTag(42);
       output.WriteString(AppKey);
     }
     if (SdkType.Length != 0) {
-      output.WriteRawTag(42);
+      output.WriteRawTag(50);
       output.WriteString(SdkType);
     }
     if (_unknownFields != null) {
@@ -1503,6 +1719,9 @@ public sealed partial class c2a_logon_sdk : pb::IMessage<c2a_logon_sdk> {
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public int CalculateSize() {
     int size = 0;
+    if (OpenId.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(OpenId);
+    }
     if (AppId.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(AppId);
     }
@@ -1528,6 +1747,9 @@ public sealed partial class c2a_logon_sdk : pb::IMessage<c2a_logon_sdk> {
   public void MergeFrom(c2a_logon_sdk other) {
     if (other == null) {
       return;
+    }
+    if (other.OpenId.Length != 0) {
+      OpenId = other.OpenId;
     }
     if (other.AppId.Length != 0) {
       AppId = other.AppId;
@@ -1556,23 +1778,190 @@ public sealed partial class c2a_logon_sdk : pb::IMessage<c2a_logon_sdk> {
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 10: {
-          AppId = input.ReadString();
+          OpenId = input.ReadString();
           break;
         }
         case 18: {
-          CchId = input.ReadString();
+          AppId = input.ReadString();
           break;
         }
         case 26: {
-          AccessToken = input.ReadString();
+          CchId = input.ReadString();
           break;
         }
         case 34: {
-          AppKey = input.ReadString();
+          AccessToken = input.ReadString();
           break;
         }
         case 42: {
+          AppKey = input.ReadString();
+          break;
+        }
+        case 50: {
           SdkType = input.ReadString();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+public sealed partial class c2a_logon_apple : pb::IMessage<c2a_logon_apple> {
+  private static readonly pb::MessageParser<c2a_logon_apple> _parser = new pb::MessageParser<c2a_logon_apple>(() => new c2a_logon_apple());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<c2a_logon_apple> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::AuthReflection.Descriptor.MessageTypes[8]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public c2a_logon_apple() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public c2a_logon_apple(c2a_logon_apple other) : this() {
+    userIdentifier_ = other.userIdentifier_;
+    identityToken_ = other.identityToken_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public c2a_logon_apple Clone() {
+    return new c2a_logon_apple(this);
+  }
+
+  /// <summary>Field number for the "user_identifier" field.</summary>
+  public const int UserIdentifierFieldNumber = 1;
+  private string userIdentifier_ = "";
+  /// <summary>
+  /// 账号名
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string UserIdentifier {
+    get { return userIdentifier_; }
+    set {
+      userIdentifier_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "identity_token" field.</summary>
+  public const int IdentityTokenFieldNumber = 2;
+  private string identityToken_ = "";
+  /// <summary>
+  /// JSON Web Token (JWT)
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string IdentityToken {
+    get { return identityToken_; }
+    set {
+      identityToken_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as c2a_logon_apple);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(c2a_logon_apple other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (UserIdentifier != other.UserIdentifier) return false;
+    if (IdentityToken != other.IdentityToken) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (UserIdentifier.Length != 0) hash ^= UserIdentifier.GetHashCode();
+    if (IdentityToken.Length != 0) hash ^= IdentityToken.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (UserIdentifier.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(UserIdentifier);
+    }
+    if (IdentityToken.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(IdentityToken);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (UserIdentifier.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(UserIdentifier);
+    }
+    if (IdentityToken.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(IdentityToken);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(c2a_logon_apple other) {
+    if (other == null) {
+      return;
+    }
+    if (other.UserIdentifier.Length != 0) {
+      UserIdentifier = other.UserIdentifier;
+    }
+    if (other.IdentityToken.Length != 0) {
+      IdentityToken = other.IdentityToken;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          UserIdentifier = input.ReadString();
+          break;
+        }
+        case 18: {
+          IdentityToken = input.ReadString();
           break;
         }
       }
@@ -1589,7 +1978,7 @@ public sealed partial class c2a_logon_super : pb::IMessage<c2a_logon_super> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::AuthReflection.Descriptor.MessageTypes[8]; }
+    get { return global::AuthReflection.Descriptor.MessageTypes[9]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

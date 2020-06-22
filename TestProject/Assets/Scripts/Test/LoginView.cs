@@ -73,7 +73,7 @@ public class LoginView : MonoBehaviour
                     Debug.Log("Build url calling ---------------------");
                   //  StartCoroutine(LoginTest(BuildUrl(dataDict["token"])));
 
-                      NetworkManager.gi.ConnectAuth_Login(dataDict["token"]);
+                      NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"],dataDict["identityTokenStr"]);
                 }
                 else
                 {
@@ -87,8 +87,18 @@ public class LoginView : MonoBehaviour
 
     public void Login()
     {
-        Debug.Log(NameFile.text + "===" + WordFile.text);
-        NetworkManager.gi.ConnectAuth_Login(NameFile.text, WordFile.text);
+        //Debug.Log(NameFile.text + "===" + WordFile.text);
+        //NetworkManager.gi.ConnectAuth_Login(NameFile.text, WordFile.text);
+
+
+        c2l_create_character_req pkt = new c2l_create_character_req();
+        pkt.CharacterName = "Cest";
+        NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LCreateCharacterReq, pkt, LogicMsgID.LogicMsgL2CCreateCharacterRep, (e) =>
+        {
+            l2c_create_character_rep msg = l2c_create_character_rep.Parser.ParseFrom(e.msg);
+            Debug.LogWarning(Newtonsoft.Json.JsonConvert.SerializeObject(msg));
+        });
+
     }
 
     public void InitSDK()
@@ -114,7 +124,7 @@ public class LoginView : MonoBehaviour
                 Debug.Log("Build url calling ---------------------");
                 //  StartCoroutine(LoginTest(BuildUrl(dataDict["token"])));
 
-                //NetworkManager.gi.ConnectAuth_Login(dataDict["token"]);
+                NetworkManager.gi.ConnectAuth_Login(dataDict["token"]);
             }
             else
             {
