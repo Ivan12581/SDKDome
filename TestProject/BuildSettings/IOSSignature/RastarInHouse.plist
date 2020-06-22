@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>compileBitcode</key>
+	<false/>
+	<key>destination</key>
+	<string>export</string>
+	<key>method</key>
+	<string>enterprise</string>
+	<key>provisioningProfiles</key>
+	<dict>
+		<key>com.rastargame.celia</key>
+		<string>celia_inhouse_20190523</string>
+	</dict>
+	<key>signingCertificate</key>
+	<string>iPhone Distribution</string>
+	<key>signingStyle</key>
+	<string>manual</string>
+	<key>stripSwiftSymbols</key>
+	<true/>
+	<key>thinning</key>
+	<string>&lt;none&gt;</string>
+	<key>teamID</key>
+	<string>C228R9J4FU</string>
+    <key>pakageName</key>
+    <string>com.rastargame.celia</string>
+    <key>provisioningProfileID</key>
+    <string>ded8b6d9-13f7-4c18-b569-d81030371875</string>
+</dict>
+</plist>

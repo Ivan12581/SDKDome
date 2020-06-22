@@ -1,0 +1,136 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec18f162f41b46b41a5bf713cbe8e9d7, type: 3}
+  m_Name: IOS
+  m_EditorClassIdentifier: 
+  Target: 9
+  CommonActions:
+  - {fileID: 114348839456820732}
+  - {fileID: 114038267142931296}
+  - {fileID: 114098835978246664}
+  - {fileID: 114255432469862384}
+  - {fileID: 114140326518334850}
+  - {fileID: 114168226212905330}
+  - {fileID: 114362192473370516}
+  PlatformActions:
+  - {fileID: 114090375994231128}
+  - {fileID: 114141047087434038}
+--- !u!114 &114038267142931296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a75c82b9b4978da46a4462eeb4305c2d, type: 3}
+  m_Name: SetServerSetting
+  m_EditorClassIdentifier: 
+--- !u!114 &114090375994231128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 291d2e39cc5aa70429f3b6d1b67bc6aa, type: 3}
+  m_Name: SetIOSOption
+  m_EditorClassIdentifier: 
+--- !u!114 &114098835978246664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0346ba7f3cfa2114f95e15a61e1e335a, type: 3}
+  m_Name: SetStoryResPath
+  m_EditorClassIdentifier: 
+--- !u!114 &114140326518334850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c7f8730e0e614645b68a03dad659967, type: 3}
+  m_Name: SetScenes
+  m_EditorClassIdentifier: 
+--- !u!114 &114141047087434038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfab5f433ee5f0548a28d7b63e0bc47e, type: 3}
+  m_Name: SetIOSSDK
+  m_EditorClassIdentifier: 
+  pluginIOSPath: 
+  pluginSavePath: 
+--- !u!114 &114168226212905330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 519caf273234a6944b42594e21796e44, type: 3}
+  m_Name: SetStoryData
+  m_EditorClassIdentifier: 
+--- !u!114 &114255432469862384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4546fa1b20fef2542873a8f97c5eed93, type: 3}
+  m_Name: SetOutputPath
+  m_EditorClassIdentifier: 
+--- !u!114 &114348839456820732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf4f82a760020f48b97e54cbc2e90e3, type: 3}
+  m_Name: SetDefineSymbols
+  m_EditorClassIdentifier: 
+--- !u!114 &114362192473370516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35c8abb4a004d43bd8b47f8d3a28b328, type: 3}
+  m_Name: SetProjectSetting
+  m_EditorClassIdentifier: 

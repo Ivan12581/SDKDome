@@ -1,0 +1,21 @@
+
+syntax = "proto3";
+
+enum MsgID {
+  MSG_NULL = 0;// 禁用
+
+  // master		: 0x00010000(65536)		- 0x0001ffff(131071)
+  // online		: 0x00020000(131072)	- 0x0002ffff(196607)
+  // monitor	: 0x00030000(196608)	- 0x0003ffff(263143)
+  // function   : 0x00040000(262144)    - 0x0004ffff(327679)
+
+  // 客户端消息 (1-65535)
+}
+
+// 消息包
+message MsgWrap {
+  int32		id			= 1;
+  string    op_id		= 2;
+  int32		op_id_idx	= 3;
+  bytes		msg			= 4;
+}

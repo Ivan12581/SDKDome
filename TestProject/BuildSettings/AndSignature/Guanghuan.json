@@ -1,0 +1,7 @@
+{
+  "PakageName": "com.guanghuan.sndwztw",
+  "KeyFileName": "guanghuan_games.jks",
+  "KeystorePass": "rastargames-guanghuan",
+  "KeyAliasName": "key-guanghuan",
+  "KeyAliasPass": "rastargames-guanghuan"
+}
