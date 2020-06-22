@@ -99,7 +99,7 @@ namespace celia.game
             Debug.Log(Utils.ip + "/" + Utils.port);
             GameTcpClient.gi.Connect(Utils.ip, Utils.port);
         }
-        public void ConnectAuth_LoginApple(string _account, string _password)
+        public void ConnectAuth_LoginApple(string _account, string _password = "")
         {
             account = _account;
             password = _password;
