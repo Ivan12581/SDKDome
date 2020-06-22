@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 80afd5dd413594229a97a47e2f9e3cd5
+guid: f4ec8bc52cecaaa4a8ff72b7dad2f0b5
 PluginImporter:
   externalObjects: {}
   serializedVersion: 2
@@ -93,12 +93,7 @@ PluginImporter:
       settings:
         AddToEmbeddedBinaries: false
         CompileFlags: 
-        FrameworkDependencies: GameKit;Security;
-  - first:
-      tvOS: tvOS
-    second:
-      enabled: 1
-      settings: {}
+        FrameworkDependencies: StoreKit;
   userData: 
   assetBundleName: 
   assetBundleVariant: 
