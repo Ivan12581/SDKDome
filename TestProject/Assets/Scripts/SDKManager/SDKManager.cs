@@ -108,8 +108,6 @@ namespace celia.game
         /// <param name="callBack">回调，state+数据字典</param>
         public void InitSDK(Action<int, Dictionary<string, string>> callBack = null)
         {
-            Debug.Log("---SDK初始化---");
-
             callBackDict[SDKResultType.Init] = callBack;
             if (proxy==null)
             {
@@ -251,7 +249,7 @@ namespace celia.game
                     // IOS SDK切换账号时，TOKEN都是从Login成功消息返回，无切换账号成功消息
                     if (state == 1 && DoingSwitch)
                     {
-                        SwitchToken = data["token"];
+                        //SwitchToken = data["token"];
                         //切换到登录场景后才收到token时，发起自动登录
                         //Messenger.DispatchEvent(Notif.SDK_SWITCH_SUCCESS);
                         //UploadDeviceInfo(DeviceUpload.SDKLoginSucc);

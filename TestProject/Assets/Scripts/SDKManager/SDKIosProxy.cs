@@ -31,7 +31,6 @@ namespace celia.game
         public override void Init()
         {
 #if UNITY_IOS
-            Debug.Log("-ios--override void Init---");
             cInit();
 #endif
         }
@@ -39,7 +38,6 @@ namespace celia.game
         public override void Login()
         {
 #if UNITY_IOS
-            Debug.Log("---override void Login---");
             cLogin();
 #endif
         }

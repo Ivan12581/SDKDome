@@ -131,8 +131,7 @@ public class LoginView : MonoBehaviour
             else if (state == 2) {
                 //identityTokenStr 为空
                 Debug.Log("---user--->" + dataDict["user"]);
-                Debug.Log("--token--->" + dataDict["token"]);
-                NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"], dataDict["token"]);
+                NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"]);
                 //NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"], "");
             }
             else
