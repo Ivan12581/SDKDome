@@ -113,8 +113,6 @@ public class LoginView : MonoBehaviour
         Debug.Log("---Unity---SDKPay---");
 
         Dictionary<string, string> data = new Dictionary<string, string>();
-        data.Add("RoleID", AuthProcessor.gi.ID.ToString());
-        data.Add("RoleName", AccountDataService.gi.getAccountData().name);
         data.Add("RoleLevel", "60");
         data.Add("ServerID", "1");
         data.Add("ServerName", "1");
