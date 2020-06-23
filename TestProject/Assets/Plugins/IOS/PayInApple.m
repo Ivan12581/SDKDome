@@ -9,7 +9,7 @@
 #import <StoreKit/StoreKit.h>
 #import <Foundation/Foundation.h>
 
-@interface PayInApple : UnityAppController<SKProductsRequestDelegate,SKPaymentTransactionObserver>
+@interface PayInApple: UnityAppController<SKProductsRequestDelegate,SKPaymentTransactionObserver>
    
 @end
 

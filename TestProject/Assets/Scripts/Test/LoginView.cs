@@ -108,31 +108,44 @@ public class LoginView : MonoBehaviour
             OutputTop.text = "Init back:" + Newtonsoft.Json.JsonConvert.SerializeObject(dataDict);
         });
     }
+    public void SDKPay()
+    {
+        Debug.Log("---Unity---SDKPay---");
+
+        Dictionary<string, string> data = new Dictionary<string, string>();
+        data.Add("RoleID", AuthProcessor.gi.ID.ToString());
+        data.Add("RoleName", AccountDataService.gi.getAccountData().name);
+        data.Add("RoleLevel", "60");
+        data.Add("ServerID", "1");
+        data.Add("ServerName", "1");
+        data.Add("MoneySymbol", "TWD");
+        data.Add("Extra", "test");
+        data.Add("GoodID", "test1");
+        data.Add("GoodNum", "1");
+        SDKManager.gi.Pay(data);
+        //SDKManager.gi.Pay(data, (s, v) =>
+        //{
+        //    LogHelper.Log("SDK Pay Callback state : " + s);
+        //    foreach (var item in v)
+        //    {
+        //        LogHelper.Log("SDK Pay Callback info : " + item.Key + "/" + item.Value);
+        //    }
+        //});
+    }
 
     public void SDKLogin()
     {
         Debug.Log("---Unity---SDKLogin---");
-        /*
-        testrunning = true;
-        */
         SDKManager.gi.Login((s, dataDict) => {
-            Debug.Log("login callback called ------------------");
             int state = int.Parse(dataDict["state"]);
             if (state == 1)
             {
-                //第一次授权登陆
-                //OutputTop.text += "\n" + dataDict["token"];
-                Debug.Log("---user--->" + dataDict["user"]);
-                Debug.Log("--token--->" + dataDict["token"]);
-                //  StartCoroutine(LoginTest(BuildUrl(dataDict["token"])));
+                //第一次授权登陆 有identityTokenStr等信息
                 NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"], dataDict["token"]);
-                //NetworkManager.gi.ConnectAuth_Login(dataDict["token"]);
             }
             else if (state == 2) {
-                //identityTokenStr 为空
-                Debug.Log("---user--->" + dataDict["user"]);
+                //后续就没有identityTokenStr这些校验信息了
                 NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"]);
-                //NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"], "");
             }
             else
             {

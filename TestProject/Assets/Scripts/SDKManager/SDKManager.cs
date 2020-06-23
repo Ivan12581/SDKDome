@@ -86,7 +86,7 @@ namespace celia.game
         /// <param name="jsonString">回调数据</param>
         public void OnResult(string jsonString)
         {
-            Debug.Log("SDK OnResult: " + jsonString);
+            Debug.Log("Unity: ---SDK OnResult--->" + jsonString);
 
             Dictionary<string, string> dataDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonString);
             SDKResultType type = (SDKResultType)int.Parse(dataDict["msgID"]);

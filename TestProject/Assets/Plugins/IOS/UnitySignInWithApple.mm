@@ -226,8 +226,7 @@ typedef NS_ENUM(NSInteger, MsgID)
         NSString *authorizationCodeStr = [[NSString alloc] initWithData:authorizationCode encoding:NSUTF8StringEncoding];
 
         // Create an account in your system.
-        //有待商榷
-        [self toGameLogin];
+
         // For the purpose of this demo app, store the userIdentifier in the keychain.
         //  需要使用钥匙串的方式保存用户的唯一信息 com.elex.girlsthrone.tw
         //[YostarKeychain save:KEYCHAIN_IDENTIFIER(@"userIdentifier") data:user];
@@ -334,28 +333,28 @@ typedef NS_ENUM(NSInteger, MsgID)
 //about GameCenter
 -(void)authenticateLocalPlayer {
     
-//    NSLog(@"尝试获取授权");
-//    GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
-//    localPlayer.authenticateHandler = ^(UIViewController * _Nullable viewController, NSError * _Nullable error) {
-//        if ([localPlayer isAuthenticated]) {
-//            //To Do something...
-//            //已经开启GameCenter并且有账号
-//            NSLog(@"已经授权1，playerID : %@", localPlayer.playerID);
-//        }else if(viewController){
-//            //To Do something...
-//            NSLog(@"已经授权2，playerID : %@", localPlayer.playerID);
-//        }
-//        else{
-//            if (!error) {
-//                NSLog(@"授权完成");
-//            }else{
-//                //To Do something...
-//                //没有开启GameCenter
-//                NSLog(@"取消授权");
-//                NSLog(@"AuthPlayer error: %@", [error localizedDescription]);
-//            }
-//        }
-//    };
+    NSLog(@"尝试获取授权");
+    GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
+    localPlayer.authenticateHandler = ^(UIViewController * _Nullable viewController, NSError * _Nullable error) {
+        if ([localPlayer isAuthenticated]) {
+            //To Do something...
+            //已经开启GameCenter并且有账号
+            NSLog(@"已经授权1，playerID : %@", localPlayer.playerID);
+        }else if(viewController){
+            //To Do something...
+            NSLog(@"已经授权2，playerID : %@", localPlayer.playerID);
+        }
+        else{
+            if (!error) {
+                NSLog(@"授权完成");
+            }else{
+                //To Do something...
+                //没有开启GameCenter
+                NSLog(@"取消授权");
+                NSLog(@"AuthPlayer error: %@", [error localizedDescription]);
+            }
+        }
+    };
 }
 
 #pragma mark -- 登录 授权 ASAuthorizationControllerDelegate
@@ -385,10 +384,7 @@ typedef NS_ENUM(NSInteger, MsgID)
 //开始注册登录自己的游戏服务器
 -(void)toGameLogin{
      NSLog(@ "--开始注册登录自己的游戏服务器--");
-    NSString *str = @"eyJpc3MiOiJodHRwczovL2FwcGxlaWQuYXBwbGUuY29tIiwiYXVkIjoiY29tLmVsZXguZ2lybHN0aHJvbmUudHciLCJleHAiOjE1OTI4Nzg0MzYsImlhdCI6MTU5Mjg3NzgzNiwic3ViIjoiMDAwMDIxLjgyNWViOTRiYzlhZDRkOGJiZjY1ODE4NDQ1ZGY5MjhiLjA4NDAiLCJjX2hhc2giOiIwVjB0SS1kWVp0YU1sRTJHU1NLcTd3IiwiZW1haWwiOiIxMDk0MTM1MjA5QHFxLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjoidHJ1ZSIsImF1dGhfdGltZSI6MTU5Mjg3NzgzNiwibm9uY2Vfc3VwcG9ydGVkIjp0cnVlfQ";
-    
-    
-    [self SendMessageToUnity: eLogin DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",userIdentifier,@"user", str,@"identityTokenStr",nil]];
+    [self SendMessageToUnity: eLogin DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",userIdentifier,@"user",nil]];
 //	[self SendMessageToUnity: eLogin DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",userIdentifier,@"user", @"",@"identityTokenStr",nil]];
 }
 
@@ -399,7 +395,7 @@ typedef NS_ENUM(NSInteger, MsgID)
 	
     NSLog(@"-ios--InitSDK----");
   //  [self signin];
-//      [self authenticateLocalPlayer];
+     [self authenticateLocalPlayer];
     //登录之前先observeAuthticationState
 //    [self observeAuthticationState];
 //    [self getPasswordInkeychain];
