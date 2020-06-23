@@ -2,3 +2,6 @@
 /TestProject/Temp
 /TestProject/obj
 /TestProject/.vs/TestProject/v16
+/TestProject/Assembly-CSharp-firstpass.csproj
+/TestProject/Assembly-CSharp.csproj
+/TestProject/Assembly-CSharp-Editor.csproj
