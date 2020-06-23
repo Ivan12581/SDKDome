@@ -65,22 +65,22 @@ public class LoginView : MonoBehaviour
         {
             waiting = true;
             SDKManager.gi.Login((s, dataDict) => {
-                Debug.Log("login callback called ------------------");
-                int state = int.Parse(dataDict["state"]);
-                if (state == 1)
-                {
-                    OutputTop.text += "\n" + dataDict["token"];
-                    Debug.Log("Build url calling ---------------------");
-                  //  StartCoroutine(LoginTest(BuildUrl(dataDict["token"])));
+                //Debug.Log("login callback called ------------------");
+                //int state = int.Parse(dataDict["state"]);
+                //if (state == 1)
+                //{
+                //    OutputTop.text += "\n" + dataDict["token"];
+                //    Debug.Log("Build url calling ---------------------");
+                //  //  StartCoroutine(LoginTest(BuildUrl(dataDict["token"])));
 
-                      //NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"],dataDict["identityTokenStr"]);
-                }
-                else
-                {
-                    OutputTop.text += "\n" + "SDK fail!!!";
-                    Debug.Log("SDK login fail ----------------");
-                    waiting = false;
-                }
+                //      //NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"],dataDict["identityTokenStr"]);
+                //}
+                //else
+                //{
+                //    OutputTop.text += "\n" + "SDK fail!!!";
+                //    Debug.Log("SDK login fail ----------------");
+                //    waiting = false;
+                //}
             });
         }
     }
@@ -121,15 +121,19 @@ public class LoginView : MonoBehaviour
             if (state == 1)
             {
                 //第一次授权登陆
-                OutputTop.text += "\n" + dataDict["token"];
-                Debug.Log("Build url calling ---------------------");
+                //OutputTop.text += "\n" + dataDict["token"];
+                Debug.Log("---user--->" + dataDict["user"]);
+                Debug.Log("--token--->" + dataDict["token"]);
                 //  StartCoroutine(LoginTest(BuildUrl(dataDict["token"])));
-                NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"], dataDict["identityTokenStr"]);
+                NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"], dataDict["token"]);
                 //NetworkManager.gi.ConnectAuth_Login(dataDict["token"]);
             }
             else if (state == 2) {
                 //identityTokenStr 为空
-                NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"], "");
+                Debug.Log("---user--->" + dataDict["user"]);
+                Debug.Log("--token--->" + dataDict["token"]);
+                NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"], dataDict["token"]);
+                //NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"], "");
             }
             else
             {
