@@ -5,6 +5,7 @@
 #import <UIKit/UIKit.h>
 #import "SSKeychain.h"
 #import <GameKit/GameKit.h>
+#import "PayInApple.h"
 //******************************************************
 //****************Apple 登录
 //******************************************************
@@ -410,6 +411,10 @@ typedef NS_ENUM(NSInteger, MsgID)
 }
 #pragma mark -- 支付
 -(void)Pay: (const char *) jsonString{
+    NSLog(@"-ios--Pay----");
+//   PayInApple * PayInAppleIn = [[PayInApple alloc] init];
+//    [PayInAppleIn Init];
+//     [PayInApple test];
 
 }
 

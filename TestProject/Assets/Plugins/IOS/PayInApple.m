@@ -8,10 +8,10 @@
 #import <UIKit/UIKit.h>
 #import <StoreKit/StoreKit.h>
 #import <Foundation/Foundation.h>
-
-@interface PayInApple: UnityAppController<SKProductsRequestDelegate,SKPaymentTransactionObserver>
-   
-@end
+#import "PayInApple.h"
+//@interface PayInApple: UnityAppController<SKProductsRequestDelegate,SKPaymentTransactionObserver>
+//
+//@end
 
 //苹果服务器验证地址:
 //测试：https://sandbox.itunes.apple.com/verifyReceipt
@@ -20,7 +20,7 @@
 
 @implementation PayInApple{
     NSString *goodID;   //商品ID
-    NSInteger *goodNum; //商品数量
+    NSInteger goodNum; //商品数量
 }
 
 
@@ -60,7 +60,7 @@
 
 //    @property(nonatomic, readonly) NSInteger quantity;
 //    The default value is 1, the minimum value is 1, and the maximum value is 10.
-    payment.quantity = goodNum;
+//    payment.quantity = goodNum;
         //可记录一个字符串，用于帮助苹果检测不规则支付活动 可以是userId，也可以是订单id，跟你自己需要而定
         //payment.applicationUsername = userId;
     [[SKPaymentQueue defaultQueue] addPayment:payment];
@@ -134,7 +134,7 @@
 
 //In-App Purchase入口
 - (void)buyProductsWithId:(NSString *)productsId andQuantity:(NSInteger)quantity {
-    goodNum = quantity;
+//    goodNum = [NSNumber numberWithInteger:quantity];
 
     [self addListener];
     //允许程序内付费购买
@@ -151,8 +151,26 @@
     }
 }
 
+- (void)buyProductsWithId2:(NSString *)productsId{
+    [self addListener];
+    //允许程序内付费购买
+    if ([SKPaymentQueue canMakePayments]) {
+        //请求对应的产品信息
+        NSArray *productArr = [[NSArray alloc] initWithObjects:productsId,nil];
+        NSSet *nsset = [NSSet setWithArray:productArr];
+        SKProductsRequest *request = [[SKProductsRequest alloc] initWithProductIdentifiers:nsset];
+        request.delegate = self;
+        [request start];
+    } else {
+        //您的手机没有打开程序内付费购买
+        NSLog(@"用户不允许内购");
+    }
+}
+
 -(void)Init{
-    
+     //PayInApple * PayInAppleIn = [[PayInApple alloc] init];
+    NSString *_productsId = @"test";
+    [self buyProductsWithId2:_productsId];
 }
 
 
@@ -164,9 +182,18 @@
 -(void)delListener{
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
 }
+#pragma mark -- 支付
+-(void)Pay: (const char *) jsonString{
+    NSLog(@"-ios--Pay----");
+//   PayInApple * PayInAppleIn = [[PayInApple alloc] init];
+//    [PayInAppleIn Init];
+     //[PayInApple Init];
 
+}
++(void)test{
+    NSLog(@"-ios--test----");
+}
 
 @end
-
 
 
