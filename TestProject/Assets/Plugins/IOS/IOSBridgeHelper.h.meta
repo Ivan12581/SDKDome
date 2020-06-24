@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2fc35cdb7f2d4a24eb97e96fedc9c052
+guid: 7734d916df9674cbab7401d04c31d3b8
 PluginImporter:
   externalObjects: {}
   serializedVersion: 2
@@ -93,7 +93,7 @@ PluginImporter:
       settings:
         AddToEmbeddedBinaries: false
         CompileFlags: 
-        FrameworkDependencies: StoreKit;
+        FrameworkDependencies: GameKit;StoreKit;
   userData: 
   assetBundleName: 
   assetBundleVariant: 
