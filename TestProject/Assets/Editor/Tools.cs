@@ -22,7 +22,7 @@ public class IOSBuilder : Editor
 
 
 
-    public const string path = "/Users/mini/Documents/EmptyXcodeprj";
+    public const string path = "/Users/mini/Documents/SDKXCodeProj";
 
 
 #if UNITY_EDITOR_OSX
