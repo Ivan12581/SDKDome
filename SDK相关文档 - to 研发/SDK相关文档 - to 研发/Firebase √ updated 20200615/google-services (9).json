@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "554619719418",
+    "firebase_url": "https://api-project-74714396.firebaseio.com",
+    "project_id": "api-project-74714396",
+    "storage_bucket": "api-project-74714396.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:554619719418:android:c634af196eea4bfd1bc343",
+        "android_client_info": {
+          "package_name": "com.elex.girlsthrone.tw.gp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "554619719418-rtqb4au05hj99h8h6n70i6b8i3d91tun.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEDfzWNAicue1zSyQ1KBEtCXWaaAlU9zY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "554619719418-rtqb4au05hj99h8h6n70i6b8i3d91tun.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.elex.girlsthrone.tw",
+                "app_store_id": "1517546329"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
