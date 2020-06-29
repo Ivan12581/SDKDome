@@ -1,5 +1,4 @@
 #import "IOSBridgeHelper.h"
-#import "PayInApple.h"
 #import "AppleHelper.h"
 //#import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
