@@ -1,22 +1,22 @@
 #import "IOSBridgeHelper.h"
 #import "AppleHelper.h"
 //#import <FBSDKCoreKit/FBSDKCoreKit.h>
-#import <FBSDKLoginKit/FBSDKLoginKit.h>
+//#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 //******************************************************
 //****************IOS中间文件
 //******************************************************
 
 @implementation IOSBridgeHelper
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    NSLog(@"-ios---IOSBridgeHelper---application--000-");
-    [super application:application didFinishLaunchingWithOptions:launchOptions];
+// - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    // NSLog(@"-ios---IOSBridgeHelper---application--000-");
+    // [super application:application didFinishLaunchingWithOptions:launchOptions];
     
-    //FaceBook 启动调用必接
-    [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
-    [FBSDKSettings setAppID:@"949004278872387"];
-    return YES;
-}
+    ////FaceBook 启动调用必接
+    // [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
+    // [FBSDKSettings setAppID:@"949004278872387"];
+    // return YES;
+// }
 extern void UnitySendMessage(const char *, const char *, const char *);
 
 -(void)SendMessageToUnity:(int)msgID DictData:(NSMutableDictionary *) dict{
