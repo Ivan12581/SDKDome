@@ -77,11 +77,17 @@ namespace celia.game
                 pkt.Proof = real_digest;
                 pkt.AccountId = AuthProcessor.gi.ID;
                 pkt.DeviceInfo = new c2l_logon_proof.Types.LogonInfo();
-                pkt.DeviceInfo.Appid = uint.Parse(SDKManager.gi.PackageParams.AppID);
-                pkt.DeviceInfo.Channel = SDKManager.gi.PackageParams.CCHID;
-                pkt.DeviceInfo.Mdid = uint.Parse(SDKManager.gi.PackageParams.MDID);
-                pkt.DeviceInfo.Device = SDKManager.gi.PackageParams.DeviceID;
-                pkt.DeviceInfo.Devicename = UnityWebRequest.EscapeURL(SystemInfo.deviceModel);
+                //pkt.DeviceInfo.Appid = uint.Parse(SDKManager.gi.PackageParams.AppID);
+                //pkt.DeviceInfo.Channel = SDKManager.gi.PackageParams.CCHID;
+                //pkt.DeviceInfo.Mdid = uint.Parse(SDKManager.gi.PackageParams.MDID);
+                //pkt.DeviceInfo.Device = SDKManager.gi.PackageParams.DeviceID;
+                //pkt.DeviceInfo.Devicename = UnityWebRequest.EscapeURL(SystemInfo.deviceModel);
+
+                pkt.DeviceInfo.Appid = 111;
+                pkt.DeviceInfo.Channel = "111";
+                pkt.DeviceInfo.Mdid = 111;
+                pkt.DeviceInfo.Device = "111";
+                pkt.DeviceInfo.Devicename = "111";
 
                 NetworkManager.gi.SendPkt(LogicMsgID.LogicMsgC2LLogonProof, pkt);
                 Debug.Log(Newtonsoft.Json.JsonConvert.SerializeObject(pkt));
