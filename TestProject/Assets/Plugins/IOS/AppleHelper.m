@@ -41,7 +41,8 @@ static AppleHelper *AppleHelperInstance = nil;
     NSLog(@"-ios---AppleHelper---InitSDK----");
     //apple初始化的时候需要添加购买结果的监听 有可能之前支付ok 但是因为通信而导致存在未处理订单
     [self addListener];
-    [IOSBridgeHelper InitSDKCallBack];
+    
+    [IOSBridgeHelper InitSDKCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",accountName,@"TWuserIdentifier",forService,@"forService",nil]];
 }
 //******************************************************
 //****************Apple Sign In With Apple

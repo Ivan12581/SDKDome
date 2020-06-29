@@ -11,10 +11,10 @@
 #import <UIKit/UIKit.h>
 #import "SSKeychain.h"
 #import <GameKit/GameKit.h>
-@interface IOSBridgeHelper:UnityAppController
+@interface IOSBridgeHelper:UnityAppController<UIApplicationDelegate>
 //+(id)sharedInstance;
 +(void)LoginCallBack:(NSMutableDictionary *)dict;
-+(void)InitSDKCallBack;
++(void)InitSDKCallBack:(NSMutableDictionary *)dict;
 +(void)UploadInfoCallBack;
 //+(void)ExitGameCallBack;
 +(void)GetConfigInfoCallBack;
