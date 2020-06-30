@@ -85,6 +85,8 @@ static IOSBridgeHelper *BridgeHelperIns = nil;
 #pragma mark -- 登录
 -(void)Login{
       [[AppleHelper sharedInstance] Login];
+//      [[AppleHelper sharedInstance] authGamecnter];
+    
 }
 +(void)LoginCallBack:(NSMutableDictionary *) dict{
       NSLog(@"-ios----IOSBridgeHelper---LoginCallBack----");

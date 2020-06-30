@@ -11,8 +11,9 @@
 #import <AuthenticationServices/AuthenticationServices.h>
 #import <GameKit/GameKit.h>
 #import <StoreKit/StoreKit.h>
-@interface AppleHelper:NSObject<ASAuthorizationControllerDelegate,ASAuthorizationControllerPresentationContextProviding,SKProductsRequestDelegate,SKPaymentTransactionObserver>
+@interface AppleHelper:NSObject<ASAuthorizationControllerDelegate,ASAuthorizationControllerPresentationContextProviding,SKProductsRequestDelegate,SKPaymentTransactionObserver,GKGameCenterControllerDelegate>
 -(void)InitSDK;
+-(void)authGamecnter;
 -(void)Pay: (const char *) jsonString;
 +(id)sharedInstance;
 @end
