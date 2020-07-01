@@ -171,11 +171,7 @@ static AppleHelper *AppleHelperInstance = nil;
         //[YostarKeychain save:KEYCHAIN_IDENTIFIER(@"userIdentifier") data:user];
         [self saveUserInKeychain:userIdentifier];
         
-        [IOSBridgeHelper LoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",userIdentifier,@"user",identityTokenStr,@"token",nil]];
-        
-//        [self SendMessageToUnity: eLogin DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",userIdentifier,@"user",identityTokenStr,@"token",nil]];
-        
-//        [self SendMessageToUnity: eLogin DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",userIdentifier,@"user",givenName,@"givenName",familyName,@"familyName",email,@"email",identityTokenStr,@"identityTokenStr",authorizationCodeStr,@"authorizationCodeStr",nil]];
+        [IOSBridgeHelper LoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",userIdentifier,@"uid",identityTokenStr,@"token",nil]];
         
     }else if ([authorization.credential isKindOfClass:[ASPasswordCredential class]]){
             NSLog(@"----这个获取的是iCloud记录的账号密码---------->");
@@ -189,7 +185,7 @@ static AppleHelper *AppleHelperInstance = nil;
         NSString *password = passwordCredential.password;
         [self toGameLogin];
         
-        [IOSBridgeHelper LoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",user,@"user",password,@"password",nil]];
+        [IOSBridgeHelper LoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",user,@"uid",password,@"password",nil]];
         
 //        [self SendMessageToUnity: eLogin DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",user,@"user",password,@"password",nil]];
         
@@ -291,18 +287,31 @@ static AppleHelper *AppleHelperInstance = nil;
 //******************************************************
 //****************Apple GameCenter
 //******************************************************
+//是否支持GameCenter
+- (BOOL) isGameCenterAvailable
+{
+    Class gcClass = (NSClassFromString(@"GKLocalPlayer"));
+    NSString *reqSysVer = @"4.1";
+    NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
+    BOOL osVersionSupported = ([currSysVer compare:reqSysVer options:NSNumericSearch] != NSOrderedAscending);
+    
+    return (gcClass && osVersionSupported);
+}
 #pragma mark - GameCenter 授权状态查询
--(void)authenticateLocalPlayer {
-    NSLog(@"尝试获取授权");
+-(void)authenticateLocalPlayer{
+    NSLog(@"尝试获取GameCenter授权");
     GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
     localPlayer.authenticateHandler = ^(UIViewController * _Nullable viewController, NSError * _Nullable error) {
-        if ([localPlayer isAuthenticated]) {
+        if ([[GKLocalPlayer localPlayer] isAuthenticated]) {
             //To Do something...
             //已经开启GameCenter并且有账号
-            NSLog(@"已经授权1，playerID : %@", localPlayer.playerID);
+
+            NSLog(@"已经授权1，playerID : %@", [GKLocalPlayer localPlayer].playerID);
+//            self.succBlock([GKLocalPlayer localPlayer].playerID);
         }else if(viewController){
             //To Do something...
-            NSLog(@"已经授权2，playerID : %@", localPlayer.playerID);
+            NSLog(@"已经授权2，playerID : %@", [GKLocalPlayer localPlayer].playerID);
+//            [self presentViewController:viewController animated:YES completion:nil];
         }
         else{
             if (!error) {
@@ -315,6 +324,58 @@ static AppleHelper *AppleHelperInstance = nil;
             }
         }
     };
+}
+-(void)authGamecnter{
+       NSLog(@"尝试获取GameCenter授权");
+    [[GKLocalPlayer localPlayer] authenticateWithCompletionHandler:^(NSError * _Nullable error) {
+        if (error == nil) {
+            //yes
+             NSLog(@"1--alias--%@",[GKLocalPlayer localPlayer].alias);
+            NSLog(@"2--authenticated--%d",[GKLocalPlayer localPlayer].authenticated);
+            NSLog(@"3--isFriend--%d",[GKLocalPlayer localPlayer].isFriend);
+            NSLog(@"4--playerID--%@",[GKLocalPlayer localPlayer].playerID);
+            [[GKLocalPlayer localPlayer] generateIdentityVerificationSignatureWithCompletionHandler:^(NSURL * _Nullable publicKeyUrl, NSData * _Nullable signature, NSData * _Nullable salt, uint64_t timestamp, NSError * _Nullable error) {
+                if (error) {
+                    NSLog(@"--ERROR: %@",error);
+                }else{
+                    NSLog(@"1--public_key_url--%@",publicKeyUrl);
+                    NSLog(@"2--signature--%@",signature);
+                    NSLog(@"3--salt--%@",salt);
+                    NSLog(@"4--timestamp--%llu",timestamp);
+                    NSLog(@"5--app_bundle_id--%@",[[NSBundle mainBundle] bundleIdentifier]);
+                }
+            }];
+            
+            
+        }else{
+            NSLog(@"失败  %@",error);
+        }
+    }];
+    
+}
+//用戶變更檢測
+- (void)registerFoeAuthenticationNotification{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(authenticationChanged) name:GKPlayerAuthenticationDidChangeNotificationName object:nil];
+}
+
+- (void)authenticationChanged{
+    if([GKLocalPlayer localPlayer].isAuthenticated){
+        
+    }else{
+        
+    }
+}
+// 上传分数给 gameCenter
+-(void)saveHighScore{
+    if ([GKLocalPlayer localPlayer].isAuthenticated) {
+        //得到分数的报告
+        GKScore *scoreReporter = [[GKScore alloc] initWithLeaderboardIdentifier:@"你的排行榜ID，ITC中找"];
+        scoreReporter.value = 1000;
+        NSArray<GKScore*> *scoreArray = @[scoreReporter];
+        //上传分数
+        [GKScore reportScores:scoreArray withCompletionHandler:nil];
+    }
 }
 //******************************************************
 //****************Apple In-App Purchase
@@ -336,8 +397,13 @@ static AppleHelper *AppleHelperInstance = nil;
     NSString *_productsId = [dict valueForKey:@"GoodID"];
     goodID = [dict valueForKey:@"GoodID"];
     NSLog(@" Pay goodID: %@", goodID);
-    [self buyProductsWithId:_productsId];
-
+    NSLog(@" Pay ServerID: %@", [dict valueForKey:@"ServerID"]);
+    //这里定义支付类型 1去Apple为支付 2为服务器返回支付验证结果
+    if ([[dict valueForKey:@"ServerID"]  isEqual: @"2"]) {
+        [self HandlePayState];
+    }else{
+        [self buyProductsWithId:_productsId];
+    }
 }
 //收到产品返回信息
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response NS_AVAILABLE(10_7, 3_0) {
@@ -388,14 +454,14 @@ static AppleHelper *AppleHelperInstance = nil;
 #pragma mark - 购买结果返回 需监听购买结果委托 [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions {
     for (SKPaymentTransaction *tran in transactions) {
-         NSLog(@"购买结果");
+         NSLog(@"购买结果订单:%@",tran);
         switch (tran.transactionState) {
             case SKPaymentTransactionStatePurchased: // 交易完成
                 // 发送自己服务器验证凭证
                 NSLog(@"交易完成");
                 [self completeTransaction:tran];
                 //    等服务器验证完后再finish 这样每次启动app这个接口会再调用
-               [[SKPaymentQueue defaultQueue]finishTransaction:tran];
+               //[[SKPaymentQueue defaultQueue]finishTransaction:tran];
                 break;
             case SKPaymentTransactionStatePurchasing: // 购买中
                 NSLog(@"商品添加进列表");
@@ -422,17 +488,17 @@ static AppleHelper *AppleHelperInstance = nil;
     NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
     // 从沙盒中获取到购买凭据
     NSData *receiptData = [NSData dataWithContentsOfURL:receiptURL];
+    NSLog(@"交易结束,验证支付信息111 : %@", receiptData);
     /**
         BASE64 常用的编码方案，通常用于数据传输，以及加密算法的基础算法，传输过程中能够保证数据传输的稳定性
         BASE64是可以编码和解码的
         关于验证：https:blog.csdn.net/qq_22080737/article/details/79786500?utm_medium=distribute.pc_relevant.none-task-blog-baidujs-2
     */
     NSString *encodeStr = [receiptData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
-    NSLog(@"交易结束,验证支付信息 : %@", encodeStr);
+    NSLog(@"交易结束,验证支付信息222 : %@", encodeStr);
     //发给自己服务器
     [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",encodeStr,@"encodeStr",nil]];
-//    [self sendMineServer:encodeStr];
-//    [self sendMineServer:transaction];
+
 }
 #pragma mark - In-App Purchase入口
 - (void)buyProductsWithId:(NSString *)productsId{
@@ -454,14 +520,16 @@ static AppleHelper *AppleHelperInstance = nil;
 #pragma mark --根据服务器返回结果来处理支付状态
 -(void)HandlePayState{
     //验证成功之后需要关闭监听 订单消除
-    if (1) {
-         NSLog(@"服务器校验交易凭证为有效");
-        [self completeTransaction:order];
-        [self removeListener];
-    }else{
-         NSLog(@"服务器校验交易凭证为无效  这个咋处理啊 我也不知道啊");
-        //我也不知道咋处理啊
-    }
+    [self completeTransaction:order];
+    [self removeListener];
+//    if (1) {
+//         NSLog(@"服务器校验交易凭证为有效");
+//        [self completeTransaction:order];
+//        [self removeListener];
+//    }else{
+//         NSLog(@"服务器校验交易凭证为无效  这个咋处理啊 我也不知道啊");
+//        //我也不知道咋处理啊
+//    }
 }
 //监听购买结果
 -(void)addListener{
