@@ -41,8 +41,12 @@ static AppleHelper *AppleHelperInstance = nil;
     NSLog(@"-ios---AppleHelper---InitSDK----");
     //apple初始化的时候需要添加购买结果的监听 有可能之前支付ok 但是因为通信而导致存在未处理订单
     [self addListener];
-    
-    [IOSBridgeHelper InitSDKCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",accountName,@"TWuserIdentifier",forService,@"forService",nil]];
+    if (@available(iOS 13.0, *)) {
+            [IOSBridgeHelper InitSDKCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",accountName,@"TWuserIdentifier",forService,@"forService",nil]];
+    }else{
+            [IOSBridgeHelper InitSDKCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",accountName,@"TWuserIdentifier",forService,@"forService",nil]];
+    }
+
 }
 //******************************************************
 //****************Apple Sign In With Apple
@@ -259,6 +263,7 @@ static AppleHelper *AppleHelperInstance = nil;
 
 #pragma mark -- 登录 授权 ASAuthorizationControllerDelegate
 -(void)Login{
+    
     //从Keychain中读取userIdentifier
     if (![SSKeychain passwordForService:forService account:accountName]) {
        NSLog(@ "--没有userIdentifier 说明之前没有登录过--需要请求授权--");
@@ -327,22 +332,24 @@ static AppleHelper *AppleHelperInstance = nil;
 }
 -(void)authGamecnter{
        NSLog(@"尝试获取GameCenter授权");
-    [[GKLocalPlayer localPlayer] authenticateWithCompletionHandler:^(NSError * _Nullable error) {
+    [[GKLocalPlayer localPlayer] authenticateWithCompletionHandler:^(NSError * _Nullable error){
         if (error == nil) {
             //yes
-             NSLog(@"1--alias--%@",[GKLocalPlayer localPlayer].alias);
+            NSLog(@"1--alias--%@",[GKLocalPlayer localPlayer].alias);
             NSLog(@"2--authenticated--%d",[GKLocalPlayer localPlayer].authenticated);
             NSLog(@"3--isFriend--%d",[GKLocalPlayer localPlayer].isFriend);
             NSLog(@"4--playerID--%@",[GKLocalPlayer localPlayer].playerID);
             [[GKLocalPlayer localPlayer] generateIdentityVerificationSignatureWithCompletionHandler:^(NSURL * _Nullable publicKeyUrl, NSData * _Nullable signature, NSData * _Nullable salt, uint64_t timestamp, NSError * _Nullable error) {
                 if (error) {
                     NSLog(@"--ERROR: %@",error);
+                [IOSBridgeHelper LoginGameCenterCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",nil]];
                 }else{
                     NSLog(@"1--public_key_url--%@",publicKeyUrl);
                     NSLog(@"2--signature--%@",signature);
                     NSLog(@"3--salt--%@",salt);
                     NSLog(@"4--timestamp--%llu",timestamp);
                     NSLog(@"5--app_bundle_id--%@",[[NSBundle mainBundle] bundleIdentifier]);
+                    [IOSBridgeHelper LoginGameCenterCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",publicKeyUrl,@"publicKeyUrl",signature,@"signature",[GKLocalPlayer localPlayer].playerID,@"playerID",nil]];
                 }
             }];
             

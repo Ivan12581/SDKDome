@@ -13,6 +13,7 @@
 #import <StoreKit/StoreKit.h>
 @interface AppleHelper:NSObject<ASAuthorizationControllerDelegate,ASAuthorizationControllerPresentationContextProviding,SKProductsRequestDelegate,SKPaymentTransactionObserver,GKGameCenterControllerDelegate>
 -(void)InitSDK;
+-(void)Login;
 -(void)authGamecnter;
 -(void)Pay: (const char *) jsonString;
 +(id)sharedInstance;
