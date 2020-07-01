@@ -64,7 +64,7 @@ public class LoginView : MonoBehaviour
         if (testrunning && !waiting)
         {
             waiting = true;
-            SDKManager.gi.Login((s, dataDict) => {
+            //SDKManager.gi.Login((s, dataDict) => {
                 //Debug.Log("login callback called ------------------");
                 //int state = int.Parse(dataDict["state"]);
                 //if (state == 1)
@@ -81,23 +81,19 @@ public class LoginView : MonoBehaviour
                 //    Debug.Log("SDK login fail ----------------");
                 //    waiting = false;
                 //}
-            });
+            //});
         }
     }
 
     public void Login()
     {
-        //Debug.Log(NameFile.text + "===" + WordFile.text);
-        //NetworkManager.gi.ConnectAuth_Login(NameFile.text, WordFile.text);
-
-
-        c2l_create_character_req pkt = new c2l_create_character_req();
-        pkt.CharacterName = "Cest";
-        NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LCreateCharacterReq, pkt, LogicMsgID.LogicMsgL2CCreateCharacterRep, (e) =>
-        {
-            l2c_create_character_rep msg = l2c_create_character_rep.Parser.ParseFrom(e.msg);
-            Debug.LogWarning(Newtonsoft.Json.JsonConvert.SerializeObject(msg));
-        });
+        //c2l_create_character_req pkt = new c2l_create_character_req();
+        //pkt.CharacterName = "Cest";
+        //NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LCreateCharacterReq, pkt, LogicMsgID.LogicMsgL2CCreateCharacterRep, (e) =>
+        //{
+        //    l2c_create_character_rep msg = l2c_create_character_rep.Parser.ParseFrom(e.msg);
+        //    Debug.LogWarning(Newtonsoft.Json.JsonConvert.SerializeObject(msg));
+        //});
 
     }
 
@@ -108,7 +104,7 @@ public class LoginView : MonoBehaviour
             OutputTop.text = "Init back:" + Newtonsoft.Json.JsonConvert.SerializeObject(dataDict);
         });
     }
-    public void SDKPay()
+    public void ApplePay()
     {
         Debug.Log("---Unity---SDKPay---");
 
@@ -118,7 +114,6 @@ public class LoginView : MonoBehaviour
         data.Add("Extra", "test");
         data.Add("GoodID", "test1");
         data.Add("GoodNum", "1");
-        SDKManager.gi.Pay(data);
         SDKManager.gi.Pay(data, (s, v) =>
         {
             LogHelper.Log("SDK Pay Callback state : " + s);
@@ -148,10 +143,10 @@ public class LoginView : MonoBehaviour
         });
     }
 
-    public void SDKLogin()
+    public void AppleLogin()
     {
         Debug.Log("---Unity---SDKLogin---");
-        SDKManager.gi.Login((s, dataDict) => {
+        SDKManager.gi.Login(SDKLoginType.Apple,(s, dataDict) => {
             int state = int.Parse(dataDict["state"]);
             if (state == 1)
             {
@@ -170,7 +165,29 @@ public class LoginView : MonoBehaviour
             }
         });
     }
-
+    public void GCLogin()
+    {
+        Debug.Log("---Unity---SDKLogin---");
+        SDKManager.gi.Login(SDKLoginType.GameCenter,(s, dataDict) => {
+            int state = int.Parse(dataDict["state"]);
+            if (state == 1)
+            {
+                //第一次授权登陆 有identityTokenStr等信息
+                NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"], dataDict["token"]);
+            }
+            else if (state == 2)
+            {
+                //后续就没有identityTokenStr这些校验信息了
+                NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"]);
+            }
+            else
+            {
+                OutputTop.text += "\n" + "SDK fail!!!";
+                Debug.Log("SDK login fail ----------------");
+                waiting = false;
+            }
+        });
+    }
     public void Switch()
     {
         SDKManager.gi.Switch((s, dataDict) => {

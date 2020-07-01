@@ -116,30 +116,11 @@ namespace celia.game
         /// 登录
         /// </summary>
         /// <param name="callBack">回调，state+数据字典</param>
-        public void Login(Action<int, Dictionary<string, string>> callBack = null)
+        public void Login(SDKLoginType type,Action<int, Dictionary<string, string>> callBack = null)
         {
             DoingSwitch = false;
             callBackDict[SDKResultType.Login] = callBack;
-            //callBackDict[SDKResultType.Login] = (s, v) =>
-            //{
-            //    if (loginDelay != null)
-            //    {
-            //        DelayManager.gi.Break(loginDelay);
-            //    }
-            //    callBack?.Invoke(s, v);
-            //};
-            // 根据接入文档，某些SDK没有登录失败回调，需自定义计时器
-            //loginDelay = DelayManager.gi.Invoke(() =>
-            //{
-            //    loginDelay = null;
-            //    JObject jObj = new JObject();
-            //    jObj.Add("msgID", (int)SDKResultType.Login);
-            //    jObj.Add("state", 0);
-            //    jObj.Add("message", "login out time");
-            //    OnResult(jObj.ToString());
-            //}, 8);
-
-            proxy?.Login();
+            proxy?.Login(type);
         }
 
         /// <summary>
@@ -353,5 +334,18 @@ namespace celia.game
         Native,
         NativeChukai,
         Oversea,
+        OverseaELEX,
+    }
+    public enum SDKLoginType
+    {
+        None,
+        /// <summary>
+        /// 星辉SDK
+        /// </summary>
+        Apple,
+        GameCenter,
+        FaceBook,
+        Google,//新增加请在Google、Rastar之间加入
+        Rastar,
     }
 }

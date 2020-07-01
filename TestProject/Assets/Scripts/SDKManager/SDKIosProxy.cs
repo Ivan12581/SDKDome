@@ -11,7 +11,7 @@ namespace celia.game
         [DllImport("__Internal")]
         private static extern void cInit();
         [DllImport("__Internal")]
-        private static extern void cLogin();
+        private static extern void cLogin(string jsonString);
         [DllImport("__Internal")]
         private static extern void cSwitch();
         [DllImport("__Internal")]
@@ -35,10 +35,11 @@ namespace celia.game
 #endif
         }
 
-        public override void Login()
+        public override void Login(SDKLoginType type = SDKLoginType.Rastar)
         {
+            //TODO:需要修改之前IOS那边的接口
 #if UNITY_IOS
-            cLogin();
+            cLogin(type.ToString());
 #endif
         }
 

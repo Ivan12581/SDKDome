@@ -13,7 +13,7 @@ namespace celia.game
         /// <summary>
         /// SDK登录
         /// </summary>
-        public virtual void Login() { }
+        public virtual void Login(SDKLoginType Type) { }
         /// <summary>
         /// SDK切换帐号
         /// </summary>

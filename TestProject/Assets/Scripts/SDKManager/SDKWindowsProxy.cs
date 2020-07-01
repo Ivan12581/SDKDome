@@ -19,7 +19,7 @@ namespace celia.game
             SDKManager.gi.OnResult(jObj.ToString());
         }
 
-        public override void Login()
+        public override void Login(SDKLoginType type = SDKLoginType.None)
         {
 
         }

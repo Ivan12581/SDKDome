@@ -13,12 +13,26 @@ namespace celia.game.editor
         {
             group = BuildPipeline.GetBuildTargetGroup(option.ProcessCfg.Target);
             recordDefines = PlayerSettings.GetScriptingDefineSymbolsForGroup(group);
-
-            if (option.ReleaseLevel == ReleaseLevel.Beta)
+            if (option.SDKType == SDKType.OverseaELEX)
             {
                 string newDefines = recordDefines;
-                newDefines += ";CELIA_RELEASE";
+                newDefines = "HOTFIX_ENABLE;CELIA_RELEASE;AOT;ELEX";
                 PlayerSettings.SetScriptingDefineSymbolsForGroup(group, newDefines);
+            }
+            else
+            {
+                if (option.ReleaseLevel == ReleaseLevel.Beta)
+                {
+                    string newDefines = recordDefines;
+                    newDefines = "HOTFIX_ENABLE;CELIA_RELEASE;AOT";
+                    PlayerSettings.SetScriptingDefineSymbolsForGroup(group, newDefines);
+                }
+                else if (option.ReleaseLevel == ReleaseLevel.Alpha)
+                {
+                    string newDefines = recordDefines;
+                    newDefines = "AOT";
+                    PlayerSettings.SetScriptingDefineSymbolsForGroup(group, newDefines);
+                }
             }
         }
 
