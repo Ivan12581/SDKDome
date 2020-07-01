@@ -113,22 +113,39 @@ public class LoginView : MonoBehaviour
         Debug.Log("---Unity---SDKPay---");
 
         Dictionary<string, string> data = new Dictionary<string, string>();
-        data.Add("RoleLevel", "60");
-        data.Add("ServerID", "1");
-        data.Add("ServerName", "1");
+        data.Add("PayType", "1");//这里定义支付类型 1去Apple为支付 2为服务器返回支付验证结果
         data.Add("MoneySymbol", "TWD");
         data.Add("Extra", "test");
         data.Add("GoodID", "test1");
         data.Add("GoodNum", "1");
         SDKManager.gi.Pay(data);
-        //SDKManager.gi.Pay(data, (s, v) =>
-        //{
-        //    LogHelper.Log("SDK Pay Callback state : " + s);
-        //    foreach (var item in v)
-        //    {
-        //        LogHelper.Log("SDK Pay Callback info : " + item.Key + "/" + item.Value);
-        //    }
-        //});
+        SDKManager.gi.Pay(data, (s, v) =>
+        {
+            LogHelper.Log("SDK Pay Callback state : " + s);
+            foreach (var item in v)
+            {
+                LogHelper.Log("SDK Pay Callback info : " + item.Key + "/" + item.Value);
+            }
+            //开始把交易凭证发给服务器验证
+            string tran = v["encodeStr"];
+            //NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LGenerateRechargeOrder, pkg, LogicMsgID.LogicMsgL2CGenerateRechargeOrder, (args) =>
+            //{
+            //    //收到服务器验证结果 开始删除交易凭证
+            //    l2c_generate_recharge_order msg = l2c_generate_recharge_order.Parser.ParseFrom(args.msg);
+            //    LogHelper.Log(Newtonsoft.Json.JsonConvert.SerializeObject(msg));
+            //    OutputTop.text = OutputTop.text + Newtonsoft.Json.JsonConvert.SerializeObject(msg);
+
+
+            //    NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LGenerateRechargeOrder, pkg, LogicMsgID.LogicMsgL2CGenerateRechargeOrder, (args) =>
+            //    {
+            //        //删除完交易凭证后需告知服务器
+
+
+
+            //    });
+            //    });
+            //});
+        });
     }
 
     public void SDKLogin()

@@ -109,10 +109,6 @@ namespace celia.game
         public void InitSDK(Action<int, Dictionary<string, string>> callBack = null)
         {
             callBackDict[SDKResultType.Init] = callBack;
-            if (proxy==null)
-            {
-                Debug.Log("---proxy==null---");
-            }
             proxy?.Init();
         }
 
@@ -123,24 +119,25 @@ namespace celia.game
         public void Login(Action<int, Dictionary<string, string>> callBack = null)
         {
             DoingSwitch = false;
-            callBackDict[SDKResultType.Login] = (s, v) =>
-            {
-                if (loginDelay != null)
-                {
-                    DelayManager.gi.Break(loginDelay);
-                }
-                callBack?.Invoke(s, v);
-            };
+            callBackDict[SDKResultType.Login] = callBack;
+            //callBackDict[SDKResultType.Login] = (s, v) =>
+            //{
+            //    if (loginDelay != null)
+            //    {
+            //        DelayManager.gi.Break(loginDelay);
+            //    }
+            //    callBack?.Invoke(s, v);
+            //};
             // 根据接入文档，某些SDK没有登录失败回调，需自定义计时器
-            loginDelay = DelayManager.gi.Invoke(() =>
-            {
-                loginDelay = null;
-                JObject jObj = new JObject();
-                jObj.Add("msgID", (int)SDKResultType.Login);
-                jObj.Add("state", 0);
-                jObj.Add("message", "login out time");
-                OnResult(jObj.ToString());
-            }, 8);
+            //loginDelay = DelayManager.gi.Invoke(() =>
+            //{
+            //    loginDelay = null;
+            //    JObject jObj = new JObject();
+            //    jObj.Add("msgID", (int)SDKResultType.Login);
+            //    jObj.Add("state", 0);
+            //    jObj.Add("message", "login out time");
+            //    OnResult(jObj.ToString());
+            //}, 8);
 
             proxy?.Login();
         }
