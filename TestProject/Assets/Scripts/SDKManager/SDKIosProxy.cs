@@ -39,7 +39,7 @@ namespace celia.game
         {
             //TODO:需要修改之前IOS那边的接口
 #if UNITY_IOS
-            cLogin(type.ToString());
+            cLogin(((int)type).ToString());
 #endif
         }
 
