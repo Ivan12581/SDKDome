@@ -119,11 +119,6 @@ public class LoginView : MonoBehaviour
         data.Add("GoodNum", "1");
         SDKManager.gi.Pay(data, (s, v) =>
         {
-            LogHelper.Log("SDK Pay Callback state : " + s);
-            foreach (var item in v)
-            {
-                LogHelper.Log("SDK Pay Callback info : " + item.Key + "/" + item.Value);
-            }
             //开始把交易凭证发给服务器验证
             string tran = v["encodeStr"];
             c2l_ios_recharge pkg = new c2l_ios_recharge();
@@ -164,8 +159,9 @@ public class LoginView : MonoBehaviour
     }
     public void AppleLogin()
     {
-        Debug.Log("---Unity---SDKLogin---");
+        Debug.Log("---Unity---AppleLogin---");
         SDKManager.gi.Login(SDKLoginType.Apple,(s, dataDict) => {
+            Debug.Log("---Unity---AppleLogin--callback-");
             int state = int.Parse(dataDict["state"]);
             if (state == 1)
             {
@@ -188,6 +184,7 @@ public class LoginView : MonoBehaviour
     {
         Debug.Log("---Unity---GCLogin---");
         SDKManager.gi.Login(SDKLoginType.GameCenter,(s, dataDict) => {
+            Debug.Log("---Unity---GCLogin--callback-");
             int state = int.Parse(dataDict["state"]);
             foreach (var item in dataDict)
             {
