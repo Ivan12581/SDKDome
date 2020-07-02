@@ -121,6 +121,8 @@ enum LogicMsgID {
 	LOGIC_MSG_C2L_SINGLE_COMBAT_RESULT		= 59107; // 单人副本结果
 	LOGIC_MSG_L2C_SINGLE_COMBAT_RESULT		= 59108; // 单人副本结果
 	LOGIC_MSG_L2C_SINGLE_STAGE_UPD			= 59109; // 单人副本关卡更新
+	LOGIC_MSG_C2L_SINGLE_REWARD				= 59110; // 单人副上周结算奖励
+	LOGIC_MSG_L2C_SINGLE_REWARD				= 59111; // 单人副上周结算奖励
 
 	// 约会588--
 	LOGIC_MSG_L2C_ENGAGEMENT_UPD 			= 58801; // 约会更新
@@ -147,6 +149,9 @@ enum LogicMsgID {
 
 	LOGIC_MSG_C2L_FISHING_SUCCESS			= 58715; // 钓鱼成功
 	LOGIC_MSG_L2C_FISHING_SUCCESS			= 58716; // 成功返回
+	
+	LOGIC_MSG_C2L_RANDOM_FISHING_RESULT		= 58719; // 随机钓鱼结果（用于连续钓鱼类型）
+	LOGIC_MSG_L2C_RANDOM_FISHING_RESULT		= 58720; // 随机钓鱼结果（所有钓鱼类型）
 
 	// 百科585--
 	LOGIC_MSG_C2L_ENCYCLOPEDIA_INIT			= 58501; // 百科初始化
@@ -183,7 +188,10 @@ enum LogicMsgID {
 	
 	LOGIC_MSG_C2L_RECHARGE_GET_SUM_AWARD	= 58111; // 领取累充奖励(活动ID为0，为总累充奖励)
 	LOGIC_MSG_L2C_RECHARGE_GET_SUM_AWARD	= 58112;
-
+	
+	LOGIC_MSG_C2L_IOS_RECHARGE		= 58115; // 充值订单号生成
+	LOGIC_MSG_L2C_IOS_RECHARGE_REP 	= 58116; // 回复
+	LOGIC_MSG_C2L_IOS_RECHARGE_DEL 	= 58117; // 删除订单结果
 	// 换装小游戏579--
 	LOGIC_MSG_C2L_MINIGAME_CLOTHCHANGING_STAR		= 57901; // 换装
 	LOGIC_MSG_L2C_MINIGAME_CLOTHCHANGING_SUCCESS	= 57902; // 换装成功
@@ -193,10 +201,15 @@ enum LogicMsgID {
 	LOGIC_MSG_L2C_STAGE_BRANCHMODEL		= 57802;
 
 	// 商城577--
-	LOGIC_MSG_C2L_STORE_INIT 		= 57701; // 初始化
+	LOGIC_MSG_C2L_STORE_INIT 		= 57701; // 初始化商城
 	LOGIC_MSG_L2C_STORE_INIT 		= 57702; // 
-	LOGIC_MSG_C2L_STORE_BUY			= 57703; // 購買
-	LOGIC_MSG_L2C_STORE_UPD			= 57704; // 購買更新
+	LOGIC_MSG_L2C_STORE_UPD			= 57703; // 商城更新
+	
+	LOGIC_MSG_C2L_STORE_BUY			= 57704; // 商城购买（游戏资源购买）
+	LOGIC_MSG_L2C_STORE_BUY			= 57705; // 
+	
+	LOGIC_MSG_L2C_STORE_GOODS_UPD		= 57706; // 商品更新
+	LOGIC_MSG_L2C_STORE_PACKAGE_UPD		= 57707; // 礼包更新
 
 	// 新手引導576--
 	LOGIC_MSG_C2L_GUIDE_INIT		= 57601; // 初始化
@@ -239,6 +252,11 @@ enum LogicMsgID {
 	
 	LOGIC_MSG_C2L_OPTIONS_MODIFY	= 56805;	// 修改设置
 	LOGIC_MSG_L2C_OPTIONS_MODIFY	= 56806;
+	
+	LOGIC_MSG_C2L_OPTIONS_BUY	= 56808; // 购买头像、背景、头像框
+	LOGIC_MSG_L2C_OPTIONS_BUY	= 56809; // 
+	
+	LOGIC_MSG_C2L_OPTIONS_DIY_HEADIMG_UPD	= 56810; // 自定义头像变更
 	
 	// 抽卡566
 	LOGIC_MSG_C2L_LOTTERY_COST	= 56601;	// 抽卡
@@ -303,12 +321,130 @@ enum LogicMsgID {
 	
 	LOGIC_MSG_L2C_TIME_LIMIT_PACKAGE_UPD		= 55702;	// 限时礼包更新
 	
+	LOGIC_MSG_C2L_CHAPTER_PACKAGE_INIT			= 55704;	// 章节礼包初始化
+	LOGIC_MSG_L2C_CHAPTER_PACKAGE_INIT			= 55705;
+	LOGIC_MSG_C2L_VALUE_PACKAGE_BUY				= 55706;	// 用游戏资源购买限时、章节礼包
+	LOGIC_MSG_L2C_VALUE_PACKAGE_BUY				= 55707;	//
+	
 	// 绑定手机556
 	LOGIC_MSG_C2L_BIND_PHONE_SEND_MSG			= 55600; 	// 申请发送信息
 	LOGIC_MSG_L2C_BIND_PHONE_SEND_MSG			= 55601;
 	
 	LOGIC_MSG_C2L_BIND_PHONE_VERIFY				= 55602;	// 验证码验证
 	LOGIC_MSG_L2C_BIND_PHONE_VERIFY				= 55603;
+	
+	// 语音回顾555--
+	LOGIC_MSG_C2L_VOICE_REVIEW_INIT			= 55501; // 语音回顾初始化
+	LOGIC_MSG_L2C_VOICE_REVIEW_INIT			= 55502; // 
+	LOGIC_MSG_L2C_VOICE_REVIEW_UPD			= 55503; // 语音回顾更新
+	LOGIC_MSG_C2L_VOICE_REVIEW_READ			= 55504; // 语音回顾阅读
+	
+	// 演讲小游戏554
+	LOGIC_MSG_C2L_SPEECH_INIT				= 55400; // 演讲小游戏初始化
+	LOGIC_MSG_L2C_SPEECH_INIT				= 55401;
+	LOGIC_MSG_C2L_SPEECH_RESULT				= 55402; // 演讲小游戏结果
+	LOGIC_MSG_L2C_SPEECH_RESULT				= 55403; 
+	
+	// 扭蛋小游戏 553
+	LOGIC_MSG_C2L_GRAB_DOLL_START			= 55300; // 抓娃娃初始化
+	LOGIC_MSG_L2C_GRAB_DOLL_START			= 55301;
+	
+	LOGIC_MSG_C2L_GRAB_DOLL_RESULT 			= 55302; // 抓娃娃结果
+	LOGIC_MSG_L2C_GRAB_DOLL_RESULT			= 55304;
+	
+	LOGIC_MSG_C2L_BUY_GRAB_DOLL_TICKET  	= 55305; // 购买抓娃娃门票
+	LOGIC_MSG_L2C_BUY_GRAB_DOLL_TICKET 		= 55306;
+	
+	// 好友 552
+	LOGIC_MSG_C2L_FRIEND_INIT				= 55200; // 拉取好友信息
+	LOGIC_MSG_L2C_FRIEND_INIT				= 55201; 
+	
+	LOGIC_MSG_C2L_FRIEND_FIND				= 55202; // 查找好友
+	LOGIC_MSG_L2C_FRIEND_FIND				= 55203;
+	
+	LOGIC_MSG_C2L_FRIEND_ADD				= 55204; // 申请添加好友
+	LOGIC_MSG_L2C_FRIEND_ADD				= 55205;
+	
+	LOGIC_MSG_C2L_FRIEND_DELETE				= 55206; // 申请删除好友
+	LOGIC_MSG_L2C_FRIEND_DELETE				= 55207;
+	
+	LOGIC_MSG_C2L_FRIEND_THUMB				= 55208; // 点赞好友个人信息
+	LOGIC_MSG_L2C_FRIEND_THUMB				= 55209;
+	
+	LOGIC_MSG_C2L_FRIEND_REQ_PACKAGE		= 55210; // 申请领取好友活跃礼包
+	LOGIC_MSG_L2C_FRIEND_REQ_PACKAGE		= 55211;
+	
+	LOGIC_MSG_L2C_FRIEND_DATA_UPD			= 55212; // 好友数据更新
+	
+	LOGIC_MSG_C2L_FRIEND_PERSONAL_DATA_INIT = 55213; // 查看个人资料
+	LOGIC_MSG_L2C_FRIEND_PERSONAL_DATA_INIT = 55214;
+	
+	LOGIC_MSG_C2L_FRIEND_PERSONAL_DATA_MODIFY = 55215; // 修改个人资料
+	LOGIC_MSG_L2C_FRIEND_PERSONAL_DATA_MODIFY = 55216;
+	
+	LOGIC_MSG_C2L_FRIEND_OPT_APPLY			= 55217; // 操作好友申请
+	LOGIC_MSG_L2C_FRIEND_OPT_APPLY			= 55218;
+	
+	LOGIC_MSG_L2C_FRIEND_PERSONAL_DATA_UPD = 55219; // 个人资料更新
+	
+	LOGIC_MSG_L2C_FRIEND_APPLY_UPD			= 55220; // 新的好友申请
+	
+	LOGIC_MSG_L2C_FRIEND_DEL_UPD 			= 55221; // 删除好友更新
+	
+	LOGIC_MSG_L2C_FRIEND_THUMB_UPD			= 55222; // 有人给点赞
+	
+	LOGIC_MSG_L2L_FRIEND_RELATION_UPD 		= 55223; // 新的好友申请(服务器内部)
+	
+	LOGIC_MSG_C2L_FRIEND_THUMB_PACKAGE_REQ 	= 55224; // 好友点赞礼包
+	LOGIC_MSG_L2C_FRIEND_THUMB_PACKAGE_REQ 	= 55225;
+	
+	LOGIC_MSG_L2C_FRIEND_RELATION_UPD		= 55227; // 新的好友关系
+	
+	// 随机关卡551
+	LOGIC_MSG_C2L_RANDOM_STAGE_INIT			= 55101; // 随机关卡初始化
+	LOGIC_MSG_L2C_RANDOM_STAGE_INIT			= 55102; //
+	LOGIC_MSG_L2C_RANDOM_STAGE_UPD			= 55103; // 随机关卡更新内容
+	
+	LOGIC_MSG_C2L_RANDOM_STAGE_PROGRESS		= 55105; // 随机关卡更新（暂时只有战斗）
+	
+	// 称号 550
+	LOGIC_MSG_C2L_TITLE_INIT				= 55001; // 称号初始化
+	LOGIC_MSG_L2C_TITLE_INIT				= 55002;
+	
+	LOGIC_MSG_C2L_CHANGE_TITLE				= 55003; // 改变称号
+	LOGIC_MSG_L2C_CHANGE_TITLE				= 55004;
+	
+	LOGIC_MSG_L2C_UNLOCK_TITLE_UPD			= 55005; // 新称号解锁
+	
+	// 分享 549
+	LOGIC_MSG_C2L_SHARE_INIT				= 54901; // 分享初始化
+	LOGIC_MSG_L2C_SHARE_INIT				= 54902;
+	LOGIC_MSG_L2C_SHARE_UPD					= 54903;
+	
+	LOGIC_MSG_C2L_SHARE_REWARD				= 54905; // 领奖
+	LOGIC_MSG_L2C_SHARE_REWARD				= 54906; // 
+	
+	// 徽章 548
+	LOGIC_MSG_C2L_BADGE_INIT				= 54801; // 徽章初始化
+	LOGIC_MSG_L2C_BADGE_INIT				= 54802;
+	LOGIC_MSG_L2C_BADGE_UPD					= 54803; // 徽章更新（新增）
+	
+	LOGIC_MSG_C2L_BADGE_CHANGED				= 54805; // 调整展示徽章
+	LOGIC_MSG_L2C_BADGE_CHANGED				= 54806; //
+	
+	// 声望 547
+	LOGIC_MSG_C2L_REPUTATION_INIT 			= 54701; // 周奖励init, 若没有发放奖励则发放奖励
+	LOGIC_MSG_L2C_REPUTATION_INIT			= 54702;
+	
+	LOGIC_MSG_C2L_REPUTATION_ACTIVITY_INIT 	= 54703; // 活动id初始化
+	LOGIC_MSG_L2C_REPUTATION_ACTIVITY_INIT	= 54704;
+	
+	LOGIC_MSG_L2C_REPUTATION_ACTIVITY_UPD	= 54705;
+	
+	//CG
+	LOGIC_MSG_C2L_UNLOCK_CG_INIT			= 54601; // 请求已解锁的CG列表
+	LOGIC_MSG_L2C_UNLOCK_CG_REP				= 54602; // 发送已解锁的CG
+	LOGIC_MSG_L2C_UNLOCK_CG_UPD				= 54603; // 更新已解锁的CG
 }
 
 // 错误返回--------------------------------------------------------------------------------------------------------------
@@ -376,6 +512,12 @@ message MutexNode
 	repeated int32 nodes	= 3;	// 节点IDs
 }
 
+// 随机关卡索引定位
+message RandomStageIndex
+{
+	int32	stage_id		= 1; // 随机关卡ID
+	int64	create_time		= 2; // 随机关卡生成时间
+}
 // --------------------------------------------------------------------------------------------------------------游戏通用数据类型
 
 // 登录--------------------------------------------------------------------------------------------------------------
@@ -459,6 +601,7 @@ message l2c_initialize {
 	int32 vitality		= 5;	// 体力
 	int32 diamond		= 6;	// 钻石
 	int32 free_diamond	= 7;	// 免费钻石
+	int32 cool_down		= 8;	// 体力剩余倒计时(单位:s)
 
 	message NationReputation {
 		int32 id		= 1; // 国家ID
@@ -576,6 +719,7 @@ message l2c_upd_player {
 	int32 free_diamond	= 7;	// 免费钻石
 	int32 maxnomal		= 8;	// 普通章节最大通关ID
 	int32 maxdiffcult	= 9;	// 困难章节最大通关ID
+	int32 cool_down		= 10;	// 体力剩余倒计时(单位:s)
 }
 
 // 角色数据更新与新加
@@ -653,6 +797,16 @@ message CombatInfo {
 	repeated int32		phalanx			= 5;	// 战斗阵容(胜利有效)
 }
 
+// 关卡锁定信息
+message StoryLockInfo {
+	message TriggerInfo {
+		int32			trigger_type	= 1; // 触发器类型
+		repeated int32	trigger_param	= 2; // 触发器参数
+	}
+	
+	repeated TriggerInfo	trigger_infos	= 1; // 未完成的触发器
+}
+
 // 主线故事更新
 message l2c_story_upd {
 	int32				stage_id			= 1;	// 关卡ID
@@ -667,6 +821,7 @@ message l2c_story_upd {
 	repeated int32		nodes				= 12;	// 剧情节点
 
 	CombatInfo			combate_result		= 14;	// 战斗信息
+	repeated StoryLockInfo	lock_infos		= 15;	// 关卡锁定信息(LOCK状态使用)
 }
 
 // 章节数据
@@ -712,6 +867,7 @@ enum StageStartResult
 // 主线关卡开始
 message c2l_story_start {
 	int32				stage_id		= 1;	// 关卡ID
+	RandomStageIndex	random_info		= 2;	// 随机关卡信息
 }
 
 message l2c_story_start {
@@ -727,6 +883,8 @@ message c2l_story_result {
 	int32				finshed_count	= 3;	// 节点完成数量（剧情发）
 	repeated int32		nodes			= 4;	// 剧情节点（剧情发）
 	repeated MutexNode	mutex_nodes		= 5;	// 互斥节点集合（剧情发）
+	
+	RandomStageIndex	random_info		= 7;	// 随机关卡信息（随机战斗发）
 
 	CombatInfo			combate_result		= 14;	// 战斗信息（战斗发）
 	int32 				settlement			= 15;	// 結算 1、戰鬥 2.劇情（都发）
@@ -947,7 +1105,7 @@ message DailyStageInfo
 message StageInfo
 {
 	int32 id 	  = 1;				// 关卡id
-	int32 state = 2;				// 状态 0:新的 1:已打过 2：等级不足
+	int32 state = 2;				// 状态 0:新的 1:已打过
 	repeated int32 starnum = 3;		// 星级
 }
 
@@ -977,7 +1135,7 @@ message l2c_daily_upd
 {
 	int32 type = 1;                     //类型
 	int32 daily_id 	  = 2;				//关卡id
-	int32 state = 3;					// 状态 0:等级不足 1:已打过 2：新的
+	int32 state = 3;					// 状态 0:新的 1:已打过
 	int32 nCombatlimit = 4;				// 次数（作废）
 	repeated int32 stars = 5;			// 星级
 }
@@ -1035,36 +1193,47 @@ message c2l_upd_phalanx {
 // ------------------------------------------------------------------------------------------------------------阵容操作
 
 // 单人副本------------------------------------------------------------------------------------------------------------
+message SingleStageInfo {
+		int32				role			= 1; // 角色id[2-8]
+		int32				stage_idx		= 2; // 关卡idx[1-10]
+		bool				is_finish		= 3; // 关卡状态
+		int32				stage_id		= 4; // id
+	
+		int32 cfg_round					= 11;
+		int32 cfg_attype				= 12;
+		string cfg_npcset				= 13;
+		string cfg_special_buff			= 14;
+		string cfg_npc_display			= 15;
+		string cfg_win_condition		= 16;
+		int32 cfg_special_text			= 17;
+		string cfg_fail_condition		= 18;
+		string cfg_bgm_change_condition = 19;
+}
 
-enum SingleStageStatus {
-	SINGLE_STAGE_STATUS_NULL		= 0; // 空(可用)
-	SINGLE_STAGE_STATUS_WIN			= 1; // 可领奖
-	SINGLE_STAGE_STATUS_COMPLETE	= 2; // 完成(不能操作)
+// 上周通关奖励信息
+message SingleStageLastAward {
+	int32					role_id			= 1; // 角色ID
+	repeated PTGameElement	awards			= 2; // 奖励
+	int32					last_stage_id	= 3; // 上周关卡ID
+	bool					is_award		= 4; // 是否可以领奖
 }
 
 // 单人副本初始化
 message c2l_single_combat_init {
 }
-message l2c_single_combat_init {
 
-	int32 role			= 1; // 角色id
-	string buff_str		= 2; // 角色buff
-	
-	message SingleStageInfo {
-		int32				role			= 1; // 角色id[2-8]
-		int32				stage_idx		= 2; // 关卡idx[1-10]
-		SingleStageStatus	state			= 3; // 关卡状态
-		int32				stage_id		= 4; // id
-	
-		int32 cfg_round				= 11;
-		int32 cfg_attype			= 12;
-		string cfg_npcset			= 13;
-		string cfg_special_buff		= 14;
-		string cfg_npc_display		= 15;
-		int32 cfg_win_condition		= 16;
-		int32 cfg_special_text		= 17;
+message l2c_single_combat_init {
+	message SingleRoleInfo {
+		int32			role_id			= 1; // 角色ID
+		repeated int32	buff_equip_id	= 2; // buff装备列表
+		int32			max_stage_idx	= 3; // 最大通关层数
+		SingleStageInfo	stage_info		= 4; // 下一个关卡信息(包括配置)
+		bool			is_choose		= 5; // 是否选定
 	}
-	repeated SingleStageInfo stage_info = 4;				// 关卡信息(包括配置)
+	
+	repeated SingleRoleInfo 		role_info	= 1; // 角色信息
+	repeated SingleStageLastAward	last_reward	= 2; // 上周通关奖励
+	int32							remain_secs = 3; // 副本剩余秒数
 }
 
 // 单人副本开始
@@ -1082,15 +1251,26 @@ message c2l_single_combat_result {
 	bool result						= 2; // true:赢 false:输
 }
 message l2c_single_combat_result {
-	int32 stage_id									= 1; // 关卡id
-	repeated PTGameElement		reward				= 2; // 奖励
-	int32 result									= 3; // 0:结算失败 1:结算成功 2:结算超时
+	int32 stage_id						= 1; // 关卡id
+	repeated PTGameElement	reward		= 2; // 奖励
 }
 
 // 单人副本更新
 message l2c_single_stage_upd {
-	int32				stage_id		= 1; // id
-	SingleStageStatus	state			= 2; // 关卡状态
+	int32				stage_id		= 1; // 完成关卡id
+	bool				is_finish		= 2; // 完成状态
+	
+	SingleStageInfo		stage_info		= 3; // 新的当前关卡信息(包括配置)
+}
+
+// 领取上周结算奖励
+message c2l_single_reward {
+	repeated int32 role_id	= 1; // 领取的角色ID
+}
+
+message l2c_single_reward {
+	repeated PTGameElement			awards		= 1; // 领取的奖励
+	repeated SingleStageLastAward	last_reward	= 2; // 上周通关奖励
 }
 
 // ------------------------------------------------------------------------------------------------------------单人副本
@@ -1198,7 +1378,10 @@ message c2l_upd_fishing_equipments {
 }
 
 message c2l_start_fishing {
-	int32 fishing_space		= 1; // 渔场ID
+	int32 fishing_space	= 1; // 渔场ID
+	
+	RandomStageIndex 	random_info		= 2; // 随机钓鱼关卡索引
+	bool				is_random_init	= 3; // 随机钓鱼关卡是否初始化
 }
 
 message l2c_start_fishing {
@@ -1206,10 +1389,13 @@ message l2c_start_fishing {
 	bool result				= 2; // 结果(true:可用 false:不可用)
 	int32 fish_id			= 3; // 鱼ID
 	int32 favor				= 4; // 好感度奖励
+	
+	int64				remain_secs	= 6; //剩余秒数（随机钓鱼类型为1时用）
 }
 
 message c2l_fishing_success {
 	int32 fishing_space		= 1; // 渔场ID
+	RandomStageIndex	random_info = 2; // 随机钓鱼关卡索引
 }
 
 message l2c_fishing_success {
@@ -1218,6 +1404,19 @@ message l2c_fishing_success {
 	int32 fish_size			= 3; // 鱼大小
 
 	repeated PTGameElement rewards = 4;		// 奖励
+	
+	int32	process			= 6; // 随机钓鱼委托完成数量
+	int64	remain_secs 	= 7; // 剩余秒数（随机钓鱼类型为1时用）
+}
+
+message c2l_random_fishing_result {
+	RandomStageIndex	random_info = 1; // 随机钓鱼关卡索引
+	bool				result		= 2; // 钓鱼是否成功
+}
+
+message l2c_random_fishing_result {
+	bool					result	= 1; // 流程更新结果
+	repeated PTGameElement	rewards	= 2; // 结算奖励
 }
 
 // ---------------------------------------------------------------------------------------------------------------钓鱼
@@ -1239,7 +1438,7 @@ message l2c_encyclopedia_upd {
 }
 
 message c2l_encyclopedia_read {
-	int32 read_node			= 1; // 新节点
+	repeated int32 read_node			= 1; // 新节点
 }
 
 // -------------------------------------------------------------------------------------------------------------- 百科
@@ -1392,17 +1591,39 @@ message l2c_recharge_get_sum_award {
 	repeated PTGameElement 	awards 	= 2; // 奖励元素
 }
 
+message c2l_ios_recharge {
+	string 	recharge_order_no		= 1;	// 充值订单号(充值凭据)
+	int32 	commodity_id			= 2;	// 商品id
+	int32 	price					= 3;	// 商品价格
+}
+
+enum IOSRechargeResult {
+	RECHARGE_SUCCESS 		= 0; 	// 成功
+	RECHARGE_SEND_GOODS 	= 1; 	// 已发货
+}
+
+message l2c_ios_recharge_rep {
+	string 						recharge_order_no		= 1;	// 充值订单号(充值凭据)
+	IOSRechargeResult			recharge_result			= 2;	// 充值结果(0充值成功&删除订单)
+	repeated	PTGameElement 	eles 					= 3;	// 购买得到的元素
+}
+
+message c2l_ios_recharge_del {
+	string 	recharge_order_no		= 1;	// 充值订单号(充值凭据)
+}
 //  -------------------------------------------------------------------------------------------------------充值
 
 // 换装小游戏 -------------------------------------------------------------------------------------------------------
 
 message c2l_minigame_cloth_star {
 	uint32 id = 1;		// 关卡ID
-	uint32 level = 2;	// 档次
+	uint32 level = 2;	// 档次(废弃)
+	repeated int32 cloth_id = 3; // 每个部位装备id
 }
 
 message l2c_send_minigame_cloth_success{
 	repeated PTGameElement rewards = 1;
+	uint32 star = 2; // 分数
 }
 // ------------------------------------------------------------------------------------------------------- 换装小游戏
 
@@ -1417,8 +1638,8 @@ message BranchmodelDailyRaid
 
 message BranchmodelSingleRaid
 {
-	int32 maxtimes = 1;			// 最大角色數量
-	int32 remainingtimes = 2;		// 完成角色數量
+	int32 choosed_num		= 1;		// 已选择人数
+	int32 max_num			= 2;		// 可选择人数
 }
 
 message c2l_stage_branchmodel
@@ -1439,31 +1660,60 @@ message l2c_stage_branchmodel
 // 商城-----------------------------------------------------------------------------------------------------
 message StoreGoods
 {
-	int32 id = 1;			// 商品id
-	int32 count = 2;		// 剩餘次數
+	int32 good_id	= 1;	// 补给站商品id
+	int32 count		= 2;	// 剩余次数
+}
+
+message StorePackages
+{
+	int32	package_id		= 1; // 礼包ID
+	int32	remain_cnts		= 2; // 剩余可购买次数（不限制次数，不用此字段）
+	int32	refresh_secs	= 3; // 下次刷新剩余秒数（没有刷新需求，不用此字段）
 }
 
 message c2l_store_init
 {
-	
-}
-
-message l2c_store_init
-{
-	repeated StoreGoods goods = 1;		// 商品信息
-	int32 remaintimes = 2;				// 剩餘時間
-}
-
-message c2l_store_buy
-{
-	int32 id = 1;		// 商品id
-	int32 num = 2;		// 商品數量
+	repeated int32 store_ids = 1;	// 请求的商店ID
 }
 
 message l2c_store_upd
 {
-	StoreGoods goods = 1;	 // 商品信息
+	int32					store_id	= 1;	// 商店ID
+	int32					remaintimes	= 2;	// 剩余时间
+	
+	repeated StoreGoods		goods		= 3;	// 商品信息（商店类型为商品时，用此字段）
+	repeated StorePackages	packages	= 4;	// 礼包信息（商店类型为礼包时，用此字段）
 }
+
+message l2c_store_init
+{
+	repeated l2c_store_upd	infos	= 1;	// 信息
+}
+
+message c2l_store_buy
+{
+	int32 store_id		= 1;	// 商店ID
+	int32 content_id	= 2;	// 商品ID或礼包ID
+	int32 num			= 3;	// 商品數量
+}
+
+message l2c_store_buy
+{
+	bool	result		= 1; // 购买结果
+}
+
+message l2c_store_goods_upd
+{
+	int32			store_id	= 1;	// 商店ID
+	StoreGoods		goods		= 2;	// 商品信息
+}
+
+message l2c_store_package_upd
+{
+	int32			store_id	= 1;	// 商店ID
+	StorePackages	package		= 2;	// 礼包信息
+}
+
 //----------------------------------------------------------------------------------------------------------商城
 
 //新手引導-----------------------------------------------------------------------------------------------------
@@ -1503,6 +1753,8 @@ message MailInfo
 	bool     is_hold = 9;                    // 邮件领取状态（邮件可能阅读不领）
 	bool     read_delete = 10;               // 邮件阅读领取后是否自动删除
 	repeated PTGameElement attachment = 11 ; // 邮件附件
+	bool     is_collect = 12; 				 // 邮件收藏状态
+	int32	 counter_tick = 13;				 // 剩余时间倒计时
 }
 
 message c2l_mail_init
@@ -1521,10 +1773,12 @@ message l2c_mail_init
 // 邮件操作类型
 enum MailOptType
 {
-	MAIL_OPT_NULL     = 0; // 默认空操作
-	MAIL_OPT_READ_ONE = 1; // 只读单封邮件
-	MAIL_OPT_HOLD_ONE = 2; // 领取单封邮件
-	MAIL_OPT_HOLD_ALL = 3; // 一键领取
+	MAIL_OPT_NULL     	= 0; 	// 默认空操作
+	MAIL_OPT_READ_ONE 	= 1; 	// 只读单封邮件
+	MAIL_OPT_HOLD_ONE 	= 2; 	// 领取单封邮件
+	MAIL_OPT_HOLD_ALL 	= 3; 	// 一键领取
+	MAIL_OPT_COLLECT  	= 4; 	// 收藏
+	MAIL_OPT_UNCOLLECT	= 5; 	// 取消收藏
 };
 
 message c2l_mail_read
@@ -1565,10 +1819,7 @@ message c2l_notice_init
 }
 
 message l2c_notice_init
-{
-	int32 total_page = 1; // 总页数(>=0)
-	int32 page_num   = 2; // 页号(从0开始第一页)
-	
+{	
 	NoticeInfo notices = 3;
 }
 
@@ -1581,6 +1832,14 @@ message l2c_notice_send
 //探索--------------------------------------------------------------------------------------------------------------------
 message ExplorationInfo
 {
+	message ExplorationElement
+	{
+		GameElementType			eType		= 1;		// 类型
+		int32					nID			= 2;		// ID
+		int32					nCount		= 3;		// 原始数量
+		int32					nExtraCount	= 4;		// 额外追加数量
+	}
+
 	int32 index			= 1;     // 探索栏号（从0开始，用于Client排序）
 	int32 mission_id	= 2;     // 任务ID
 	int32 character_id	= 3;     // 任务执行男主ID
@@ -1597,8 +1856,8 @@ message ExplorationInfo
 		
 		int32 remain_secs	= 4; // 剩余秒数（单位:s）
 		int64 end_time      = 5; // 结束时间戳
-		repeated PTGameElement items    = 6; // 常规掉落物品
-		repeated PTGameElement speicals = 7; // 特殊掉落物品
+		repeated ExplorationElement items		= 6; // 常规掉落物品
+		repeated ExplorationElement speicals	= 7; // 特殊掉落物品
 	}
 	repeated ChildInfo children	= 8; // 子探索任务
 	repeated int32 skill_cards	= 9; // 放置的技能卡牌（最多6个）
@@ -1672,10 +1931,14 @@ message l2c_sevenlogin_reward
 message l2c_options_upd {
 	repeated int32 own_head_frame 	= 1; // 拥有的所有头像框
 	repeated int32 own_background	= 2; // 拥有的所有背景
+	repeated int32 own_head_image	= 3; // 拥有的所有头像
 	
 	bool	is_first_rename	= 4;	// 是否使用第一次改名
-	int32	cur_head_frame	= 5;	// 当前使用的头像
-	int32	cur_background	= 6;	// 当前使用的背景
+	int32	cur_head_frame	= 5;	// 当前使用的头像框
+	int32	cur_head_image	= 6;	// 当前使用的头像
+	int32	cur_background	= 7;	// 当前使用的背景
+	string 	phone_num		= 8;	// 当前绑定手机
+	bool	reward			= 9; 	// 是否已领奖
 }
 
 message c2l_options_init {
@@ -1693,6 +1956,7 @@ enum OptionsType
 	OPTIONS_NAME		= 1; // 修改昵称(Value传新昵称)
 	OPTIONS_HEAD_FRAME	= 2; // 修改头像框(Value传ID)
 	OPTIONS_BACKGROUND	= 3; // 修改背景(Value传ID)
+	OPTIONS_HEAD_IMAGE	= 4; // 修改头像(Value传ID)
 };
 
 message c2l_options_modify {
@@ -1702,6 +1966,19 @@ message c2l_options_modify {
 
 message l2c_options_modify {
 	bool	is_result = 1;	// 设置结果（由于屏蔽字原因，不走60000）
+}
+
+message c2l_options_buy {
+	OptionsType type 	= 1; // 类型
+	int32		id		= 2; // 购买的ID
+} 
+
+message l2c_options_buy {
+	bool	is_result = 1;	// 结果
+}
+
+message c2l_options_diy_headimg_upd {
+	
 }
 
 //------------------------------------------------------------------------------------------------------------个性化设置
@@ -1848,8 +2125,10 @@ message l2c_achievement_stage_upd
 
 enum DailyTaskStatus
 {
-	TASK_STATUS_OPEN = 0;								// 未完成
-	TASK_STATUS_END	 = 1;								// 已完成	
+	TASK_STATUS_LOCK	= 0;								// 未解锁
+	TASK_STATUS_OPEN	= 1;								// 未完成
+	TASK_STATUS_UNAWARD	= 2;								// 完成但未领奖
+	TASK_STATUS_END		= 3;								// 任务结束	
 }
 
 message c2l_daily_task_init
@@ -1862,6 +2141,9 @@ message l2c_daily_task_init
 	int32 page_num		= 2; 							// 当前页数[0,n]
 	
 	repeated l2c_daily_task_upd task = 3;
+	
+	int32 active_num 	= 4; 							// 当前活跃值
+	int32 trigger_active_num = 5; 						// 多少活跃值会触发活跃 
 }
 
 message c2l_daily_task_get_reward
@@ -1873,6 +2155,7 @@ message l2c_daily_task_get_reward
 {
 	int32 task_id 							= 1;
 	repeated PTGameElement		rewards		= 2;		// 奖励
+	int32 active_num = 3; // 当前活跃值
 }
 
 message l2c_daily_task_upd
@@ -2004,6 +2287,28 @@ message l2c_time_limit_package_upd
 	int32 					package_id  = 3; //礼包ID
 }
 
+message c2l_chapter_package_init
+{
+	
+}
+
+message l2c_chapter_package_init
+{
+	repeated l2c_time_limit_package_init infos = 1;	// 章节礼包
+}
+
+message c2l_value_package_buy
+{
+	int32	id				= 1; // 购买的ID
+	int32	package_type	= 2; // 礼包类型（1限时礼包  2章节礼包）			
+}
+
+message l2c_value_package_buy
+{
+	bool					result		= 1; // 购买结果
+	repeated PTGameElement	reweards	= 2; // 礼包内容
+}
+
 // ------------------------------------------------------------------------------------------------- 限时礼包
 	
 // 绑定手机 --------------------------------------------------------------------------------------------------
@@ -2040,6 +2345,593 @@ message l2c_bind_phone_verify
 {
 	bool 					success_flag		= 1; 	// 成功 -1 失败 -0
 	int32					err_code			= 2;	// 失败返回码
+	repeated PTGameElement 	awards 				= 3; // 奖励元素
 }
 
 // -------------------------------------------------------------------------------------------------- 绑定手机
+
+// 语音回顾-------------------------------------------------------------------------------------------------
+
+message c2l_voice_review_init {
+
+}
+
+message l2c_voice_review_init {
+	int32 total_page		= 1; // 总页数
+	int32 page_num			= 2; // 当前页号
+	repeated int32 values	= 3; // 节点ID(每页最多100条)
+	repeated int32 read_values = 4; // 已读节点ID(每页最多100条)
+}
+
+message l2c_voice_review_upd {
+	int32 new_node			= 1; // 新节点
+}
+
+message c2l_voice_review_read {
+	int32 read_node			= 1; // 新节点
+}
+
+// ------------------------------------------------------------------------------------------------- 语音回顾
+
+
+
+// 演讲小游戏 -----------------------------------------------------------------------------------------------
+
+// LOGIC_MSG_C2L_SPEECH_INIT
+message c2l_speech_init
+{
+}
+
+message l2c_speech_init
+{
+	int32 speech_count	 = 1; // 历史参与演讲小游戏次数
+}
+
+
+// LOGIC_MSG_C2L_SPEECH_RESULT	
+message c2l_speech_result
+{
+	int32 speech_id 	 		= 1; 	// 演讲小游戏ID
+	repeated int32 	cloth_ids 	= 2; 	// 关联换装小游戏所穿的衣服
+	repeated int32 options 		= 3;	// 选项(如果是QTE的话, 则为得分)
+}
+
+message l2c_speech_result
+{
+	int32 score = 1;
+	repeated PTGameElement awards = 2;	
+	bool all_best_tag = 3; // 有全部正向标签 - true
+	bool have_worst_tag = 4; // 有一个负向标签 - true
+}
+	
+	
+// ------------------------------------------------------------------------------------------------演讲小游戏
+
+// 抓娃娃小游戏 -----------------------------------------------------------------------------------------------
+message Doll
+{
+	GameElementType type = 1; // 资源类型
+	int32 id = 2;	// 资源的物品id
+	int32 count = 3; // 数目
+	int32 index = 4; // 服务器用, 球的编号 对应表中的id 可能重复
+	int32 doll_id = 5; // 客户端用 球的编号 唯一数字
+}
+
+// LOGIC_MSG_C2L_GRAB_DOLL_START
+message c2l_grab_doll_start
+{	
+	int32 machine_id = 1; // 娃娃机id
+}
+// LOGIC_MSG_L2C_GRAB_DOLL_START
+message l2c_grab_doll_start
+{
+	int32		remain_time = 1; // 剩余时间
+	repeated Doll success_doll_id = 2; // 能成功抓取的娃娃id
+	repeated Doll show_doll_id = 3; // 演示的娃娃id（不会被抓取到）
+}
+// LOGIC_MSG_C2L_GRAB_DOLL_RESULT
+message c2l_grab_doll_result
+{
+	repeated Doll grabbed_doll_id = 1; // 被成功抓取的娃娃id
+	int32 machine_id = 2; // 娃娃机id
+}
+// LOGIC_MSG_L2C_GRAB_DOLL_RESULT
+message l2c_grab_doll_result
+{
+	repeated PTGameElement awards = 1; 
+}
+
+// LOGIC_MSG_C2L_BUY_GRAB_DOLL_TICKET 购买抓娃娃门票
+message c2l_buy_grab_doll_ticket
+{
+}
+
+// LOGIC_MSG_L2C_BUY_GRAB_DOLL_TICKET
+message l2c_buy_grab_doll_ticket
+{
+	repeated PTGameElement awards = 1; 
+}
+
+
+// ------------------------------------------------------------------------------------------------抓娃娃小游戏
+
+// 头像系统---------------------------------------------------------------------------------------------------- TODO
+
+message ProfileMsgData // TODO
+{
+}
+
+// -----------------------------------------------------------------------------------------------------头像系统
+
+// 徽章系统---------------------------------------------------------------------------------------------------- TODO
+
+message BadgeMsgData // TODO
+{
+}
+
+// -----------------------------------------------------------------------------------------------------徽章系统
+
+// 好友系统 ---------------------------------------------------------------------------------------------------
+
+message FriendRelationMsgData
+{
+	int64 add_relation_time	= 1; // 建立关系时间
+	bool today_thumb		= 2; // 当天是否已点赞
+	bool recv_active_package = 3; // true-当天已领取过该好友的活跃礼包 false-当前未领取
+	FriendMsgData data 		= 4;
+}
+
+message FriendMsgData
+{
+	uint32 account_id 	= 1; // ID
+	string name			= 2; // 名字冲突
+	int32 level			= 3; // 等级
+	string signature	= 5; // 个性签名
+	int32 profile = 6; // 头像
+	repeated int32 own_badge		= 7; // 拥有的徽章
+	repeated int32 show_badge		= 8; // 展示的徽章
+	int32 achievement_level			= 9; // 成就等级
+	int32 fish_level				= 10; // 钓鱼等级
+	int64 last_online_time 			= 11; // 离线时 上次在线时间 
+	bool today_active				= 12; // 当天是否活跃 true-活跃 false-不活跃
+	string background				= 14; // 背景图
+	int32 thumb_num					= 15; // 好友点赞数目
+	int32 profile_circle			= 17; // 头像框
+	bool is_online 					= 19; // 当前是否在线
+	int32 title_prefix				= 20; // 称号前缀
+	int32 title_midfix				= 21; // 称号中缀
+	int32 title_postfix 			= 22; // 称号后缀
+}
+
+enum FriendRetType
+{
+	ENM_ADD_FRIEND_SUCCESS = 0; // 添加好友成功
+	ENM_ADD_FRIEND_ERR_FULL = 2; // 好友列表已满
+	ENM_ADD_FRIEND_ERR_ANOTHER_FULL = 3; // 对方好友列表已满
+	ENM_ADD_FRIEND_ERR_NOT_FIND = 4; // 未找到该玩家
+	ENM_ADD_FRIEND_ERR_YET_FRIEND = 5; // 对方已经是好友了
+	ENM_ADD_FRIEND_ERR_TARGET_APPLY_FULL = 6;
+	ENM_ADD_FRIEND_ERR_TARGET_WRONG = 7; // 目标错误
+	
+	ENM_DEL_FRIEND_SUCCESS = 10; // 删除好友成功
+	ENM_DEL_FRIEND_ERR_NOT_FRIEND = 11; // 对方不是您的好友
+	ENM_DEL_FRIEND_ERR_UP_LIMIT = 12; // 删除好友至上限
+	
+	ENM_THUMB_FRIEND_SUCCESS = 20; // 点赞好友页面成功
+	ENM_THUMB_FRIEND_ERR_YET_THUMB = 21; // 今日已点赞过
+	ENM_THUMB_FRIEND_ERR_UP_LIMIT = 22; // 今日点赞上限
+	ENM_THUMB_FRIEND_ERR_NOT_FRIEND = 23; // 对方不是您的好友
+	
+	ENM_GIFT_FRIEND_SUCCESS = 30; // 领取好友活跃礼包成功
+	ENM_GIFT_FRIEND_ERR_NOT_FRIEND = 31; // 对方不是您的好友
+	ENM_GIFT_FRIEND_ERR_UP_LIMIT = 32; // 领取已达上限
+	ENM_GIFT_FRIEND_ERR_CAN_NOT_RECV = 33; // 没有可以领取的
+	
+	ENM_MODIFY_PERSONAL_DATA_SUCCESS = 40;
+	ENM_MODIFY_PERSONAL_DATA_ERR_SENSITIVE_WORD = 41; // 有敏感词
+	ENM_MODIFY_PERSONAL_DATA_ERR_NO_BACKGROUND = 42; // 不存在此背景图
+	ENM_MODIFY_PERSONAL_DATA_ERR_BADGE_NO_GAIN = 43; // 设置中有未获取的徽章
+	
+	ENM_APPLY_FRIEND_OPT_SUCCESS = 50;
+	ENM_APPLY_FRIEND_ERR_NO_THIS_APPLY = 51; // 申请列表中没有这个ID
+	ENM_APPLY_FRIEND_ERR_WRONG_OPT = 52; // 无效操作
+	ENM_APPLY_FRIEND_ERR_UP_LIMIT = 53; // 好友已达上限
+	ENM_APPLY_FRIEND_ERR_TARGET_UP_LIMIT = 54; // 对方好友已达上限
+	
+	ENM_REQ_FRIEND_THUMB_PACKAGE_SUCCESS = 70;
+	ENM_REQ_FRIEND_THUMB_NO_CAN_RECV = 71;
+	
+}
+
+enum FriendReqType
+{
+	ENM_FRIEND_REQ_TYPE_ALL = 0; // 所有好友
+	ENM_FRIEND_REQ_TYPE_SINGLE = 1; // 单个好友
+}
+
+enum FriendApplyOptType
+{
+	ENM_FRIEND_APPLY_OPT_AGREE = 0;
+	ENM_FRIEND_APPLY_OPT_IGNORE = 1;
+}
+
+// LOGIC_MSG_C2L_FRIEND_INIT				= 55200; // 拉取好友信息
+message c2l_friend_init
+{
+}
+
+// LOGIC_MSG_L2C_FRIEND_INIT				= 55201; 
+message l2c_friend_init
+{
+	int32 total_page	= 1; // 总页数(每页最多10个数据)
+	int32 page_num		= 2; // 当前页数[0,n]
+	
+	repeated FriendRelationMsgData friend_data = 3;
+	repeated FriendRelationMsgData apply_data = 4;
+	
+	int32 recv_gift_num = 5; // 今日已领取活跃礼包数目
+}
+
+// LOGIC_MSG_C2L_FRIEND_FIND				= 55202; // 查找好友
+message c2l_friend_find
+{
+	uint32 account_id = 1;
+}
+
+// LOGIC_MSG_L2C_FRIEND_FIND				= 55203;
+message l2c_friend_find
+{
+	FriendMsgData friend_data = 1;
+}
+	
+// LOGIC_MSG_C2L_FRIEND_ADD				= 55204; // 申请添加好友
+message c2l_friend_add
+{
+	uint32 account_id = 1;
+}
+
+// LOGIC_MSG_L2C_FRIEND_ADD				= 55205;
+message l2c_friend_add
+{
+	FriendRetType type = 1;
+}
+
+// LOGIC_MSG_C2L_FRIEND_DELETE				= 55206; // 申请删除好友
+message c2l_friend_delete
+{
+	uint32 account_id = 1;
+}
+
+// LOGIC_MSG_L2C_FRIEND_DELETE				= 55207;
+message l2c_friend_delete
+{
+	FriendRetType type = 1;
+}
+
+// LOGIC_MSG_C2L_FRIEND_THUMB				= 55208; // 点赞好友个人信息
+message c2l_friend_thumb
+{
+	uint32 account_id = 1;
+}
+
+// LOGIC_MSG_L2C_FRIEND_THUMB				= 55209;
+message l2c_friend_thumb
+{
+	FriendRetType type = 1;
+}
+
+// LOGIC_MSG_C2L_FRIEND_REQ_PACKAGE		= 55210; // 申请领取好友活跃礼包
+message c2l_friend_req_package
+{
+	FriendReqType type = 1;
+	uint32 account_id  = 2; // 若FriendReqType为ENM_FRIEND_REQ_TYPE_SINGLE, 需要填充此字段
+}
+// LOGIC_MSG_L2C_FRIEND_REQ_PACKAGE		= 55211;
+message l2c_friend_req_package
+{
+	FriendRetType type = 1;
+	repeated PTGameElement awards = 2; 
+	int32 recved_active_num = 3; // 以领取的活跃奖励数目
+}
+
+// LOGIC_MSG_L2C_FRIEND_DATA_UPD			= 55212; // 好友数据更新
+message l2c_friend_data_upd
+{
+	FriendMsgData friend_data = 1;
+}
+
+// LOGIC_MSG_C2L_FRIEND_PERSONAL_DATA_INIT = 55213; // 查看个人资料
+message c2l_friend_personal_data_init
+{
+}
+
+// LOGIC_MSG_L2C_FRIEND_PERSONAL_DATA_INIT = 55214;
+message l2c_friend_personal_data_init
+{
+	FriendMsgData data = 1;
+	int32 recved_thumb_num = 2; // 已领取的赞数奖励
+	int32 next_thumb_num = 3;	// 下一个赞数奖励(如果没有下一个, 返回最后一个赞数奖励)
+	int32 recved_active_num = 4; // 以领取的活跃奖励数目
+}
+
+// LOGIC_MSG_C2L_FRIEND_PERSONAL_DATA_MODIFY = 55215; // 修改个人资料
+message c2l_friend_personal_data_modify
+{
+	string signature	= 1; // 个性签名
+	repeated int32 show_badge		= 2; // 展示的徽章
+	string background				= 3; // 背景图
+}
+
+// LOGIC_MSG_L2C_FRIEND_PERSONAL_DATA_MODIFY = 55216;
+message l2c_friend_personal_data_modify
+{
+	FriendRetType type = 1;
+}
+
+// LOGIC_MSG_C2L_FRIEND_OPT_APPLY			= 55217; // 操作好友申请
+message c2l_friend_opt_apply
+{
+	FriendApplyOptType type = 1;
+	uint32 account_id = 2;
+}
+// LOGIC_MSG_L2C_FRIEND_OPT_APPLY			= 55218;
+message l2c_friend_opt_apply
+{
+	FriendRetType type = 1;
+}
+
+// LOGIC_MSG_L2C_FRIEND_PERSONAL_DATA_UPD
+message l2c_friend_personal_data_upd
+{
+	FriendMsgData data = 1;
+}
+
+// LOGIC_MSG_L2C_FRIEND_APPLY_UPD
+message l2c_friend_apply_upd
+{
+	FriendRelationMsgData data = 1;
+}
+
+// LOGIC_MSG_L2C_FRIEND_DEL_UPD 
+message l2c_friend_del_upd
+{
+	uint32 account_id = 1;
+}
+
+// LOGIC_MSG_L2C_FRIEND_THUMB_UPD
+message l2c_friend_thumb_upd
+{
+}
+
+// LOGIC_MSG_L2L_FRIEND_RELATION_UPD
+message l2l_friend_relation_upd
+{
+	string source_account = 1;
+	FriendMsgData data = 2;
+	int32 opt = 3; // 申请好友 同意好友 被点赞 删除
+	uint32 source_id = 4; // 仅删除操作用到
+}
+
+
+// LOGIC_MSG_C2L_FRIEND_THUMB_PACKAGE_REQ 	= 55224; // 好友点赞礼包
+message c2l_friend_thumb_package_req
+{
+}
+// LOGIC_MSG_L2C_FRIEND_THUMB_PACKAGE_REQ 	= 55225;
+message l2c_friend_thumb_package_req
+{
+	FriendRetType type = 1;
+	repeated PTGameElement awards = 2; 
+	int32 next_thumb_num = 3;
+}
+
+// LOGIC_MSG_L2C_FRIEND_RELATION_UPD
+message l2c_friend_relation_upd
+{
+	FriendRelationMsgData data = 1;
+}
+
+// ----------------------------------------------------------------------------------------------------好友系统
+
+// 随机关卡-------------------------------------------------------------------------------------------------	
+message RandomStageInfo {
+	int32	stage_type		= 1;	// 关卡类型（战斗、钓鱼小游戏）
+	int32	id				= 2;	// 关卡ID（stage_id）
+	bool	is_accept		= 3;	// 是否接受
+	
+	int64	create_time		= 5;	// 生成时间戳
+	int64	end_time		= 6;	// 结束时间戳
+	int32	cur_secs		= 7;	// 当前剩余秒数
+	
+	// 随机关卡参数
+	repeated int32	int_param		= 9;	// 整形参数（战斗：0:所在章节 1:所在位置	钓鱼：）
+	repeated string string_param	= 10;	// 字符参数（战斗：							钓鱼：）
+}
+
+message c2l_random_stage_init {
+
+}
+
+message l2c_random_stage_init {
+	repeated RandomStageInfo infos = 1;	// 所有随机关卡信息
+}
+
+enum RandomStageOptType
+{
+	RANDOM_STAGE_OPT_T_ADD	= 0;	// 添加
+	RANDOM_STAGE_OPT_T_DEL	= 1;	// 删除
+	RANDOM_STAGE_OPT_T_UPD	= 2;	// 更新
+}
+
+message l2c_random_stage_upd {
+	RandomStageOptType	opts	= 1;	// 操作类型
+	RandomStageInfo		info	= 2;	// 关卡信息
+}
+
+message c2l_random_stage_progress {
+	int32	stage_id		= 1;	// 关卡ID
+	int64	create_time		= 2;	// 生成时间戳
+}
+
+// ------------------------------------------------------------------------------------------------- 随机关卡
+
+// 称号 ------------------------------------------------------------------------------------------------
+
+enum TitleRetType
+{
+	TITLE_CHANGE_SUCCESS = 0;
+	TITLE_CHANGE_ERR_NO_PREFIX = 1;
+	TITLE_CHANGE_ERR_NO_POFIX = 2;
+	TITLE_CHANGE_ERR_NO_MIDFIX = 3;
+}
+
+// LOGIC_MSG_C2L_TITLE_INIT				= 55001; // 称号初始化
+message c2l_title_init
+{
+
+}
+
+// LOGIC_MSG_L2C_TITLE_INIT				= 55002;
+message l2c_title_init
+{
+	repeated int32 own_title_id = 1; // 已拥有的称号
+	int32 prefix = 2; 	// 现在装备的前缀
+	int32 midfix = 3; 	// 现在装备的中缀
+	int32 pofix = 4; 	// 现在装备的后缀
+}
+	
+// LOGIC_MSG_C2L_CHANGE_TITLE				= 55003; // 改变称号
+message c2l_change_title
+{
+	int32 prefix = 1; 	// 前缀
+	int32 midfix = 2; 	// 中缀
+	int32 pofix = 3; 	// 后缀
+}
+
+// LOGIC_MSG_L2C_CHANGE_TITLE				= 55004;
+message l2c_change_title
+{
+	TitleRetType ret = 1;
+}
+
+// LOGIC_MSG_L2C_UNLOCK_TITLE_UPD
+message l2c_unlock_title_upd
+{
+	int32 title_id = 1;
+}
+
+// ------------------------------------------------------------------------------------------------ 称号
+
+// 分享-------------------------------------------------------------------------------------------------
+message c2l_share_init {
+	
+}
+
+message l2c_share_upd {
+	int32		id			= 1; // 分享ID
+	bool		is_reward	= 2; // 是否可以领奖
+}
+
+message l2c_share_init {
+	repeated l2c_share_upd	infos = 1; // 初始化信息
+}
+
+message c2l_share_reward {
+	int32		id			= 1; // 分享ID
+}
+
+message l2c_share_reward {
+	bool					result = 1;	// 结果 false:不可领取 true：领取成功
+	repeated PTGameElement	awards = 2; // 奖励元素
+}
+
+// ------------------------------------------------------------------------------------------------- 分享
+
+// 徽章-------------------------------------------------------------------------------------------------
+message c2l_badge_init {
+	
+}
+
+message l2c_badge_init {
+	repeated int32		cur_badge_ids	= 1;	// 当前展示徽章
+	repeated int32		own_badge_ids	= 2;	// 已拥有徽章
+}
+
+message l2c_badge_upd {
+	int32		id = 1;		// 新增徽章ID
+}
+
+message c2l_badge_changed {
+	repeated int32		changed_ids	= 1; // 变更后的徽章
+}
+
+message l2c_badge_changed {
+	bool				result	= 1; // 变更结果
+}
+
+// ------------------------------------------------------------------------------------------------- 徽章
+
+// 声望 ------------------------------------------------------------------------------------------------
+// LOGIC_MSG_C2L_REPUTATION_INIT 			= 54701; 
+message c2l_reputation_init
+{
+}
+// LOGIC_MSG_L2C_REPUTATION_INIT			= 54702;
+message l2c_reputation_init
+{
+	message NationReputation
+	{
+		int32 id = 1;
+		int32 level = 2;
+	}
+	repeated NationReputation last_week_reputation = 1;
+	bool is_award_this_week = 2; // true 本次有奖励 false 本次无奖励
+	repeated PTGameElement	awards = 3; // 奖励元素 
+	int32 counter_tick = 4; // 距离下次刷新时间倒计时
+}
+	
+// LOGIC_MSG_C2L_REPUTATION_ACTIVITY_INIT 	= 54703;
+message c2l_reputation_activity_init
+{
+
+}
+
+message SpeechActivity
+{
+	int32 id = 1;
+	int32 counter_tick = 2; // 距离下次刷新时间倒计时
+	int32 remain_cnts = 3; // 剩余次数
+}
+
+// LOGIC_MSG_L2C_REPUTATION_ACTIVITY_INIT	= 54704;
+message l2c_reputation_activity_init
+{
+	repeated SpeechActivity activity_info = 1;
+}
+
+message l2c_reputation_activity_upd
+{
+	repeated SpeechActivity activity_info = 1;
+}
+
+
+// ------------------------------------------------------------------------------------------------ 声望
+
+// CG --------------------------------------------------------------------------------------------------
+//LOGIC_MSG_C2L_UNLOCK_CG_INIT = 54601;
+message c2l_unlock_cg_init
+{
+}
+	
+//LOGIC_MSG_L2C_UNLOCK_CG_REP = 54602;
+message l2c_unlock_cg_rep
+{
+	repeated int32 cg_id = 1;
+}
+
+//LOGIC_MSG_L2C_UNLOCK_CG_UPD = 54603;
+message l2c_unlock_cg_upd
+{
+	repeated int32 cg_id = 1;
+}
+// -------------------------------------------------------------------------------------------------- CG
