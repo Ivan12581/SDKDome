@@ -152,12 +152,12 @@ public class LoginView : MonoBehaviour
                 data["PayType"] = "2";
                 SDKManager.gi.Pay(data);
            
-                NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LIosRechargeDel, pkg2, LogicMsgID.LogicMsgC2LIosRechargeDel, (args) =>{
-                    //删除完交易凭证后需告知服务器 but c don't have reply from L
+                //NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LIosRechargeDel, pkg2, LogicMsgID.LogicMsgC2LIosRechargeDel, (args) =>{
+                //    //删除完交易凭证后需告知服务器 but c don't have reply from L
+                //    l2c_ios_recharge_rep msg = l2c_ios_recharge_rep.Parser.ParseFrom(args.msg);
 
 
-
-                });
+                //});
             });
         });
     
