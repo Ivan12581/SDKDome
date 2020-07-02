@@ -10,7 +10,7 @@ namespace celia.game
     {
         public const int header_length = 4;                         // 消息头长度
         public bool connectionCheck = false;              // 是否需要网络检查来保证发送完成
-        const int max_body_length = 4096;                           // 消息体最大长度
+        const int max_body_length = 40960;                           // 消息体最大长度
         const int max_length = header_length + max_body_length;     // 消息缓存总长度
 
         public int proto;                                           //消息号
