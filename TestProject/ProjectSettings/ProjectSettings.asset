@@ -727,7 +727,7 @@ PlayerSettings:
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
   scriptingDefineSymbols:
-    4: AOT
+    4: AOT;ELEX
     7: BUILD_TYPE__1;BUILD_PLATFORM_ANDROID;BUILD_ARCH_ANDROID
   platformArchitecture: {}
   scriptingBackend:

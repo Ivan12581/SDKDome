@@ -404,9 +404,9 @@ static AppleHelper *AppleHelperInstance = nil;
     NSString *_productsId = [dict valueForKey:@"GoodID"];
     goodID = [dict valueForKey:@"GoodID"];
     NSLog(@" Pay goodID: %@", goodID);
-    NSLog(@" Pay ServerID: %@", [dict valueForKey:@"ServerID"]);
+    NSLog(@" Pay PayType: %@", [dict valueForKey:@"PayType"]);
     //这里定义支付类型 1去Apple为支付 2为服务器返回支付验证结果
-    if ([[dict valueForKey:@"ServerID"]  isEqual: @"2"]) {
+    if ([[dict valueForKey:@"PayType"]  isEqual: @"2"]) {
         [self HandlePayState];
     }else{
         [self buyProductsWithId:_productsId];
@@ -501,8 +501,9 @@ static AppleHelper *AppleHelperInstance = nil;
         BASE64是可以编码和解码的
         关于验证：https:blog.csdn.net/qq_22080737/article/details/79786500?utm_medium=distribute.pc_relevant.none-task-blog-baidujs-2
     */
-    NSString *encodeStr = [receiptData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
-    NSLog(@"交易结束,验证支付信息222 : %@", encodeStr);
+    NSString *encodeStr = [receiptData base64EncodedStringWithOptions:3];
+     NSLog(@"交易结束,验证支付信息222 : %@", encodeStr);
+
     //发给自己服务器
     [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",encodeStr,@"encodeStr",nil]];
 
@@ -527,6 +528,7 @@ static AppleHelper *AppleHelperInstance = nil;
 #pragma mark --根据服务器返回结果来处理支付状态
 -(void)HandlePayState{
     //验证成功之后需要关闭监听 订单消除
+    NSLog(@"验证成功之后需要关闭监听 订单消除");
     [self completeTransaction:order];
     [self removeListener];
 //    if (1) {
@@ -546,6 +548,10 @@ static AppleHelper *AppleHelperInstance = nil;
 -(void)removeListener{
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
 }
+- (void)gameCenterViewControllerDidFinish:(nonnull GKGameCenterViewController *)gameCenterViewController { 
+    <#code#>
+}
+
 @end
 
 
