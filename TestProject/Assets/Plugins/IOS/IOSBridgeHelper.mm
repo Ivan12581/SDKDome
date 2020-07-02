@@ -141,10 +141,7 @@ static IOSBridgeHelper *BridgeHelperIns = nil;
     NSLog(@"-ios--Pay----");
     [[AppleHelper sharedInstance] Pay:jsonString];
 }
--(void)Pay{
-    NSLog(@"-ios--Pay----");
-//    [[AppleHelper sharedInstance] Pay:jsonString];
-}
+
 +(void)PayCallBack:(NSMutableDictionary *) dict{
     NSLog(@"-ios----IOSBridgeHelper---PayCallBack----");
     [BridgeHelperIns SendMessageToUnity: ePay DictData:dict];
