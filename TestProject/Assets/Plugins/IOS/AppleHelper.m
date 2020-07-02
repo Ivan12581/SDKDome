@@ -549,7 +549,7 @@ static AppleHelper *AppleHelperInstance = nil;
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
 }
 - (void)gameCenterViewControllerDidFinish:(nonnull GKGameCenterViewController *)gameCenterViewController { 
-    <#code#>
+    NSLog(@"----gameCenterViewControllerDidFinish----这个是干嘛的------>");
 }
 
 @end
