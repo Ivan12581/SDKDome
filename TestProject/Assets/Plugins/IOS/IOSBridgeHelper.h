@@ -14,6 +14,7 @@
 @interface IOSBridgeHelper:UnityAppController<UIApplicationDelegate>
 //+(id)sharedInstance;
 +(void)LoginCallBack:(NSMutableDictionary *)dict;
++(void)LoginGameCenterCallBack:(NSMutableDictionary *)dict;
 +(void)InitSDKCallBack:(NSMutableDictionary *)dict;
 +(void)UploadInfoCallBack;
 //+(void)ExitGameCallBack;

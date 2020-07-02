@@ -49,6 +49,16 @@ typedef NS_ENUM(NSInteger, MsgID)
     eShare,
     eNaver,
 };
+typedef NS_ENUM(NSInteger, SDKLoginType)
+{
+    tNone,
+    tApple,
+    tGameCenter,
+    tFacebook,
+    tGoogle,//新增加请在Google、Rastar之间加入
+    tRastar,
+
+};
 
 static IOSBridgeHelper *BridgeHelperIns = nil;
 //+(IOSBridgeHelper*)sharedInstance{
@@ -82,14 +92,40 @@ static IOSBridgeHelper *BridgeHelperIns = nil;
     NSLog(@"-ios----IOSBridgeHelper---InitSDKCallBack----");
     [BridgeHelperIns SendMessageToUnity: eInit DictData:dict];
 }
-#pragma mark -- 登录
--(void)Login{
-      [[AppleHelper sharedInstance] Login];
-//      [[AppleHelper sharedInstance] authGamecnter];
+#pragma mark -- 登录 jsonString 为登录方式 就是一个字符串
+-(void)Login: (const char *) jsonString{
+    NSLog(@"ios登录类型: %s", jsonString);
+    NSInteger  type = [[NSString stringWithUTF8String:jsonString] integerValue];
+    switch (type) {
+        case tNone:
+            break;
+        case tApple:
+                [[AppleHelper sharedInstance] Login];
+                break;
+        case tGameCenter:
+                [[AppleHelper sharedInstance] authGamecnter];
+                break;
+        case tFacebook:
+                break;
+        case tGoogle:
+                break;
+        default:
+            break;
+    }
+
     
 }
 +(void)LoginCallBack:(NSMutableDictionary *) dict{
       NSLog(@"-ios----IOSBridgeHelper---LoginCallBack----");
+    [dict setValue: [NSNumber numberWithInt:tApple] forKey: @"type"];
+   [BridgeHelperIns SendMessageToUnity: eLogin DictData:dict];
+}
+-(void)LoginGameCenter{
+      [[AppleHelper sharedInstance] authGamecnter];
+}
++(void)LoginGameCenterCallBack:(NSMutableDictionary *) dict{
+    NSLog(@"-ios----IOSBridgeHelper---LoginCallBack----");
+    [dict setValue: [NSNumber numberWithInt:tGameCenter] forKey: @"type"];
    [BridgeHelperIns SendMessageToUnity: eLogin DictData:dict];
 }
 
@@ -104,6 +140,10 @@ static IOSBridgeHelper *BridgeHelperIns = nil;
 -(void)Pay: (const char *) jsonString{
     NSLog(@"-ios--Pay----");
     [[AppleHelper sharedInstance] Pay:jsonString];
+}
+-(void)Pay{
+    NSLog(@"-ios--Pay----");
+//    [[AppleHelper sharedInstance] Pay:jsonString];
 }
 +(void)PayCallBack:(NSMutableDictionary *) dict{
     NSLog(@"-ios----IOSBridgeHelper---PayCallBack----");
@@ -139,8 +179,8 @@ extern "C"
     void cInit(){
         [(IOSBridgeHelper*)[UIApplication sharedApplication].delegate InitSDK];
     }
-    void cLogin(){
-        [(IOSBridgeHelper*)[UIApplication sharedApplication].delegate Login];
+    void cLogin(const char* jsonString){
+        [(IOSBridgeHelper*)[UIApplication sharedApplication].delegate Login:jsonString];
     }
     void cSwitch(){
         [(IOSBridgeHelper*)[UIApplication sharedApplication].delegate Switch];
