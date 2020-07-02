@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CDN_ADDRESS: https://down-mb.resources.3737.com/xly-test
   NET_ASSETS: NetAssets_Test
-  ip: 192.168.102.175
+  ip: 192.168.102.225
   port: 52001
   pf: 1
