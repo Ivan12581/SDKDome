@@ -186,24 +186,12 @@ public class LoginView : MonoBehaviour
     }
     public void GCLogin()
     {
-        Debug.Log("---Unity---SDKLogin---");
+        Debug.Log("---Unity---GCLogin---");
         SDKManager.gi.Login(SDKLoginType.GameCenter,(s, dataDict) => {
             int state = int.Parse(dataDict["state"]);
-            if (state == 1)
+            foreach (var item in dataDict)
             {
-                //第一次授权登陆 有identityTokenStr等信息
-                NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"], dataDict["token"]);
-            }
-            else if (state == 2)
-            {
-                //后续就没有identityTokenStr这些校验信息了
-                NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"]);
-            }
-            else
-            {
-                OutputTop.text += "\n" + "SDK fail!!!";
-                Debug.Log("SDK login fail ----------------");
-                waiting = false;
+                Debug.Log("GCLogin Callback info : " + item.Key + "/" + item.Value);
             }
         });
     }
