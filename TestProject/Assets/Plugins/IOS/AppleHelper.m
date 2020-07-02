@@ -339,17 +339,27 @@ static AppleHelper *AppleHelperInstance = nil;
             NSLog(@"2--authenticated--%d",[GKLocalPlayer localPlayer].authenticated);
             NSLog(@"3--isFriend--%d",[GKLocalPlayer localPlayer].isFriend);
             NSLog(@"4--playerID--%@",[GKLocalPlayer localPlayer].playerID);
-            [[GKLocalPlayer localPlayer] generateIdentityVerificationSignatureWithCompletionHandler:^(NSURL * _Nullable publicKeyUrl, NSData * _Nullable signature, NSData * _Nullable salt, uint64_t timestamp, NSError * _Nullable error) {
+            [[GKLocalPlayer localPlayer] generateIdentityVerificationSignatureWithCompletionHandler:^(NSURL * publicKeyUrl, NSData * signature, NSData * salt, uint64_t timestamp, NSError * error) {
                 if (error) {
                     NSLog(@"--ERROR: %@",error);
-                [IOSBridgeHelper LoginGameCenterCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",nil]];
+                    [IOSBridgeHelper LoginGameCenterCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",nil]];
                 }else{
-                    NSLog(@"1--public_key_url--%@",publicKeyUrl);
-                    NSLog(@"2--signature--%@",signature);
-                    NSLog(@"3--salt--%@",salt);
-                    NSLog(@"4--timestamp--%llu",timestamp);
+                    NSString *_publicKeyUrl =[publicKeyUrl absoluteString];
+                    NSString *_signature =[signature base64EncodedStringWithOptions:0];
+                    NSString *_salt =[salt base64EncodedStringWithOptions:0];
+                    NSString *_timestamp =[NSString stringWithFormat:@"%llu",timestamp];
+                    
+                    NSLog(@"1--_publicKeyUrl--%@",_publicKeyUrl);
+                    NSLog(@"2--_signature--%@",_signature);
+                    NSLog(@"3--_salt--%@",_salt);
+                    NSLog(@"4--timestamp--%@",_timestamp);
                     NSLog(@"5--app_bundle_id--%@",[[NSBundle mainBundle] bundleIdentifier]);
-                    [IOSBridgeHelper LoginGameCenterCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",publicKeyUrl,@"publicKeyUrl",signature,@"signature",[GKLocalPlayer localPlayer].playerID,@"playerID",nil]];
+
+                    [IOSBridgeHelper LoginGameCenterCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",_publicKeyUrl,@"publicKeyUrl",[[NSBundle mainBundle] bundleIdentifier],@"bundleIdentifier",_signature,@"signature",_salt,@"salt",_timestamp,@"timestamp",[GKLocalPlayer localPlayer].playerID,@"playerID",nil]];
+                    
+
+                    
+
                 }
             }];
             
@@ -501,7 +511,7 @@ static AppleHelper *AppleHelperInstance = nil;
         BASE64是可以编码和解码的
         关于验证：https:blog.csdn.net/qq_22080737/article/details/79786500?utm_medium=distribute.pc_relevant.none-task-blog-baidujs-2
     */
-    NSString *encodeStr = [receiptData base64EncodedStringWithOptions:3];
+    NSString *encodeStr = [receiptData base64EncodedStringWithOptions:0];
      NSLog(@"交易结束,验证支付信息222 : %@", encodeStr);
 
     //发给自己服务器
