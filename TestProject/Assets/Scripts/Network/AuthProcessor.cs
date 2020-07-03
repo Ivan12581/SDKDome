@@ -381,6 +381,7 @@ namespace celia.game
                     case LoginType.SDKToken:
                     case LoginType.Super:
                     case LoginType.Apple:
+                    case LoginType.GameCenter:
                     default:
                         Messenger.DispatchEvent(Notif.LOGIN_FAIL);
                         break;
