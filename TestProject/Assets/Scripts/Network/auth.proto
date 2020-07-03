@@ -37,6 +37,7 @@ enum AuthMsgID {
   AUTH_MSG_C2A_LOGON_SDK			= 62006; // SDK登录
   AUTH_MSG_C2A_LOGON_SUPER			= 62008; // 无密码登录
   AUTH_MSG_C2A_LOGON_APPLE			= 62010; // Apple登录
+  AUTH_MSG_C2A_LOGON_APPLE_GAMECENTER = 62011; // Apple GameCenter登录
 
 }
 
@@ -96,9 +97,17 @@ message c2a_logon_sdk {
 
 message c2a_logon_apple {
   string    user_identifier        = 1; // 账号名
-  string    identity_token         = 2; // JSON Web Token (JWT)
+  string    identity_token         = 2; // JSON Web Token (JWT) 只有第一次登录注册有用,以后都只看账号名
 }
 
 message c2a_logon_super {
   string	username = 2;
+}
+
+message c2a_logon_apple_gamecenter{
+	string	user_identifier		= 1; // 账号名
+	string 	public_key_url		= 2; // 获取公钥的url
+	string 	signature			= 3; // 签名
+	string 	salt				= 4; // 随机NSString; GameKit uses to compute the hash and randomize it
+	string 	timestamp			= 5; // 签名生成时间戳
 }

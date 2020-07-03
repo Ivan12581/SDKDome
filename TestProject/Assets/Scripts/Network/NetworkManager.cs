@@ -46,6 +46,7 @@ namespace celia.game
         SDKToken,
         Super,
         Apple,
+        GameCenter,
     }
 
     public class NetworkManager : SingleMonoBehaviour<NetworkManager>
@@ -68,7 +69,7 @@ namespace celia.game
         string account;
         string password;
         string token;
-
+        c2a_logon_apple_gamecenter GCpkt;
         NetworkManager()
         {
             // 网络模块
@@ -105,6 +106,18 @@ namespace celia.game
             password = _password;
             loginType = LoginType.Apple;
 
+            // 连接认证服
+            state = NetState.NET_STATE_AUTH_CONNECTING;
+            Debug.Log(Utils.ip + "/" + Utils.port);
+            GameTcpClient.gi.Connect(Utils.ip, Utils.port);
+        }
+        public void ConnectAuth_LoginGameCenter(c2a_logon_apple_gamecenter args)
+        {
+            //account = _account;
+            //password = _password;
+
+            loginType = LoginType.GameCenter;
+            GCpkt = args;
             // 连接认证服
             state = NetState.NET_STATE_AUTH_CONNECTING;
             Debug.Log(Utils.ip + "/" + Utils.port);
@@ -728,10 +741,6 @@ namespace celia.game
             }
         }
 
-        void Start()
-        {
-        }
-
         private void Gi_state_callback(object sender, AuthEventArgs e)
         {
             switch (state = e.state)
@@ -771,6 +780,9 @@ namespace celia.game
                                 break;
                             case LoginType.Apple:
                                 AuthProcessor.gi.LoginApple(account, password);
+                                break;
+                            case LoginType.GameCenter:
+                                AuthProcessor.gi.LoginGameCenter(GCpkt);
                                 break;
                         }
                     }

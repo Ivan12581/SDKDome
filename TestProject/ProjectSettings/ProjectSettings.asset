@@ -154,7 +154,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     '': com.xlycs.rastar
-    Android: com.xlycs.rastar
+    Android: com.elex.girlsthrone.tw.gp
     iOS: com.elex.girlsthrone.tw
   buildNumber: {}
   AndroidBundleVersionCode: 2
@@ -246,10 +246,10 @@ PlayerSettings:
   AndroidTargetArchitectures: 3
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: 
-  AndroidKeyaliasName: 
+  AndroidKeystoreName: D:/SDKDomeProject/TestProject/BuildSettings/AndSignature/zmxt.keystore
+  AndroidKeyaliasName: key-zmxt
   AndroidBuildApkPerCpuArchitecture: 0
-  AndroidTVCompatibility: 1
+  AndroidTVCompatibility: 0
   AndroidIsGame: 1
   AndroidEnableTango: 0
   androidEnableBanner: 1
@@ -728,7 +728,7 @@ PlayerSettings:
   webGLThreadsSupport: 0
   scriptingDefineSymbols:
     4: AOT;ELEX
-    7: BUILD_TYPE__1;BUILD_PLATFORM_ANDROID;BUILD_ARCH_ANDROID
+    7: 
   platformArchitecture: {}
   scriptingBackend:
     Android: 1

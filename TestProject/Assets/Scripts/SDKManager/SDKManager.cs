@@ -245,6 +245,7 @@ namespace celia.game
                     }
                     break;
                 case SDKResultType.Pay:
+
                     break;
                 case SDKResultType.ExitGame:
                     if (state == 1)

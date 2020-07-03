@@ -186,6 +186,18 @@ namespace celia.game
             // 状态变化
             state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_CHALLENGE));
         }
+        public void LoginGameCenter(c2a_logon_apple_gamecenter pkt)
+        {
+            loginType = LoginType.GameCenter;
+
+            //c2a_logon_apple_gamecenter pkt = new c2a_logon_apple_gamecenter();
+            //pkt.UserIdentifier = user;
+            //pkt.IdentityToken = identityTokenStr;
+
+            NetworkManager.gi.SendPkt(AuthMsgID.AuthMsgC2ALogonAppleGamecenter, pkt);
+            // 状态变化
+            state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_CHALLENGE));
+        }
         public static byte[] BigInteger2ByteArray(BigInteger v)
         {
             byte[] result = v.ToByteArray();

@@ -142,7 +142,7 @@ public class LoginView : MonoBehaviour
                 }
 
                 c2l_ios_recharge_del pkg2 = new c2l_ios_recharge_del();
-                pkg2.RechargeOrderNo = order;
+                pkg2.RechargeOrderNo = tran;
 
                 data["PayType"] = "2";
                 SDKManager.gi.Pay(data);
@@ -185,10 +185,23 @@ public class LoginView : MonoBehaviour
         Debug.Log("---Unity---GCLogin---");
         SDKManager.gi.Login(SDKLoginType.GameCenter,(s, dataDict) => {
             Debug.Log("---Unity---GCLogin--callback-");
-            int state = int.Parse(dataDict["state"]);
-            foreach (var item in dataDict)
+            //int state = int.Parse(dataDict["state"]);
+
+            c2a_logon_apple_gamecenter args = new c2a_logon_apple_gamecenter();
+            dataDict.TryGetValue("state", out string state);
+            dataDict.TryGetValue("playerID", out string playerID);
+            dataDict.TryGetValue("publicKeyUrl", out string publicKeyUrl);
+            dataDict.TryGetValue("signature", out string signature);
+            dataDict.TryGetValue("salt", out string salt);
+            dataDict.TryGetValue("timestamp", out string timestamp);
+            args.UserIdentifier = playerID;
+            args.PublicKeyUrl = publicKeyUrl;
+            args.Signature = signature;
+            args.Salt = salt;
+            args.Timestamp = timestamp;
+            if (int.Parse(state) == 1)
             {
-                Debug.Log("GCLogin Callback info : " + item.Key + "/" + item.Value);
+                NetworkManager.gi.ConnectAuth_LoginGameCenter(args);
             }
         });
     }
