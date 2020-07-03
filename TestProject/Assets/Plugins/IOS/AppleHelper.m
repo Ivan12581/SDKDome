@@ -39,8 +39,8 @@ static AppleHelper *AppleHelperInstance = nil;
     userIdentifier = @"nil";
     
     NSLog(@"-ios---AppleHelper---InitSDK----");
-    //apple初始化的时候需要添加购买结果的监听 有可能之前支付ok 但是因为通信而导致存在未处理订单
-    [self addListener];
+    //TODO：apple初始化的时候需要添加购买结果的监听 有可能之前支付ok 但是因为通信而导致存在未处理订单 但是此时还没链接服务器
+//    [self addListener];
     if (@available(iOS 13.0, *)) {
             [IOSBridgeHelper InitSDKCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",accountName,@"TWuserIdentifier",forService,@"forService",nil]];
     }else{
@@ -339,6 +339,12 @@ static AppleHelper *AppleHelperInstance = nil;
             NSLog(@"2--authenticated--%d",[GKLocalPlayer localPlayer].authenticated);
             NSLog(@"3--isFriend--%d",[GKLocalPlayer localPlayer].isFriend);
             NSLog(@"4--playerID--%@",[GKLocalPlayer localPlayer].playerID);
+            NSLog(@"4--displayName--%@",[GKLocalPlayer localPlayer].displayName);
+//            if (@available(iOS 12.4, *)) {
+//                NSLog(@"4--playerID--%@",[GKLocalPlayer localPlayer].teamPlayerID);
+//            } else {
+//                // Fallback on earlier versions
+//            }
             [[GKLocalPlayer localPlayer] generateIdentityVerificationSignatureWithCompletionHandler:^(NSURL * publicKeyUrl, NSData * signature, NSData * salt, uint64_t timestamp, NSError * error) {
                 if (error) {
                     NSLog(@"--ERROR: %@",error);
