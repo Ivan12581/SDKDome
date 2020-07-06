@@ -195,10 +195,11 @@ public class LoginView : MonoBehaviour
             dataDict.TryGetValue("salt", out string salt);
             dataDict.TryGetValue("timestamp", out string timestamp);
             args.UserIdentifier = playerID;
-            args.PublicKeyUrl = publicKeyUrl;
-            args.Signature = signature;
-            args.Salt = salt;
-            args.Timestamp = timestamp;
+            //应服务器要求 下面字段先注释掉 正式应该加上的
+            //args.PublicKeyUrl = publicKeyUrl;
+            //args.Signature = signature;
+            //args.Salt = salt;
+            //args.Timestamp = timestamp;
             if (int.Parse(state) == 1)
             {
                 NetworkManager.gi.ConnectAuth_LoginGameCenter(args);

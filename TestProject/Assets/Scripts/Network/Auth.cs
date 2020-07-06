@@ -38,25 +38,24 @@ public static partial class AuthReflection {
           "DgoGY2NoX2lkGAMgASgJEhQKDGFjY2Vzc190b2tlbhgEIAEoCRIPCgdhcHBf",
           "a2V5GAUgASgJEhAKCHNka190eXBlGAYgASgJIkIKD2MyYV9sb2dvbl9hcHBs",
           "ZRIXCg91c2VyX2lkZW50aWZpZXIYASABKAkSFgoOaWRlbnRpdHlfdG9rZW4Y",
-          "AiABKAkiIwoPYzJhX2xvZ29uX3N1cGVyEhAKCHVzZXJuYW1lGAIgASgJIoEB",
-          "ChpjMmFfbG9nb25fYXBwbGVfZ2FtZWNlbnRlchIXCg91c2VyX2lkZW50aWZp",
-          "ZXIYASABKAkSFgoOcHVibGljX2tleV91cmwYAiABKAkSEQoJc2lnbmF0dXJl",
-          "GAMgASgJEgwKBHNhbHQYBCABKAkSEQoJdGltZXN0YW1wGAUgASgJKo0CCg9B",
-          "Y2NvdW50T3BSZXN1bHQSDAoIQU9SX05VTEwQABIKCgZBT1JfT0sQARIVChFB",
-          "T1JfTkFNRV9UT09fTE9ORxACEhkKFUFPUl9QQVNTX1dST05HX0xFTkdUSBAD",
-          "EhoKFkFPUl9OQU1FX0FMUkVBRFlfRVhJU1QQBBIWChJBT1JfTkFNRV9OT1Rf",
-          "RVhJU1QQBRIZChVBT1JfREJfSU5URVJOQUxfRVJST1IQBhIYChRBT1JfUEFT",
-          "U19XUk9OR19FUlJPUhAHEhQKEEFPUl9JRF9PVVRfUkFOR0UQCBIWChJBT1Jf",
-          "QUNDT1VOVF9MT0NLRUQQCRIXChNBT1JfU1ZDX01BSU5URU5BTkNFEAoqigMK",
-          "CUF1dGhNc2dJRBIRCg1BVVRIX01TR19OVUxMEAASHwoZQVVUSF9NU0dfQzJB",
-          "X1JFR0lTVEVSX1JFURDJ3AMSHwoZQVVUSF9NU0dfQTJDX1JFR0lTVEVSX1JF",
-          "UBDK3AMSIgocQVVUSF9NU0dfQzJBX0xPR09OX0NIQUxMRU5HRRCx5AMSHAoW",
-          "QVVUSF9NU0dfQTJDX0xPR09OX0FTSxCy5AMSHgoYQVVUSF9NU0dfQzJBX0xP",
-          "R09OX1BST09GELPkAxIcChZBVVRIX01TR19BMkNfTE9HT05fUkVQELTkAxIf",
-          "ChlBVVRIX01TR19BMkNfTE9HT05fUkVHSU9OELXkAxIcChZBVVRIX01TR19D",
-          "MkFfTE9HT05fU0RLELbkAxIeChhBVVRIX01TR19DMkFfTE9HT05fU1VQRVIQ",
-          "uOQDEh4KGEFVVEhfTVNHX0MyQV9MT0dPTl9BUFBMRRC65AMSKQojQVVUSF9N",
-          "U0dfQzJBX0xPR09OX0FQUExFX0dBTUVDRU5URVIQu+QDYgZwcm90bzM="));
+          "AiABKAkiIwoPYzJhX2xvZ29uX3N1cGVyEhAKCHVzZXJuYW1lGAIgASgJIjUK",
+          "GmMyYV9sb2dvbl9hcHBsZV9nYW1lY2VudGVyEhcKD3VzZXJfaWRlbnRpZmll",
+          "chgBIAEoCSqNAgoPQWNjb3VudE9wUmVzdWx0EgwKCEFPUl9OVUxMEAASCgoG",
+          "QU9SX09LEAESFQoRQU9SX05BTUVfVE9PX0xPTkcQAhIZChVBT1JfUEFTU19X",
+          "Uk9OR19MRU5HVEgQAxIaChZBT1JfTkFNRV9BTFJFQURZX0VYSVNUEAQSFgoS",
+          "QU9SX05BTUVfTk9UX0VYSVNUEAUSGQoVQU9SX0RCX0lOVEVSTkFMX0VSUk9S",
+          "EAYSGAoUQU9SX1BBU1NfV1JPTkdfRVJST1IQBxIUChBBT1JfSURfT1VUX1JB",
+          "TkdFEAgSFgoSQU9SX0FDQ09VTlRfTE9DS0VEEAkSFwoTQU9SX1NWQ19NQUlO",
+          "VEVOQU5DRRAKKooDCglBdXRoTXNnSUQSEQoNQVVUSF9NU0dfTlVMTBAAEh8K",
+          "GUFVVEhfTVNHX0MyQV9SRUdJU1RFUl9SRVEQydwDEh8KGUFVVEhfTVNHX0Ey",
+          "Q19SRUdJU1RFUl9SRVAQytwDEiIKHEFVVEhfTVNHX0MyQV9MT0dPTl9DSEFM",
+          "TEVOR0UQseQDEhwKFkFVVEhfTVNHX0EyQ19MT0dPTl9BU0sQsuQDEh4KGEFV",
+          "VEhfTVNHX0MyQV9MT0dPTl9QUk9PRhCz5AMSHAoWQVVUSF9NU0dfQTJDX0xP",
+          "R09OX1JFUBC05AMSHwoZQVVUSF9NU0dfQTJDX0xPR09OX1JFR0lPThC15AMS",
+          "HAoWQVVUSF9NU0dfQzJBX0xPR09OX1NESxC25AMSHgoYQVVUSF9NU0dfQzJB",
+          "X0xPR09OX1NVUEVSELjkAxIeChhBVVRIX01TR19DMkFfTE9HT05fQVBQTEUQ",
+          "uuQDEikKI0FVVEhfTVNHX0MyQV9MT0dPTl9BUFBMRV9HQU1FQ0VOVEVSELvk",
+          "A2IGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::AccountOpResult), typeof(global::AuthMsgID), }, new pbr::GeneratedClrTypeInfo[] {
@@ -70,7 +69,7 @@ public static partial class AuthReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::c2a_logon_sdk), global::c2a_logon_sdk.Parser, new[]{ "OpenId", "AppId", "CchId", "AccessToken", "AppKey", "SdkType" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::c2a_logon_apple), global::c2a_logon_apple.Parser, new[]{ "UserIdentifier", "IdentityToken" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::c2a_logon_super), global::c2a_logon_super.Parser, new[]{ "Username" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::c2a_logon_apple_gamecenter), global::c2a_logon_apple_gamecenter.Parser, new[]{ "UserIdentifier", "PublicKeyUrl", "Signature", "Salt", "Timestamp" }, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::c2a_logon_apple_gamecenter), global::c2a_logon_apple_gamecenter.Parser, new[]{ "UserIdentifier" }, null, null, null)
         }));
   }
   #endregion
@@ -2133,10 +2132,6 @@ public sealed partial class c2a_logon_apple_gamecenter : pb::IMessage<c2a_logon_
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public c2a_logon_apple_gamecenter(c2a_logon_apple_gamecenter other) : this() {
     userIdentifier_ = other.userIdentifier_;
-    publicKeyUrl_ = other.publicKeyUrl_;
-    signature_ = other.signature_;
-    salt_ = other.salt_;
-    timestamp_ = other.timestamp_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -2159,62 +2154,6 @@ public sealed partial class c2a_logon_apple_gamecenter : pb::IMessage<c2a_logon_
     }
   }
 
-  /// <summary>Field number for the "public_key_url" field.</summary>
-  public const int PublicKeyUrlFieldNumber = 2;
-  private string publicKeyUrl_ = "";
-  /// <summary>
-  /// 获取公钥的url
-  /// </summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public string PublicKeyUrl {
-    get { return publicKeyUrl_; }
-    set {
-      publicKeyUrl_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-    }
-  }
-
-  /// <summary>Field number for the "signature" field.</summary>
-  public const int SignatureFieldNumber = 3;
-  private string signature_ = "";
-  /// <summary>
-  /// 签名
-  /// </summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public string Signature {
-    get { return signature_; }
-    set {
-      signature_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-    }
-  }
-
-  /// <summary>Field number for the "salt" field.</summary>
-  public const int SaltFieldNumber = 4;
-  private string salt_ = "";
-  /// <summary>
-  /// 随机NSString; GameKit uses to compute the hash and randomize it
-  /// </summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public string Salt {
-    get { return salt_; }
-    set {
-      salt_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-    }
-  }
-
-  /// <summary>Field number for the "timestamp" field.</summary>
-  public const int TimestampFieldNumber = 5;
-  private string timestamp_ = "";
-  /// <summary>
-  /// 签名生成时间戳
-  /// </summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public string Timestamp {
-    get { return timestamp_; }
-    set {
-      timestamp_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-    }
-  }
-
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
     return Equals(other as c2a_logon_apple_gamecenter);
@@ -2229,10 +2168,6 @@ public sealed partial class c2a_logon_apple_gamecenter : pb::IMessage<c2a_logon_
       return true;
     }
     if (UserIdentifier != other.UserIdentifier) return false;
-    if (PublicKeyUrl != other.PublicKeyUrl) return false;
-    if (Signature != other.Signature) return false;
-    if (Salt != other.Salt) return false;
-    if (Timestamp != other.Timestamp) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -2240,10 +2175,6 @@ public sealed partial class c2a_logon_apple_gamecenter : pb::IMessage<c2a_logon_
   public override int GetHashCode() {
     int hash = 1;
     if (UserIdentifier.Length != 0) hash ^= UserIdentifier.GetHashCode();
-    if (PublicKeyUrl.Length != 0) hash ^= PublicKeyUrl.GetHashCode();
-    if (Signature.Length != 0) hash ^= Signature.GetHashCode();
-    if (Salt.Length != 0) hash ^= Salt.GetHashCode();
-    if (Timestamp.Length != 0) hash ^= Timestamp.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -2261,22 +2192,6 @@ public sealed partial class c2a_logon_apple_gamecenter : pb::IMessage<c2a_logon_
       output.WriteRawTag(10);
       output.WriteString(UserIdentifier);
     }
-    if (PublicKeyUrl.Length != 0) {
-      output.WriteRawTag(18);
-      output.WriteString(PublicKeyUrl);
-    }
-    if (Signature.Length != 0) {
-      output.WriteRawTag(26);
-      output.WriteString(Signature);
-    }
-    if (Salt.Length != 0) {
-      output.WriteRawTag(34);
-      output.WriteString(Salt);
-    }
-    if (Timestamp.Length != 0) {
-      output.WriteRawTag(42);
-      output.WriteString(Timestamp);
-    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -2287,18 +2202,6 @@ public sealed partial class c2a_logon_apple_gamecenter : pb::IMessage<c2a_logon_
     int size = 0;
     if (UserIdentifier.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(UserIdentifier);
-    }
-    if (PublicKeyUrl.Length != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeStringSize(PublicKeyUrl);
-    }
-    if (Signature.Length != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeStringSize(Signature);
-    }
-    if (Salt.Length != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeStringSize(Salt);
-    }
-    if (Timestamp.Length != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeStringSize(Timestamp);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -2314,18 +2217,6 @@ public sealed partial class c2a_logon_apple_gamecenter : pb::IMessage<c2a_logon_
     if (other.UserIdentifier.Length != 0) {
       UserIdentifier = other.UserIdentifier;
     }
-    if (other.PublicKeyUrl.Length != 0) {
-      PublicKeyUrl = other.PublicKeyUrl;
-    }
-    if (other.Signature.Length != 0) {
-      Signature = other.Signature;
-    }
-    if (other.Salt.Length != 0) {
-      Salt = other.Salt;
-    }
-    if (other.Timestamp.Length != 0) {
-      Timestamp = other.Timestamp;
-    }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
 
@@ -2339,22 +2230,6 @@ public sealed partial class c2a_logon_apple_gamecenter : pb::IMessage<c2a_logon_
           break;
         case 10: {
           UserIdentifier = input.ReadString();
-          break;
-        }
-        case 18: {
-          PublicKeyUrl = input.ReadString();
-          break;
-        }
-        case 26: {
-          Signature = input.ReadString();
-          break;
-        }
-        case 34: {
-          Salt = input.ReadString();
-          break;
-        }
-        case 42: {
-          Timestamp = input.ReadString();
           break;
         }
       }

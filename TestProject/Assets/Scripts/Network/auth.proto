@@ -106,8 +106,8 @@ message c2a_logon_super {
 
 message c2a_logon_apple_gamecenter{
 	string	user_identifier		= 1; // 账号名
-	string 	public_key_url		= 2; // 获取公钥的url
-	string 	signature			= 3; // 签名
-	string 	salt				= 4; // 随机NSString; GameKit uses to compute the hash and randomize it
-	string 	timestamp			= 5; // 签名生成时间戳
+	//string 	public_key_url		= 2; // 获取公钥的url
+	//string 	signature			= 3; // 签名
+	//string 	salt				= 4; // 随机NSString; GameKit uses to compute the hash and randomize it
+	//string 	timestamp			= 5; // 签名生成时间戳
 }
