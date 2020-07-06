@@ -120,9 +120,12 @@ public class LoginView : MonoBehaviour
         SDKManager.gi.Pay(data, (s, v) =>
         {
             //开始把交易凭证发给服务器验证
-            string tran = v["encodeStr"];
+            v.TryGetValue("encodeStr",out string receiptData);
+            v.TryGetValue("product_id", out string product_id);
+            v.TryGetValue("transaction_id", out string transaction_id);
+
             c2l_ios_recharge pkg = new c2l_ios_recharge();
-            pkg.RechargeOrderNo = v["encodeStr"];
+            pkg.RechargeOrderNo = receiptData;
             pkg.CommodityId = 111;
             pkg.Price = 222;
             NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LIosRecharge, pkg, LogicMsgID.LogicMsgL2CIosRechargeRep, (args) =>
