@@ -189,9 +189,12 @@ enum LogicMsgID {
 	LOGIC_MSG_C2L_RECHARGE_GET_SUM_AWARD	= 58111; // 领取累充奖励(活动ID为0，为总累充奖励)
 	LOGIC_MSG_L2C_RECHARGE_GET_SUM_AWARD	= 58112;
 	
-	LOGIC_MSG_C2L_IOS_RECHARGE		= 58115; // 充值订单号生成
-	LOGIC_MSG_L2C_IOS_RECHARGE_REP 	= 58116; // 回复
-	LOGIC_MSG_C2L_IOS_RECHARGE_DEL 	= 58117; // 删除订单结果
+	LOGIC_MSG_C2L_IOS_RECHARGE				= 58115; // 充值订单号
+	LOGIC_MSG_L2C_IOS_RECHARGE_REP 			= 58116; // 回复
+	LOGIC_MSG_L2C_IOS_RECHARGE_INIT			= 58117; // 回复
+	
+	LOGIC_MSG_L2C_RECHARGE_COMMODITY_ASK	= 58120; // 请求充值商品
+	LOGIC_MSG_L2C_RECHARGE_COMMODITY_REP	= 58121; // 回复
 	// 换装小游戏579--
 	LOGIC_MSG_C2L_MINIGAME_CLOTHCHANGING_STAR		= 57901; // 换装
 	LOGIC_MSG_L2C_MINIGAME_CLOTHCHANGING_SUCCESS	= 57902; // 换装成功
@@ -1200,7 +1203,7 @@ message SingleStageInfo {
 		int32				stage_id		= 4; // id
 	
 		int32 cfg_round					= 11;
-		int32 cfg_attype				= 12;
+		string cfg_attype				= 12;
 		string cfg_npcset				= 13;
 		string cfg_special_buff			= 14;
 		string cfg_npc_display			= 15;
@@ -1592,24 +1595,41 @@ message l2c_recharge_get_sum_award {
 }
 
 message c2l_ios_recharge {
-	string 	recharge_order_no		= 1;	// 充值订单号(充值凭据)
-	int32 	commodity_id			= 2;	// 商品id
-	int32 	price					= 3;	// 商品价格
+	int32 total_package				= 1;	// 消息包总数
+	int32 package_index				= 2;	// 消息包索引(1~total_package)
+	string 	recharge_order_no		= 3;	// 充值订单号(充值凭据) 被拆包的数据
+	//后面三个数据尾包发来即可
+	string transaction_id			= 4;	// ios交易唯一标识
+	string 	commodity_id			= 5;	// 商品id
+	int32 	num						= 6;	// 商品数量
 }
 
 enum IOSRechargeResult {
-	RECHARGE_SUCCESS 		= 0; 	// 成功
-	RECHARGE_SEND_GOODS 	= 1; 	// 已发货
+	RECHARGE_RECEIVE 		= 0; 	// 已收到客户端请求(已存库，请不要再发来)
+	RECHARGE_SEND_GOODS 	= 1; 	// 已发货(通知客户端删除凭据)
 }
 
 message l2c_ios_recharge_rep {
-	string 						recharge_order_no		= 1;	// 充值订单号(充值凭据)
-	IOSRechargeResult			recharge_result			= 2;	// 充值结果(0充值成功&删除订单)
+	IOSRechargeResult			recharge_result			= 1;	// 充值结果(0已收到/1充值成功&删除订单)
+	repeated	string	transaction_ids					= 2;	// 通知客户端去ios删除的交易id
 	repeated	PTGameElement 	eles 					= 3;	// 购买得到的元素
 }
 
-message c2l_ios_recharge_del {
-	string 	recharge_order_no		= 1;	// 充值订单号(充值凭据)
+message l2c_ios_recharge_init {
+	repeated	string	verifing_order				= 1;		// 正在验证中的凭据对应的交易id
+	repeated	string to_delete_order				= 2;		// 客户端需要删除的凭据(已发货)对应的交易id
+}
+
+// 客户端充值某类型商品需先请求服务器是否可以充值
+message l2c_recharge_commodity_ask {
+	string commodity_id		= 1;		// 商品唯一id
+	int32 qutity			= 2;		// 商品数量
+}
+
+// 回复
+message l2c_recharge_commodity_rep {
+	string commodity_id		= 1;		// 商品唯一id
+	int32 qutity			= 2;		// 商品数量
 }
 //  -------------------------------------------------------------------------------------------------------充值
 

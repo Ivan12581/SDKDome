@@ -2,6 +2,7 @@
 
 using Newtonsoft.Json;
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -52,6 +53,26 @@ public class LoginView : MonoBehaviour
         id = strs[3].Substring(strs[3].IndexOf('\"',9) + 1, strs[3].LastIndexOf('\"') - strs[3].IndexOf('\"',9) - 1);
 
         Debug.Log(code +"---"+ id);        */
+
+
+        string str = "12";
+
+        int count = str.Length;
+        int num = (int)Math.Ceiling((double)count / 2);
+        c2l_ios_recharge pkg = new c2l_ios_recharge();
+        for (int i = 1; i <= num; i++)
+        {
+            string str1;
+            if (num == i)
+            {
+                str1 = str.Substring((i - 1) * 2, count- (i - 1) * 2);
+            }
+            else {
+                str1 = str.Substring((i - 1) * 2, 2);
+            }
+
+            Debug.Log(str1);
+        }
     }
 
     public void SetServerIP()
@@ -123,39 +144,66 @@ public class LoginView : MonoBehaviour
             v.TryGetValue("product_id", out string product_id);
             v.TryGetValue("transaction_id", out string transaction_id);
 
+            int TotalCount = receiptData.Length;
+            int TotalPackage = (int)Math.Ceiling((double)TotalCount / 2000);
             c2l_ios_recharge pkg = new c2l_ios_recharge();
-            pkg.RechargeOrderNo = receiptData;
-            pkg.CommodityId = 111;
-            pkg.Price = 222;
-            NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LIosRecharge, pkg, LogicMsgID.LogicMsgL2CIosRechargeRep, (args) =>
+            for (int PackageIndex = 1; PackageIndex <= TotalPackage; PackageIndex++)
             {
-                //收到服务器验证结果 开始删除交易凭证
-                l2c_ios_recharge_rep msg = l2c_ios_recharge_rep.Parser.ParseFrom(args.msg);
-                Debug.Log("===收到服务器验证结果===" + JsonConvert.SerializeObject(msg));
-                string order = msg.RechargeOrderNo;
-                IOSRechargeResult result = msg.RechargeResult;
-                Google.Protobuf.Collections.RepeatedField<PTGameElement> eles = msg.Eles;
-                foreach (var item in msg.Eles)
+                pkg.TotalPackage = TotalPackage;
+                pkg.PackageIndex = PackageIndex;
+                if (TotalPackage == PackageIndex)
                 {
-                    int count = item.NCount;
-                    int id = item.NID;
-                    GameElementType type = item.EType;
-                    Debug.Log("---Eles--item.NCount:" + item.NCount + " item.NID:" + item.NID + " item.EType:" + item.EType);
+                    pkg.RechargeOrderNo = receiptData.Substring((PackageIndex - 1) * 2000, TotalCount - (PackageIndex - 1) * 2000);
+                    pkg.TransactionId = transaction_id;
+                    pkg.CommodityId = product_id;
+                    pkg.Num = 1;
+                }
+                else {
+                    pkg.RechargeOrderNo = receiptData.Substring((PackageIndex - 1) * 2000,2000);
                 }
 
-                c2l_ios_recharge_del pkg2 = new c2l_ios_recharge_del();
-                pkg2.RechargeOrderNo = receiptData;
+                NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LIosRecharge, pkg, LogicMsgID.LogicMsgL2CIosRechargeRep, (args) =>
+                {
+                    //收到服务器验证结果 开始删除交易凭证
+                    l2c_ios_recharge_rep msg = l2c_ios_recharge_rep.Parser.ParseFrom(args.msg);
+                    Debug.Log("===收到服务器验证结果===" + JsonConvert.SerializeObject(msg));
+                    IOSRechargeResult result = msg.RechargeResult;
+                    Google.Protobuf.Collections.RepeatedField<string> TransactionIds = msg.TransactionIds;
+                    Google.Protobuf.Collections.RepeatedField<PTGameElement> eles = msg.Eles;
+                    if (result == IOSRechargeResult.RechargeReceive)
+                    {
+                        // finishTransaction:tran];
+                        data.Add("tran", TransactionIds[0]);
+                        data["PayType"] = "2";
+                        SDKManager.gi.Pay(data);
+                    }
+                    else if(result == IOSRechargeResult.RechargeSendGoods){ 
+                        
+                    }
 
-                data["PayType"] = "2";
-                SDKManager.gi.Pay(data);
-           
-                //NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LIosRechargeDel, pkg2, LogicMsgID.LogicMsgC2LIosRechargeDel, (args) =>{
-                //    //删除完交易凭证后需告知服务器 but c don't have reply from L
-                //    l2c_ios_recharge_rep msg = l2c_ios_recharge_rep.Parser.ParseFrom(args.msg);
+                    foreach (var item in msg.Eles)
+                    {
+                        int count = item.NCount;
+                        int id = item.NID;
+                        GameElementType type = item.EType;
+                        Debug.Log("---Eles--item.NCount:" + item.NCount + " item.NID:" + item.NID + " item.EType:" + item.EType);
+                    }
+
+                    //c2l_ios_recharge_del pkg2 = new c2l_ios_recharge_del();
+                    //pkg2.RechargeOrderNo = receiptData;
 
 
-                //});
-            });
+
+                    //NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LIosRechargeDel, pkg2, LogicMsgID.LogicMsgC2LIosRechargeDel, (args) =>{
+                    //    //删除完交易凭证后需告知服务器 but c don't have reply from L
+                    //    l2c_ios_recharge_rep msg = l2c_ios_recharge_rep.Parser.ParseFrom(args.msg);
+
+
+                    //});
+                });
+            }
+
+
         });
     
     }

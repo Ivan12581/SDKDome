@@ -10,7 +10,7 @@ namespace celia.game
 
         public SDKAndroidProxy()
         {
-            var unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+            var unityPlayer = new AndroidJavaClass("com.elex.girlsthrone.tw.gp.MainActivity");
             currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
         }
 
