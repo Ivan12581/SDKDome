@@ -177,17 +177,20 @@ public class LoginView : MonoBehaviour
                         data["PayType"] = "2";
                         SDKManager.gi.Pay(data);
                     }
-                    else if(result == IOSRechargeResult.RechargeSendGoods){ 
-                        
+                    else if(result == IOSRechargeResult.RechargeSendGoods){
+                        data.Add("tran", TransactionIds[0]);
+                        data["PayType"] = "2";
+                        SDKManager.gi.Pay(data);
+                        foreach (var item in msg.Eles)
+                        {
+                            int count = item.NCount;
+                            int id = item.NID;
+                            GameElementType type = item.EType;
+                            Debug.Log("---Eles--item.NCount:" + item.NCount + " item.NID:" + item.NID + " item.EType:" + item.EType);
+                        }
                     }
 
-                    foreach (var item in msg.Eles)
-                    {
-                        int count = item.NCount;
-                        int id = item.NID;
-                        GameElementType type = item.EType;
-                        Debug.Log("---Eles--item.NCount:" + item.NCount + " item.NID:" + item.NID + " item.EType:" + item.EType);
-                    }
+
 
                     //c2l_ios_recharge_del pkg2 = new c2l_ios_recharge_del();
                     //pkg2.RechargeOrderNo = receiptData;
