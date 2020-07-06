@@ -542,7 +542,7 @@ static AppleHelper *AppleHelperInstance = nil;
      NSLog(@"交易结束,验证支付信息222 : %@", encodeStr);
 
     //发给自己服务器
-//    [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",encodeStr,@"encodeStr",nil]];
+    [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",encodeStr,@"encodeStr",product_id,@"product_id",transaction_id,@"transaction_id",nil]];
 
 }
 #pragma mark - In-App Purchase入口
