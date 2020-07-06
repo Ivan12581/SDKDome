@@ -157,53 +157,42 @@ public class LoginView : MonoBehaviour
                     pkg.TransactionId = transaction_id;
                     pkg.CommodityId = product_id;
                     pkg.Num = 1;
+                    NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LIosRecharge, pkg, LogicMsgID.LogicMsgL2CIosRechargeRep, (args) =>
+                    {
+                        //收到服务器验证结果 开始删除交易凭证
+                        l2c_ios_recharge_rep msg = l2c_ios_recharge_rep.Parser.ParseFrom(args.msg);
+                        Debug.Log("===收到服务器验证结果===" + JsonConvert.SerializeObject(msg));
+                        IOSRechargeResult result = msg.RechargeResult;
+                        Google.Protobuf.Collections.RepeatedField<string> TransactionIds = msg.TransactionIds;
+                        Google.Protobuf.Collections.RepeatedField<PTGameElement> eles = msg.Eles;
+                        if (result == IOSRechargeResult.RechargeReceive)
+                        {
+                            // finishTransaction:tran];
+                            data.Add("tran", TransactionIds[0]);
+                            data["PayType"] = "2";
+                            SDKManager.gi.Pay(data);
+                        }
+                        else if (result == IOSRechargeResult.RechargeSendGoods)
+                        {
+                            data.Add("tran", TransactionIds[0]);
+                            data["PayType"] = "2";
+                            SDKManager.gi.Pay(data);
+                            foreach (var item in msg.Eles)
+                            {
+                                int count = item.NCount;
+                                int id = item.NID;
+                                GameElementType type = item.EType;
+                                Debug.Log("---Eles--item.NCount:" + item.NCount + " item.NID:" + item.NID + " item.EType:" + item.EType);
+                            }
+                        }
+                    });
                 }
                 else {
                     pkg.RechargeOrderNo = receiptData.Substring((PackageIndex - 1) * 2000,2000);
+                    NetworkManager.gi.SendPkt(LogicMsgID.LogicMsgC2LIosRecharge, pkg);
                 }
 
-                NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LIosRecharge, pkg, LogicMsgID.LogicMsgL2CIosRechargeRep, (args) =>
-                {
-                    //收到服务器验证结果 开始删除交易凭证
-                    l2c_ios_recharge_rep msg = l2c_ios_recharge_rep.Parser.ParseFrom(args.msg);
-                    Debug.Log("===收到服务器验证结果===" + JsonConvert.SerializeObject(msg));
-                    IOSRechargeResult result = msg.RechargeResult;
-                    Google.Protobuf.Collections.RepeatedField<string> TransactionIds = msg.TransactionIds;
-                    Google.Protobuf.Collections.RepeatedField<PTGameElement> eles = msg.Eles;
-                    if (result == IOSRechargeResult.RechargeReceive)
-                    {
-                        // finishTransaction:tran];
-                        data.Add("tran", TransactionIds[0]);
-                        data["PayType"] = "2";
-                        SDKManager.gi.Pay(data);
-                    }
-                    else if(result == IOSRechargeResult.RechargeSendGoods){
-                        data.Add("tran", TransactionIds[0]);
-                        data["PayType"] = "2";
-                        SDKManager.gi.Pay(data);
-                        foreach (var item in msg.Eles)
-                        {
-                            int count = item.NCount;
-                            int id = item.NID;
-                            GameElementType type = item.EType;
-                            Debug.Log("---Eles--item.NCount:" + item.NCount + " item.NID:" + item.NID + " item.EType:" + item.EType);
-                        }
-                    }
 
-
-
-                    //c2l_ios_recharge_del pkg2 = new c2l_ios_recharge_del();
-                    //pkg2.RechargeOrderNo = receiptData;
-
-
-
-                    //NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LIosRechargeDel, pkg2, LogicMsgID.LogicMsgC2LIosRechargeDel, (args) =>{
-                    //    //删除完交易凭证后需告知服务器 but c don't have reply from L
-                    //    l2c_ios_recharge_rep msg = l2c_ios_recharge_rep.Parser.ParseFrom(args.msg);
-
-
-                    //});
-                });
             }
 
 
