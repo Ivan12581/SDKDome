@@ -245,7 +245,7 @@ namespace celia.game
                     }
                     break;
                 case SDKResultType.Pay:
-
+                    
                     break;
                 case SDKResultType.ExitGame:
                     if (state == 1)
@@ -269,7 +269,19 @@ namespace celia.game
                     break;
             }
         }
+        private void PayCallBack(int type) {
+            if (type == 0)
+            {
+               //支付初始化 返回所有订单信息
+               //然后向服务器获得订单信息作对比 
+            } else if (type == 1) {
+                //正常购买
+            }
+            else if (type == 2)
+            {
 
+            }
+        }
         private void BackToLogin()
         {
             if (changingScene)

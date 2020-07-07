@@ -146,6 +146,8 @@ public class LoginView : MonoBehaviour
 
             int TotalCount = receiptData.Length;
             int TotalPackage = (int)Math.Ceiling((double)TotalCount / 2000);
+            Debug.Log("---凭证总长度--->" + TotalCount);
+            Debug.Log("===TotalPackage=" + TotalPackage);
             c2l_ios_recharge pkg = new c2l_ios_recharge();
             for (int PackageIndex = 1; PackageIndex <= TotalPackage; PackageIndex++)
             {
@@ -168,9 +170,14 @@ public class LoginView : MonoBehaviour
                         if (result == IOSRechargeResult.RechargeReceive)
                         {
                             // finishTransaction:tran];
-                            data.Add("tran", TransactionIds[0]);
+                            data.Add("tran", "");
                             data["PayType"] = "2";
-                            SDKManager.gi.Pay(data);
+                            
+                            foreach (var item in TransactionIds)
+                            {
+                                data["tran"] = item;
+                                SDKManager.gi.Pay(data);
+                            }
                         }
                         else if (result == IOSRechargeResult.RechargeSendGoods)
                         {
@@ -197,7 +204,6 @@ public class LoginView : MonoBehaviour
 
 
         });
-    
     }
     public void AppleLogin()
     {
