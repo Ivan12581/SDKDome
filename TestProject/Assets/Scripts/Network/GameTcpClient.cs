@@ -991,6 +991,10 @@ namespace celia.game
 
                                     MainThreadDispatcher.gi.Enqueue(() =>
                                     {
+                                        if (rcv_callback[wrap.Id] == null)
+                                        {
+                                            Debug.Log("---rcv_callback[wrap.Id] == null--- ");
+                                        }
                                         rcv_callback[wrap.Id]?.Invoke(this, new TcpClientEventArgs(wrap));
                                     });
                                 }
