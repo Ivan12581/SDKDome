@@ -40,8 +40,8 @@ static AppleHelper *AppleHelperInstance = nil;
     userIdentifier = @"nil";
     
     NSLog(@"-ios---AppleHelper---InitSDK----");
-    //TODO：apple初始化的时候需要添加购买结果的监听 有可能之前支付ok 但是因为通信而导致存在未处理订单 但是此时还没链接服务器
-    [self addListener];
+    //TODO：apple初始化的时候需要添加购买结果的监听 有可能之前支付ok 但是因为通信而导致存在未处理订单 但是此时还没链接服务器 所有购买监听应该在链接逻辑服成功后开启
+//    [self addListener];
     if (@available(iOS 13.0, *)) {
             [IOSBridgeHelper InitSDKCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",accountName,@"TWuserIdentifier",forService,@"forService",nil]];
     }else{
@@ -414,17 +414,19 @@ static AppleHelper *AppleHelperInstance = nil;
     NSData *data = [jsonNSString dataUsingEncoding:NSUTF8StringEncoding];
     // nsdata -> nsdictionary
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-
+    NSLog(@" ---ios pay---: %@", dict);
     NSString *_productsId = [dict valueForKey:@"GoodID"];
     goodID = [dict valueForKey:@"GoodID"];
-
-    NSLog(@" Pay goodID: %@", goodID);
-    NSLog(@" Pay PayType: %@", [dict valueForKey:@"PayType"]);
-    //这里定义支付类型 1去Apple为支付 2为服务器返回支付验证结果
-    if ([[dict valueForKey:@"PayType"]  isEqual: @"2"]) {
-        [self HandlePayState];
-    }else{
+    NSString *Type = [dict valueForKey:@"PayType"];
+    //这里定义支付类型 0为初始化 打开支付监听 1去Apple为支付 2为删除订单
+    if ([Type isEqual: @"0"]) {
+          [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
+    }else if ([Type isEqual: @"1"]){
         [self buyProductsWithId:_productsId];
+    }else if ([Type isEqual: @"2"]){
+        [self CheckTrans:[dict valueForKey:@"tran"]];
+    }else{
+//        [self CheckTrans:[dict valueForKey:@"tran"]];
     }
 }
 //收到产品返回信息
@@ -511,12 +513,22 @@ static AppleHelper *AppleHelperInstance = nil;
 }
 
 //从服务器返回 通过订单号解除交易状态
--(void)CheckTrans{
-    for (SKPaymentTransaction *tran in trans) {
-        if ([tran.transactionIdentifier  isEqual: @"服务器传过来"]) {
-            [[SKPaymentQueue defaultQueue] finishTransaction:tran];
+-(void)CheckTrans:(NSString *)deltran{
+      NSLog(@"---从服务器返回 通过订单号解除交易状态---: %@", deltran);
+    if(trans != nil && trans.count > 0){
+        SKPaymentTransaction *curtran = nil;
+        for (SKPaymentTransaction *tran in trans) {
+            if ([tran.transactionIdentifier  isEqual: deltran]) {
+                curtran = tran;
+//                [[SKPaymentQueue defaultQueue] finishTransaction:tran];
+                break;
+            }
+        }
+        if (curtran != nil) {
+            [[SKPaymentQueue defaultQueue] finishTransaction:curtran];
         }
     }
+
 }
 //交易结束,验证支付信息是否都正确。
 - (void)completeTransaction:(SKPaymentTransaction *)transaction {
