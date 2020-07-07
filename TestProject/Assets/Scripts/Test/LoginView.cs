@@ -137,6 +137,8 @@ public class LoginView : MonoBehaviour
         data.Add("Extra", "test");
         data.Add("GoodID", "test1");
         data.Add("GoodNum", "1");
+
+
         SDKManager.gi.Pay(data, (s, v) =>
         {
             //开始把交易凭证发给服务器验证
@@ -163,7 +165,7 @@ public class LoginView : MonoBehaviour
                     {
                         //收到服务器验证结果 开始删除交易凭证
                         l2c_ios_recharge_rep msg = l2c_ios_recharge_rep.Parser.ParseFrom(args.msg);
-                        Debug.Log("===收到服务器验证结果===" + JsonConvert.SerializeObject(msg));
+                        Debug.Log("---receive data from server--->" + JsonConvert.SerializeObject(msg));
                         IOSRechargeResult result = msg.RechargeResult;
                         Google.Protobuf.Collections.RepeatedField<string> TransactionIds = msg.TransactionIds;
                         Google.Protobuf.Collections.RepeatedField<PTGameElement> eles = msg.Eles;

@@ -1733,7 +1733,7 @@ public enum LogicMsgID {
   /// </summary>
   [pbr::OriginalName("LOGIC_MSG_L2C_IOS_RECHARGE_REP")] LogicMsgL2CIosRechargeRep = 58116,
   /// <summary>
-  /// 回复
+  /// 初始化订单信息
   /// </summary>
   [pbr::OriginalName("LOGIC_MSG_L2C_IOS_RECHARGE_INIT")] LogicMsgL2CIosRechargeInit = 58117,
   /// <summary>
