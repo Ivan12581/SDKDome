@@ -127,6 +127,7 @@ public class LoginView : MonoBehaviour
             OutputTop.text = "Init back:" + Newtonsoft.Json.JsonConvert.SerializeObject(dataDict);
         });
     }
+
     public void ApplePay()
     {
         Debug.Log("---Unity---SDKPay---");
@@ -138,9 +139,14 @@ public class LoginView : MonoBehaviour
         data.Add("GoodID", "test1");
         data.Add("GoodNum", "1");
 
-
+        bool Lock = false;
         SDKManager.gi.Pay(data, (s, v) =>
         {
+            if (Lock)
+            {
+                return;
+            }
+            Lock = true;
             //开始把交易凭证发给服务器验证
             v.TryGetValue("encodeStr",out string receiptData);
             v.TryGetValue("product_id", out string product_id);
