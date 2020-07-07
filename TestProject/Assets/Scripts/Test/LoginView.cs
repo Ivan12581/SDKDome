@@ -256,43 +256,52 @@ public class LoginView : MonoBehaviour
     }
     public void FBLogin()
     {
+        Debug.Log("---Unity---FBLogin---");
+        SDKManager.gi.Login(SDKLoginType.FaceBook, (s, dataDict) =>
+        {
+            Debug.Log("---Unity---FBLogin--callback-");
+            //int state = int.Parse(dataDict["state"]);
+
+            c2a_logon_apple_gamecenter args = new c2a_logon_apple_gamecenter();
+            dataDict.TryGetValue("state", out string state);
+            dataDict.TryGetValue("playerID", out string playerID);
+            dataDict.TryGetValue("publicKeyUrl", out string publicKeyUrl);
+            dataDict.TryGetValue("signature", out string signature);
+            dataDict.TryGetValue("salt", out string salt);
+            dataDict.TryGetValue("timestamp", out string timestamp);
+            args.UserIdentifier = playerID;
+            //应服务器要求 下面字段先注释掉 正式应该加上的
+            //args.PublicKeyUrl = publicKeyUrl;
+            //args.Signature = signature;
+            //args.Salt = salt;
+            //args.Timestamp = timestamp;
+            if (int.Parse(state) == 1)
+            {
+                NetworkManager.gi.ConnectAuth_LoginGameCenter(args);
+            }
+        });
+    }
+
+    public void FBShare() {
+        Debug.Log("---Unity---FBShare---");
+    }
+    public void ApplePayInit()
+    {
+        Debug.Log("---Unity---ApplePayInit---");
         Dictionary<string, string> data = new Dictionary<string, string>();
         data.Add("PayType", "0");//这里定义支付类型 0:初始化支付 1去Apple为支付 2为服务器返回支付验证结果
         SDKManager.gi.Pay(data);
-
-
-        //Debug.Log("---Unity---FBLogin---");
-        //SDKManager.gi.Login(SDKLoginType.FaceBook, (s, dataDict) => {
-        //    Debug.Log("---Unity---FBLogin--callback-");
-        //    //int state = int.Parse(dataDict["state"]);
-
-        //    c2a_logon_apple_gamecenter args = new c2a_logon_apple_gamecenter();
-        //    dataDict.TryGetValue("state", out string state);
-        //    dataDict.TryGetValue("playerID", out string playerID);
-        //    dataDict.TryGetValue("publicKeyUrl", out string publicKeyUrl);
-        //    dataDict.TryGetValue("signature", out string signature);
-        //    dataDict.TryGetValue("salt", out string salt);
-        //    dataDict.TryGetValue("timestamp", out string timestamp);
-        //    args.UserIdentifier = playerID;
-        //    //应服务器要求 下面字段先注释掉 正式应该加上的
-        //    //args.PublicKeyUrl = publicKeyUrl;
-        //    //args.Signature = signature;
-        //    //args.Salt = salt;
-        //    //args.Timestamp = timestamp;
-        //    if (int.Parse(state) == 1)
-        //    {
-        //        NetworkManager.gi.ConnectAuth_LoginGameCenter(args);
-        //    }
-        //});
     }
     public void Switch()
     {
+        Debug.Log("---Unity---Switch---");
         SDKManager.gi.Switch((s, dataDict) => {
             OutputTop.text = "Switch back:" + s;
         });
     }
     public void Exit()
     {
+        Debug.Log("---Unity---Exit---");
         SDKManager.gi.ExitGame((s, dataDict) => {
             OutputTop.text = "ExitGame back:" + s;
         });
