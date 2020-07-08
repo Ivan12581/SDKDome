@@ -13,11 +13,10 @@ namespace celia.game
             NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LRechargeGoodsInit, new c2l_recharge_goods_init(), LogicMsgID.LogicMsgL2CRechargeGoodsInit, (args) =>
             {
                 l2c_recharge_goods_init msg = l2c_recharge_goods_init.Parser.ParseFrom(args.msg);
-           //     LogHelper.Log($"TotalCost : {msg.Goods.TotalCost}");
 
                 foreach (var item in msg.Goods.DoubleGoods)
                 {
-                    LogHelper.Log($"DoubleGoods : {item}");
+
                 }
             });
         }
@@ -29,12 +28,10 @@ namespace celia.game
             c2l_generate_recharge_order pkg = new c2l_generate_recharge_order();
             pkg.CommodityId = id;
 
-            LogHelper.Log("buying : " + pkg.CommodityId);
 
             NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LGenerateRechargeOrder, pkg, LogicMsgID.LogicMsgL2CGenerateRechargeOrder, (args) =>
             {
                 l2c_generate_recharge_order msg = l2c_generate_recharge_order.Parser.ParseFrom(args.msg);
-                LogHelper.Log(Newtonsoft.Json.JsonConvert.SerializeObject(msg));
                 OutputTop.text = OutputTop.text + Newtonsoft.Json.JsonConvert.SerializeObject(msg);
 
                 Dictionary<string, string> data = new Dictionary<string, string>();
@@ -52,10 +49,9 @@ namespace celia.game
                 data.Add("Extra", msg.ThroughParam);
                 SDKManager.gi.Pay(data ,(s,v)=>
                 {
-                    LogHelper.Log("SDK Pay Callback state : " + s);
                     foreach (var item in v)
                     {
-                        LogHelper.Log("SDK Pay Callback info : " + item.Key + "/" + item.Value);
+
                     }
                 });
             });
@@ -63,8 +59,6 @@ namespace celia.game
             NetworkManager.gi.RegisterMsgHandler(LogicMsgID.LogicMsgL2CRechargeOrderUpd, (args) => 
             {
                 l2c_recharge_order_upd msg = l2c_recharge_order_upd.Parser.ParseFrom(args.msg);
-                LogHelper.Log(Newtonsoft.Json.JsonConvert.SerializeObject(msg));
-                LogHelper.Log("-----------------Buy success-----------------");
                 OutputTop.text = OutputTop.text + Newtonsoft.Json.JsonConvert.SerializeObject(msg);
             });
         }

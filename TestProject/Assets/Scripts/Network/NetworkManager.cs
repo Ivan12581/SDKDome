@@ -269,7 +269,6 @@ namespace celia.game
                 {
                     GameTcpClient.gi.rcv_callback[msgId] -= handler;
 
-                    LogHelper.Log("stop wait msg 247:"+msgId);
                     PopupMessageManager.gi.StopWait(type: PopupMessageManager.LoadingType.MSG);
                     callback?.Invoke(e);
                 };
@@ -280,7 +279,6 @@ namespace celia.game
                 msgId, handler = (s, e) =>
                 {
                     GameTcpClient.gi.rcv_callback[msgId] -= handler;
-                    LogHelper.Log("stop wait msg 258:"+msgId);
                     PopupMessageManager.gi.StopWait(type: PopupMessageManager.LoadingType.MSG);
                     callback?.Invoke(e);
                 });
@@ -345,7 +343,6 @@ namespace celia.game
                 l2c_error msg = l2c_error.Parser.ParseFrom(args.msg);
 
                 Debug.Log("收到错误协议， ID为" + msg.Id);
-                LogHelper.Log("收到错误协议， ID为" + msg.Id);
 
                 GameTcpClient.gi.SetMsgState(send_msg.guid, MsgHandle.MsgHandleState.IS_OVER);
 
@@ -364,7 +361,6 @@ namespace celia.game
             {
                 GameTcpClient.gi.SetMsgState(send_msg.guid, MsgHandle.MsgHandleState.IS_OVER);
 
-                LogHelper.Log("收到成功返回的协议， ID为" + ((int)proto));
                 // 移除错误回调
                 RemoveMsgHandler(LogicMsgID.LogicMsgL2CError, errorCallback);
                 flag = true;
@@ -387,7 +383,6 @@ namespace celia.game
             () =>
             {
                 //remove msg handler
-                LogHelper.Log("stop wait msg 364:"+((int)proto));
                 PopupMessageManager.gi.StopWait(type: PopupMessageManager.LoadingType.MSG);
                 flag = true;
                 RemoveMsgHandler(callbackProto, successCallback);
@@ -481,8 +476,6 @@ namespace celia.game
             var defaultFailedResult = new Dictionary<LogicMsgID, Dictionary<int, TcpClientEventArgs>>();
             void DealWithError()
             {
-
-                LogHelper.Log("stop wait msg 458:"+((int)proto));
                 PopupMessageManager.gi.StopWait(type: PopupMessageManager.LoadingType.MSG);
 
                 flag = true;
@@ -595,7 +588,6 @@ namespace celia.game
                                 flag = true;
 
                                 // 调用成功回调
-                                LogHelper.Log("stop wait msg 571:"+((int)proto));
                                 PopupMessageManager.gi.StopWait(type: PopupMessageManager.LoadingType.MSG);
                                 callback?.Invoke((false, successResult));
                             }
@@ -629,7 +621,6 @@ namespace celia.game
                 //remove msg handler
                 // 一旦发生错误情况，直接清除全部的回调
 
-                LogHelper.Log("stop wait msg 605:"+((int)proto));
                 PopupMessageManager.gi.StopWait(type: PopupMessageManager.LoadingType.MSG);
                 flag = true;
                 ClearSuccessHandlers();
@@ -687,13 +678,11 @@ namespace celia.game
                     }
                     else
                     {
-                        LogHelper.Log("不到3次的默认重发" + send_msg.proto);
                         ReSend();
                     }
                 }
                 else
                 {
-                    LogHelper.Log("准备弹出登录界面:" + send_msg.proto);
                     {
                         //提示回到登陆界面
                         reLoginHandler?.Invoke();

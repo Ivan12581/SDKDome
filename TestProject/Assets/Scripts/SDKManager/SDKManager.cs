@@ -213,7 +213,7 @@ namespace celia.game
                 case SDKResultType.Init:
                     if (state == 0)//初始化失败则重新初始化
                     {
-                        InitSDK();
+                        //InitSDK();
                     }else if(state == 1)
                     {
                         //UploadDeviceInfo(DeviceUpload.SDKInitSucc);
@@ -222,7 +222,7 @@ namespace celia.game
                 case SDKResultType.Login:
                     if (loginDelay != null)
                     {
-                        DelayManager.gi.Break(loginDelay);
+                        //DelayManager.gi.Break(loginDelay);
                     }
                     // IOS SDK切换账号时，TOKEN都是从Login成功消息返回，无切换账号成功消息
                     if (state == 1 && DoingSwitch)
@@ -245,7 +245,7 @@ namespace celia.game
                     }
                     break;
                 case SDKResultType.Pay:
-                    SDKPay.gi.PayCallBack(data);
+                    SDKPay.gi.SDKPayCallBack(state,data);
                     break;
                 case SDKResultType.ExitGame:
                     if (state == 1)

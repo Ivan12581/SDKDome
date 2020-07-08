@@ -108,7 +108,7 @@ namespace celia.game
 
         public void Connect(string ip, uint port)
         {
-            LogHelper.Log("Connect...");
+            Debug.Log("Connect...");
             Close();
 
             remote_ip = ip;
@@ -124,7 +124,7 @@ namespace celia.game
         /// </summary>
         public void Reconnect()
         {
-            LogHelper.Log("Reconnect close");
+            Debug.Log("Reconnect close");
             Close();
             reset(false);
         }
@@ -161,7 +161,7 @@ namespace celia.game
                 waitForSend.Clear();
 
                 // 确保关闭了转圈圈
-                LogHelper.Log("stop wait all 163");
+                Debug.Log("stop wait all 163");
                 PopupMessageManager.gi.StopAllLoading();
                 if (networkThread != null && hasStarted)
                 {
@@ -249,7 +249,7 @@ namespace celia.game
                 string content = "网络异常，是否重连?";
 
                 // 确保关闭了转圈圈
-                LogHelper.Log("stop wait all 260");
+                Debug.Log("stop wait all 260");
                 PopupMessageManager.gi.StopAllLoading();
                 //reconnectIsOpen = true;
                 if (networkThread != null && hasStarted)
@@ -331,7 +331,7 @@ namespace celia.game
                     close_call = true;
                     isInitReady = false;
 
-                    LogHelper.Log("TCP close()");
+                    Debug.Log("TCP close()");
                 }
                 catch (Exception e)
                 {
@@ -384,8 +384,6 @@ namespace celia.game
             }
 
             ++_ping_out;
-            //Debug.Log("Ping Out值为" + _ping_out);
-         //   LogHelper.Log("Ping: " + _ping_out);
             SendPkt(new GameMessage() { guid = HEART_BEAT });
         }
 
@@ -562,8 +560,6 @@ namespace celia.game
             isInitReady = false;
             isNoCharacter = false;
 
-            LogHelper.Log("网络线程开始");
-
             /// 尝试重新连接的次数
             int reconnectTimes = 0;
 
@@ -579,7 +575,6 @@ namespace celia.game
 
                     MainThreadDispatcher.gi.Enqueue(() =>
                     {
-                        LogHelper.Log("stop wait tcp 582");
                         PopupMessageManager.gi.StopWait(type: PopupMessageManager.LoadingType.TCP);
                     });
 
@@ -759,7 +754,7 @@ namespace celia.game
             // 如果开启网络检查，需要先保证网络的连接状态，直到确认网络连接畅通后再进行实际的发包
             if (connectionCheck)
             {
-                LogHelper.Log("closed & tryConnect:" + closed + ":" + tryConnect + ":" + isInitReady);
+                Debug.Log("closed & tryConnect:" + closed + ":" + tryConnect + ":" + isInitReady);
                 // 如果服务器已经关闭了，要进行重连，tryConnect 的判断是为了同时多条要重发的情况下，只存在一次重连尝试，其它重发的消息将缓存到waitforsend列表里
                 if (closed && !tryConnect)
                 {
@@ -907,7 +902,7 @@ namespace celia.game
                     {
                         System.Console.WriteLine("do_read() Exception:{0}", e.ToString());
 
-                        LogHelper.Log("读线程异常");
+                        Debug.Log("读线程异常");
                         Close();
                     }
                 }
@@ -993,7 +988,6 @@ namespace celia.game
                 if (!closed && kick_out_time <= _ping_out)
                 {
                     Debug.LogError("TCP Client: Ping超时！关闭TCP Client");
-                    LogHelper.Log("TCP Client: Ping超时");
 
                     Close();
 
@@ -1062,7 +1056,6 @@ namespace celia.game
                     {
                         // 因被服务器踢出而掉线一般会出现此异常，被远程主机拒绝
                         Debug.LogError("写线程异常 do_write() Exception:{0}" + e.ToString());
-                        LogHelper.Log("写线程异常");
                         // 直接关了就可以了
                         Close();
                     }

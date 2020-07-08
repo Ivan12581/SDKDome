@@ -189,12 +189,17 @@ enum LogicMsgID {
 	LOGIC_MSG_C2L_RECHARGE_GET_SUM_AWARD	= 58111; // 领取累充奖励(活动ID为0，为总累充奖励)
 	LOGIC_MSG_L2C_RECHARGE_GET_SUM_AWARD	= 58112;
 	
-	LOGIC_MSG_C2L_IOS_RECHARGE				= 58115; // 充值订单号
-	LOGIC_MSG_L2C_IOS_RECHARGE_REP 			= 58116; // 回复
-	LOGIC_MSG_L2C_IOS_RECHARGE_INIT			= 58117; // 初始化订单信息
+	// IOS充值
+	LOGIC_MSG_C2L_IOS_RECHARGE_INIT			= 58115; // 初始化订单信息
+	LOGIC_MSG_L2C_IOS_RECHARGE_INIT			= 58116; // 
 	
-	LOGIC_MSG_L2C_RECHARGE_COMMODITY_ASK	= 58120; // 请求充值商品
-	LOGIC_MSG_L2C_RECHARGE_COMMODITY_REP	= 58121; // 回复
+	LOGIC_MSG_C2L_RECHARGE_COMMODITY_ASK	= 58117; // 请求充值商品(验证)
+	LOGIC_MSG_L2C_RECHARGE_COMMODITY_REP	= 58118; // 回复
+	
+	LOGIC_MSG_C2L_IOS_RECHARGE				= 58119; // 充值
+	LOGIC_MSG_L2C_IOS_RECHARGE_REP 			= 58120; // 回复	
+	LOGIC_MSG_C2L_IOS_RECHARGE_CLOSED		= 58121; // 已删除IOS交易订单信息
+	
 	// 换装小游戏579--
 	LOGIC_MSG_C2L_MINIGAME_CLOTHCHANGING_STAR		= 57901; // 换装
 	LOGIC_MSG_L2C_MINIGAME_CLOTHCHANGING_SUCCESS	= 57902; // 换装成功
@@ -1593,45 +1598,65 @@ message l2c_recharge_get_sum_award {
 	bool					result	= 1; // 领取结果
 	repeated PTGameElement 	awards 	= 2; // 奖励元素
 }
+//  -------------------------------------------------------------------------------------------------------充值
 
+// IOS充值-------------------------------------------------------------------------------------------------------
+
+// LOGIC_MSG_C2L_IOS_RECHARGE_INIT
+message c2l_ios_recharge_init {
+}
+
+// LOGIC_MSG_L2C_IOS_RECHARGE_INIT
+message l2c_ios_recharge_init {
+	repeated string order_to_delete		= 1;	// 未删除的订单
+}
+
+// LOGIC_MSG_C2L_RECHARGE_COMMODITY_ASK 问询是否可购买
+message c2l_recharge_commodity_ask {
+	string commodity_id		= 1;		// 商品唯一id
+	int32 qutity			= 2;		// 商品数量
+}
+
+// LOGIC_MSG_L2C_RECHARGE_COMMODITY_REP
+message l2c_recharge_commodity_rep {
+	string commodity_id		= 1;		// 商品唯一id
+	int32 qutity			= 2;		// 商品数量
+}
+
+// LOGIC_MSG_C2L_IOS_RECHARGE
 message c2l_ios_recharge {
 	int32 total_package				= 1;	// 消息包总数
 	int32 package_index				= 2;	// 消息包索引(1~total_package)
-	string 	recharge_order_no		= 3;	// 充值订单号(充值凭据) 被拆包的数据
-	//后面三个数据尾包发来即可
-	string transaction_id			= 4;	// ios交易唯一标识
-	string 	commodity_id			= 5;	// 商品id
-	int32 	num						= 6;	// 商品数量
+	string 	recharge_order_no		= 3;	// 充值凭据(被拆包的数据)
+	
+	message transaction_info {
+		string transaction_id			= 1;	// ios订单id(唯一标识)
+		string 	commodity_id			= 2;	// 商品id
+		int32 	num						= 3;	// 商品数量
+	}
+	
+	// 该字段信息尾包发来即可
+	repeated transaction_info order_infos	= 4;	// 订单信息 
 }
 
 enum IOSRechargeResult {
-	RECHARGE_RECEIVE 		= 0; 	// 已收到客户端请求(已存库，请不要再发来)
-	RECHARGE_SEND_GOODS 	= 1; 	// 已发货(通知客户端删除凭据)
+	RECHARGE_RECEIVE 		= 0; 	// 已收到客户端请求(可以关闭IOS交易信息)
+	RECHARGE_SEND_GOODS 	= 1; 	// 验证通过已发货
+	RECHARGE_ERROR 			= 2; 	// 充值异常
 }
 
+// LOGIC_MSG_L2C_IOS_RECHARGE_REP
 message l2c_ios_recharge_rep {
 	IOSRechargeResult			recharge_result			= 1;	// 充值结果(0已收到/1充值成功&删除订单)
 	repeated	string	transaction_ids					= 2;	// 通知客户端去ios删除的交易id
 	repeated	PTGameElement 	eles 					= 3;	// 购买得到的元素
 }
 
-message l2c_ios_recharge_init {
-	repeated	string	verifing_order				= 1;		// 正在验证中的凭据对应的交易id
-	repeated	string to_delete_order				= 2;		// 客户端需要删除的凭据(已发货)对应的交易id
+// LOGIC_MSG_C2L_IOS_RECHARGE_CLOSED
+message c2l_ios_recharge_closed {
+	repeated string order_deleted		= 1;	// 已删除的订单
 }
-
-// 客户端充值某类型商品需先请求服务器是否可以充值
-message l2c_recharge_commodity_ask {
-	string commodity_id		= 1;		// 商品唯一id
-	int32 qutity			= 2;		// 商品数量
-}
-
-// 回复
-message l2c_recharge_commodity_rep {
-	string commodity_id		= 1;		// 商品唯一id
-	int32 qutity			= 2;		// 商品数量
-}
-//  -------------------------------------------------------------------------------------------------------充值
+//  -------------------------------------------------------------------------------------------------------IOS充值
 
 // 换装小游戏 -------------------------------------------------------------------------------------------------------
 

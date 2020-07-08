@@ -98,9 +98,9 @@ public class LoginView : MonoBehaviour
                 if (TotalPackage == PackageIndex)
                 {
                     pkg.RechargeOrderNo = receiptData.Substring((PackageIndex - 1) * 2000, TotalCount - (PackageIndex - 1) * 2000);
-                    pkg.TransactionId = transaction_id;
-                    pkg.CommodityId = product_id;
-                    pkg.Num = 1;
+                    //pkg.TransactionId = transaction_id;
+                    //pkg.CommodityId = product_id;
+                    //pkg.Num = 1;
                     NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LIosRecharge, pkg, LogicMsgID.LogicMsgL2CIosRechargeRep, (args) =>
                     {
                         //收到服务器验证结果 开始删除交易凭证
@@ -229,8 +229,7 @@ public class LoginView : MonoBehaviour
     public void ApplePayInit()
     {
         Debug.Log("---Unity---ApplePayInit---");
-        SDKPay.gi.Init();
-        SDKPay.gi.GetSDKPayInfo();
+        SDKPay.gi.ApplePayInit();
     }
     public void Switch()
     {
