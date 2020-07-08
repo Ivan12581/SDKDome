@@ -316,30 +316,6 @@ namespace celia.game
             reconnectWaitForSel = false;
             NetworkManager.gi.curReconnectGUID = "";
             Close();
-            /*
-            //如果不是在登陆界面，则回到登录界面
-            if (SceneManager.GetActiveScene().name != SceneMgr.LOGIN)
-            {
-                SceneTransition.gi.ToScene(SceneMgr.LOGIN, completedCallBack: (scene, obj) =>
-                {
-                    LogicProcessor.OnDisconnectReturnToLoginResetData();
-                });
-            }
-            else
-            {
-                //检查是否有其它界面打开着
-                if (View.LoginView.BindCodeorChangingNameIsOpen())
-                {
-                    SceneTransition.gi.ToScene(SceneMgr.LOGIN, completedCallBack: (scene, obj) =>
-                    {
-                        LogicProcessor.OnDisconnectReturnToLoginResetData();
-                    });
-                }
-                else
-                {
-                    LogicProcessor.OnDisconnectReturnToLoginResetData();
-                }
-            }*/
         }
 
         public void Close()
@@ -387,7 +363,7 @@ namespace celia.game
             }
             else
             {
-                Debug.Log("查找到有未处理的消息: " + wrap.Id + " guid: " + wrap.OpId + " index: " + wrap.OpIdIdx);
+                Debug.Log("--An unhandled message was found: " + wrap.Id + " guid: " + wrap.OpId + " index: " + wrap.OpIdIdx);
             }
             //opid 为空的应该是服务器主动推过来的登录询问协议之类的
             if (wrap.OpId != "")
@@ -735,7 +711,7 @@ namespace celia.game
         /// <param name="connectionCheck">是否进行网络连接检查，如果进行检查，则会在网络连接断开时进行自动重连相关逻辑</param>
         public GameMessage SendPkt(int proto, IMessage pkt, string guid = "", bool connectionCheck = false)
         {
-            Debug.Log("预定发送:" + proto + " guid: " + guid);
+            Debug.Log("--SendPkt protoID:" + proto + " guid: " + guid);
 
             MsgWrap wrap = null;
             GameMessage msg = null;

@@ -43,53 +43,13 @@ public class LoginView : MonoBehaviour
         counter = 0;
         testrunning = false;
         waiting = false;
-
-        /*
-        string text = "{\"code\":200,\"msg\":\"\u6210\u529f\",\"data\":{\"adult\":1,\"openid\":\"78040639\"}}";
-        string[] strs = text.Split(',');
-        string code;
-        string id;
-        code = strs[0].Substring(strs[0].IndexOf(':') + 1);
-        id = strs[3].Substring(strs[3].IndexOf('\"',9) + 1, strs[3].LastIndexOf('\"') - strs[3].IndexOf('\"',9) - 1);
-
-        Debug.Log(code +"---"+ id);        */
-
-
-
     }
 
     public void SetServerIP()
     {
         GameSetting.gi.ip = serverIP.text;
-        OutputTop.text = GameSetting.gi.ip.ToString() + "===========" + Utils.ip;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (testrunning && !waiting)
-        {
-            waiting = true;
-            //SDKManager.gi.Login((s, dataDict) => {
-                //Debug.Log("login callback called ------------------");
-                //int state = int.Parse(dataDict["state"]);
-                //if (state == 1)
-                //{
-                //    OutputTop.text += "\n" + dataDict["token"];
-                //    Debug.Log("Build url calling ---------------------");
-                //  //  StartCoroutine(LoginTest(BuildUrl(dataDict["token"])));
-
-                //      //NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"],dataDict["identityTokenStr"]);
-                //}
-                //else
-                //{
-                //    OutputTop.text += "\n" + "SDK fail!!!";
-                //    Debug.Log("SDK login fail ----------------");
-                //    waiting = false;
-                //}
-            //});
-        }
-    }
 
     public void Login()
     {

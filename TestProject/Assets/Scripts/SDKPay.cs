@@ -39,7 +39,7 @@ namespace celia.game {
         /// <param name="args"></param>
         private void IosRechargeRep(object sender, TcpClientEventArgs args) {
             l2c_ios_recharge_rep msg = l2c_ios_recharge_rep.Parser.ParseFrom(args.msg);
-            Debug.Log("===收到服务器验证结果===" + JsonConvert.SerializeObject(msg));
+            Debug.Log("---Server validation results received--->" + JsonConvert.SerializeObject(msg));
             IOSRechargeResult result = msg.RechargeResult;
             Google.Protobuf.Collections.RepeatedField<string> TransactionIds = msg.TransactionIds;
             Google.Protobuf.Collections.RepeatedField<PTGameElement> eles = msg.Eles;
@@ -57,9 +57,13 @@ namespace celia.game {
             }
             else if (result == IOSRechargeResult.RechargeSendGoods)
             {
-                data.Add("tran", TransactionIds[0]);
                 data["PayType"] = "2";
-                SDKManager.gi.Pay(data);
+                foreach (var item in TransactionIds)
+                {
+                    data["tran"] = item;
+
+                    SDKManager.gi.Pay(data);
+                }
                 foreach (var item in msg.Eles)
                 {
                     //int count = item.NCount;
@@ -124,7 +128,7 @@ namespace celia.game {
 
                 int TotalCount = receiptData.Length;
                 int TotalPackage = (int)Math.Ceiling((double)TotalCount / 2000);
-                Debug.Log("---凭证总长度--->" + TotalCount);
+                Debug.Log("---TotalCount--->" + TotalCount);
                 Debug.Log("===TotalPackage=" + TotalPackage);
                 c2l_ios_recharge pkg = new c2l_ios_recharge();
                 for (int PackageIndex = 1; PackageIndex <= TotalPackage; PackageIndex++)
