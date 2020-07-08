@@ -46,23 +46,20 @@ namespace celia.game {
             if (result == IOSRechargeResult.RechargeReceive)
             {
                 // finishTransaction:tran];
-                data.Add("tran", "");
-                data["PayType"] = "2";
+                //data.Add("tran", "");
+                //data["PayType"] = "2";
 
-                foreach (var item in TransactionIds)
-                {
-                    data["tran"] = item;
-                    SDKManager.gi.Pay(data);
-                }
+                //SDKManager.gi.Pay(data);
             }
             else if (result == IOSRechargeResult.RechargeSendGoods)
             {
                 data["PayType"] = "2";
+
                 foreach (var item in TransactionIds)
                 {
-                    data["tran"] = item;
+                    //data["tran"] = item;
 
-                    SDKManager.gi.Pay(data);
+                    //SDKManager.gi.Pay(data);
                 }
                 foreach (var item in msg.Eles)
                 {

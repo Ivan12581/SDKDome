@@ -412,7 +412,6 @@ namespace celia.game
 
             Debug.Log("认证服:断开到认证服的连接");
             GameTcpClient.gi.Close();
-            LoginView.waiting = false;
         }
 
         public void ConnectingLogic()

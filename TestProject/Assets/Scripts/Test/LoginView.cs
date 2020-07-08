@@ -10,16 +10,10 @@ using UnityEngine.UI;
 
 public class LoginView : MonoBehaviour
 {
-    public InputField NameFile;
-    public InputField WordFile;
+
     public InputField serverIP;
-
-    public InputField OutputTop;
-    public InputField OutputBtm;
-
     public GameObject GoTest;
 
-    public Text openidText, successCountText,errorOpenid;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,10 +33,8 @@ public class LoginView : MonoBehaviour
                 Debug.LogWarning(Newtonsoft.Json.JsonConvert.SerializeObject(msg));
             });
         });
-        Debug.Log("LOG TEST");
-        counter = 0;
-        testrunning = false;
-        waiting = false;
+        Debug.Log("---Unity Start---");
+
     }
 
     public void SetServerIP()
@@ -67,7 +59,7 @@ public class LoginView : MonoBehaviour
     {
         Debug.Log("---Unity---InitSDK---");
         SDKManager.gi.InitSDK((s, dataDict) => {
-            OutputTop.text = "Init back:" + Newtonsoft.Json.JsonConvert.SerializeObject(dataDict);
+
         });
     }
 
@@ -172,9 +164,8 @@ public class LoginView : MonoBehaviour
             }
             else
             {
-                OutputTop.text += "\n" + "SDK fail!!!";
+
                 Debug.Log("SDK login fail ----------------");
-                waiting = false;
             }
         });
     }
@@ -245,79 +236,17 @@ public class LoginView : MonoBehaviour
     {
         Debug.Log("---Unity---Switch---");
         SDKManager.gi.Switch((s, dataDict) => {
-            OutputTop.text = "Switch back:" + s;
+
         });
     }
     public void Exit()
     {
         Debug.Log("---Unity---Exit---");
         SDKManager.gi.ExitGame((s, dataDict) => {
-            OutputTop.text = "ExitGame back:" + s;
+
         });
     }
 
-    public static bool waiting;
-    public bool testrunning;
-    int counter;
-    string openid;
-    public IEnumerator LoginTest(string _url)
-    {
-        Debug.Log("URL-----------------" + _url);
-        WWW getData = new WWW(_url);  
-        yield return getData;
-        if (getData.error != null)
-        {
-            Debug.Log("httppppp error-----------------" + getData.error);
-        }
-        else
-        {
-            string resultTest = string.Copy(getData.text);
-            Debug.Log(resultTest.Split(',').Length + "httppppp result-----------------" + resultTest);
-            string[] strs = resultTest.Split(',');
-
-            string code;
-            string id;
-            code = strs[0].Substring(strs[0].IndexOf(':') + 1);
-            id = strs[3].Substring(strs[3].IndexOf('\"', 9) + 1, strs[3].LastIndexOf('\"') - strs[3].IndexOf('\"', 9) - 1);
-
-            if (code == "200")
-            {
-                counter++;
-                successCountText.text = counter.ToString();
-                if (string.IsNullOrEmpty(openid))
-                {
-                    openid = id;
-                    openidText.text = openid;
-                }
-                if (openid != id)
-                {
-                    errorOpenid.text = openid;
-                    testrunning = false;
-                }
-            }
-            else
-            {
-                Debug.Log("LOGING Error" + getData.text);
-            }
-        }
-        waiting = false;
-        if (counter == 5000)
-        {
-            testrunning = false;
-        }
-    }
-
-    
-
-    public string BuildUrl(string token)
-    {
-        string result = "http://access_token.rastargame.com/v2/Token/verify/?";
-        string md5_src = $"access_token={token}&app_id=101189&cch_id=185&tm={Utils.ConvertDateTimeInt(System.DateTime.Now)}&";
-
-        result += md5_src + "sign=" + Utils.GetMD5Key(md5_src + "4byauQ3MJXUPNi0");
-
-        return result;
-    }
 }
 
 

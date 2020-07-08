@@ -247,8 +247,6 @@ namespace celia.game
             MainThreadDispatcher.gi.Enqueue(() =>
             {
                 string content = "网络异常，是否重连?";
-                string confirm = "重连";
-                string cancel = "重登";
 
                 // 确保关闭了转圈圈
                 LogHelper.Log("stop wait all 260");
