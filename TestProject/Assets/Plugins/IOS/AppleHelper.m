@@ -424,7 +424,7 @@ static AppleHelper *AppleHelperInstance = nil;
     }else if ([Type isEqual: @"1"]){
         [self buyProductsWithId:_productsId];
     }else if ([Type isEqual: @"2"]){
-        [self CheckTrans:[dict valueForKey:@"tran"]];
+//        [self CheckTrans:[dict valueForKey:@"tran"]];
     }else{
 //        [self CheckTrans:[dict valueForKey:@"tran"]];
     }
@@ -466,7 +466,7 @@ static AppleHelper *AppleHelperInstance = nil;
 //    The default value is 1, the minimum value is 1, and the maximum value is 10.
 //    payment.quantity = goodNum;
         //可记录一个字符串，用于帮助苹果检测不规则支付活动 可以是userId，也可以是订单id，跟你自己需要而定
-        payment.applicationUsername = userIdentifier;
+        payment.applicationUsername = @"userIdentifier";
     //A在上面下单了，订单已经发送给APP store，这个时候，断网了，还没接到APP store反馈回来的支付结果，这个时候，A退出了账号，过了一会儿，有网络了，B登录了，这个时候，如果订单返回了，
     [[SKPaymentQueue defaultQueue] addPayment:payment];
 }
@@ -543,8 +543,11 @@ static AppleHelper *AppleHelperInstance = nil;
     NSString *product_id = transaction.payment.productIdentifier;
     //获取transaction_id
     NSString * transaction_id = transaction.transactionIdentifier;
+    NSString *applicationUsername = transaction.payment.applicationUsername;
+    
     NSLog(@"交易结束,验证支付信息000: %@", product_id);
     NSLog(@"交易结束,验证支付信息111: %@", transaction_id);
+     NSLog(@"--applicationUsername--: %@", applicationUsername);
     /**
         BASE64 常用的编码方案，通常用于数据传输，以及加密算法的基础算法，传输过程中能够保证数据传输的稳定性
         BASE64是可以编码和解码的
