@@ -55,24 +55,7 @@ public class LoginView : MonoBehaviour
         Debug.Log(code +"---"+ id);        */
 
 
-        string str = "12";
 
-        int count = str.Length;
-        int num = (int)Math.Ceiling((double)count / 2);
-        c2l_ios_recharge pkg = new c2l_ios_recharge();
-        for (int i = 1; i <= num; i++)
-        {
-            string str1;
-            if (num == i)
-            {
-                str1 = str.Substring((i - 1) * 2, count- (i - 1) * 2);
-            }
-            else {
-                str1 = str.Substring((i - 1) * 2, 2);
-            }
-
-            Debug.Log(str1);
-        }
     }
 
     public void SetServerIP()
@@ -128,7 +111,12 @@ public class LoginView : MonoBehaviour
         });
     }
 
-    public void ApplePay()
+    public void ApplePay() {
+        Debug.Log("---Unity---SDKPay---");
+        SDKPay.gi.Pay();
+    }
+
+    public void ApplePay1()
     {
         Debug.Log("---Unity---SDKPay---");
 
@@ -139,14 +127,8 @@ public class LoginView : MonoBehaviour
         data.Add("GoodID", "test1");
         data.Add("GoodNum", "1");
 
-        bool Lock = false;
         SDKManager.gi.Pay(data, (s, v) =>
         {
-            if (Lock)
-            {
-                return;
-            }
-            Lock = true;
             //开始把交易凭证发给服务器验证
             v.TryGetValue("encodeStr",out string receiptData);
             v.TryGetValue("product_id", out string product_id);
@@ -296,9 +278,8 @@ public class LoginView : MonoBehaviour
     public void ApplePayInit()
     {
         Debug.Log("---Unity---ApplePayInit---");
-        Dictionary<string, string> data = new Dictionary<string, string>();
-        data.Add("PayType", "0");//这里定义支付类型 0:初始化支付 1去Apple为支付 2为服务器返回支付验证结果
-        SDKManager.gi.Pay(data);
+        SDKPay.gi.Init();
+        SDKPay.gi.GetSDKPayInfo();
     }
     public void Switch()
     {
