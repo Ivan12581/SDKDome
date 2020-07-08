@@ -15,8 +15,11 @@
     NSString *userIdentifier;
     NSString *goodID;   //商品ID
     NSInteger goodNum; //商品数量
+    NSInteger  PayModel;//支付类型
     SKPaymentTransaction *order;
     NSArray *trans;
+  
+    BOOL IsFirst;
 }
 static AppleHelper *AppleHelperInstance = nil;
 +(AppleHelper*)sharedInstance{
@@ -38,7 +41,7 @@ static AppleHelper *AppleHelperInstance = nil;
     accountName = @"TWuserIdentifier";
     forService = @"com.elex.girlsthrone.tw";
     userIdentifier = @"nil";
-    
+    IsFirst = true;
     NSLog(@"-ios---AppleHelper---InitSDK----");
     //TODO：apple初始化的时候需要添加购买结果的监听 有可能之前支付ok 但是因为通信而导致存在未处理订单 但是此时还没链接服务器 所有购买监听应该在链接逻辑服成功后开启
 //    [self addListener];
@@ -401,33 +404,40 @@ static AppleHelper *AppleHelperInstance = nil;
 //******************************************************
 //****************Apple In-App Purchase
 //******************************************************
-//苹果服务器验证地址:
-//测试：https://sandbox.itunes.apple.com/verifyReceipt
-//已上线Appstore：https://buy.itunes.apple.com/verifyReceipt
+//这里定义支付类型 0为初始化 打开支付监听 1去Apple为支付 2为删除订单
+typedef NS_ENUM(NSInteger, PayType)
+{
+    cNone,
+    cInit,
+    cPay,
+    cDelOrder,
+};
 
-//此处后面要根据参数来确定是购买 还是将服务器校验结果返回（为了处理apple这边支付状态）
-#pragma mark -- 支付
+
+#pragma mark -- Apple In-App Purchase 入口
 -(void)Pay: (const char *) jsonString{
        // const char* --> nnstring
     NSString *jsonNSString = [NSString stringWithUTF8String:jsonString];
     // nsstring -> nsdata
     NSData *data = [jsonNSString dataUsingEncoding:NSUTF8StringEncoding];
     // nsdata -> nsdictionary
-    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSLog(@" ---ios pay---: %@", dict);
-    NSString *_productsId = [dict valueForKey:@"GoodID"];
-    goodID = [dict valueForKey:@"GoodID"];
-    NSString *Type = [dict valueForKey:@"PayType"];
-    //这里定义支付类型 0为初始化 打开支付监听 1去Apple为支付 2为删除订单
-    if ([Type isEqual: @"0"]) {
-          [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
-    }else if ([Type isEqual: @"1"]){
-        [self buyProductsWithId:_productsId];
-    }else if ([Type isEqual: @"2"]){
-//        [self CheckTrans:[dict valueForKey:@"tran"]];
-    }else{
-//        [self CheckTrans:[dict valueForKey:@"tran"]];
+    PayModel = [[dict valueForKey:@"PayType"] integerValue];
+    switch (PayModel) {
+        case cInit:
+             [self InitApplePay];
+            break;
+        case cPay:
+              [self buyIAP:dict];
+                break;
+        case cDelOrder:
+              [self CheckTrans:dict];
+        default:
+//             [self CheckTrans:[dict valueForKey:@"tran"]];
+            break;
     }
+
 }
 //收到产品返回信息
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response NS_AVAILABLE(10_7, 3_0) {
@@ -456,7 +466,7 @@ static AppleHelper *AppleHelperInstance = nil;
         }
     }
     if (requestProduct == nil) {
-         NSLog(@"****error*****");
+         NSLog(@"****requestProduct == nil*****");
         return;
     }
     //发送购买请求
@@ -464,7 +474,7 @@ static AppleHelper *AppleHelperInstance = nil;
     SKMutablePayment *payment = [SKMutablePayment paymentWithProduct:requestProduct];
 //    @property(nonatomic, readonly) NSInteger quantity;
 //    The default value is 1, the minimum value is 1, and the maximum value is 10.
-//    payment.quantity = goodNum;
+    payment.quantity = goodNum;
         //可记录一个字符串，用于帮助苹果检测不规则支付活动 可以是userId，也可以是订单id，跟你自己需要而定
         payment.applicationUsername = @"userIdentifier";
     //A在上面下单了，订单已经发送给APP store，这个时候，断网了，还没接到APP store反馈回来的支付结果，这个时候，A退出了账号，过了一会儿，有网络了，B登录了，这个时候，如果订单返回了，
@@ -479,18 +489,21 @@ static AppleHelper *AppleHelperInstance = nil;
 //请求结束
 - (void)requestDidFinish:(SKRequest *)request{
     NSLog(@"请求结束");
+//    BOOL b= [SKPaymentQueue canMakePayments];
 }
 #pragma mark - 购买结果返回 需监听购买结果委托 [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions {
-    //第一次为全部 后面为最新 所以要加锁
-    trans = transactions;
+    if (transactions.count<1) {
+         NSLog(@"--有问题啊--transactions.count<1-");
+        return;
+    }
+
     for (SKPaymentTransaction *tran in transactions) {
-         NSLog(@"购买结果订单:%@",tran);
+            NSLog(@"交易完成productIdentifier:%@",tran.payment.productIdentifier);
         switch (tran.transactionState) {
             case SKPaymentTransactionStatePurchased: // 交易完成
                 // 发送自己服务器验证凭证
-                NSLog(@"交易完成");
-                [self completeTransaction:tran];
+               [self HandleAppleOrder:tran];
                 //    等服务器验证完后再finish 这样每次启动app这个接口会再调用
 //               [[SKPaymentQueue defaultQueue]finishTransaction:tran];
                 break;
@@ -510,23 +523,67 @@ static AppleHelper *AppleHelperInstance = nil;
                 break;
         }
     }
+    [self HandleReceipt];
+}
+//预处理并统计Apple订单
+-(void)HandleAppleOrder:(SKPaymentTransaction *)transaction{
+    //获取product_id
+    NSString *product_id = transaction.payment.productIdentifier;
+    //获取transaction_id
+    NSString * transaction_id = transaction.transactionIdentifier;
+    NSInteger quantity = transaction.payment.quantity;
+    NSString *applicationUsername = transaction.payment.applicationUsername;
+    switch (PayModel) {
+        case cNone:
+            break;
+        case cInit:
+            [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"4", @"state",product_id,@"product_id",transaction_id,@"transaction_id",quantity,@"quantity",applicationUsername,@"uid",nil]];
+                break;
+        case cPay:
+            [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",product_id,@"product_id",transaction_id,@"transaction_id",quantity,@"quantity",applicationUsername,@"uid",nil]];
+                break;
+        case cDelOrder:
+                break;
+
+        default:
+            break;
+    }
+}
+
+-(void)HandleReceipt{
+    NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
+    // 从沙盒中获取到购买凭据
+    NSData *receiptData = [NSData dataWithContentsOfURL:receiptURL];
+    NSString *encodeStr = [receiptData base64EncodedStringWithOptions:0];
+     NSLog(@"交易结束,验证支付信息222 : %@", encodeStr);
+
+    //发给自己服务器
+    [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"4", @"state",encodeStr,@"encodeStr",PayModel,@"PayType",nil]];
 }
 
 //从服务器返回 通过订单号解除交易状态
--(void)CheckTrans:(NSString *)deltran{
-      NSLog(@"---从服务器返回 通过订单号解除交易状态---: %@", deltran);
+-(void)CheckTrans:(NSMutableDictionary *) dict{
+    NSString *needDelOrder = [dict valueForKey:(@"Order")];
+    NSLog(@"---从服务器返回 通过订单号解除交易状态---: %@", needDelOrder);
     if(trans != nil && trans.count > 0){
         SKPaymentTransaction *curtran = nil;
         for (SKPaymentTransaction *tran in trans) {
-            if ([tran.transactionIdentifier  isEqual: deltran]) {
+            if ([tran.transactionIdentifier  isEqual: needDelOrder]) {
                 curtran = tran;
-//                [[SKPaymentQueue defaultQueue] finishTransaction:tran];
                 break;
             }
         }
         if (curtran != nil) {
             [[SKPaymentQueue defaultQueue] finishTransaction:curtran];
+              NSLog(@"---找到并删除----");
+            [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",PayModel,@"PayType",needDelOrder,@"Order",nil]];
+        }else{
+             NSLog(@"---未找到该定单---");
+            [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",PayModel,@"PayType",needDelOrder,@"Order",nil]];
         }
+    }else{
+         NSLog(@"---Error:Apple Order is nil---");
+        [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",PayModel,@"PayType",needDelOrder,@"Order",nil]];
     }
 
 }
@@ -560,15 +617,27 @@ static AppleHelper *AppleHelperInstance = nil;
     [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",encodeStr,@"encodeStr",product_id,@"product_id",transaction_id,@"transaction_id",nil]];
 
 }
+
+-(void)InitApplePay{
+        //允许程序内付费购买
+    if ([SKPaymentQueue canMakePayments]) {
+        [self addListener];
+    } else {
+         NSLog(@"用户不允许内购");
+    [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",PayModel,@"PayType",nil]];
+    }
+}
 #pragma mark - In-App Purchase入口
-- (void)buyProductsWithId:(NSString *)productsId{
-//    goodNum = [NSNumber numberWithInteger:quantity];
-    [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
-    [self addListener];
+- (void)buyIAP:(NSMutableDictionary *) dict{
+    goodID = [dict valueForKey:@"goodID"];
+    goodNum = [[dict valueForKey:@"GoodNum"] integerValue];
+
+//    [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
+//    [self addListener];
     //允许程序内付费购买
     if ([SKPaymentQueue canMakePayments]) {
         //请求对应的产品信息
-        NSArray *productArr = [[NSArray alloc] initWithObjects:productsId,nil];
+        NSArray *productArr = [[NSArray alloc] initWithObjects:goodID,nil];
         NSSet *nsset = [NSSet setWithArray:productArr];
         SKProductsRequest *request = [[SKProductsRequest alloc] initWithProductIdentifiers:nsset];
         request.delegate = self;
