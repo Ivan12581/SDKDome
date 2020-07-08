@@ -11,6 +11,10 @@ namespace celia.game
         {
             get
             {
+                if (_gi == null)
+                {
+                    _gi = new T();
+                }
                 return _gi;
             }
         }
