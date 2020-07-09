@@ -21,6 +21,8 @@ public class LoginView : MonoBehaviour
         {
             GoTest.SetActive(true);
             gameObject.SetActive(false);
+            
+            SDKPay.gi.GetServerPayInfo();
         });
 
         Messenger.AddEventListener(Notif.NO_NAME_LOG_IN, () =>
@@ -35,11 +37,15 @@ public class LoginView : MonoBehaviour
         });
         Debug.Log("---Unity Start---");
 
-
     }
 
     public void SetServerIP()
     {
+        if (string.IsNullOrEmpty(serverIP.text))
+        {
+            Debug.Log("---serverIP.text---");
+            return;
+        }
         GameSetting.gi.ip = serverIP.text;
     }
 
@@ -66,7 +72,7 @@ public class LoginView : MonoBehaviour
 
     public void ApplePay() {
         Debug.Log("---Unity---SDKPay---");
-        SDKPay.gi.Pay();
+        SDKPay.gi.Pay("test1");
     }
 
     public void AppleLogin()

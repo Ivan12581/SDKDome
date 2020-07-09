@@ -7,60 +7,16 @@ namespace celia.game
 {
 	public class RechargeTest : MonoBehaviour
 	{
-        public InputField OutputTop;
         public void Init()
         {
-            NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LRechargeGoodsInit, new c2l_recharge_goods_init(), LogicMsgID.LogicMsgL2CRechargeGoodsInit, (args) =>
-            {
-                l2c_recharge_goods_init msg = l2c_recharge_goods_init.Parser.ParseFrom(args.msg);
-
-                foreach (var item in msg.Goods.DoubleGoods)
-                {
-
-                }
-            });
+                
         }
 
         public InputField inputField;
         public void Buy()
         {
-            int id = int.Parse(inputField.text);
-            c2l_generate_recharge_order pkg = new c2l_generate_recharge_order();
-            pkg.CommodityId = id;
-
-
-            NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LGenerateRechargeOrder, pkg, LogicMsgID.LogicMsgL2CGenerateRechargeOrder, (args) =>
-            {
-                l2c_generate_recharge_order msg = l2c_generate_recharge_order.Parser.ParseFrom(args.msg);
-                OutputTop.text = OutputTop.text + Newtonsoft.Json.JsonConvert.SerializeObject(msg);
-
-                Dictionary<string, string> data = new Dictionary<string, string>();
-                data.Add("RoleID", AuthProcessor.gi.ID.ToString());
-                data.Add("RoleName", AccountDataService.gi.getAccountData().name);
-                data.Add("RoleLevel", "60");
-                data.Add("ServerID", "1");
-                data.Add("ServerName", "1");
-                data.Add("PayMoney",GetCost(id));
-                data.Add("OrderID", msg.AppOrderNo);
-                data.Add("OrderName","TestOrderName");
-                data.Add("GoodsName", GetGoodsName(id));
-                data.Add("GoodsDesc", GetGoodsDesc(id));
-                data.Add("MoneySymbol", "TWD");
-                data.Add("Extra", msg.ThroughParam);
-                SDKManager.gi.Pay(data ,(s,v)=>
-                {
-                    foreach (var item in v)
-                    {
-
-                    }
-                });
-            });
-
-            NetworkManager.gi.RegisterMsgHandler(LogicMsgID.LogicMsgL2CRechargeOrderUpd, (args) => 
-            {
-                l2c_recharge_order_upd msg = l2c_recharge_order_upd.Parser.ParseFrom(args.msg);
-                OutputTop.text = OutputTop.text + Newtonsoft.Json.JsonConvert.SerializeObject(msg);
-            });
+            string gooid = inputField.text;
+            SDKPay.gi.Pay(gooid);
         }
 
         string GetGoodsName(int id)

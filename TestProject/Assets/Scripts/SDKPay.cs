@@ -83,13 +83,15 @@ namespace celia.game {
             Init();
             Debug.Log("---Unity---ApplePayInit---");
             data["PayType"] = ((int)PayType.Init).ToString();
+            AppleOrders.Clear();
             SDKManager.gi.Pay(data);
         }
         /// <summary>
         /// 从服务器初始化订单信息 应该连接逻辑服后就请求
         /// </summary>
-        private void GetServerPayInfo()
+        public void GetServerPayInfo()
         {
+            Debug.Log("---GetServerPayInfo---");
             ServerOrders.Clear();
             c2l_ios_recharge_init pkg = new c2l_ios_recharge_init();
             NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LIosRechargeInit, pkg, LogicMsgID.LogicMsgL2CIosRechargeInit, (args) =>
@@ -110,23 +112,26 @@ namespace celia.game {
         /// </summary>
         /// <param name="commodityId">Apple配置的商品id</param>
         /// <param name="qutity">The default value is 1, the minimum value is 1, and the maximum value is 10</param>
-        public void Pay(string commodityId = "test1",int qutity = 1)
+        public void Pay(string goodID,int qutity = 1)
         {
             Init();
+            if (string.IsNullOrEmpty(goodID)){
+                Debug.LogError("---goodid is null---");
+                return;
+            }
             //请求充值商品
-            c2l_recharge_commodity_ask pkg = new c2l_recharge_commodity_ask
-            {
-                CommodityId = commodityId,
+            c2l_recharge_commodity_ask pkg = new c2l_recharge_commodity_ask{
+                CommodityId = goodID,
                 Qutity = qutity
             };
-            NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LRechargeCommodityAsk, pkg, LogicMsgID.LogicMsgL2CRechargeCommodityRep, (args) =>
-            {
+            NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LRechargeCommodityAsk, pkg, LogicMsgID.LogicMsgL2CRechargeCommodityRep, (args) =>{
                 l2c_recharge_commodity_rep msg = l2c_recharge_commodity_rep.Parser.ParseFrom(args.msg);
                 Debug.Log("---LogicMsgL2CRechargeCommodityRep--->" + JsonConvert.SerializeObject(msg));
                 data["PayType"] = ((int)PayType.Pay).ToString();
                 data["GoodID"] = msg.CommodityId;
                 data["GoodNum"] = msg.Qutity.ToString();
                 data["Extra"] = $"{msg.OrderIndex}&{AuthProcessor.gi.ID}";
+                AppleOrders.Clear();
                 SDKManager.gi.Pay(data);
             });
         }
