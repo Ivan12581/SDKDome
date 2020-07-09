@@ -16,6 +16,7 @@
     NSString *goodID;   //商品ID
     NSInteger goodNum; //商品数量
     NSInteger  PayModel;//支付类型
+    NSString *Extra;    //支付透传字段 用用户uid和服务器订单用‘&’拼接
     SKPaymentTransaction *order;
     NSArray *trans;
   
@@ -41,7 +42,6 @@ static AppleHelper *AppleHelperInstance = nil;
     accountName = @"TWuserIdentifier";
     forService = @"com.elex.girlsthrone.tw";
     userIdentifier = @"nil";
-    IsFirst = true;
     NSLog(@"-ios---AppleHelper---InitSDK----");
     //TODO：apple初始化的时候需要添加购买结果的监听 有可能之前支付ok 但是因为通信而导致存在未处理订单 但是此时还没链接服务器 所有购买监听应该在链接逻辑服成功后开启
 //    [self addListener];
@@ -451,17 +451,17 @@ typedef NS_ENUM(NSInteger, PayType)
     }
     if (requestProduct == nil) {
          NSLog(@"****requestProduct == nil*****");
+        [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"3", @"state",PayModel,@"PayType",nil]];
         return;
     }
     //发送购买请求
     NSLog(@"发送购买请求");
     SKMutablePayment *payment = [SKMutablePayment paymentWithProduct:requestProduct];
-//    @property(nonatomic, readonly) NSInteger quantity;
 //    The default value is 1, the minimum value is 1, and the maximum value is 10.
     payment.quantity = goodNum;
         //可记录一个字符串，用于帮助苹果检测不规则支付活动 可以是userId，也可以是订单id，跟你自己需要而定
-        payment.applicationUsername = @"userIdentifier";
-    //A在上面下单了，订单已经发送给APP store，这个时候，断网了，还没接到APP store反馈回来的支付结果，这个时候，A退出了账号，过了一会儿，有网络了，B登录了，这个时候，如果订单返回了，
+    payment.applicationUsername = Extra;
+
     [[SKPaymentQueue defaultQueue] addPayment:payment];
 }
 #pragma mark - SKRequestDelegate
@@ -473,13 +473,10 @@ typedef NS_ENUM(NSInteger, PayType)
 - (void)requestDidFinish:(SKRequest *)request{
     NSLog(@"请求结束");
 }
-#pragma mark - 购买结果返回 需监听购买结果委托 [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
+#pragma mark - 购买结果返回 需监听购买结果委托
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions {
-    if (transactions.count<1) {
-         NSLog(@"--有问题啊--transactions.count<1-");
-        return;
-    }
-
+    //缓存订单信息 为了送达服务器后后可以删除订单
+    trans = transactions;
     for (SKPaymentTransaction *tran in transactions) {
             NSLog(@"交易完成productIdentifier:%@",tran.payment.productIdentifier);
         switch (tran.transactionState) {
@@ -515,7 +512,7 @@ typedef NS_ENUM(NSInteger, PayType)
     NSString * transaction_id = transaction.transactionIdentifier;
     NSInteger quantity = transaction.payment.quantity;
     NSString *applicationUsername = transaction.payment.applicationUsername;
-    [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",product_id,@"product_id",transaction_id,@"transaction_id",quantity,@"quantity",applicationUsername,@"uid",PayModel,@"PayType",nil]];
+    [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",product_id,@"product_id",transaction_id,@"transaction_id",quantity,@"quantity",applicationUsername,@"Extra",PayModel,@"PayType",nil]];
 
     switch (PayModel) {
         case cNone:
@@ -614,7 +611,7 @@ typedef NS_ENUM(NSInteger, PayType)
 - (void)buyIAP:(NSMutableDictionary *) dict{
     goodID = [dict valueForKey:@"goodID"];
     goodNum = [[dict valueForKey:@"GoodNum"] integerValue];
-
+    Extra = [dict valueForKey:@"Extra"];
     //请求对应的产品信息
     NSArray *productArr = [[NSArray alloc] initWithObjects:goodID,nil];
     NSSet *nsset = [NSSet setWithArray:productArr];
