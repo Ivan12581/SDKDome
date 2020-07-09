@@ -17,10 +17,7 @@ public class IosSDKSetting : Editor{
         PBXProject proj = new PBXProject();
         proj.ReadFromString(File.ReadAllText(projPath));
         string target = proj.TargetGuidByName("Unity-iPhone");
-        //添加苹果自带功能
-        // proj.AddCapability(target, PBXCapabilityType.GameCenter);
-        // proj.AddCapability(target, PBXCapabilityType.InAppPurchase);
-        // proj.AddCapability(target, PBXCapabilityType.InAppPurchase);
+
         string plistPath = Path.Combine(path, "Info.plist");
         PlistDocument plist = new PlistDocument();
         plist.ReadFromFile(plistPath);
