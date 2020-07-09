@@ -267,7 +267,6 @@ static AppleHelper *AppleHelperInstance = nil;
 
 #pragma mark -- 登录 授权 ASAuthorizationControllerDelegate
 -(void)Login{
-    
     //从Keychain中读取userIdentifier
     if (![SSKeychain passwordForService:forService account:accountName]) {
        NSLog(@ "--没有userIdentifier 说明之前没有登录过--需要请求授权--");
@@ -285,10 +284,6 @@ static AppleHelper *AppleHelperInstance = nil;
 #pragma mark -- 开始注册登录自己的游戏服务器
 -(void)toGameLogin{
      NSLog(@ "--开始注册登录自己的游戏服务器--");
-//    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-//    @"2", @"state",
-//    userIdentifier, @"user", nil];
-//    [IOSBridgeHelper LoginCallBack:dict];
     [IOSBridgeHelper LoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",userIdentifier,@"user",nil]];
 }
 
@@ -390,17 +385,7 @@ static AppleHelper *AppleHelperInstance = nil;
         
     }
 }
-// 上传分数给 gameCenter
--(void)saveHighScore{
-    if ([GKLocalPlayer localPlayer].isAuthenticated) {
-        //得到分数的报告
-        GKScore *scoreReporter = [[GKScore alloc] initWithLeaderboardIdentifier:@"你的排行榜ID，ITC中找"];
-        scoreReporter.value = 1000;
-        NSArray<GKScore*> *scoreArray = @[scoreReporter];
-        //上传分数
-        [GKScore reportScores:scoreArray withCompletionHandler:nil];
-    }
-}
+
 //******************************************************
 //****************Apple In-App Purchase
 //******************************************************
@@ -412,7 +397,6 @@ typedef NS_ENUM(NSInteger, PayType)
     cPay,
     cDelOrder,
 };
-
 
 #pragma mark -- Apple In-App Purchase 入口
 -(void)Pay: (const char *) jsonString{
@@ -462,7 +446,7 @@ typedef NS_ENUM(NSInteger, PayType)
         //如果后台消费条目的ID与我这里需要请求的一样（用于确保订单的正确性）
         if([product.productIdentifier isEqualToString:goodID]){
             requestProduct = product;
-//                break;
+                break;
         }
     }
     if (requestProduct == nil) {
@@ -483,13 +467,11 @@ typedef NS_ENUM(NSInteger, PayType)
 #pragma mark - SKRequestDelegate
 //请求失败
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
-    // 购买失败
-    NSLog(@"error:%@", error);
+    NSLog(@"请求失败error:%@", error);
 }
 //请求结束
 - (void)requestDidFinish:(SKRequest *)request{
     NSLog(@"请求结束");
-//    BOOL b= [SKPaymentQueue canMakePayments];
 }
 #pragma mark - 购买结果返回 需监听购买结果委托 [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions {
@@ -533,19 +515,21 @@ typedef NS_ENUM(NSInteger, PayType)
     NSString * transaction_id = transaction.transactionIdentifier;
     NSInteger quantity = transaction.payment.quantity;
     NSString *applicationUsername = transaction.payment.applicationUsername;
+    [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",product_id,@"product_id",transaction_id,@"transaction_id",quantity,@"quantity",applicationUsername,@"uid",PayModel,@"PayType",nil]];
+
     switch (PayModel) {
         case cNone:
+            NSLog(@"--有问题啊--cNone");
             break;
         case cInit:
-            [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"4", @"state",product_id,@"product_id",transaction_id,@"transaction_id",quantity,@"quantity",applicationUsername,@"uid",nil]];
                 break;
         case cPay:
-            [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",product_id,@"product_id",transaction_id,@"transaction_id",quantity,@"quantity",applicationUsername,@"uid",nil]];
                 break;
         case cDelOrder:
+            NSLog(@"--有问题啊--cDelOrder-");
                 break;
-
         default:
+            NSLog(@"--有问题啊--default-");
             break;
     }
 }
@@ -555,10 +539,9 @@ typedef NS_ENUM(NSInteger, PayType)
     // 从沙盒中获取到购买凭据
     NSData *receiptData = [NSData dataWithContentsOfURL:receiptURL];
     NSString *encodeStr = [receiptData base64EncodedStringWithOptions:0];
-     NSLog(@"交易结束,验证支付信息222 : %@", encodeStr);
-
+//     NSLog(@"交易结束,验证支付信息222 : %@", encodeStr);
     //发给自己服务器
-    [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"4", @"state",encodeStr,@"encodeStr",PayModel,@"PayType",nil]];
+    [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",encodeStr,@"encodeStr",PayModel,@"PayType",nil]];
 }
 
 //从服务器返回 通过订单号解除交易状态
@@ -579,11 +562,11 @@ typedef NS_ENUM(NSInteger, PayType)
             [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",PayModel,@"PayType",needDelOrder,@"Order",nil]];
         }else{
              NSLog(@"---未找到该定单---");
-            [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",PayModel,@"PayType",needDelOrder,@"Order",nil]];
+            [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",PayModel,@"PayType",needDelOrder,@"Order",nil]];
         }
     }else{
          NSLog(@"---Error:Apple Order is nil---");
-        [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",PayModel,@"PayType",needDelOrder,@"Order",nil]];
+        [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"3", @"state",PayModel,@"PayType",needDelOrder,@"Order",nil]];
     }
 
 }
@@ -614,14 +597,14 @@ typedef NS_ENUM(NSInteger, PayType)
      NSLog(@"交易结束,验证支付信息222 : %@", encodeStr);
 
     //发给自己服务器
-    [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",encodeStr,@"encodeStr",product_id,@"product_id",transaction_id,@"transaction_id",nil]];
+    [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",PayModel,@"PayType",encodeStr,@"encodeStr",product_id,@"product_id",transaction_id,@"transaction_id",nil]];
 
 }
-
+#pragma mark - In-App Purchase 初始化
 -(void)InitApplePay{
         //允许程序内付费购买
     if ([SKPaymentQueue canMakePayments]) {
-        [self addListener];
+         [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
     } else {
          NSLog(@"用户不允许内购");
     [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",PayModel,@"PayType",nil]];
@@ -632,36 +615,14 @@ typedef NS_ENUM(NSInteger, PayType)
     goodID = [dict valueForKey:@"goodID"];
     goodNum = [[dict valueForKey:@"GoodNum"] integerValue];
 
-//    [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
-//    [self addListener];
-    //允许程序内付费购买
-    if ([SKPaymentQueue canMakePayments]) {
-        //请求对应的产品信息
-        NSArray *productArr = [[NSArray alloc] initWithObjects:goodID,nil];
-        NSSet *nsset = [NSSet setWithArray:productArr];
-        SKProductsRequest *request = [[SKProductsRequest alloc] initWithProductIdentifiers:nsset];
-        request.delegate = self;
-        [request start];
-    } else {
-        //您的手机没有打开程序内付费购买
-        NSLog(@"用户不允许内购");
-    }
+    //请求对应的产品信息
+    NSArray *productArr = [[NSArray alloc] initWithObjects:goodID,nil];
+    NSSet *nsset = [NSSet setWithArray:productArr];
+    SKProductsRequest *request = [[SKProductsRequest alloc] initWithProductIdentifiers:nsset];
+    request.delegate = self;
+    [request start];
 }
-#pragma mark --根据服务器返回结果来处理支付状态
--(void)HandlePayState{
-    //验证成功之后需要关闭监听 订单消除
-    NSLog(@"验证成功之后需要关闭监听 订单消除");
-    [self completeTransaction:order];
-    [self removeListener];
-//    if (1) {
-//         NSLog(@"服务器校验交易凭证为有效");
-//        [self completeTransaction:order];
-//        [self removeListener];
-//    }else{
-//         NSLog(@"服务器校验交易凭证为无效  这个咋处理啊 我也不知道啊");
-//        //我也不知道咋处理啊
-//    }
-}
+
 //监听购买结果
 -(void)addListener{
     [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
