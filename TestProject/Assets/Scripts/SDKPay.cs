@@ -44,8 +44,8 @@ namespace celia.game {
             IOSRechargeResult result = msg.RechargeResult;
             Google.Protobuf.Collections.RepeatedField<string> TransactionIds = msg.TransactionIds;
             Google.Protobuf.Collections.RepeatedField<PTGameElement> eles = msg.Eles;
-            if (result == IOSRechargeResult.RechargeReceive)
-            {
+            
+            if (result == IOSRechargeResult.RechargeReceive){
                 foreach (string Order in TransactionIds)
                 {
                     data["PayType"] = ((int)PayType.DelOrder).ToString();
@@ -56,11 +56,8 @@ namespace celia.game {
                 AppleOrders.Clear();
                 ServerOrders.Clear();
                 VoucherData = "";
-            }
-            else if (result == IOSRechargeResult.RechargeSendGoods)
-            {
+            }else if (result == IOSRechargeResult.RechargeSendGoods){
                 data["PayType"] = "2";
-
                 //foreach (string item in TransactionIds)
                 //{
                 //    data["tran"] = item;
@@ -75,12 +72,16 @@ namespace celia.game {
                     //Debug.Log("---Eles--item.NCount:" + item.NCount + " item.NID:" + item.NID + " item.EType:" + item.EType);
                 }
             }
+            else if (result == IOSRechargeResult.RechargeError){
+
+            }
         }
         /// <summary>
         /// Apple支付初始化 应该程序启动就开启
         /// </summary>
         public void ApplePayInit() {
             Init();
+            Debug.Log("---Unity---ApplePayInit---");
             data["PayType"] = ((int)PayType.Init).ToString();
             SDKManager.gi.Pay(data);
         }
@@ -95,7 +96,7 @@ namespace celia.game {
             {
                 l2c_ios_recharge_init msg = l2c_ios_recharge_init.Parser.ParseFrom(args.msg);
                 Debug.Log("---GetServerPayInfo--->" + JsonConvert.SerializeObject(msg));
-                Google.Protobuf.Collections.RepeatedField<string> TransactionIds = msg.OrderToDelete;
+                Google.Protobuf.Collections.RepeatedField<string> TransactionIds = msg.IdToClose;
                 foreach (var item in TransactionIds)
                 {
                     ServerOrders.Add(item);
@@ -107,21 +108,27 @@ namespace celia.game {
         /// <summary>
         /// Apple支付外部调用接口
         /// </summary>
-        public void Pay()
+        /// <param name="commodityId">Apple配置的商品id</param>
+        /// <param name="qutity">The default value is 1, the minimum value is 1, and the maximum value is 10</param>
+        public void Pay(string commodityId = "test1",int qutity = 1)
         {
             Init();
             //请求充值商品
-            //l2c_recharge_commodity_ask pkg = new l2c_recharge_commodity_ask
-            //{
-            //    CommodityId = "111",
-            //    Qutity = 1
-            //};
-            //NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgL2CRechargeCommodityAsk, pkg, LogicMsgID.LogicMsgL2CRechargeCommodityRep, (args) =>{ 
-
-            //});
-
-            data["PayType"] = ((int)PayType.Pay).ToString();
-            SDKManager.gi.Pay(data);
+            c2l_recharge_commodity_ask pkg = new c2l_recharge_commodity_ask
+            {
+                CommodityId = commodityId,
+                Qutity = qutity
+            };
+            NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LRechargeCommodityAsk, pkg, LogicMsgID.LogicMsgL2CRechargeCommodityRep, (args) =>
+            {
+                l2c_recharge_commodity_rep msg = l2c_recharge_commodity_rep.Parser.ParseFrom(args.msg);
+                Debug.Log("---LogicMsgL2CRechargeCommodityRep--->" + JsonConvert.SerializeObject(msg));
+                data["PayType"] = ((int)PayType.Pay).ToString();
+                data["GoodID"] = msg.CommodityId;
+                data["GoodNum"] = msg.Qutity.ToString();
+                data["Extra"] = $"{msg.OrderIndex}&{AuthProcessor.gi.ID}";
+                SDKManager.gi.Pay(data);
+            });
         }
         public void SDKPayCallBack(int state,Dictionary<string, string> data)
         {
@@ -178,15 +185,28 @@ namespace celia.game {
             data.TryGetValue("product_id", out string product_id);
             data.TryGetValue("transaction_id", out string transaction_id);
             data.TryGetValue("quantity", out string quantity);
-            data.TryGetValue("uid", out string uid);
-            if (string.IsNullOrEmpty(uid))
+            data.TryGetValue("Extra", out string Extra);
+            if (string.IsNullOrEmpty(Extra))
             {
                 Debug.Log("---uid is null---");
+
+            }
+            string[] Extras = Extra.Split('&');
+            if (Extra.Length!=2)
+            {
+                Debug.Log("---bug---");
+            }
+            string Uid = Extras[0];
+            string orderIndex = Extras[1];
+            if (Uid.Equals(AuthProcessor.gi.ID.ToString()))
+            {
+                Debug.Log("---该订单不是自己的---");
             }
             c2l_ios_recharge.Types.transaction_info Info = new c2l_ios_recharge.Types.transaction_info
             {
                 TransactionId = transaction_id,
                 CommodityId = product_id,
+                OrderIndex = orderIndex,
                 Num = int.Parse(quantity)
             };
             AppleOrders.Add(Info);
@@ -206,6 +226,8 @@ namespace celia.game {
                 }else{
                     Debug.Log("---未收到凭证-没有-key:encodeStr-");
                 }
+            }else if (state == 3){
+                Debug.Log("---苹果后台那边没有查到该商品---");
             }
 
         }
@@ -236,15 +258,15 @@ namespace celia.game {
                     }
                     foreach (c2l_ios_recharge.Types.transaction_info info in AppleOrders)
                     {
-                        pkg.OrderInfos.Add(info);
+                        pkg.IdClosed.Add(info);
                     }
 
-                    pkg.RechargeOrderNo = VoucherData.Substring((PackageIndex - 1) * 2000, TotalCount - (PackageIndex - 1) * 2000);
+                    pkg.PayToken = VoucherData.Substring((PackageIndex - 1) * 2000, TotalCount - (PackageIndex - 1) * 2000);
                     NetworkManager.gi.SendPkt(LogicMsgID.LogicMsgC2LIosRecharge, pkg);
                 }
                 else
                 {
-                    pkg.RechargeOrderNo = VoucherData.Substring((PackageIndex - 1) * 2000, 2000);
+                    pkg.PayToken = VoucherData.Substring((PackageIndex - 1) * 2000, 2000);
                     NetworkManager.gi.SendPkt(LogicMsgID.LogicMsgC2LIosRecharge, pkg);
                 }
             }
@@ -256,18 +278,22 @@ namespace celia.game {
         /// <param name="data"></param>
         private void DelOrderCallBack(int state, Dictionary<string, string> data)
         {
+            data.TryGetValue("Order", out string order);
             if (state == 0){
 
             } else if (state == 1) {
-                data.TryGetValue("Order",out string order);
+
                 Debug.Log("---删除订单成功---"+ order);
             } else if (state == 2){
-                data.TryGetValue("Order", out string order);
                 Debug.Log("---删除订单失败---" + order);
             }
             else if (state == 3){
-                Debug.Log("---Error:Apple 那边没有订单---");
+                Debug.Log("---Error:Apple 那边没有订单---"+order);
             }
+            c2l_ios_recharge_closed pkg = new c2l_ios_recharge_closed();
+            pkg.OrderDeleted.Add(order);
+            NetworkManager.gi.SendPkt(LogicMsgID.LogicMsgC2LIosRechargeClosed, pkg);
+
         }
         /// <summary>
         /// 对比服务器和苹果的订单状态
@@ -280,6 +306,11 @@ namespace celia.game {
             }
             else if (AppleOrders.Count == 0){
                 //直接服务器数据原路返回
+                c2l_ios_recharge_closed pkg = new c2l_ios_recharge_closed();
+                foreach (string order in ServerOrders){
+                    pkg.OrderDeleted.Add(order);
+                }
+                NetworkManager.gi.SendPkt(LogicMsgID.LogicMsgC2LIosRechargeClosed, pkg);
             }
             else if (ServerOrders.Count == 0){
                 //需要将AppleOrders全部发服务器就好了
@@ -290,26 +321,34 @@ namespace celia.game {
                 List<c2l_ios_recharge.Types.transaction_info> needVerifyData = new List<c2l_ios_recharge.Types.transaction_info>();
                 //需要check
                 bool IsFind = false;
-                foreach (c2l_ios_recharge.Types.transaction_info aInfo in AppleOrders)
-                {
+                foreach (c2l_ios_recharge.Types.transaction_info aInfo in AppleOrders){
                     IsFind = false;
-                    foreach (string sInfo in ServerOrders)
-                    {
-                        if (string.Equals(aInfo, sInfo))
-                        {
+                    foreach (string sInfo in ServerOrders){
+                        if (string.Equals(aInfo, sInfo)){
                             needDelOrders.Add(sInfo);
                             IsFind = true;
                             break;
                         }
                     }
-                    if (!IsFind)
-                    {
+                    if (!IsFind){
                         needVerifyData.Add(aInfo);
                     }
                 }
+
+                c2l_ios_recharge_closed pkg = new c2l_ios_recharge_closed();
+                foreach (var order in ServerOrders){
+                    //还有服务器有 Apple没有的
+                    if (!needDelOrders.Contains(order)){
+                        pkg.OrderDeleted.Add(order);
+                    }
+                }
+                if (pkg.OrderDeleted.Count>0){
+                    NetworkManager.gi.SendPkt(LogicMsgID.LogicMsgC2LIosRechargeClosed, pkg);
+                }
+               
                 DelOrderInApple(needDelOrders);
                 AppleOrders = needVerifyData;
-                //其实可能还有服务器有 Apple没有的
+
                 //发给服务器
                 VerifyVoucherData();
             }

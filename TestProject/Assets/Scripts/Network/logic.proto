@@ -1608,7 +1608,7 @@ message c2l_ios_recharge_init {
 
 // LOGIC_MSG_L2C_IOS_RECHARGE_INIT
 message l2c_ios_recharge_init {
-	repeated string order_to_delete		= 1;	// 未删除的订单
+	repeated string id_to_close		= 1;	// 未删除的订单
 }
 
 // LOGIC_MSG_C2L_RECHARGE_COMMODITY_ASK 问询是否可购买
@@ -1628,7 +1628,7 @@ message l2c_recharge_commodity_rep {
 message c2l_ios_recharge {
 	int32 total_package				= 1;	// 消息包总数
 	int32 package_index				= 2;	// 消息包索引(1~total_package)
-	string 	recharge_order_no		= 3;	// 充值凭据(被拆包的数据)
+	string 	pay_token		= 3;	// 充值凭据(被拆包的数据)
 	
 	message transaction_info {
 		string transaction_id			= 1;	// ios订单id(唯一标识)
@@ -1638,7 +1638,7 @@ message c2l_ios_recharge {
 	}
 	
 	// 该字段信息尾包发来即可
-	repeated transaction_info order_infos	= 4;	// 订单信息 
+	repeated transaction_info id_closed	= 4;	// 订单信息 
 }
 
 enum IOSRechargeResult {
