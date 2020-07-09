@@ -451,7 +451,7 @@ typedef NS_ENUM(NSInteger, PayType)
     }
     if (requestProduct == nil) {
          NSLog(@"****requestProduct == nil*****");
-        [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"3", @"state",PayModel,@"PayType",nil]];
+        [self BackBridge:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"3", @"state",nil]];
         return;
     }
     //发送购买请求
@@ -512,7 +512,8 @@ typedef NS_ENUM(NSInteger, PayType)
     NSString * transaction_id = transaction.transactionIdentifier;
     NSInteger quantity = transaction.payment.quantity;
     NSString *applicationUsername = transaction.payment.applicationUsername;
-    [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",product_id,@"product_id",transaction_id,@"transaction_id",quantity,@"quantity",applicationUsername,@"Extra",PayModel,@"PayType",nil]];
+    
+    [self BackBridge:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",product_id,@"product_id",transaction_id,@"transaction_id",[NSString stringWithFormat:@"%ld",(long)quantity],@"quantity",applicationUsername,@"Extra",nil]];
 
     switch (PayModel) {
         case cNone:
@@ -538,7 +539,7 @@ typedef NS_ENUM(NSInteger, PayType)
     NSString *encodeStr = [receiptData base64EncodedStringWithOptions:0];
 //     NSLog(@"交易结束,验证支付信息222 : %@", encodeStr);
     //发给自己服务器
-    [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",encodeStr,@"encodeStr",PayModel,@"PayType",nil]];
+    [self BackBridge:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",encodeStr,@"encodeStr",nil]];
 }
 
 //从服务器返回 通过订单号解除交易状态
@@ -556,14 +557,14 @@ typedef NS_ENUM(NSInteger, PayType)
         if (curtran != nil) {
             [[SKPaymentQueue defaultQueue] finishTransaction:curtran];
               NSLog(@"---找到并删除----");
-            [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",PayModel,@"PayType",needDelOrder,@"Order",nil]];
+            [self BackBridge:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",needDelOrder,@"Order",nil]];
         }else{
              NSLog(@"---未找到该定单---");
-            [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",PayModel,@"PayType",needDelOrder,@"Order",nil]];
+            [self BackBridge:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",needDelOrder,@"Order",nil]];
         }
     }else{
          NSLog(@"---Error:Apple Order is nil---");
-        [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"3", @"state",PayModel,@"PayType",needDelOrder,@"Order",nil]];
+        [self BackBridge:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"3", @"state",needDelOrder,@"Order",nil]];
     }
 
 }
@@ -594,7 +595,7 @@ typedef NS_ENUM(NSInteger, PayType)
      NSLog(@"交易结束,验证支付信息222 : %@", encodeStr);
 
     //发给自己服务器
-    [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",PayModel,@"PayType",encodeStr,@"encodeStr",product_id,@"product_id",transaction_id,@"transaction_id",nil]];
+    [self BackBridge:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",encodeStr,@"encodeStr",product_id,@"product_id",transaction_id,@"transaction_id",nil]];
 
 }
 #pragma mark - In-App Purchase 初始化
@@ -604,7 +605,7 @@ typedef NS_ENUM(NSInteger, PayType)
          [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
     } else {
          NSLog(@"用户不允许内购");
-    [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",PayModel,@"PayType",nil]];
+    [self BackBridge:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",nil]];
     }
 }
 #pragma mark - In-App Purchase入口
@@ -619,7 +620,11 @@ typedef NS_ENUM(NSInteger, PayType)
     request.delegate = self;
     [request start];
 }
-
+#pragma mark - In-App Purchase入口
+- (void)BackBridge:(NSMutableDictionary *) dict{
+    [dict setValue: [NSNumber numberWithInt:(int)PayModel] forKey: @"PayType"];
+    [IOSBridgeHelper PayCallBack:dict];
+}
 //监听购买结果
 -(void)addListener{
     [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
