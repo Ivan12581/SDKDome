@@ -23,7 +23,6 @@ namespace celia.game
 
         private SDKProxy proxy;
         private Dictionary<SDKResultType, Action<int, Dictionary<string, string>>> callBackDict = new Dictionary<SDKResultType, Action<int, Dictionary<string, string>>>();
-        private DelayMethod loginDelay;
         
         // 切换帐号流程控制相关
         public bool DoingSwitch;
@@ -47,6 +46,7 @@ namespace celia.game
             proxy = new SDKAndroidProxy();
 #elif UNITY_IOS
             proxy = new SDKIosProxy();
+            SDKPay.gi.ApplePayInit();
 #endif
             GetConfigInfo();
             //UploadDeviceInfo(DeviceUpload.IconLaunch);
@@ -220,10 +220,6 @@ namespace celia.game
                     }
                     break;
                 case SDKResultType.Login:
-                    if (loginDelay != null)
-                    {
-                        //DelayManager.gi.Break(loginDelay);
-                    }
                     // IOS SDK切换账号时，TOKEN都是从Login成功消息返回，无切换账号成功消息
                     if (state == 1 && DoingSwitch)
                     {

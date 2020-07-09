@@ -35,6 +35,7 @@ public class LoginView : MonoBehaviour
         });
         Debug.Log("---Unity Start---");
 
+
     }
 
     public void SetServerIP()
@@ -68,85 +69,6 @@ public class LoginView : MonoBehaviour
         SDKPay.gi.Pay();
     }
 
-    public void ApplePay1()
-    {
-        Debug.Log("---Unity---SDKPay---");
-
-        Dictionary<string, string> data = new Dictionary<string, string>();
-        data.Add("PayType", "1");//这里定义支付类型 1去Apple为支付 2为服务器返回支付验证结果
-        data.Add("MoneySymbol", "TWD");
-        data.Add("Extra", "test");
-        data.Add("GoodID", "test1");
-        data.Add("GoodNum", "1");
-
-        SDKManager.gi.Pay(data, (s, v) =>
-        {
-            //开始把交易凭证发给服务器验证
-            v.TryGetValue("encodeStr",out string receiptData);
-            v.TryGetValue("product_id", out string product_id);
-            v.TryGetValue("transaction_id", out string transaction_id);
-
-            int TotalCount = receiptData.Length;
-            int TotalPackage = (int)Math.Ceiling((double)TotalCount / 2000);
-            Debug.Log("---凭证总长度--->" + TotalCount);
-            Debug.Log("===TotalPackage=" + TotalPackage);
-            c2l_ios_recharge pkg = new c2l_ios_recharge();
-            for (int PackageIndex = 1; PackageIndex <= TotalPackage; PackageIndex++)
-            {
-                pkg.TotalPackage = TotalPackage;
-                pkg.PackageIndex = PackageIndex;
-                if (TotalPackage == PackageIndex)
-                {
-                    pkg.RechargeOrderNo = receiptData.Substring((PackageIndex - 1) * 2000, TotalCount - (PackageIndex - 1) * 2000);
-                    //pkg.TransactionId = transaction_id;
-                    //pkg.CommodityId = product_id;
-                    //pkg.Num = 1;
-                    NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LIosRecharge, pkg, LogicMsgID.LogicMsgL2CIosRechargeRep, (args) =>
-                    {
-                        //收到服务器验证结果 开始删除交易凭证
-                        l2c_ios_recharge_rep msg = l2c_ios_recharge_rep.Parser.ParseFrom(args.msg);
-                        Debug.Log("---receive data from server--->" + JsonConvert.SerializeObject(msg));
-                        IOSRechargeResult result = msg.RechargeResult;
-                        Google.Protobuf.Collections.RepeatedField<string> TransactionIds = msg.TransactionIds;
-                        Google.Protobuf.Collections.RepeatedField<PTGameElement> eles = msg.Eles;
-                        if (result == IOSRechargeResult.RechargeReceive)
-                        {
-                            // finishTransaction:tran];
-                            data.Add("tran", "");
-                            data["PayType"] = "2";
-                            
-                            foreach (var item in TransactionIds)
-                            {
-                                data["tran"] = item;
-                                SDKManager.gi.Pay(data);
-                            }
-                        }
-                        else if (result == IOSRechargeResult.RechargeSendGoods)
-                        {
-                            data.Add("tran", TransactionIds[0]);
-                            data["PayType"] = "2";
-                            SDKManager.gi.Pay(data);
-                            foreach (var item in msg.Eles)
-                            {
-                                int count = item.NCount;
-                                int id = item.NID;
-                                GameElementType type = item.EType;
-                                Debug.Log("---Eles--item.NCount:" + item.NCount + " item.NID:" + item.NID + " item.EType:" + item.EType);
-                            }
-                        }
-                    });
-                }
-                else {
-                    pkg.RechargeOrderNo = receiptData.Substring((PackageIndex - 1) * 2000,2000);
-                    NetworkManager.gi.SendPkt(LogicMsgID.LogicMsgC2LIosRecharge, pkg);
-                }
-
-
-            }
-
-
-        });
-    }
     public void AppleLogin()
     {
         Debug.Log("---Unity---AppleLogin---");
@@ -228,8 +150,8 @@ public class LoginView : MonoBehaviour
     }
     public void ApplePayInit()
     {
-        Debug.Log("---Unity---ApplePayInit---");
-        SDKPay.gi.ApplePayInit();
+        //Debug.Log("---Unity---ApplePayInit---");
+        //SDKPay.gi.ApplePayInit();
     }
     public void Switch()
     {
