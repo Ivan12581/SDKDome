@@ -35,7 +35,7 @@ public class LoginView : MonoBehaviour
                 Debug.LogWarning(Newtonsoft.Json.JsonConvert.SerializeObject(msg));
             });
         });
-        Debug.Log("---Unity Start---");
+        Debug.Log("---LoginView Start---");
 
     }
 
@@ -46,6 +46,7 @@ public class LoginView : MonoBehaviour
             Debug.Log("---serverIP.text---");
             return;
         }
+        Debug.Log("---SetServerIP---" + serverIP.text);
         GameSetting.gi.ip = serverIP.text;
     }
 
