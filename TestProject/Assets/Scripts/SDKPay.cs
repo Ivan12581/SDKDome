@@ -8,17 +8,11 @@ namespace celia.game {
     /// </summary>
     public class SDKPay : SingleClass<SDKPay>
     {
-        private string Serverinfo = "";//PayInfo From Server
-        private string Appleinfo = "";//PayInfo From Apple
-
-        private bool GetServerInfo = false;
-        private bool GetSDKInfo = false;
         private Dictionary<string, string> data;
-        //private Dictionary<string, string> AppleOrders;//从Apple那边拿到的所有订单
         private List<c2l_ios_recharge.Types.transaction_info> AppleOrders;//从Apple那边拿到的所有订单
         private List<string> ServerOrders;//从服务器那边拿到的所有需要删除的订单
         private bool IsInit = false;
-        private string VoucherData;//凭证
+        private string VoucherData;//支付凭证
         private void Init()
         {
             if (IsInit)
@@ -52,12 +46,16 @@ namespace celia.game {
             Google.Protobuf.Collections.RepeatedField<PTGameElement> eles = msg.Eles;
             if (result == IOSRechargeResult.RechargeReceive)
             {
-                foreach (string item in TransactionIds)
+                foreach (string Order in TransactionIds)
                 {
                     data["PayType"] = ((int)PayType.DelOrder).ToString();
-                    data["Order"] = item;
+                    data["Order"] = Order;
                     SDKManager.gi.Pay(data);
                 }
+                //状态重置
+                AppleOrders.Clear();
+                ServerOrders.Clear();
+                VoucherData = "";
             }
             else if (result == IOSRechargeResult.RechargeSendGoods)
             {
@@ -78,26 +76,31 @@ namespace celia.game {
                 }
             }
         }
+        /// <summary>
+        /// Apple支付初始化 应该程序启动就开启
+        /// </summary>
         public void ApplePayInit() {
             Init();
-            GetSDKInfo = false;
             data["PayType"] = ((int)PayType.Init).ToString();
             SDKManager.gi.Pay(data);
         }
-
-
+        /// <summary>
+        /// 从服务器初始化订单信息 应该连接逻辑服后就请求
+        /// </summary>
         private void GetServerPayInfo()
         {
-            GetServerInfo = false;
+            ServerOrders.Clear();
             c2l_ios_recharge_init pkg = new c2l_ios_recharge_init();
             NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LIosRechargeInit, pkg, LogicMsgID.LogicMsgL2CIosRechargeInit, (args) =>
             {
                 l2c_ios_recharge_init msg = l2c_ios_recharge_init.Parser.ParseFrom(args.msg);
                 Debug.Log("---GetServerPayInfo--->" + JsonConvert.SerializeObject(msg));
                 Google.Protobuf.Collections.RepeatedField<string> TransactionIds = msg.OrderToDelete;
-                GetServerInfo = true;
+                foreach (var item in TransactionIds)
+                {
+                    ServerOrders.Add(item);
+                }
                 CheckOrderState();
-
             });
 
         }
@@ -120,7 +123,6 @@ namespace celia.game {
             data["PayType"] = ((int)PayType.Pay).ToString();
             SDKManager.gi.Pay(data);
         }
-
         public void SDKPayCallBack(int state,Dictionary<string, string> data)
         {
 
@@ -155,92 +157,54 @@ namespace celia.game {
         /// <param name="data"></param>
         private void InitCallBack(int state, Dictionary<string, string> data) {
             if (state == 0){
-                Debug.Log("---用户不允许内购---");
-                GetSDKInfo = true;
+                Debug.Log("--InitCallBack-用户不允许内购---");
             } else if (state == 1) {
-                Debug.Log("---没有未删除订单---");
-                GetSDKInfo = true;
+                Debug.Log("-InitCallBack--有未删除订单---");
+                AddAppleOrders(data);
             }
             else if (state == 2){
-                Debug.Log("---有未删除订单---");
-
-                data.TryGetValue("product_id", out string product_id);
-                data.TryGetValue("transaction_id", out string transaction_id);
-                data.TryGetValue("quantity", out string quantity);
-                data.TryGetValue("uid", out string uid);
-                if (string.IsNullOrEmpty(uid))
-                {
-                    Debug.Log("---uid is null---");
-                }
-
-                c2l_ios_recharge.Types.transaction_info Info = new c2l_ios_recharge.Types.transaction_info
-                {
-                    TransactionId = transaction_id,
-                    CommodityId = product_id,
-                    Num = int.Parse(quantity)
-                };
-                AppleOrders.Add(Info);
-            }else if (state == 4){
-
-                if (data.ContainsKey("encodeStr"))
-                {
-                    Debug.Log("---收到凭证---");
+                if (data.ContainsKey("encodeStr")){
+                    Debug.Log("---凭证收集完毕 等待连接逻辑服后 向服务器请求服务器订单 然后对比---");
                     VoucherData = data["encodeStr"];
-                    GetSDKInfo = true;
-                }
-                else {
+                }else{
                     Debug.Log("---未收到凭证-没有-key:encodeStr-");
                 }
 
-            }
-            CheckOrderState();
-        }
+            }else if (state == 4){
 
+            }
+        }
+        void AddAppleOrders(Dictionary<string, string> data) {
+            data.TryGetValue("product_id", out string product_id);
+            data.TryGetValue("transaction_id", out string transaction_id);
+            data.TryGetValue("quantity", out string quantity);
+            data.TryGetValue("uid", out string uid);
+            if (string.IsNullOrEmpty(uid))
+            {
+                Debug.Log("---uid is null---");
+            }
+            c2l_ios_recharge.Types.transaction_info Info = new c2l_ios_recharge.Types.transaction_info
+            {
+                TransactionId = transaction_id,
+                CommodityId = product_id,
+                Num = int.Parse(quantity)
+            };
+            AppleOrders.Add(Info);
+        }
         /// <summary>
         /// 发送订单和凭证到服务器
         /// </summary>
         private void PayCallBack(int state, Dictionary<string, string> data) {
             if (state == 1) {
-                //开始把交易凭证发给服务器验证
-                data.TryGetValue("encodeStr", out string receiptData);
-                //data.TryGetValue("product_id", out string product_id);
-                //data.TryGetValue("transaction_id", out string transaction_id);
+                AddAppleOrders(data);
 
-                int TotalCount = receiptData.Length;
-                int TotalPackage = (int)Math.Ceiling((double)TotalCount / 2000);
-                Debug.Log("---TotalCount--->" + TotalCount);
-                Debug.Log("===TotalPackage=" + TotalPackage);
-                c2l_ios_recharge pkg = new c2l_ios_recharge();
-                for (int PackageIndex = 1; PackageIndex <= TotalPackage; PackageIndex++)
-                {
-                    pkg.TotalPackage = TotalPackage;
-                    pkg.PackageIndex = PackageIndex;
-                    if (TotalPackage == PackageIndex)
-                    {
-                        if (AppleOrders.Count == 0)
-                        {
-                            Debug.Log("---AppleOrders.Count == 0--->");
-                            return;
-                        }
-                        foreach (c2l_ios_recharge.Types.transaction_info info in AppleOrders)
-                        {
-                            pkg.OrderInfos.Add(info);
-                        }
-
-                        pkg.RechargeOrderNo = receiptData.Substring((PackageIndex - 1) * 2000, TotalCount - (PackageIndex - 1) * 2000);
-                        NetworkManager.gi.SendPkt(LogicMsgID.LogicMsgC2LIosRecharge, pkg);
-                    }
-                    else
-                    {
-                        pkg.RechargeOrderNo = receiptData.Substring((PackageIndex - 1) * 2000, 2000);
-                        NetworkManager.gi.SendPkt(LogicMsgID.LogicMsgC2LIosRecharge, pkg);
-                    }
-
-                }
             } else if (state == 2) {
-                if (data.ContainsKey("encodeStr"))
-                {
+                if (data.ContainsKey("encodeStr")){
+                    Debug.Log("---收到凭证-- 开始发送服务器验证-");
                     VoucherData = data["encodeStr"];
+                    VerifyVoucherData();
+                }else{
+                    Debug.Log("---未收到凭证-没有-key:encodeStr-");
                 }
             }
 
@@ -249,6 +213,11 @@ namespace celia.game {
         /// 开始把交易凭证发给服务器验证
         /// </summary>
         private void VerifyVoucherData() {
+            if (string.IsNullOrEmpty(VoucherData)|| AppleOrders.Count<1)
+            {
+                Debug.LogError("VoucherData is nil or AppleOrders is nil");
+                return;
+            }
             int TotalCount = VoucherData.Length;
             int TotalPackage = (int)Math.Ceiling((double)TotalCount / 2000);
             Debug.Log("---TotalCount--->" + TotalCount);
@@ -278,19 +247,26 @@ namespace celia.game {
                     pkg.RechargeOrderNo = VoucherData.Substring((PackageIndex - 1) * 2000, 2000);
                     NetworkManager.gi.SendPkt(LogicMsgID.LogicMsgC2LIosRecharge, pkg);
                 }
-
             }
         }
+        /// <summary>
+        /// Apple删除订单结果返回
+        /// </summary>
+        /// <param name="state"></param>
+        /// <param name="data"></param>
         private void DelOrderCallBack(int state, Dictionary<string, string> data)
         {
             if (state == 0){
-                Debug.Log("---删除订单失败---");
+
             } else if (state == 1) {
                 data.TryGetValue("Order",out string order);
                 Debug.Log("---删除订单成功---"+ order);
             } else if (state == 2){
                 data.TryGetValue("Order", out string order);
-                Debug.Log("---Error:Apple 那边没有订单---" + order);
+                Debug.Log("---删除订单失败---" + order);
+            }
+            else if (state == 3){
+                Debug.Log("---Error:Apple 那边没有订单---");
             }
         }
         /// <summary>
@@ -298,52 +274,51 @@ namespace celia.game {
         /// </summary>
         private void CheckOrderState()
         {
-            if (GetSDKInfo&&GetServerInfo)
-            {
-                if (AppleOrders.Count == 0 && ServerOrders.Count == 0)
+            if (AppleOrders.Count == 0 && ServerOrders.Count == 0){
+                Debug.Log("---岁月静好--->");
+                return;
+            }
+            else if (AppleOrders.Count == 0){
+                //直接服务器数据原路返回
+            }
+            else if (ServerOrders.Count == 0){
+                //需要将AppleOrders全部发服务器就好了
+                VerifyVoucherData();
+            }
+            else {
+                List<string> needDelOrders = new List<string>();
+                List<c2l_ios_recharge.Types.transaction_info> needVerifyData = new List<c2l_ios_recharge.Types.transaction_info>();
+                //需要check
+                bool IsFind = false;
+                foreach (c2l_ios_recharge.Types.transaction_info aInfo in AppleOrders)
                 {
-                    return;
-                }
-                else if (AppleOrders.Count == 0)
-                {
-                    //直接服务器数据原路返回
-                }
-                else if (ServerOrders.Count == 0)
-                {
-                    //需要将AppleOrders全部发服务器就好了
-                    VerifyVoucherData();
-                }
-                else {
-                    List<string> needDelOrders = new List<string>();
-                    List<c2l_ios_recharge.Types.transaction_info> needVerifyData = new List<c2l_ios_recharge.Types.transaction_info>();
-                    //需要check
-                    bool IsFind = false;
-                    foreach (c2l_ios_recharge.Types.transaction_info aInfo in AppleOrders)
+                    IsFind = false;
+                    foreach (string sInfo in ServerOrders)
                     {
-                        IsFind = false;
-                        foreach (string sInfo in ServerOrders)
+                        if (string.Equals(aInfo, sInfo))
                         {
-                            if (string.Equals(aInfo, sInfo))
-                            {
-                                needDelOrders.Add(sInfo);
-                                IsFind = true;
-                                break;
-                            }
-                        }
-                        if (!IsFind)
-                        {
-                            needVerifyData.Add(aInfo);
+                            needDelOrders.Add(sInfo);
+                            IsFind = true;
+                            break;
                         }
                     }
-                    DelOrderInApple(needDelOrders);
-                    AppleOrders = needVerifyData;
-                    VerifyVoucherData();
-                    //发给服务器
+                    if (!IsFind)
+                    {
+                        needVerifyData.Add(aInfo);
+                    }
                 }
-
+                DelOrderInApple(needDelOrders);
+                AppleOrders = needVerifyData;
+                //其实可能还有服务器有 Apple没有的
+                //发给服务器
+                VerifyVoucherData();
             }
-        }
 
+        }
+        /// <summary>
+        /// 删除Apple订单
+        /// </summary>
+        /// <param name="Orders"></param>
         private void DelOrderInApple(List<string> Orders) {
             if (Orders.Count>0)
             {
@@ -355,7 +330,6 @@ namespace celia.game {
                 }
             }
         }
-
         private enum PayType
         {
             None,
