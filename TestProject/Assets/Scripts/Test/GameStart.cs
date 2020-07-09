@@ -8,9 +8,10 @@ public class GameStart : MonoBehaviour
     void Awake()
     {
         DelayManager.Create();
+        NetworkManager.Create();
         SDKManager.Create();
         SDKManager.gi.Init();
-        NetworkManager.Create();
+
         MainThreadDispatcher.Create();
         PopupMessageManager.Create();
         AuthProcessor.Create();
