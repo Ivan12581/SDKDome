@@ -13,7 +13,8 @@ public class LoginView : MonoBehaviour
 
     public InputField serverIP;
     public GameObject GoTest;
-
+    //554619719418-rtqb4au05hj99h8h6n70i6b8i3d91tun.apps.googleusercontent.com
+    //com.googleusercontent.apps.554619719418-rtqb4au05hj99h8h6n70i6b8i3d91tun
     // Start is called before the first frame update
     void Start()
     {
