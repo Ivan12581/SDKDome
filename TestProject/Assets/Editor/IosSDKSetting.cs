@@ -150,6 +150,7 @@ public class IosSDKSetting : Editor{
         plist.ReadFromFile(plistPath);
         PlistElementDict rootDict = plist.root;
         rootDict.SetString("FacebookAppID", "949004278872387");
+        rootDict.SetString("GoogleClientID", "554619719418-rtqb4au05hj99h8h6n70i6b8i3d91tun.apps.googleusercontent.com");
         rootDict.SetString("FacebookAppDisplayName", "Girl for the Throne TW");
         // URL types配置
         PlistElementArray URLTypes = plist.root.CreateArray("CFBundleURLTypes");
