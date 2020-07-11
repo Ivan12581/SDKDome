@@ -30,13 +30,6 @@ static AppleHelper *AppleHelperInstance = nil;
         }
     }
     return AppleHelperInstance;
-//    static AppleHelper* instance = nil;
-//    static dispatch_once_t once;
-//
-//    dispatch_once(&once, ^{
-//        instance = [[self.class alloc] init];
-//    });
-//    return instance;
 }
 -(void)InitSDK{
     accountName = @"TWuserIdentifier";

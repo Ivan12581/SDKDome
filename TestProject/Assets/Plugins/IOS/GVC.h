@@ -6,11 +6,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <GoogleSignIn/GoogleSignIn.h>
 NS_ASSUME_NONNULL_BEGIN
 
-@interface GVC : UIViewController
-
+@interface GVC : UIViewController<GIDSignInDelegate>
+-(void)InitSDK;
+-(void)Login;
++(id)sharedInstance;
 @end
 
 NS_ASSUME_NONNULL_END

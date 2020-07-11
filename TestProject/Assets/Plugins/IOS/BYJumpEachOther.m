@@ -24,8 +24,9 @@ static BYJumpEachOther *_Instance = nil;
   - (void)setupIOS
 {
     // 跳转到IOS界面,Unity界面暂停
-    UnityPause(true);
+
      GVC *vc = [[GVC alloc] init];
+    
 //    GoogleHelper *vc = [[GoogleHelper alloc] init];
     
 //    UIViewController *vc = [[UIViewController alloc] init];
@@ -39,13 +40,14 @@ static BYJumpEachOther *_Instance = nil;
 //    [btn addTarget:self action:@selector(setupUnity) forControlEvents:UIControlEventTouchUpInside];
 
 //    [vc.view addSubview:btn];
-
+    vc.view.backgroundColor = [UIColor whiteColor];
+    //vc.view.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
     self.vc = vc;
     [self.vc.view setHidden:NO];
     NSLog(@"设置界面为IOS界面");
     [GetAppController().window bringSubviewToFront:UnityGetGLViewController().view];
     GetAppController().window.rootViewController = vc;
-    
+        UnityPause(true);
 //    [[GoogleHelper sharedInstance] Login];
 }
 // 设置Unity界面

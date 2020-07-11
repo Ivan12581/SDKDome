@@ -1,9 +1,12 @@
 #import "IOSBridgeHelper.h"
 #import "AppleHelper.h"
 #import "GoogleHelper.h"
+#import "FBHelper.h"
+#import "GVC.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "BYJumpEachOther.h"
+#import <GoogleSignIn/GoogleSignIn.h>
 //******************************************************
 //****************IOS中间文件
 //******************************************************
@@ -11,18 +14,45 @@
 @implementation IOSBridgeHelper
  - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
      NSLog(@"-ios---IOSBridgeHelper---application--000-");
+      NSLog(@"-ios---IOSBridgeHelper---application--000-");
+      NSLog(@"-ios---IOSBridgeHelper---application--000-");
+      NSLog(@"-ios---IOSBridgeHelper---application--000-");
      [super application:application didFinishLaunchingWithOptions:launchOptions];
      //Google 启动
-    
+
      
-     [GIDSignIn sharedInstance].clientID = @"554619719418-rtqb4au05hj99h8h6n70i6b8i3d91tun.apps.googleusercontent.com";
+         [GIDSignIn sharedInstance].clientID = @"589453917038-qaoga89fitj2ukrsq27ko56fimmojac6.apps.googleusercontent.com";
+
+//     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//     GoogleHelper *masterViewController =
+//         [[GoogleHelper alloc] initWithNibName:@"GoogleHelper"
+//                                                bundle:nil];
+//     self.navigationController =
+//         [[UINavigationController alloc]
+//             initWithRootViewController:masterViewController];
+//     self.window.rootViewController = self.navigationController;
+//     [self.window makeKeyAndVisible];
 //     [GIDSignIn sharedInstance].delegate = self;
      
-    //FaceBook 启动调用必接
-//     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
-//     [FBSDKSettings setAppID:@"949004278872387"];
+//    FaceBook 启动调用必接
+     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
+     [FBSDKSettings setAppID:@"949004278872387"];
      return YES;
  }
+
+- (BOOL)application:(UIApplication *)app
+            openURL:(NSURL *)url
+            options:(NSDictionary<NSString *, id> *)options {
+  return [[GIDSignIn sharedInstance] handleURL:url];
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+  return [[GIDSignIn sharedInstance] handleURL:url];
+}
+
 extern void UnitySendMessage(const char *, const char *, const char *);
 
 -(void)SendMessageToUnity:(int)msgID DictData:(NSMutableDictionary *) dict{
@@ -77,7 +107,8 @@ static IOSBridgeHelper *BridgeHelperIns = nil;
 -(void)InitSDK{
     [self Init];
 //    [[AppleHelper sharedInstance] InitSDK];
-    [[GoogleHelper sharedInstance] InitSDK];
+//     [[GVC sharedInstance] InitSDK];
+//    [[GoogleHelper sharedInstance] InitSDK];
     if (BridgeHelperIns == nil) {
         NSLog(@"-BridgeHelperIns == nil----");
     }
@@ -90,25 +121,29 @@ static IOSBridgeHelper *BridgeHelperIns = nil;
 #pragma mark -- 登录 jsonString 为登录方式 就是一个字符串
 -(void)Login: (const char *) jsonString{
     NSLog(@"ios登录类型: %s", jsonString);
-    [[BYJumpEachOther sharedInstance] setupIOS];
-//    NSInteger  type = [[NSString stringWithUTF8String:jsonString] integerValue];
-//    switch (type) {
-//        case tNone:
-//            break;
-//        case tApple:
-//                [[AppleHelper sharedInstance] Login];
-//                break;
-//        case tGameCenter:
-//                [[AppleHelper sharedInstance] authGamecnter];
-//                break;
-//        case tFacebook:
-//                break;
-//        case tGoogle:
+    
+    NSInteger  type = [[NSString stringWithUTF8String:jsonString] integerValue];
+    switch (type) {
+        case tNone:
+            break;
+        case tApple:
+                [[AppleHelper sharedInstance] Login];
+                break;
+        case tGameCenter:
+                [[AppleHelper sharedInstance] authGamecnter];
+                break;
+        case tFacebook:
+              [[FBHelper sharedInstance] Login];
+                break;
+        case tGoogle:
+            
+            [[GVC sharedInstance] Login];
+//            [[BYJumpEachOther sharedInstance] setupIOS];
 //            [[GoogleHelper sharedInstance] Login];
-//                break;
-//        default:
-//            break;
-//    }
+                break;
+        default:
+            break;
+    }
 
     
 }

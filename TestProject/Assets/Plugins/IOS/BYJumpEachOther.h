@@ -10,6 +10,7 @@
 @interface BYJumpEachOther : NSObject
 +(id)sharedInstance;
 -(void)setupIOS;
+-(void)setupUnity;
 // 存储的iOS控制器
 @property (nonatomic, strong) UIViewController *vc;
 @end

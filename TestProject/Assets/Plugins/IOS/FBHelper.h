@@ -10,7 +10,10 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
-@interface FBHelper : UIViewController <UIApplicationDelegate>
+@interface FBHelper : UIViewController <UIApplicationDelegate,FBSDKSharingDelegate>
+-(void)InitSDK;
+-(void)Login;
++(id)sharedInstance;
 - (void)sharer:(id<FBSDKSharing>)sharer didCompleteWithResults:(NSDictionary *)results;
 - (void)sharer:(id<FBSDKSharing>)sharer didFailWithError:(NSError *)error;
 - (void)sharerDidCancel:(id<FBSDKSharing>)sharer;

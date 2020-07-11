@@ -10,7 +10,18 @@
 
 @implementation FBHelper
 //  AppDelegate.m
-
+static FBHelper *_Instance = nil;
++(FBHelper*)sharedInstance{
+    if (_Instance == nil) {
+        if (self == [FBHelper class]) {
+            _Instance = [[self alloc] init];
+        }
+    }
+    return _Instance;
+}
+-(void)InitSDK{
+    NSLog(@"---FBHelper---InitSDK---");
+}
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
             options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
@@ -27,6 +38,7 @@
 //****************FaceBook Login
 //******************************************************
 -(void)Login{
+        NSLog(@"---FBHelper---Login---");
     FBSDKLoginManager *login = [FBSDKLoginManager new];
     [login logInWithPermissions:@[@"public_profile",@"email",@"user_friends"] fromViewController:self handler:^(FBSDKLoginManagerLoginResult * _Nullable result, NSError * _Nullable error) {
         if (error) {

@@ -7,6 +7,13 @@
 
 #import "GoogleHelper.h"
 #import "UnityAppController.h"
+@interface GoogleHelper () <GIDSignInDelegate>
+
+//@property (nonatomic, copy) void (^confirmActionBlock)(void);
+//@property (nonatomic, copy) void (^cancelActionBlock)(void);
+
+@end
+
 @implementation GoogleHelper
 
 static GoogleHelper *GoogleHelperIns = nil;
@@ -17,45 +24,13 @@ static GoogleHelper *GoogleHelperIns = nil;
         }
     }
     return GoogleHelperIns;
-
 }
-//-(void)viewDidLoad{
-//    [super viewDidLoad];
-//        [GIDSignIn sharedInstance].clientID = @"554619719418-rtqb4au05hj99h8h6n70i6b8i3d91tun.apps.googleusercontent.com";
-////    [GIDSignIn sharedInstance].clientID = @"com.googleusercontent.apps.554619719418-rtqb4au05hj99h8h6n70i6b8i3d91tun";
-//
-//    GIDSignIn *signIn = [GIDSignIn sharedInstance];
-//    signIn.shouldFetchBasicProfile = YES;
-//    signIn.delegate = self;
-////    signIn.presentingViewController = self;
-//    [signIn setScopes:[NSArray arrayWithObject:@"https://www.googleapis.com/auth/drive.readonly"]];
-////    [[GIDSignIn sharedInstance] restorePreviousSignIn];
-////     [[GIDSignIn sharedInstance] signIn];
-//
-//
-//    //    UIViewController *vc = [[UIViewController alloc] init];
-//    //    vc.view.backgroundColor = [UIColor greenColor];
-//    //    vc.view.frame = [UIScreen mainScreen].bounds;
-//    //
-//        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(70, 530, 180, 30)];
-//        btn.backgroundColor = [UIColor redColor];
-//        [btn setTitle:@"跳转到Unity界面" forState:UIControlStateNormal];
-//        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//        [btn addTarget:self action:@selector(Login) forControlEvents:UIControlEventTouchUpInside];
-//
-//
-////    GIDSignInButton *btn = [[GIDSignInButton alloc] init];
-////
-////    btn.frame = CGRectMake(100, 100, 300, 100);
-////    [btn setTitle:@"跳转到Unity界面" forState:UIControlStateNormal];
-//    [self.view addSubview:btn];
-//
-//}
+
 -(void)InitSDK{
     NSLog(@"---GoogleHelper  Init---");
     [GIDSignIn sharedInstance].clientID = @"554619719418-rtqb4au05hj99h8h6n70i6b8i3d91tun.apps.googleusercontent.com";
     [GIDSignIn sharedInstance].delegate = self;
-     
+    [GIDSignIn sharedInstance].shouldFetchBasicProfile = YES;
 }
 
 
