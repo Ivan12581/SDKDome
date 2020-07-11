@@ -6,8 +6,9 @@
 //
 
 #import "GoogleHelper.h"
-
+#import "UnityAppController.h"
 @implementation GoogleHelper
+
 static GoogleHelper *GoogleHelperIns = nil;
 +(GoogleHelper*)sharedInstance{
     if (GoogleHelperIns == nil) {
@@ -18,21 +19,58 @@ static GoogleHelper *GoogleHelperIns = nil;
     return GoogleHelperIns;
 
 }
-
+//-(void)viewDidLoad{
+//    [super viewDidLoad];
+//        [GIDSignIn sharedInstance].clientID = @"554619719418-rtqb4au05hj99h8h6n70i6b8i3d91tun.apps.googleusercontent.com";
+////    [GIDSignIn sharedInstance].clientID = @"com.googleusercontent.apps.554619719418-rtqb4au05hj99h8h6n70i6b8i3d91tun";
+//
+//    GIDSignIn *signIn = [GIDSignIn sharedInstance];
+//    signIn.shouldFetchBasicProfile = YES;
+//    signIn.delegate = self;
+////    signIn.presentingViewController = self;
+//    [signIn setScopes:[NSArray arrayWithObject:@"https://www.googleapis.com/auth/drive.readonly"]];
+////    [[GIDSignIn sharedInstance] restorePreviousSignIn];
+////     [[GIDSignIn sharedInstance] signIn];
+//
+//
+//    //    UIViewController *vc = [[UIViewController alloc] init];
+//    //    vc.view.backgroundColor = [UIColor greenColor];
+//    //    vc.view.frame = [UIScreen mainScreen].bounds;
+//    //
+//        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(70, 530, 180, 30)];
+//        btn.backgroundColor = [UIColor redColor];
+//        [btn setTitle:@"跳转到Unity界面" forState:UIControlStateNormal];
+//        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//        [btn addTarget:self action:@selector(Login) forControlEvents:UIControlEventTouchUpInside];
+//
+//
+////    GIDSignInButton *btn = [[GIDSignInButton alloc] init];
+////
+////    btn.frame = CGRectMake(100, 100, 300, 100);
+////    [btn setTitle:@"跳转到Unity界面" forState:UIControlStateNormal];
+//    [self.view addSubview:btn];
+//
+//}
 -(void)InitSDK{
     NSLog(@"---GoogleHelper  Init---");
     [GIDSignIn sharedInstance].clientID = @"554619719418-rtqb4au05hj99h8h6n70i6b8i3d91tun.apps.googleusercontent.com";
     [GIDSignIn sharedInstance].delegate = self;
+     
 }
 
-- (BOOL)application:(UIApplication *)application
-didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-  [GIDSignIn sharedInstance].clientID = @"554619719418-rtqb4au05hj99h8h6n70i6b8i3d91tun.apps.googleusercontent.com";
-  [GIDSignIn sharedInstance].delegate = self;
-
-  return YES;
+- (void)signIn:(GIDSignIn *)signIn presentViewController:(UIViewController *)viewController{
+    NSLog(@"%@", signIn);
+   //此处的rootViewControlle为当前显示的试图控制器
+//    GetAppController().window.rootViewController
+    [GetAppController().window.rootViewController presentViewController:viewController animated:YES completion:nil];
+//    [self.rootViewController presentViewController:viewController animated:YES completion:nil];
 }
+//- (void)presentSignInViewController:(UIViewController *)viewController {
+//    NSLog(@"--------presentSignInViewController----------");
+//  [[self navigationController] pushViewController:viewController animated:YES];
+//}
+
 - (void)signIn:(GIDSignIn *)signIn
 didSignInForUser:(GIDGoogleUser *)user
      withError:(NSError *)error {
@@ -73,13 +111,12 @@ didDisconnectWithUser:(GIDGoogleUser *)user
             options:(NSDictionary<NSString *, id> *)options {
   return [[GIDSignIn sharedInstance] handleURL:url];
 }
-- (IBAction)didTapSignOut:(id)sender {
-  [[GIDSignIn sharedInstance] signOut];
-}
+
 - (void)Login {
+     NSLog(@"---GoogleHelper  Login---");
 //  [super viewDidLoad];
 
-  [GIDSignIn sharedInstance].presentingViewController = self;
+//  [GIDSignIn sharedInstance].presentingViewController = self;
 
   // Automatically sign in the user.
 

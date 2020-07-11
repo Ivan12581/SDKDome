@@ -118,10 +118,12 @@ static NSString *const kCredentialsButtonAccessibilityIdentifier = @"Credentials
   signIn.delegate = self;
   signIn.presentingViewController = self;
   [GIDSignIn sharedInstance].scopes = @[ @"email" ];
+    NSLog(@"--------Sign in----------");
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil {
+       NSLog(@"--------initWithNibName----------");
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
     [self setUp];
@@ -140,12 +142,14 @@ static NSString *const kCredentialsButtonAccessibilityIdentifier = @"Credentials
 }
 
 - (void)viewDidLoad {
+     NSLog(@"--------viewDidLoad----------");
   [super viewDidLoad];
 
   self.credentialsButton.accessibilityIdentifier = kCredentialsButtonAccessibilityIdentifier;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+      NSLog(@"--------viewWillAppear----------");
   [self adoptUserSettings];
   [self reportAuthStatus];
   [self updateButtons];
@@ -159,6 +163,7 @@ static NSString *const kCredentialsButtonAccessibilityIdentifier = @"Credentials
 - (void)signIn:(GIDSignIn *)signIn
     didSignInForUser:(GIDGoogleUser *)user
            withError:(NSError *)error {
+      NSLog(@"--------didSignInForUser----------");
   if (error) {
     _signInAuthStatus.text = [NSString stringWithFormat:@"Status: Authentication error: %@", error];
     return;
@@ -170,6 +175,7 @@ static NSString *const kCredentialsButtonAccessibilityIdentifier = @"Credentials
 - (void)signIn:(GIDSignIn *)signIn
     didDisconnectWithUser:(GIDGoogleUser *)user
                 withError:(NSError *)error {
+    NSLog(@"--------didDisconnectWithUser----------");
   if (error) {
     _signInAuthStatus.text = [NSString stringWithFormat:@"Status: Failed to disconnect: %@", error];
   } else {
@@ -180,6 +186,7 @@ static NSString *const kCredentialsButtonAccessibilityIdentifier = @"Credentials
 }
 
 - (void)presentSignInViewController:(UIViewController *)viewController {
+    NSLog(@"--------presentSignInViewController----------");
   [[self navigationController] pushViewController:viewController animated:YES];
 }
 
@@ -232,6 +239,7 @@ static NSString *const kCredentialsButtonAccessibilityIdentifier = @"Credentials
 }
 
 - (void)reportAuthStatus {
+     NSLog(@"--------reportAuthStatus----------");
   GIDGoogleUser *googleUser = [[GIDSignIn sharedInstance] currentUser];
   if (googleUser.authentication) {
     _signInAuthStatus.text = @"Status: Authenticated";
@@ -246,6 +254,7 @@ static NSString *const kCredentialsButtonAccessibilityIdentifier = @"Credentials
 // Update the interface elements containing user data to reflect the
 // currently signed in user.
 - (void)refreshUserInfo {
+        NSLog(@"--------refreshUserInfo----------");
   if ([GIDSignIn sharedInstance].currentUser.authentication == nil) {
     self.userName.text = kPlaceholderUserName;
     self.userEmailAddress.text = kPlaceholderEmailAddress;
@@ -305,21 +314,25 @@ static NSString *const kCredentialsButtonAccessibilityIdentifier = @"Credentials
 #pragma mark - IBActions
 
 - (IBAction)signOut:(id)sender {
+         NSLog(@"--------signOut----------");
   [[GIDSignIn sharedInstance] signOut];
   [self reportAuthStatus];
   [self updateButtons];
 }
 
 - (IBAction)disconnect:(id)sender {
+     NSLog(@"--------disconnect----------");
   [[GIDSignIn sharedInstance] disconnect];
 }
 
 - (IBAction)showAuthInspector:(id)sender {
+      NSLog(@"--------showAuthInspector----------");
   AuthInspectorViewController *authInspector = [[AuthInspectorViewController alloc] init];
   [[self navigationController] pushViewController:authInspector animated:YES];
 }
 
 - (IBAction)checkSignIn:(id)sender {
+      NSLog(@"--------checkSignIn----------");
   [self reportAuthStatus];
 }
 
@@ -336,6 +349,7 @@ static NSString *const kCredentialsButtonAccessibilityIdentifier = @"Credentials
 #pragma mark - UIAlertView Delegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+     NSLog(@"--------alertView----------");
   if (buttonIndex == alertView.cancelButtonIndex) {
     if (_cancelActionBlock) {
       _cancelActionBlock();

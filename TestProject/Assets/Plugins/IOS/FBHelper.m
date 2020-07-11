@@ -10,15 +10,6 @@
 
 @implementation FBHelper
 //  AppDelegate.m
-- (BOOL)application:(UIApplication *)application
-    didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  NSLog(@"-ios---FBHelper---application--111--");
-  // You can skip this line if you have the latest version of the SDK installed
-  [[FBSDKApplicationDelegate sharedInstance] application:application
-    didFinishLaunchingWithOptions:launchOptions];
-  // Add any custom logic here.
-  return YES;
-}
 
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
@@ -32,7 +23,26 @@
   // Add any custom logic here.
   return handled;
 }
-
+//******************************************************
+//****************FaceBook Login
+//******************************************************
+-(void)Login{
+    FBSDKLoginManager *login = [FBSDKLoginManager new];
+    [login logInWithPermissions:@[@"public_profile",@"email",@"user_friends"] fromViewController:self handler:^(FBSDKLoginManagerLoginResult * _Nullable result, NSError * _Nullable error) {
+        if (error) {
+              NSLog(@"Unexpected login error: %@", error);
+        }else{
+            if (result.isCancelled) {
+                NSLog(@"--login isCancelled---");
+            }else{
+                NSLog(@"---result.token---> %@", result.token);
+            }
+        }
+    }];
+}
+-(void)Logout{
+    [[FBSDKLoginManager new] logOut];
+}
 //******************************************************
 //****************FaceBook Share
 //******************************************************

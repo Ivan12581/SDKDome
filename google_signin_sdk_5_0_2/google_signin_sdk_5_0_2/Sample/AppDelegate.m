@@ -35,7 +35,7 @@ static NSString * const kClientID =
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   // Set app's client ID for |GIDSignIn|.
   [GIDSignIn sharedInstance].clientID = kClientID;
-
+ NSLog(@"-------start--------");
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   SignInViewController *masterViewController =
       [[SignInViewController alloc] initWithNibName:@"SignInViewController"
@@ -53,6 +53,7 @@ static NSString * const kClientID =
               openURL:(NSURL *)url
     sourceApplication:(NSString *)sourceApplication
            annotation:(id)annotation {
+     NSLog(@"-------GIDSignIn sharedInstance] handleURL:url---------");
   return [[GIDSignIn sharedInstance] handleURL:url];
 }
 

@@ -7,7 +7,7 @@
 #import <GoogleSignIn/GoogleSignIn.h>
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-@interface GoogleHelper:NSObject<UIApplicationDelegate, GIDSignInDelegate>
+@interface GoogleHelper:UIResponder<UIApplicationDelegate,GIDSignInDelegate>
 -(void)InitSDK;
 -(void)Login;
 +(id)sharedInstance;

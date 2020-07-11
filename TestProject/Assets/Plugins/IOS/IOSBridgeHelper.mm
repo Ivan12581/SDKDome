@@ -3,7 +3,7 @@
 #import "GoogleHelper.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
-
+#import "BYJumpEachOther.h"
 //******************************************************
 //****************IOS中间文件
 //******************************************************
@@ -13,11 +13,14 @@
      NSLog(@"-ios---IOSBridgeHelper---application--000-");
      [super application:application didFinishLaunchingWithOptions:launchOptions];
      //Google 启动
-
+    
+     
+     [GIDSignIn sharedInstance].clientID = @"554619719418-rtqb4au05hj99h8h6n70i6b8i3d91tun.apps.googleusercontent.com";
+//     [GIDSignIn sharedInstance].delegate = self;
      
     //FaceBook 启动调用必接
-     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
-     [FBSDKSettings setAppID:@"949004278872387"];
+//     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
+//     [FBSDKSettings setAppID:@"949004278872387"];
      return YES;
  }
 extern void UnitySendMessage(const char *, const char *, const char *);
@@ -64,21 +67,9 @@ typedef NS_ENUM(NSInteger, SDKLoginType)
 };
 
 static IOSBridgeHelper *BridgeHelperIns = nil;
-//+(IOSBridgeHelper*)sharedInstance{
-//    if (IOSBridgeHelperInstance == nil) {
-//        if (self == [IOSBridgeHelper class]) {
-//            IOSBridgeHelperInstance = [[self alloc] init];
-//        }
-//    }
-//    return IOSBridgeHelperInstance;
-//}
-
 -(void)Init{
     if (BridgeHelperIns == nil) {
-//        if (self == [IOSBridgeHelper class]) {
-            BridgeHelperIns = [IOSBridgeHelper new];
-//            IOSBridgeHelperInstance = [[self alloc] init];
-//        }
+        BridgeHelperIns = [IOSBridgeHelper new];
     }
 }
 
@@ -99,7 +90,7 @@ static IOSBridgeHelper *BridgeHelperIns = nil;
 #pragma mark -- 登录 jsonString 为登录方式 就是一个字符串
 -(void)Login: (const char *) jsonString{
     NSLog(@"ios登录类型: %s", jsonString);
-     [[GoogleHelper sharedInstance] Login];
+    [[BYJumpEachOther sharedInstance] setupIOS];
 //    NSInteger  type = [[NSString stringWithUTF8String:jsonString] integerValue];
 //    switch (type) {
 //        case tNone:
