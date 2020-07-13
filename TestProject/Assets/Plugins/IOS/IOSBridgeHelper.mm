@@ -106,7 +106,7 @@ static IOSBridgeHelper *BridgeHelperIns = nil;
 #pragma mark --init
 -(void)InitSDK{
     [self Init];
-//    [[AppleHelper sharedInstance] InitSDK];
+    [[AppleHelper sharedInstance] InitSDK];
 //     [[GVC sharedInstance] InitSDK];
 //    [[GoogleHelper sharedInstance] InitSDK];
     if (BridgeHelperIns == nil) {

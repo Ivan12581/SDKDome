@@ -12,6 +12,7 @@
 #import "SSKeychain.h"
 #import <GameKit/GameKit.h>
 @interface IOSBridgeHelper:UnityAppController<UIApplicationDelegate>
+@property(strong, nonatomic) UINavigationController *navigationController;
 //+(id)sharedInstance;
 +(void)LoginCallBack:(NSMutableDictionary *)dict;
 +(void)LoginGameCenterCallBack:(NSMutableDictionary *)dict;
