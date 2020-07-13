@@ -127,12 +127,19 @@ namespace celia.game {
             NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LRechargeCommodityAsk, pkg, LogicMsgID.LogicMsgL2CRechargeCommodityRep, (args) =>{
                 l2c_recharge_commodity_rep msg = l2c_recharge_commodity_rep.Parser.ParseFrom(args.msg);
                 Debug.Log("---LogicMsgL2CRechargeCommodityRep--->" + JsonConvert.SerializeObject(msg));
-                data["PayType"] = ((int)PayType.Pay).ToString();
-                data["GoodID"] = msg.CommodityId;
-                data["GoodNum"] = msg.Qutity.ToString();
-                data["Extra"] = $"{msg.OrderIndex}&{AuthProcessor.gi.ID}";
-                AppleOrders.Clear();
-                SDKManager.gi.Pay(data);
+                if (msg.Able)
+                {
+                    data["PayType"] = ((int)PayType.Pay).ToString();
+                    data["GoodID"] = msg.CommodityId;
+                    data["GoodNum"] = msg.Qutity.ToString();
+                    data["Extra"] = $"{msg.OrderIndex}&{AuthProcessor.gi.ID}";
+                    AppleOrders.Clear();
+                    SDKManager.gi.Pay(data);
+                }
+                else {
+                    Debug.Log("----不能购买此商品---");
+                }
+
             });
         }
         public void SDKPayCallBack(int state,Dictionary<string, string> data)
