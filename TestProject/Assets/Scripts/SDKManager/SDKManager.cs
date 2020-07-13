@@ -46,7 +46,7 @@ namespace celia.game
             proxy = new SDKAndroidProxy();
 #elif UNITY_IOS
             proxy = new SDKIosProxy();
-            SDKPay.gi.ApplePayInit();
+            //SDKPay.gi.ApplePayInit();
 #endif
             GetConfigInfo();
             //UploadDeviceInfo(DeviceUpload.IconLaunch);

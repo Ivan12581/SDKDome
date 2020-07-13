@@ -68,7 +68,7 @@ public class LoginView : MonoBehaviour
     {
         Debug.Log("---Unity---InitSDK---");
         SDKManager.gi.InitSDK((s, dataDict) => {
-
+            SDKPay.gi.ApplePayInit();
         });
     }
     public void ApplePay() {
