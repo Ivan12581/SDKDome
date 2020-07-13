@@ -5,6 +5,7 @@
 //  Created by mini on 7/10/20.
 //
 #import "BYJumpEachOther.h"
+#import "UnityAppController.h"
 #import "GVC.h"
 
 @implementation GVC
@@ -13,24 +14,32 @@ static GVC *_Instance = nil;
     if (_Instance == nil) {
         if (self == [GVC class]) {
             _Instance = [[self alloc] init];
+//            GetAppController().window.rootViewController = _Instance;
+//            NSLog(@"---GVC---sharedInstance---");
         }
     }
     return _Instance;
 }
 -(void)InitSDK{
-    NSLog(@"---GVC---InitSDK---");
 
     
 }
+-(void)viewDidLoad{
+    NSLog(@"---GVC---viewDidLoad---");
+}
 //- (void)viewDidLoad {
 //    [super viewDidLoad];
-    
+//    NSLog(@"---GVC---viewDidLoad---");
+//    NSLog(@"设置界面为IOS界面");
+//    [GetAppController().window bringSubviewToFront:UnityGetGLViewController().view];
+//    GetAppController().window.rootViewController = self;
+//        UnityPause(true);
 //    [GIDSignIn sharedInstance].delegate = self;
 //    [GIDSignIn sharedInstance].shouldFetchBasicProfile = YES;
-    
-    // Do any additional setup after loading the view.
-//    [GIDSignIn sharedInstance].presentingViewController = self;
 //
+//     //Do any additional setup after loading the view.
+//    [GIDSignIn sharedInstance].presentingViewController = self;
+
 //            UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(70, 530, 180, 30)];
 //            btn.backgroundColor = [UIColor redColor];
 //            [btn setTitle:@"Login" forState:UIControlStateNormal];
@@ -44,11 +53,10 @@ static GVC *_Instance = nil;
 //           [btnBack setTitleColor:[UIColor yellowColor] forState:UIControlStateNormal];
 //           [btnBack addTarget:self action:@selector(Backto) forControlEvents:UIControlEventTouchUpInside];
 //        [self.view addSubview:btnBack];
-    
+//
 //    GIDSignInButton *button = [[GIDSignInButton alloc] init];
 //    button.frame = CGRectMake(100, 100, 300, 100);
 //     [self.view addSubview:button];
-//    NSTimer *myTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(Login) userInfo:nil repeats:NO];
     //不重复，只调用一次。timer运行一次就会自动停止运行
 
 //    [[GIDSignIn sharedInstance] signIn];
@@ -62,8 +70,11 @@ static GVC *_Instance = nil;
 [GIDSignIn sharedInstance].shouldFetchBasicProfile = YES;
 
 // Do any additional setup after loading the view.
-[GIDSignIn sharedInstance].presentingViewController = self;
-[[GIDSignIn sharedInstance] signIn];
+    [GIDSignIn sharedInstance].presentingViewController = [[[UIApplication sharedApplication] delegate] window].rootViewController;
+    
+    [[GIDSignIn sharedInstance] signIn];
+//    NSTimer *myTimer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(tets) userInfo:nil repeats:NO];
+
     
       // Automatically sign in the user.
 //  [[GIDSignIn sharedInstance] restorePreviousSignIn];
@@ -71,6 +82,11 @@ static GVC *_Instance = nil;
 
 
 
+}
+-(void)tets{
+
+    NSLog(@"---tets---");
+    [[GIDSignIn sharedInstance] signIn];
 }
 -(void)saveHan{
         GIDSignIn *signIn = [GIDSignIn sharedInstance];
@@ -99,6 +115,7 @@ static GVC *_Instance = nil;
     }];
 }
 -(void)dealloc {
+     NSLog(@"---GVC  dealloc---");
 //    [[GIDSignIn sharedInstance].presentingViewController.view removeFromSuperview]; // It works!
 }
 /*

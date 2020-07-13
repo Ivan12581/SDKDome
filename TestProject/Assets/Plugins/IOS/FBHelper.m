@@ -39,8 +39,11 @@ static FBHelper *_Instance = nil;
 //******************************************************
 -(void)Login{
         NSLog(@"---FBHelper---Login---");
+//    UIWindow* window = [[[UIApplication sharedApplication] delegate] window];
+//    NSAssert(window, @"The window is empty");
+
     FBSDKLoginManager *login = [FBSDKLoginManager new];
-    [login logInWithPermissions:@[@"public_profile",@"email",@"user_friends"] fromViewController:self handler:^(FBSDKLoginManagerLoginResult * _Nullable result, NSError * _Nullable error) {
+    [login logInWithPermissions:@[@"public_profile",@"email",@"user_friends"] fromViewController:[[[UIApplication sharedApplication] delegate] window].rootViewController handler:^(FBSDKLoginManagerLoginResult * _Nullable result, NSError * _Nullable error) {
         if (error) {
               NSLog(@"Unexpected login error: %@", error);
         }else{
