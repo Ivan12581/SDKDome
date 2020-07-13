@@ -16,6 +16,12 @@ namespace celia.game
         public void Buy()
         {
             string gooid = inputField.text;
+            
+            if (string.IsNullOrEmpty(gooid))
+            {
+                Debug.LogError("---goodid is null---");
+                gooid = "test1";
+            }
             SDKPay.gi.Pay(gooid);
         }
 
