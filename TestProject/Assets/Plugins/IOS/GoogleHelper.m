@@ -6,14 +6,7 @@
 //
 
 #import "GoogleHelper.h"
-#import "UnityAppController.h"
-@interface GoogleHelper () <GIDSignInDelegate>
-
-//@property (nonatomic, copy) void (^confirmActionBlock)(void);
-//@property (nonatomic, copy) void (^cancelActionBlock)(void);
-
-@end
-
+#import "IOSBridgeHelper.h"
 @implementation GoogleHelper
 
 static GoogleHelper *GoogleHelperIns = nil;
@@ -28,23 +21,21 @@ static GoogleHelper *GoogleHelperIns = nil;
 
 -(void)InitSDK{
     NSLog(@"---GoogleHelper  Init---");
-    [GIDSignIn sharedInstance].clientID = @"554619719418-rtqb4au05hj99h8h6n70i6b8i3d91tun.apps.googleusercontent.com";
+    [GIDSignIn sharedInstance].clientID = @"554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn.apps.googleusercontent.com";
     [GIDSignIn sharedInstance].delegate = self;
     [GIDSignIn sharedInstance].shouldFetchBasicProfile = YES;
+    [GIDSignIn sharedInstance].presentingViewController = [[[UIApplication sharedApplication] delegate] window].rootViewController;
 }
 
 
 - (void)signIn:(GIDSignIn *)signIn presentViewController:(UIViewController *)viewController{
-    NSLog(@"%@", signIn);
+       NSLog(@"---presentViewController--->%@", signIn);
    //此处的rootViewControlle为当前显示的试图控制器
 //    GetAppController().window.rootViewController
     [GetAppController().window.rootViewController presentViewController:viewController animated:YES completion:nil];
 //    [self.rootViewController presentViewController:viewController animated:YES completion:nil];
 }
-//- (void)presentSignInViewController:(UIViewController *)viewController {
-//    NSLog(@"--------presentSignInViewController----------");
-//  [[self navigationController] pushViewController:viewController animated:YES];
-//}
+
 
 - (void)signIn:(GIDSignIn *)signIn
 didSignInForUser:(GIDGoogleUser *)user
@@ -60,18 +51,8 @@ didSignInForUser:(GIDGoogleUser *)user
   // Perform any operations on signed in user here.
   NSString *userId = user.userID;                  // For client-side use only!
   NSString *idToken = user.authentication.idToken; // Safe to send to the server
-  NSString *fullName = user.profile.name;
-  NSString *givenName = user.profile.givenName;
-  NSString *familyName = user.profile.familyName;
-  NSString *email = user.profile.email;
-    
-    NSLog(@"---userId--->%@", userId);
-    NSLog(@"---idToken--->%@", idToken);
-    NSLog(@"---fullName--->%@", fullName);
-    NSLog(@"---givenName--->%@", givenName);
-    NSLog(@"---familyName--->%@", familyName);
-    NSLog(@"---email--->%@", email);
-  // ...
+
+    [IOSBridgeHelper LoginGoogleCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",userId,@"UserID",idToken,@"Token",nil]];
 }
 
 - (void)signIn:(GIDSignIn *)signIn
@@ -89,15 +70,16 @@ didDisconnectWithUser:(GIDGoogleUser *)user
 
 - (void)Login {
      NSLog(@"---GoogleHelper  Login---");
-//  [super viewDidLoad];
+    GIDSignIn *signIn = [GIDSignIn sharedInstance];
+    if ([signIn hasPreviousSignIn]) {
+        [signIn restorePreviousSignIn];
+        
+    }else{
+        [[GIDSignIn sharedInstance] signIn];
+    }
 
-//  [GIDSignIn sharedInstance].presentingViewController = self;
-
-  // Automatically sign in the user.
-
-
-    [[GIDSignIn sharedInstance] signIn];
-//  [[GIDSignIn sharedInstance] restorePreviousSignIn];
+      // Automatically sign in the user.
+    //  [[GIDSignIn sharedInstance] restorePreviousSignIn];
 
 }
 @end
