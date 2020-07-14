@@ -9,7 +9,7 @@
 #import "BYJumpEachOther.h"
 #import "UnityAppController.h"
 #import "GoogleHelper.h"
-#import "GVC.h"
+
 @implementation BYJumpEachOther
 static BYJumpEachOther *_Instance = nil;
 +(BYJumpEachOther*)sharedInstance{
@@ -25,19 +25,19 @@ static BYJumpEachOther *_Instance = nil;
 {
     // 跳转到IOS界面,Unity界面暂停
 
-     GVC *vc = [[GVC alloc] init];
+//     GVC *vc = [[GVC alloc] init];
     
 //    GoogleHelper *vc = [[GoogleHelper alloc] init];
     
-//    UIViewController *vc = [[UIViewController alloc] init];
-//    vc.view.backgroundColor = [UIColor greenColor];
-//    vc.view.frame = [UIScreen mainScreen].bounds;
-//
-//    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(70, 530, 180, 30)];
-//    btn.backgroundColor = [UIColor redColor];
-//    [btn setTitle:@"跳转到Unity界面" forState:UIControlStateNormal];
-//    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//    [btn addTarget:self action:@selector(setupUnity) forControlEvents:UIControlEventTouchUpInside];
+    UIViewController *vc = [[UIViewController alloc] init];
+    vc.view.backgroundColor = [UIColor greenColor];
+    vc.view.frame = [UIScreen mainScreen].bounds;
+
+    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(70, 530, 180, 30)];
+    btn.backgroundColor = [UIColor redColor];
+    [btn setTitle:@"跳转到Unity界面" forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(setupUnity) forControlEvents:UIControlEventTouchUpInside];
 
 //    [vc.view addSubview:btn];
     vc.view.backgroundColor = [UIColor whiteColor];
