@@ -220,7 +220,7 @@ namespace celia.game
             };
             loginType = LoginType.FaceBook;
 
-            NetworkManager.gi.SendPkt(AuthMsgID.AuthMsgC2ALogonGoogle, pkt);
+            NetworkManager.gi.SendPkt(AuthMsgID.AuthMsgC2ALogonFacebook, pkt);
             // 状态变化
             state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_CHALLENGE));
         }
