@@ -2,10 +2,9 @@
 #import "AppleHelper.h"
 #import "GoogleHelper.h"
 #import "FBHelper.h"
-#import "GVC.h"
+
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
-#import "BYJumpEachOther.h"
 #import <GoogleSignIn/GoogleSignIn.h>
 //******************************************************
 //****************IOS中间文件
@@ -13,26 +12,12 @@
 
 @implementation IOSBridgeHelper
  - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-     NSLog(@"-ios---IOSBridgeHelper---application--000-");
-      NSLog(@"-ios---IOSBridgeHelper---application--000-");
-      NSLog(@"-ios---IOSBridgeHelper---application--000-");
-      NSLog(@"-ios---IOSBridgeHelper---application--000-");
+
      [super application:application didFinishLaunchingWithOptions:launchOptions];
      //Google 启动
+      [GIDSignIn sharedInstance].clientID = @"554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn.apps.googleusercontent.com";
 
-     
-         [GIDSignIn sharedInstance].clientID = @"589453917038-qaoga89fitj2ukrsq27ko56fimmojac6.apps.googleusercontent.com";
 
-//     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//     GoogleHelper *masterViewController =
-//         [[GoogleHelper alloc] initWithNibName:@"GoogleHelper"
-//                                                bundle:nil];
-//     self.navigationController =
-//         [[UINavigationController alloc]
-//             initWithRootViewController:masterViewController];
-//     self.window.rootViewController = self.navigationController;
-//     [self.window makeKeyAndVisible];
-//     [GIDSignIn sharedInstance].delegate = self;
      
 //    FaceBook 启动调用必接
      [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
@@ -40,19 +25,21 @@
      return YES;
  }
 
-- (BOOL)application:(UIApplication *)app
-            openURL:(NSURL *)url
-            options:(NSDictionary<NSString *, id> *)options {
-  return [[GIDSignIn sharedInstance] handleURL:url];
-}
 
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation {
-  return [[GIDSignIn sharedInstance] handleURL:url];
-}
 
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary*)options{
+    return [[FBSDKApplicationDelegate sharedInstance] application:app openURL:url sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey] annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
+}
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    [super applicationDidBecomeActive:application];
+    [FBSDKAppEvents activateApp];
+}
+//- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+//    [super application:application openURL:url options:options];
+//
+//    BOOL handled = [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey] annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
+//    return handled;
+//}
 extern void UnitySendMessage(const char *, const char *, const char *);
 
 -(void)SendMessageToUnity:(int)msgID DictData:(NSMutableDictionary *) dict{
@@ -107,8 +94,8 @@ static IOSBridgeHelper *BridgeHelperIns = nil;
 -(void)InitSDK{
     [self Init];
     [[AppleHelper sharedInstance] InitSDK];
-//     [[GVC sharedInstance] InitSDK];
-//    [[GoogleHelper sharedInstance] InitSDK];
+    [[FBHelper sharedInstance] InitSDK];
+    [[GoogleHelper sharedInstance] InitSDK];
     if (BridgeHelperIns == nil) {
         NSLog(@"-BridgeHelperIns == nil----");
     }
@@ -136,10 +123,7 @@ static IOSBridgeHelper *BridgeHelperIns = nil;
               [[FBHelper sharedInstance] Login];
                 break;
         case tGoogle:
-            
-            [[GVC sharedInstance] Login];
-//            [[BYJumpEachOther sharedInstance] setupIOS];
-//            [[GoogleHelper sharedInstance] Login];
+            [[GoogleHelper sharedInstance] Login];
                 break;
         default:
             break;
@@ -152,12 +136,20 @@ static IOSBridgeHelper *BridgeHelperIns = nil;
     [dict setValue: [NSNumber numberWithInt:tApple] forKey: @"type"];
    [BridgeHelperIns SendMessageToUnity: eLogin DictData:dict];
 }
--(void)LoginGameCenter{
-      [[AppleHelper sharedInstance] authGamecnter];
-}
+
 +(void)LoginGameCenterCallBack:(NSMutableDictionary *) dict{
-    NSLog(@"-ios----IOSBridgeHelper---LoginCallBack----");
+    NSLog(@"-ios----IOSBridgeHelper---LoginGameCenterCallBack----");
     [dict setValue: [NSNumber numberWithInt:tGameCenter] forKey: @"type"];
+   [BridgeHelperIns SendMessageToUnity: eLogin DictData:dict];
+}
++(void)LoginGoogleCallBack:(NSMutableDictionary *) dict{
+    NSLog(@"-ios----IOSBridgeHelper---LoginGoogleCallBack----");
+    [dict setValue: [NSNumber numberWithInt:tGoogle] forKey: @"type"];
+   [BridgeHelperIns SendMessageToUnity: eLogin DictData:dict];
+}
++(void)LoginFaceBookCallBack:(NSMutableDictionary *) dict{
+    NSLog(@"-ios----IOSBridgeHelper---LoginFaceBookCallBack----");
+    [dict setValue: [NSNumber numberWithInt:tFacebook] forKey: @"type"];
    [BridgeHelperIns SendMessageToUnity: eLogin DictData:dict];
 }
 

@@ -470,11 +470,14 @@ typedef NS_ENUM(NSInteger, PayType)
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions {
     //缓存订单信息 为了送达服务器后后可以删除订单
     trans = transactions;
+    int count = 0;
     for (SKPaymentTransaction *tran in transactions) {
             NSLog(@"交易完成productIdentifier:%@",tran.payment.productIdentifier);
+                    NSLog(@"交易完成transactionIdentifier:%@",tran.transactionIdentifier);
         switch (tran.transactionState) {
             case SKPaymentTransactionStatePurchased: // 交易完成
                 // 发送自己服务器验证凭证
+                count = count + 1;
                [self HandleAppleOrder:tran];
                 //    等服务器验证完后再finish 这样每次启动app这个接口会再调用
 //               [[SKPaymentQueue defaultQueue]finishTransaction:tran];
@@ -495,10 +498,14 @@ typedef NS_ENUM(NSInteger, PayType)
                 break;
         }
     }
-    [self HandleReceipt];
+    if (count > 0) {
+        [self HandleReceipt];
+    }
+
 }
 //预处理并统计Apple订单
 -(void)HandleAppleOrder:(SKPaymentTransaction *)transaction{
+     NSLog(@"--预处理并统计Apple订单---");
     //获取product_id
     NSString *product_id = transaction.payment.productIdentifier;
     //获取transaction_id
@@ -526,6 +533,7 @@ typedef NS_ENUM(NSInteger, PayType)
 }
 
 -(void)HandleReceipt{
+    NSLog(@"--HandleReceipt---");
     NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
     // 从沙盒中获取到购买凭据
     NSData *receiptData = [NSData dataWithContentsOfURL:receiptURL];
@@ -603,7 +611,8 @@ typedef NS_ENUM(NSInteger, PayType)
 }
 #pragma mark - In-App Purchase入口
 - (void)buyIAP:(NSMutableDictionary *) dict{
-    goodID = [dict valueForKey:@"goodID"];
+//    goodID = [dict valueForKey:@"goodID"];
+    goodID = @"test1";
     goodNum = [[dict valueForKey:@"GoodNum"] integerValue];
     Extra = [dict valueForKey:@"Extra"];
     //请求对应的产品信息
