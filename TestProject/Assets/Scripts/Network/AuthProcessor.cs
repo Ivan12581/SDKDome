@@ -198,6 +198,32 @@ namespace celia.game
             // 状态变化
             state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_CHALLENGE));
         }
+        public void LoginGoogle(string userID, string TokenStr)
+        {
+            c2a_logon_google pkt = new c2a_logon_google
+            {
+                GoogleId = userID,
+                IdToken = TokenStr
+            };
+            loginType = LoginType.Google;
+
+            NetworkManager.gi.SendPkt(AuthMsgID.AuthMsgC2ALogonGoogle, pkt);
+            // 状态变化
+            state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_CHALLENGE));
+        }
+        public void LoginFaceBook(string userID, string TokenStr)
+        {
+            c2a_logon_facebook pkt = new c2a_logon_facebook
+            {
+                FacebookId = userID,
+                AccessToken = TokenStr
+            };
+            loginType = LoginType.FaceBook;
+
+            NetworkManager.gi.SendPkt(AuthMsgID.AuthMsgC2ALogonGoogle, pkt);
+            // 状态变化
+            state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_CHALLENGE));
+        }
         public static byte[] BigInteger2ByteArray(BigInteger v)
         {
             byte[] result = v.ToByteArray();
@@ -382,6 +408,8 @@ namespace celia.game
                     case LoginType.Super:
                     case LoginType.Apple:
                     case LoginType.GameCenter:
+                    case LoginType.Google:
+                    case LoginType.FaceBook:
                     default:
                         Messenger.DispatchEvent(Notif.LOGIN_FAIL);
                         break;

@@ -13,8 +13,8 @@ public class LoginView : MonoBehaviour
 
     public InputField serverIP;
     public GameObject GoTest;
-    //554619719418-rtqb4au05hj99h8h6n70i6b8i3d91tun.apps.googleusercontent.com
-    //com.googleusercontent.apps.554619719418-rtqb4au05hj99h8h6n70i6b8i3d91tun
+    //554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn.apps.googleusercontent.com
+    //com.googleusercontent.apps.554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +37,6 @@ public class LoginView : MonoBehaviour
             });
         });
         Debug.Log("---LoginView Start---");
-
     }
 
     public void SetServerIP()
@@ -103,6 +102,22 @@ public class LoginView : MonoBehaviour
         Debug.Log("---Unity---GCLogin---");
         SDKManager.gi.Login(SDKLoginType.FaceBook,(s, dataDict) => {
             Debug.Log("---Unity---GCLogin--callback-");
+            int state = int.Parse(dataDict["state"]);
+            if (state == 1)
+            {
+                //第一次授权登陆 有identityTokenStr等信息
+                NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"], dataDict["token"]);
+            }
+            else if (state == 2)
+            {
+                //后续就没有identityTokenStr这些校验信息了
+                NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"]);
+            }
+            else
+            {
+
+                Debug.Log("SDK login fail ----------------");
+            }
 
         });
     }
@@ -111,6 +126,18 @@ public class LoginView : MonoBehaviour
         Debug.Log("---Unity---GoogleLogin---");
         SDKManager.gi.Login(SDKLoginType.Google, (s, dataDict) => {
             Debug.Log("---Unity---GoogleLogin--callback-");
+            int state = int.Parse(dataDict["state"]);
+            if (state == 1){
+                if (dataDict.TryGetValue("user", out string userID) && dataDict.TryGetValue("token", out string token))
+                {
+                    NetworkManager.gi.ConnectAuth_LoginGoogle(userID, userID);
+                }else {
+                    Debug.Log("--userID is nil or token is nil--");
+                }
+            }
+            else{
+                Debug.Log("SDK login fail ----------------");
+            }
 
         });
     }
@@ -120,6 +147,20 @@ public class LoginView : MonoBehaviour
         SDKManager.gi.Login(SDKLoginType.FaceBook, (s, dataDict) =>
         {
             Debug.Log("---Unity---FBLogin--callback-");
+            int state = int.Parse(dataDict["state"]);
+            if (state == 1)
+            {
+                if (dataDict.TryGetValue("user", out string userID) && dataDict.TryGetValue("token", out string token)){
+                    NetworkManager.gi.ConnectAuth_LoginFaceBook(userID, userID);
+                }
+                else{
+                    Debug.Log("--userID is nil or token is nil--");
+                }
+            }
+            else
+            {
+                Debug.Log("SDK login fail ----------------");
+            }
         });
     }
 

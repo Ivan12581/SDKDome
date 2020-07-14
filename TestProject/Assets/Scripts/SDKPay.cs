@@ -130,7 +130,7 @@ namespace celia.game {
                 if (msg.Able)
                 {
                     data["PayType"] = ((int)PayType.Pay).ToString();
-                    data["GoodID"] = msg.CommodityId;
+                    data["GoodID"] = msg.CommodityId.ToString();
                     data["GoodNum"] = msg.Qutity.ToString();
                     data["Extra"] = $"{msg.OrderIndex}&{AuthProcessor.gi.ID}";
                     AppleOrders.Clear();
@@ -204,7 +204,7 @@ namespace celia.game {
 
             }
             string[] Extras = Extra.Split('&');
-            if (Extra.Length!=2)
+            if (Extras.Length!=2)
             {
                 Debug.Log("---bug---");
             }
