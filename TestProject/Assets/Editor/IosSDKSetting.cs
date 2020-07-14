@@ -8,7 +8,7 @@ using UnityEditor;
 using System;
 public class IosSDKSetting : Editor{
     //#if UNITY_EDITOR_OSX
-    public const string path = "/Users/mini/Documents/EmptyXcodeprj";
+    public const string path = "/Users/mini/Documents/SDKXCodeProj";
     [MenuItem("IosSDKSetting/FaceBook配置")]
     public static void IOSbuildFaceBook()
     {
@@ -135,11 +135,16 @@ public class IosSDKSetting : Editor{
         PBXProject proj = new PBXProject();
         proj.ReadFromString(File.ReadAllText(projPath));
         string target = proj.TargetGuidByName("Unity-iPhone");
-        // SDK依赖
+        // SDK依赖 --Google
         proj.AddFrameworkToProject(target, "LocalAuthentication.framework", false);
         proj.AddFrameworkToProject(target, "SafariServices.framework", false);
         proj.AddFrameworkToProject(target, "AuthenticationServices.framework", false);
         proj.AddFrameworkToProject(target, "SystemConfiguration.framework", false);
+
+        proj.AddFrameworkToProject(target, "storekit.framework", false);
+        proj.AddFrameworkToProject(target, "AuthenticationServices.framework", false);
+        proj.AddFrameworkToProject(target, "gamekit.framework", false);
+
         // BuildSetting修改
         //proj.SetBuildProperty(target, "ENABLE_BITCODE", "NO");
         proj.AddBuildProperty(target, "OTHER_LDFLAGS", "-ObjC");
@@ -167,14 +172,6 @@ public class IosSDKSetting : Editor{
         PlistElementArray urlScheme = typeRole.CreateArray("CFBundleURLSchemes");
         urlScheme.AddString(GoogleClientID);
 
-        //string[] urlSchemes = { "fb949004278872387" , "com.googleusercontent.apps.554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn" };
-        //foreach (string str in urlSchemes)
-        //{
-        //    PlistElementDict typeRole = URLTypes.AddDict();
-        //    typeRole.SetString("CFBundleTypeRole", "Editor");
-        //    PlistElementArray urlScheme = typeRole.CreateArray("CFBundleURLSchemes");
-        //    urlScheme.AddString(str);
-        //}
         // LSApplicationQueriesSchemes配置
         PlistElementArray LSApplicationQueriesSchemes = plist.root.CreateArray("LSApplicationQueriesSchemes");
         // facebook接入配置为了适配ios9
