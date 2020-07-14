@@ -163,8 +163,7 @@ public class IosSDKSetting : Editor{
         string GoogleClientID = "com.googleusercontent.apps.554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn";
         PlistElementDict typeRole = URLTypes.AddDict();
         typeRole.SetString("CFBundleTypeRole", "Editor");
-        PlistElementDict typeRole2 = URLTypes.AddDict();
-        typeRole2.SetString("CFBundleURLName", GoogleClientID);
+        typeRole.SetString("CFBundleURLName", GoogleClientID);
         PlistElementArray urlScheme = typeRole.CreateArray("CFBundleURLSchemes");
         urlScheme.AddString(GoogleClientID);
 
