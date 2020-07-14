@@ -47,6 +47,8 @@ namespace celia.game
         Super,
         Apple,
         GameCenter,
+        Google,
+        FaceBook
     }
 
     public class NetworkManager : SingleMonoBehaviour<NetworkManager>
@@ -101,6 +103,27 @@ namespace celia.game
             GameTcpClient.gi.Connect(Utils.ip, Utils.port);
         }
         public void ConnectAuth_LoginApple(string _account, string _password = "")
+        {
+            account = _account;
+            password = _password;
+            loginType = LoginType.Apple;
+
+            // 连接认证服
+            state = NetState.NET_STATE_AUTH_CONNECTING;
+            Debug.Log(Utils.ip + "/" + Utils.port);
+            GameTcpClient.gi.Connect(Utils.ip, Utils.port);
+        }
+        public void ConnectAuth_LoginGoogle(string _account, string _password = "")
+        {
+
+            loginType = LoginType.Apple;
+
+            // 连接认证服
+            state = NetState.NET_STATE_AUTH_CONNECTING;
+            Debug.Log(Utils.ip + "/" + Utils.port);
+            GameTcpClient.gi.Connect(Utils.ip, Utils.port);
+        }
+        public void ConnectAuth_LoginFaceBook(string _account, string _password = "")
         {
             account = _account;
             password = _password;
@@ -771,6 +794,12 @@ namespace celia.game
                                 AuthProcessor.gi.LoginApple(account, password);
                                 break;
                             case LoginType.GameCenter:
+                                AuthProcessor.gi.LoginGameCenter(GCpkt);
+                                break;
+                            case LoginType.Google:
+                                AuthProcessor.gi.LoginGameCenter(GCpkt);
+                                break;
+                            case LoginType.FaceBook:
                                 AuthProcessor.gi.LoginGameCenter(GCpkt);
                                 break;
                         }

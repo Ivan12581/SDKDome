@@ -39,6 +39,7 @@ enum AuthMsgID {
   AUTH_MSG_C2A_LOGON_APPLE			= 62010; // Apple登录
   AUTH_MSG_C2A_LOGON_APPLE_GAMECENTER = 62011; // Apple GameCenter登录
 
+  AUTH_MSG_C2A_LOGON_GOOGLE			= 62012; // GooglePlay登录
 }
 
 // 客户端消息
@@ -98,6 +99,11 @@ message c2a_logon_sdk {
 message c2a_logon_apple {
   string    user_identifier        = 1; // 账号名
   string    identity_token         = 2; // JSON Web Token (JWT) 只有第一次登录注册有用,以后都只看账号名
+}
+
+message c2a_logon_google {
+  string	google_id		= 1; // Google ID
+  string    id_token        = 2; // id_token
 }
 
 message c2a_logon_super {

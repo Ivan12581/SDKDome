@@ -38,23 +38,25 @@ public static partial class AuthReflection {
           "DgoGY2NoX2lkGAMgASgJEhQKDGFjY2Vzc190b2tlbhgEIAEoCRIPCgdhcHBf",
           "a2V5GAUgASgJEhAKCHNka190eXBlGAYgASgJIkIKD2MyYV9sb2dvbl9hcHBs",
           "ZRIXCg91c2VyX2lkZW50aWZpZXIYASABKAkSFgoOaWRlbnRpdHlfdG9rZW4Y",
-          "AiABKAkiIwoPYzJhX2xvZ29uX3N1cGVyEhAKCHVzZXJuYW1lGAIgASgJIjUK",
-          "GmMyYV9sb2dvbl9hcHBsZV9nYW1lY2VudGVyEhcKD3VzZXJfaWRlbnRpZmll",
-          "chgBIAEoCSqNAgoPQWNjb3VudE9wUmVzdWx0EgwKCEFPUl9OVUxMEAASCgoG",
-          "QU9SX09LEAESFQoRQU9SX05BTUVfVE9PX0xPTkcQAhIZChVBT1JfUEFTU19X",
-          "Uk9OR19MRU5HVEgQAxIaChZBT1JfTkFNRV9BTFJFQURZX0VYSVNUEAQSFgoS",
-          "QU9SX05BTUVfTk9UX0VYSVNUEAUSGQoVQU9SX0RCX0lOVEVSTkFMX0VSUk9S",
-          "EAYSGAoUQU9SX1BBU1NfV1JPTkdfRVJST1IQBxIUChBBT1JfSURfT1VUX1JB",
-          "TkdFEAgSFgoSQU9SX0FDQ09VTlRfTE9DS0VEEAkSFwoTQU9SX1NWQ19NQUlO",
-          "VEVOQU5DRRAKKooDCglBdXRoTXNnSUQSEQoNQVVUSF9NU0dfTlVMTBAAEh8K",
-          "GUFVVEhfTVNHX0MyQV9SRUdJU1RFUl9SRVEQydwDEh8KGUFVVEhfTVNHX0Ey",
-          "Q19SRUdJU1RFUl9SRVAQytwDEiIKHEFVVEhfTVNHX0MyQV9MT0dPTl9DSEFM",
-          "TEVOR0UQseQDEhwKFkFVVEhfTVNHX0EyQ19MT0dPTl9BU0sQsuQDEh4KGEFV",
-          "VEhfTVNHX0MyQV9MT0dPTl9QUk9PRhCz5AMSHAoWQVVUSF9NU0dfQTJDX0xP",
-          "R09OX1JFUBC05AMSHwoZQVVUSF9NU0dfQTJDX0xPR09OX1JFR0lPThC15AMS",
-          "HAoWQVVUSF9NU0dfQzJBX0xPR09OX1NESxC25AMSHgoYQVVUSF9NU0dfQzJB",
-          "X0xPR09OX1NVUEVSELjkAxIeChhBVVRIX01TR19DMkFfTE9HT05fQVBQTEUQ",
-          "uuQDEikKI0FVVEhfTVNHX0MyQV9MT0dPTl9BUFBMRV9HQU1FQ0VOVEVSELvk",
+          "AiABKAkiNwoQYzJhX2xvZ29uX2dvb2dsZRIRCglnb29nbGVfaWQYASABKAkS",
+          "EAoIaWRfdG9rZW4YAiABKAkiIwoPYzJhX2xvZ29uX3N1cGVyEhAKCHVzZXJu",
+          "YW1lGAIgASgJIjUKGmMyYV9sb2dvbl9hcHBsZV9nYW1lY2VudGVyEhcKD3Vz",
+          "ZXJfaWRlbnRpZmllchgBIAEoCSqNAgoPQWNjb3VudE9wUmVzdWx0EgwKCEFP",
+          "Ul9OVUxMEAASCgoGQU9SX09LEAESFQoRQU9SX05BTUVfVE9PX0xPTkcQAhIZ",
+          "ChVBT1JfUEFTU19XUk9OR19MRU5HVEgQAxIaChZBT1JfTkFNRV9BTFJFQURZ",
+          "X0VYSVNUEAQSFgoSQU9SX05BTUVfTk9UX0VYSVNUEAUSGQoVQU9SX0RCX0lO",
+          "VEVSTkFMX0VSUk9SEAYSGAoUQU9SX1BBU1NfV1JPTkdfRVJST1IQBxIUChBB",
+          "T1JfSURfT1VUX1JBTkdFEAgSFgoSQU9SX0FDQ09VTlRfTE9DS0VEEAkSFwoT",
+          "QU9SX1NWQ19NQUlOVEVOQU5DRRAKKqsDCglBdXRoTXNnSUQSEQoNQVVUSF9N",
+          "U0dfTlVMTBAAEh8KGUFVVEhfTVNHX0MyQV9SRUdJU1RFUl9SRVEQydwDEh8K",
+          "GUFVVEhfTVNHX0EyQ19SRUdJU1RFUl9SRVAQytwDEiIKHEFVVEhfTVNHX0My",
+          "QV9MT0dPTl9DSEFMTEVOR0UQseQDEhwKFkFVVEhfTVNHX0EyQ19MT0dPTl9B",
+          "U0sQsuQDEh4KGEFVVEhfTVNHX0MyQV9MT0dPTl9QUk9PRhCz5AMSHAoWQVVU",
+          "SF9NU0dfQTJDX0xPR09OX1JFUBC05AMSHwoZQVVUSF9NU0dfQTJDX0xPR09O",
+          "X1JFR0lPThC15AMSHAoWQVVUSF9NU0dfQzJBX0xPR09OX1NESxC25AMSHgoY",
+          "QVVUSF9NU0dfQzJBX0xPR09OX1NVUEVSELjkAxIeChhBVVRIX01TR19DMkFf",
+          "TE9HT05fQVBQTEUQuuQDEikKI0FVVEhfTVNHX0MyQV9MT0dPTl9BUFBMRV9H",
+          "QU1FQ0VOVEVSELvkAxIfChlBVVRIX01TR19DMkFfTE9HT05fR09PR0xFELzk",
           "A2IGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
@@ -68,6 +70,7 @@ public static partial class AuthReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::a2c_logon_region), global::a2c_logon_region.Parser, new[]{ "Ip", "Port", "HttpAddress" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::c2a_logon_sdk), global::c2a_logon_sdk.Parser, new[]{ "OpenId", "AppId", "CchId", "AccessToken", "AppKey", "SdkType" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::c2a_logon_apple), global::c2a_logon_apple.Parser, new[]{ "UserIdentifier", "IdentityToken" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::c2a_logon_google), global::c2a_logon_google.Parser, new[]{ "GoogleId", "IdToken" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::c2a_logon_super), global::c2a_logon_super.Parser, new[]{ "Username" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::c2a_logon_apple_gamecenter), global::c2a_logon_apple_gamecenter.Parser, new[]{ "UserIdentifier" }, null, null, null)
         }));
@@ -175,6 +178,10 @@ public enum AuthMsgID {
   /// Apple GameCenterµÇÂ¼
   /// </summary>
   [pbr::OriginalName("AUTH_MSG_C2A_LOGON_APPLE_GAMECENTER")] AuthMsgC2ALogonAppleGamecenter = 62011,
+  /// <summary>
+  /// GooglePlayµÇÂ¼
+  /// </summary>
+  [pbr::OriginalName("AUTH_MSG_C2A_LOGON_GOOGLE")] AuthMsgC2ALogonGoogle = 62012,
 }
 
 #endregion
@@ -1977,6 +1984,169 @@ public sealed partial class c2a_logon_apple : pb::IMessage<c2a_logon_apple> {
 
 }
 
+public sealed partial class c2a_logon_google : pb::IMessage<c2a_logon_google> {
+  private static readonly pb::MessageParser<c2a_logon_google> _parser = new pb::MessageParser<c2a_logon_google>(() => new c2a_logon_google());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<c2a_logon_google> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::AuthReflection.Descriptor.MessageTypes[9]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public c2a_logon_google() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public c2a_logon_google(c2a_logon_google other) : this() {
+    googleId_ = other.googleId_;
+    idToken_ = other.idToken_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public c2a_logon_google Clone() {
+    return new c2a_logon_google(this);
+  }
+
+  /// <summary>Field number for the "google_id" field.</summary>
+  public const int GoogleIdFieldNumber = 1;
+  private string googleId_ = "";
+  /// <summary>
+  /// Google ID
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string GoogleId {
+    get { return googleId_; }
+    set {
+      googleId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "id_token" field.</summary>
+  public const int IdTokenFieldNumber = 2;
+  private string idToken_ = "";
+  /// <summary>
+  /// id_token
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string IdToken {
+    get { return idToken_; }
+    set {
+      idToken_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as c2a_logon_google);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(c2a_logon_google other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (GoogleId != other.GoogleId) return false;
+    if (IdToken != other.IdToken) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (GoogleId.Length != 0) hash ^= GoogleId.GetHashCode();
+    if (IdToken.Length != 0) hash ^= IdToken.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (GoogleId.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(GoogleId);
+    }
+    if (IdToken.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(IdToken);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (GoogleId.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(GoogleId);
+    }
+    if (IdToken.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(IdToken);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(c2a_logon_google other) {
+    if (other == null) {
+      return;
+    }
+    if (other.GoogleId.Length != 0) {
+      GoogleId = other.GoogleId;
+    }
+    if (other.IdToken.Length != 0) {
+      IdToken = other.IdToken;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          GoogleId = input.ReadString();
+          break;
+        }
+        case 18: {
+          IdToken = input.ReadString();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
 public sealed partial class c2a_logon_super : pb::IMessage<c2a_logon_super> {
   private static readonly pb::MessageParser<c2a_logon_super> _parser = new pb::MessageParser<c2a_logon_super>(() => new c2a_logon_super());
   private pb::UnknownFieldSet _unknownFields;
@@ -1985,7 +2155,7 @@ public sealed partial class c2a_logon_super : pb::IMessage<c2a_logon_super> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::AuthReflection.Descriptor.MessageTypes[9]; }
+    get { return global::AuthReflection.Descriptor.MessageTypes[10]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2114,7 +2284,7 @@ public sealed partial class c2a_logon_apple_gamecenter : pb::IMessage<c2a_logon_
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::AuthReflection.Descriptor.MessageTypes[10]; }
+    get { return global::AuthReflection.Descriptor.MessageTypes[11]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
