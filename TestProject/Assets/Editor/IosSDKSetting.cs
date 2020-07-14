@@ -150,18 +150,32 @@ public class IosSDKSetting : Editor{
         plist.ReadFromFile(plistPath);
         PlistElementDict rootDict = plist.root;
         rootDict.SetString("FacebookAppID", "949004278872387");
-        rootDict.SetString("GoogleClientID", "554619719418-rtqb4au05hj99h8h6n70i6b8i3d91tun.apps.googleusercontent.com");
+        rootDict.SetString("GoogleClientID", "554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn.apps.googleusercontent.com");
         rootDict.SetString("FacebookAppDisplayName", "Girl for the Throne TW");
         // URL types配置
+        string FacebookAppID = "949004278872387";
         PlistElementArray URLTypes = plist.root.CreateArray("CFBundleURLTypes");
-        string[] urlSchemes = { "fb949004278872387" , "com.googleusercontent.apps.554619719418-rtqb4au05hj99h8h6n70i6b8i3d91tun" };
-        foreach (string str in urlSchemes)
-        {
-            PlistElementDict typeRole = URLTypes.AddDict();
-            typeRole.SetString("CFBundleTypeRole", "Editor");
-            PlistElementArray urlScheme = typeRole.CreateArray("CFBundleURLSchemes");
-            urlScheme.AddString(str);
-        }
+        PlistElementDict typeRoleFB = URLTypes.AddDict();
+        typeRoleFB.SetString("CFBundleTypeRole", "Editor");
+        PlistElementArray urlSchemeFB = typeRoleFB.CreateArray("CFBundleURLSchemes");
+        urlSchemeFB.AddString(FacebookAppID);
+
+        string GoogleClientID = "com.googleusercontent.apps.554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn";
+        PlistElementDict typeRole = URLTypes.AddDict();
+        typeRole.SetString("CFBundleTypeRole", "Editor");
+        PlistElementDict typeRole2 = URLTypes.AddDict();
+        typeRole2.SetString("CFBundleURLName", GoogleClientID);
+        PlistElementArray urlScheme = typeRole.CreateArray("CFBundleURLSchemes");
+        urlScheme.AddString(GoogleClientID);
+
+        //string[] urlSchemes = { "fb949004278872387" , "com.googleusercontent.apps.554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn" };
+        //foreach (string str in urlSchemes)
+        //{
+        //    PlistElementDict typeRole = URLTypes.AddDict();
+        //    typeRole.SetString("CFBundleTypeRole", "Editor");
+        //    PlistElementArray urlScheme = typeRole.CreateArray("CFBundleURLSchemes");
+        //    urlScheme.AddString(str);
+        //}
         // LSApplicationQueriesSchemes配置
         PlistElementArray LSApplicationQueriesSchemes = plist.root.CreateArray("LSApplicationQueriesSchemes");
         // facebook接入配置为了适配ios9

@@ -198,12 +198,12 @@ namespace celia.game
             // 状态变化
             state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_CHALLENGE));
         }
-        public void LoginGoogle(string user, string TokenStr)
+        public void LoginGoogle(string userID, string TokenStr)
         {
             c2a_logon_google pkt = new c2a_logon_google
             {
-                IdToken = TokenStr,
-                GoogleId = user
+                GoogleId = userID,
+                IdToken = TokenStr
             };
             loginType = LoginType.Google;
 
@@ -211,12 +211,12 @@ namespace celia.game
             // 状态变化
             state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_CHALLENGE));
         }
-        public void LoginFaceBook(string user, string TokenStr)
+        public void LoginFaceBook(string userID, string TokenStr)
         {
-            c2a_logon_google pkt = new c2a_logon_google
+            c2a_logon_facebook pkt = new c2a_logon_facebook
             {
-                IdToken = TokenStr,
-                GoogleId = user
+                FacebookId = userID,
+                AccessToken = TokenStr
             };
             loginType = LoginType.FaceBook;
 

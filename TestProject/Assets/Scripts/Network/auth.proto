@@ -40,6 +40,7 @@ enum AuthMsgID {
   AUTH_MSG_C2A_LOGON_APPLE_GAMECENTER = 62011; // Apple GameCenterµÇÂ¼
 
   AUTH_MSG_C2A_LOGON_GOOGLE			= 62012; // GooglePlayµÇÂ¼
+  AUTH_MSG_C2A_LOGON_FACEBOOK		= 62013; // FacebookµÇÂ¼
 }
 
 // ¿Í»§¶ËÏûÏ¢
@@ -104,6 +105,11 @@ message c2a_logon_apple {
 message c2a_logon_google {
   string	google_id		= 1; // Google ID
   string    id_token        = 2; // id_token
+}
+
+message c2a_logon_facebook {
+  string 	facebook_id		= 1; // Facebook ID
+  string 	access_token	= 2; // access_token
 }
 
 message c2a_logon_super {
