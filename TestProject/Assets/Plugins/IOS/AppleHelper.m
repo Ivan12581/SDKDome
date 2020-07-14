@@ -32,10 +32,12 @@ static AppleHelper *AppleHelperInstance = nil;
     return AppleHelperInstance;
 }
 -(void)InitSDK{
+    NSString * bundleID = [NSBundle mainBundle].bundleIdentifier;
     accountName = @"TWuserIdentifier";
     forService = @"com.elex.girlsthrone.tw";
     userIdentifier = @"nil";
-    NSLog(@"-ios---AppleHelper---InitSDK----");
+
+    NSLog(@"-ios---AppleHelper---InitSDK---bundleID-%@",bundleID);
     //TODO：apple初始化的时候需要添加购买结果的监听 有可能之前支付ok 但是因为通信而导致存在未处理订单 但是此时还没链接服务器 所有购买监听应该在链接逻辑服成功后开启
 //    [self addListener];
     if (@available(iOS 13.0, *)) {
@@ -153,23 +155,14 @@ static AppleHelper *AppleHelperInstance = nil;
         // 用户登录使用ASAuthorizationAppleIDCredential
         ASAuthorizationAppleIDCredential *appleIDCredential = authorization.credential;
         userIdentifier = appleIDCredential.user;
-        // 使用过授权的，可能获取不到以下三个参数
-//        NSString *familyName = appleIDCredential.fullName.familyName;
-//        NSString *givenName = appleIDCredential.fullName.givenName;
-//        NSString *email = appleIDCredential.email;
         
         NSData *identityToken = appleIDCredential.identityToken;
-        NSData *authorizationCode = appleIDCredential.authorizationCode;
-        NSLog(@"--authorizationCode--%@", authorizationCode);
+//      NSData *authorizationCode = appleIDCredential.authorizationCode;
+
         // 服务器验证需要使用的参数
         NSString *identityTokenStr = [[NSString alloc] initWithData:identityToken encoding:NSUTF8StringEncoding];
 //        NSString *authorizationCodeStr = [[NSString alloc] initWithData:authorizationCode encoding:NSUTF8StringEncoding];
 
-        // Create an account in your system.
-
-        // For the purpose of this demo app, store the userIdentifier in the keychain.
-        //  需要使用钥匙串的方式保存用户的唯一信息 com.elex.girlsthrone.tw
-        //[YostarKeychain save:KEYCHAIN_IDENTIFIER(@"userIdentifier") data:user];
         [self saveUserInKeychain:userIdentifier];
         
         [IOSBridgeHelper LoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",userIdentifier,@"uid",identityTokenStr,@"token",nil]];
@@ -187,8 +180,6 @@ static AppleHelper *AppleHelperInstance = nil;
         [self toGameLogin];
         
         [IOSBridgeHelper LoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",user,@"uid",password,@"password",nil]];
-        
-//        [self SendMessageToUnity: eLogin DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",user,@"user",password,@"password",nil]];
         
     }else{
         NSLog(@"授权信息均不符");
@@ -226,12 +217,6 @@ static AppleHelper *AppleHelperInstance = nil;
 //    [self SendMessageToUnity: eLogin DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",errorMsg,@"errormsg",nil]];
 }
 
-// 告诉代理应该在哪个window 展示内容给用户
-- (ASPresentationAnchor)presentationAnchorForAuthorizationController:(ASAuthorizationController *)controller API_AVAILABLE(ios(13.0)){
-    NSLog(@"88888888888");
-    // 返回window
-    return [UIApplication sharedApplication].windows.lastObject;
-}
 #pragma mark - 获取userIdentifier
 -(void)getPasswordInkeychain{
     NSString *accountName = @"TWuserIdentifier";

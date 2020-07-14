@@ -15,8 +15,8 @@
 
      [super application:application didFinishLaunchingWithOptions:launchOptions];
      //Google 启动
-      [GIDSignIn sharedInstance].clientID = @"554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn.apps.googleusercontent.com";
 
+//      [GIDSignIn sharedInstance].clientID = @"554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn.apps.googleusercontent.com";
 
      
 //    FaceBook 启动调用必接

@@ -20,6 +20,9 @@ static FBHelper *_Instance = nil;
     return _Instance;
 }
 -(void)InitSDK{
+//      [FBSDKSettings setAppID:@"949004278872387"];
+    [FBSDKSettings setAppID:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"FacebookAppID"]];
+    
     NSLog(@"---FBHelper---InitSDK---");
 }
 - (BOOL)application:(UIApplication *)application
@@ -90,15 +93,11 @@ static FBHelper *_Instance = nil;
 }
 #pragma mark -- 将FaceBook的登录信息返回给自己服务器
 -(void)SendAccessTokenToServer:(FBSDKAccessToken *)accessToken{
-    NSString* AppID = accessToken.appID;
     NSString* UserID = accessToken.userID;
     NSString* Token = accessToken.tokenString;
-    NSString* description = accessToken.description;
-    NSLog(@"---description--> %@", description);
-    NSLog(@"---Uid--> %@", UserID);
+    NSLog(@"---UserID--> %@", UserID);
     NSLog(@"---Token--> %@", Token);
-    NSLog(@"---AppID--> %@", AppID);
-    [IOSBridgeHelper LoginFaceBookCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",UserID,@"UserID",Token,@"Token",nil]];
+    [IOSBridgeHelper LoginFaceBookCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",UserID,@"user",Token,@"token",nil]];
 }
 #pragma mark -- 通过userID 来获取用户的详细信息
 -(void)GetUserInfoWithUserID:(NSString *)userID{
