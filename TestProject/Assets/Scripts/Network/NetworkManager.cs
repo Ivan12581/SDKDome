@@ -71,6 +71,7 @@ namespace celia.game
         string account;
         string password;
         string token;
+        string UserID;
         c2a_logon_apple_gamecenter GCpkt;
         NetworkManager()
         {
@@ -113,21 +114,22 @@ namespace celia.game
             Debug.Log(Utils.ip + "/" + Utils.port);
             GameTcpClient.gi.Connect(Utils.ip, Utils.port);
         }
-        public void ConnectAuth_LoginGoogle(string _account, string _password = "")
+        public void ConnectAuth_LoginGoogle(string _UserID, string _token)
         {
 
-            loginType = LoginType.Apple;
-
+            loginType = LoginType.Google;
+            UserID = _UserID;
+            token = _token;
             // 连接认证服
             state = NetState.NET_STATE_AUTH_CONNECTING;
             Debug.Log(Utils.ip + "/" + Utils.port);
             GameTcpClient.gi.Connect(Utils.ip, Utils.port);
         }
-        public void ConnectAuth_LoginFaceBook(string _account, string _password = "")
+        public void ConnectAuth_LoginFaceBook(string _UserID, string _token)
         {
-            account = _account;
-            password = _password;
-            loginType = LoginType.Apple;
+            UserID = _UserID;
+            token = _token;
+            loginType = LoginType.FaceBook;
 
             // 连接认证服
             state = NetState.NET_STATE_AUTH_CONNECTING;
@@ -797,10 +799,10 @@ namespace celia.game
                                 AuthProcessor.gi.LoginGameCenter(GCpkt);
                                 break;
                             case LoginType.Google:
-                                AuthProcessor.gi.LoginGameCenter(GCpkt);
+                                AuthProcessor.gi.LoginGoogle(UserID, token);
                                 break;
                             case LoginType.FaceBook:
-                                AuthProcessor.gi.LoginGameCenter(GCpkt);
+                                AuthProcessor.gi.LoginFaceBook(UserID, token);
                                 break;
                         }
                     }
