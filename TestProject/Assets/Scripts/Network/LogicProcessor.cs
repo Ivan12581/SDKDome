@@ -88,7 +88,7 @@ namespace celia.game
                 pkt.DeviceInfo.Mdid = 111;
                 pkt.DeviceInfo.Device = "111";
                 pkt.DeviceInfo.Devicename = "111";
-
+                Debug.Log("---LogicMsgID.LogicMsgC2LLogonProof--->" + Newtonsoft.Json.JsonConvert.SerializeObject(pkt));
                 NetworkManager.gi.SendPkt(LogicMsgID.LogicMsgC2LLogonProof, pkt);
                 Debug.Log(Newtonsoft.Json.JsonConvert.SerializeObject(pkt));
             }
