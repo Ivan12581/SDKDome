@@ -158,7 +158,7 @@ public class IosSDKSetting : Editor{
         rootDict.SetString("GoogleClientID", "554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn.apps.googleusercontent.com");
         rootDict.SetString("FacebookAppDisplayName", "Girl for the Throne TW");
         // URL types配置
-        string FacebookAppID = "949004278872387";
+        string FacebookAppID = "fb949004278872387";
         PlistElementArray URLTypes = plist.root.CreateArray("CFBundleURLTypes");
         PlistElementDict typeRoleFB = URLTypes.AddDict();
         typeRoleFB.SetString("CFBundleTypeRole", "Editor");
