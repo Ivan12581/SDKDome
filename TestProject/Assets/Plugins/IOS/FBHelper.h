@@ -13,6 +13,8 @@
 @interface FBHelper : UIViewController <UIApplicationDelegate,FBSDKSharingDelegate>
 -(void)InitSDK;
 -(void)Login;
+-(void)FBShareUrl;
+-(void)FBShareImage;
 +(id)sharedInstance;
 - (void)sharer:(id<FBSDKSharing>)sharer didCompleteWithResults:(NSDictionary *)results;
 - (void)sharer:(id<FBSDKSharing>)sharer didFailWithError:(NSError *)error;

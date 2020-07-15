@@ -8,7 +8,9 @@
 #import "FBHelper.h"
 #import "IOSBridgeHelper.h"
 
-@implementation FBHelper
+@implementation FBHelper{
+    UIViewController* RVC;
+}
 
 static FBHelper *_Instance = nil;
 +(FBHelper*)sharedInstance{
@@ -24,19 +26,9 @@ static FBHelper *_Instance = nil;
     [FBSDKSettings setAppID:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"FacebookAppID"]];
     
     NSLog(@"---FBHelper---InitSDK---");
+    RVC = [[[UIApplication sharedApplication] delegate] window].rootViewController;
 }
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
-  NSLog(@"-ios---FBHelper---application--222--");
-  BOOL handled = [[FBSDKApplicationDelegate sharedInstance] application:application
-    openURL:url
-    sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
-    annotation:options[UIApplicationOpenURLOptionsAnnotationKey]
-  ];
-  // Add any custom logic here.
-  return handled;
-}
+
 //******************************************************
 //****************FaceBook Login
 //******************************************************
@@ -158,8 +150,33 @@ static FBHelper *_Instance = nil;
     dialog.delegate = self;
     dialog.mode = FBSDKShareDialogModeNative;
     [dialog show];
+    
+    
+    
 }
-
+-(void)FBShareUrl{
+    //构建内容
+    FBSDKShareLinkContent *linkContent = [[FBSDKShareLinkContent alloc] init];
+    linkContent.contentURL = [NSURL URLWithString:@"https://image.baidu.com"];
+    linkContent.quote = @"1234567899874653214";
+//    linkContent.contentTitle = @"百度";
+//    linkContent.contentDescription = [[NSString alloc] initWithFormat:@"%@",@"星空图片欣赏"];
+//    linkContent.imageURL = [NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561310690603&di=6fb462fc7c72ab479061c8045639f87b&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F4034970a304e251fb1a2546da986c9177e3e53c9.jpg"];
+//    //分享对话框
+    [FBSDKShareDialog showFromViewController:RVC withContent:linkContent delegate:self];
+}
+-(void)FBShareImage{
+    //分享内容
+    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561310690603&di=6fb462fc7c72ab479061c8045639f87b&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F4034970a304e251fb1a2546da986c9177e3e53c9.jpg"]]];
+    FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
+    photo.image = image;
+    photo.userGenerated = YES;
+    FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
+    content.photos = @[photo];
+    //分享对话框
+    [FBSDKShareDialog showFromViewController:RVC withContent:content delegate:self];
+}
+//分享成功回调
 #pragma mark - FaceBook Share Delegate
 - (void)sharer:(id<FBSDKSharing>)sharer didCompleteWithResults:(NSDictionary *)results {
     NSString *postId = results[@"postId"];
@@ -173,10 +190,11 @@ static FBHelper *_Instance = nil;
     }
     
 }
-
+//分享失败回调
 - (void)sharer:(id<FBSDKSharing>)sharer didFailWithError:(NSError *)error {
     FBSDKShareDialog *dialog = (FBSDKShareDialog *)sharer;
     if (error == nil && dialog.mode == FBSDKShareDialogModeNative) {
+         NSLog(@"---用户没有安装Facebook app---");
         // 如果使用原生登录失败，但error为空，那是因为用户没有安装Facebook app
         // 重设dialog的mode，再次弹出对话框
         dialog.mode = FBSDKShareDialogModeBrowser;
@@ -185,7 +203,7 @@ static FBHelper *_Instance = nil;
         NSLog(@"share Failure");
     }
 }
-
+//分享取消回调
 - (void)sharerDidCancel:(id<FBSDKSharing>)sharer {
     NSLog(@"sahre Cancel");
 }

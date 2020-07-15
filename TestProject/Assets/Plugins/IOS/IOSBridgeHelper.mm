@@ -120,6 +120,8 @@ static IOSBridgeHelper *BridgeHelperIns = nil;
                 [[AppleHelper sharedInstance] authGamecnter];
                 break;
         case tFacebook:
+            
+//              [[FBHelper sharedInstance] FBShareUrl];
               [[FBHelper sharedInstance] Login];
                 break;
         case tGoogle:
