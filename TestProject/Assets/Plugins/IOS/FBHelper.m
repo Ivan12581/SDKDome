@@ -38,7 +38,7 @@ static FBHelper *_Instance = nil;
         if ([FBSDKAccessToken isCurrentAccessTokenActive]) {
             FBSDKAccessToken* AccessToken = [FBSDKAccessToken currentAccessToken];
             [self SendAccessTokenToServer:AccessToken];
-            [self GetUserInfoWithUserID:AccessToken.userID];
+//            [self GetUserInfoWithUserID:AccessToken.userID];
         }else{
             [self FBLogin];
         }
@@ -61,7 +61,7 @@ static FBHelper *_Instance = nil;
             }else{
                 NSLog(@"---result.token---> %@", result.token);
                 [self SendAccessTokenToServer:result.token];
-                [self GetUserInfoWithUserID:result.token.userID];
+//                [self GetUserInfoWithUserID:result.token.userID];
             }
         }
     }];
