@@ -151,7 +151,7 @@ public class LoginView : MonoBehaviour
             if (state == 1)
             {
                 if (dataDict.TryGetValue("user", out string userID) && dataDict.TryGetValue("token", out string token)){
-                    NetworkManager.gi.ConnectAuth_LoginFaceBook(userID, userID);
+                    NetworkManager.gi.ConnectAuth_LoginFaceBook(userID, token);
                 }
                 else{
                     Debug.Log("--userID is nil or token is nil--");
