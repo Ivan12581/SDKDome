@@ -72,14 +72,14 @@ didDisconnectWithUser:(GIDGoogleUser *)user
 
 - (void)Login {
      NSLog(@"---GoogleHelper  Login---");
-     [[GIDSignIn sharedInstance] signIn];
-//    GIDSignIn *signIn = [GIDSignIn sharedInstance];
-//    if ([signIn hasPreviousSignIn]) {
-//        [signIn restorePreviousSignIn];
-//
-//    }else{
-//        [[GIDSignIn sharedInstance] signIn];
-//    }
+//     [[GIDSignIn sharedInstance] signIn];
+    GIDSignIn *signIn = [GIDSignIn sharedInstance];
+    if ([signIn hasPreviousSignIn]) {
+        [signIn restorePreviousSignIn];
+
+    }else{
+        [[GIDSignIn sharedInstance] signIn];
+    }
 
       // Automatically sign in the user.
     //  [[GIDSignIn sharedInstance] restorePreviousSignIn];
