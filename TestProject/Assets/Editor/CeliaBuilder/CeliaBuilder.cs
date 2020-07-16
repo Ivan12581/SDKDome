@@ -46,7 +46,7 @@ namespace celia.game.editor
         [MenuItem("Tools/Build/iOS/Alpha版Xcode工程")]
         public static void BuildiOSDevelopment()
         {
-            StartBuild(new string[] { "Platform:IOS", "Level:Alpha", "Sign:RastarInHouse" , "Path:/Users/mini/Documents/SDKXCodeProj" });
+            StartBuild(new string[] { "Platform:IOS", "Level:Alpha", "Sign:RastarInHouse" , "Path:/Users/mini/Documents/ZiAnXCodeProj" });
         }
         #endregion
 

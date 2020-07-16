@@ -453,6 +453,16 @@ enum LogicMsgID {
 	LOGIC_MSG_C2L_UNLOCK_CG_INIT			= 54601; // 请求已解锁的CG列表
 	LOGIC_MSG_L2C_UNLOCK_CG_REP				= 54602; // 发送已解锁的CG
 	LOGIC_MSG_L2C_UNLOCK_CG_UPD				= 54603; // 更新已解锁的CG
+	
+	// Google支付 544
+	LOGIC_MSG_C2L_GOOGLE_PURCHASE_INIT		= 54401; // 初始化没关闭的订单
+	LOGIC_MSG_L2C_GOOGLE_PURCHASE_INIT		= 54402; //
+	LOGIC_MSG_C2L_GOOGLE_PURCHASE_CREATE	= 54404; // 创建Google订单
+	LOGIC_MSG_L2C_GOOGLE_PURCHASE_CREATE	= 54405; // 
+	LOGIC_MSG_C2L_GOOGLE_PURCHASE_TOKEN		= 54407; // 验证token
+	LOGIC_MSG_L2C_GOOGLE_PURCHASE_TOKEN		= 54408; //
+	LOGIC_MSG_C2L_GOOGLE_PURCHASE_VOIDED	= 54410; // 取消logic生成的订单
+	LOGIC_MSG_L2C_GOOGLE_PURCHASE_VOIDED	= 54411; // 
 }
 
 // 错误返回--------------------------------------------------------------------------------------------------------------
@@ -1176,13 +1186,18 @@ message l2c_daily_fast
 
 message l2c_daily_result
 {
-	repeated PTGameElement		reward				= 1; // 奖励
 	message CharacterLevel
 	{
 		int32					id					= 1;	// ID
 		int32					level				= 2;	// 等级
 	}
 	repeated CharacterLevel		character_level		= 2;	// 角色等级
+	message NpcElement
+	{
+		int32					id					= 1;	// NpcID
+		repeated 				PTGameElement 		reward	= 2;	// 奖励
+	}
+	repeated NpcElement			npc_element			= 3; 	// npc对应奖励
 }
 // ------------------------------------------------------------------------------------------------------------日常副本
 
@@ -2983,3 +2998,52 @@ message l2c_unlock_cg_upd
 	repeated int32 cg_id = 1;
 }
 // -------------------------------------------------------------------------------------------------- CG
+
+// Google支付 ------------------------------------------------------------------------------------------
+message c2l_google_purchase_init {
+
+}
+
+message l2c_google_purchase_init {
+	message UnfinishInfo {
+		int32						app_order_no	= 1;	// 游戏订单号
+		int32 						commodity_id	= 2;	// 商品ID
+		string						product_id		= 3;	// 仅在客户端支付成功，关订单时可能会用到
+	}
+	
+	repeated UnfinishInfo 	unfinish_orders = 1; // 未完成订单 
+}
+
+message c2l_google_purchase_create {
+	int32 	commodity_id = 1;	// 商品ID
+}
+
+message l2c_google_purchase_create {
+	int32						app_order_no	= 1;	// 游戏订单序号
+	bool						is_test			= 2;	// 是否为模拟支付，为模拟支付不要发送c2l_google_purchase_token
+	int32 						commodity_id	= 3;	// 商品ID
+	bool						result			= 4;	// 订单生成结果
+}
+
+message c2l_google_purchase_token {
+	string product_id		= 1;	// The inapp product SKU (for example, 'com.some.thing.inapp1').
+	string token			= 2;	// The token provided to the user's device when the inapp product was purchased.
+	int32 	commodity_id	= 3;	// 商品ID
+	int32 app_order_no		= 5;	// 游戏订单序号
+}
+
+message l2c_google_purchase_token {
+	int32 app_order_no		= 1;	// 游戏订单序号
+	string product_id		= 2;	// The inapp product SKU (for example, 'com.some.thing.inapp1').
+	bool result				= 3;	// 服务器验证app_order_no结果。
+}
+
+message c2l_google_purchase_voided {
+	int32 app_order_no		= 1;	// 游戏订单序号
+}
+
+message l2c_google_purchase_voided {
+	bool	result			= 1;	// 是否取消成功
+}
+
+//  ------------------------------------------------------------------------------------------Google支付
