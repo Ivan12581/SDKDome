@@ -11,13 +11,9 @@ namespace celia.game {
         private Dictionary<string, string> data;
         private List<c2l_ios_recharge.Types.transaction_info> AppleOrders;//从Apple那边拿到的所有订单
         private List<string> ServerOrders;//从服务器那边拿到的所有需要删除的订单
-        private bool IsInit = false;
         private string VoucherData;//支付凭证
-        private void Init()
-        {
-            if (IsInit)
-                return;
-            IsInit = true;
+
+        public SDKPay() {
             AppleOrders = new List<c2l_ios_recharge.Types.transaction_info>();
             ServerOrders = new List<string>();
             data = new Dictionary<string, string>
@@ -80,7 +76,6 @@ namespace celia.game {
         /// Apple支付初始化 应该程序启动就开启
         /// </summary>
         public void ApplePayInit() {
-            Init();
             Debug.Log("---Unity---ApplePayInit---");
             data["PayType"] = ((int)PayType.Init).ToString();
             AppleOrders.Clear();
@@ -114,7 +109,6 @@ namespace celia.game {
         /// <param name="qutity">The default value is 1, the minimum value is 1, and the maximum value is 10</param>
         public void Pay(string goodID = "test1",int qutity = 1)
         {
-            Init();
             if (string.IsNullOrEmpty(goodID)){
                 Debug.LogError("--SDKPay-goodid is null---");
                 return;

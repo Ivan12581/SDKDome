@@ -22,6 +22,10 @@ namespace celia.game
         private static extern void cOpenService();
         [DllImport("__Internal")]
         private static extern void cGetConfigInfo();
+        [DllImport("__Internal")]
+        private static extern void cCustomerService(string jsonString);
+        [DllImport("__Internal")]
+        private static extern void cShare(string jsonString);
 #endif
         public SDKIosProxy()
         {
@@ -71,7 +75,18 @@ namespace celia.game
             cUpLoadInfo(jsonString);
 #endif
         }
-
+        public override void CustomerService(string jsonString)
+        {
+#if UNITY_IOS
+            cCustomerService(jsonString);
+#endif
+        }
+        public override void Share(string jsonString)
+        {
+#if UNITY_IOS
+            cShare(jsonString);
+#endif
+        }
         public override void ExitGame()
         {
 

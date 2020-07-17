@@ -33,6 +33,16 @@ namespace celia.game
         /// </summary>
         public virtual void GetConfigInfo() { }
         /// <summary>
+        /// AlHelp客服界面
+        /// </summary>
+        /// <param name="jsonString">打开指定的界面所需要的参数，json字串，uploadType:0创角1进入2升级</param>
+        public virtual void CustomerService(string jsonString){ }
+        /// <summary>
+        /// 分享
+        /// </summary>
+        /// <param name="jsonString">分享平台和具体信息等数据</param>
+        public virtual void Share(string jsonString) { }
+        /// <summary>
         /// 退出游戏
         /// </summary>
         public virtual void ExitGame() { }

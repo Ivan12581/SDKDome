@@ -17,7 +17,7 @@ namespace celia.game.editor
             Debug.Log("SetScenes PostExcuted!");
         }
 
-        private static List<string> ProcessScenes()
+        public static List<string> ProcessScenes()
         {
             List<string> scenes = new List<string>();
             System.Type sceneMgrType = typeof(SceneMgr);

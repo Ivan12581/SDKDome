@@ -166,8 +166,24 @@ public class LoginView : MonoBehaviour
 
     public void FBShare() {
         Debug.Log("---Unity---FBShare---");
-    }
+        SDKManager.gi.Share((s, dataDict) =>
+        {
+            Debug.Log("---Unity---FBShare--callback-");
 
+        });
+    }
+    /// <summary>
+    /// AI-Helper 客服
+    /// </summary>
+    public void CustomerService()
+    {
+        Debug.Log("---Unity---CustomerService---");
+        SDKManager.gi.CustomerService((s, dataDict) =>
+        {
+            Debug.Log("---Unity---CustomerService--callback-");
+
+        });
+    }
     public void Switch()
     {
         Debug.Log("---Unity---Switch---");

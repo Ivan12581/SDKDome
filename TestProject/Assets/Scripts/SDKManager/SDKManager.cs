@@ -45,7 +45,7 @@ namespace celia.game
 #elif UNITY_ANDROID
             proxy = new SDKAndroidProxy();
 #elif UNITY_IOS
-            proxy = new SDKIosProxy();
+            //proxy = new SDKIosProxy();
             //SDKPay.gi.ApplePayInit();
 #endif
             GetConfigInfo();
@@ -109,7 +109,8 @@ namespace celia.game
         public void InitSDK(Action<int, Dictionary<string, string>> callBack = null)
         {
             callBackDict[SDKResultType.Init] = callBack;
-            proxy?.Init();
+            CallSDK(SDKResultType.Init);
+            //proxy?.Init();
         }
 
         /// <summary>
@@ -120,7 +121,8 @@ namespace celia.game
         {
             DoingSwitch = false;
             callBackDict[SDKResultType.Login] = callBack;
-            proxy?.Login(type);
+            CallSDK(SDKResultType.Login, ((int)type).ToString());
+            //proxy?.Login(type);
         }
 
         /// <summary>
@@ -131,7 +133,8 @@ namespace celia.game
         {
             DoingSwitch = true;
             callBackDict[SDKResultType.Switch] = callBack;
-            proxy?.Switch();
+            CallSDK(SDKResultType.Switch);
+            //proxy?.Switch();
         }
 
         /// <summary>
@@ -144,7 +147,8 @@ namespace celia.game
             string jsonData = JsonConvert.SerializeObject(payData);
             Debug.Log(jsonData);
             callBackDict[SDKResultType.Pay] = callBack;
-            proxy?.Pay(jsonData);
+            CallSDK(SDKResultType.Pay, jsonData);
+            //proxy?.Pay(jsonData);
         }
 
         /// <summary>
@@ -182,7 +186,8 @@ namespace celia.game
             jobj.Add("oldname", "");
             //拓展字段，传旧角色名
             jobj.Add("extra", "");
-            proxy?.UploadInfo(jobj.ToString());
+            CallSDK(SDKResultType.UploadInfo,jobj.ToString());
+            //proxy?.UploadInfo(jobj.ToString());
         }
 
         /// <summary>
@@ -191,9 +196,37 @@ namespace celia.game
         public void GetConfigInfo(Action<int, Dictionary<string, string>> callBack = null)
         {
             callBackDict[SDKResultType.ConfigInfo] = callBack;
-            proxy?.GetConfigInfo();
+            CallSDK(SDKResultType.ConfigInfo);
+            //proxy?.GetConfigInfo();
         }
-
+        /// <summary>
+        /// 客服入口
+        /// </summary>
+        /// <param name="callBack"></param>
+        public void CustomerService(Action<int, Dictionary<string, string>> callBack = null)
+        {
+            callBackDict[SDKResultType.CustomerService] = callBack;
+            JObject jobj = new JObject();
+            jobj.Add("playerName", "123"); //游戏中用户名称。如果拿不到userName，传入空字符串@""，会使用默认昵称"anonymous"
+            jobj.Add("playerUid", "123");   //用户在游戏里的唯一标示id。如果拿不到uid，传入空字符串@""，系统会生成一个唯一设备id
+            jobj.Add("ServerID", "001");    //用户所在的服务器编号
+            jobj.Add("PlayerParseId", "001");   //传空字符串
+            jobj.Add("PlayershowConversationFlag", "001"); //参数的值是 “0” 或 “1”，标识是否开启人工入口。为 “1” 时，将在机器人客服聊天界面右上角，提供人工客服聊天的入口
+            jobj.Add("Config", "001");//可选参数，自定义Dictionary信息。可以在此处设置特定的Tag信息。说明: elva - tags对应的值为array类型，此处传入自定义的标签，需要在AIHelp 客服后台配置同名称的标签才能生效。
+            CallSDK(SDKResultType.CustomerService, jobj.ToString());
+            //proxy?.CustomerService(jobj.ToString());
+        }
+        /// <summary>
+        /// 分享
+        /// </summary>
+        /// <param name="callBack">分享回调</param>
+        public void Share(Action<int, Dictionary<string, string>> callBack = null)
+        {
+            callBackDict[SDKResultType.Share] = callBack;
+            JObject jobj = new JObject();
+            CallSDK(SDKResultType.Share, jobj.ToString());
+            //proxy?.Share(jobj.ToString());
+        }
         /// <summary>
         /// 退出游戏数据
         /// </summary>
@@ -201,10 +234,13 @@ namespace celia.game
         public void ExitGame(Action<int, Dictionary<string, string>> callBack = null)
         {
             callBackDict[SDKResultType.ExitGame] = callBack;
-            proxy?.ExitGame();
+            CallSDK(SDKResultType.ExitGame);
+            //proxy?.ExitGame();
         }
 
-
+        void CallSDK(SDKResultType type, string jsonString = "") {
+            SDKBridgeHelper.gi.CallSDK(type, jsonString);
+        }
         // 通用回调处理
         public void OnResultBack(SDKResultType resultType, int state, Dictionary<string, string> data)
         {
@@ -263,6 +299,12 @@ namespace celia.game
                         PackageParams = (data["appID"], data["cchID"], data["mdID"], data["deviceID"]);
                     }
                     break;
+                case SDKResultType.CustomerService:
+                    if (state == 1)
+                    {
+                        
+                    }
+                    break;
             }
         }
         private void PayCallBack(int type) {
@@ -318,7 +360,7 @@ namespace celia.game
         RoleGuideOver,
         RoleRename,
     }
-    // 该枚举与SDK接入层定义一致
+    // 该枚举与SDK接入层定义一致 Android为同名方法 IOS为枚举值 列如SDKResultType.Init 在Android中为“Init” 在IOS为0
     public enum SDKResultType
     {
         Init,
@@ -334,6 +376,10 @@ namespace celia.game
         Bind,
         Share,
         Naver,
+        /// <summary>
+        /// AIHelper 客服
+        /// </summary>
+        CustomerService,
     }
 
     // SDK类型
