@@ -156,7 +156,8 @@ PlayerSettings:
     '': com.xlycs.rastar
     Android: com.elex.girlsthrone.tw.gp
     iOS: com.elex.girlsthrone.tw
-  buildNumber: {}
+  buildNumber:
+    iOS: 1
   AndroidBundleVersionCode: 2
   AndroidMinSdkVersion: 16
   AndroidTargetSdkVersion: 0
