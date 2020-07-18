@@ -11,7 +11,9 @@
 #import <AuthenticationServices/AuthenticationServices.h>
 #import <GameKit/GameKit.h>
 #import <StoreKit/StoreKit.h>
+#import "cDelegate.h"
 @interface AppleHelper:NSObject<ASAuthorizationControllerDelegate,ASAuthorizationControllerPresentationContextProviding,SKProductsRequestDelegate,SKPaymentTransactionObserver,GKGameCenterControllerDelegate>
+@property (nonatomic, weak) id<cDelegate> CbDelegate;
 -(void)InitSDK;
 -(void)Login;
 -(void)authGamecnter;

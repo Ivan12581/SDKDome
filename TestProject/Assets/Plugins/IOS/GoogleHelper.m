@@ -6,7 +6,7 @@
 //
 
 #import "GoogleHelper.h"
-#import "IOSBridgeHelper.h"
+#import "UnityAppController.h"
 @implementation GoogleHelper
 
 static GoogleHelper *GoogleHelperIns = nil;
@@ -19,14 +19,21 @@ static GoogleHelper *GoogleHelperIns = nil;
     return GoogleHelperIns;
 }
 
+-(void)setDelegate:(id<cDelegate>)delegate{
+    self.CbDelegate = delegate;
+}
+
 -(void)InitSDK{
     NSLog(@"---GoogleHelper  Init---");
+    
 //    [GIDSignIn sharedInstance].clientID = @"554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn.apps.googleusercontent.com";
    [GIDSignIn sharedInstance].clientID = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"GoogleClientID"];
     [GIDSignIn sharedInstance].delegate = self;
     [GIDSignIn sharedInstance].shouldFetchBasicProfile = YES;
     [GIDSignIn sharedInstance].presentingViewController = [[[UIApplication sharedApplication] delegate] window].rootViewController;
-
+    
+//    [self.CbDelegate LoginGoogleCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",@"userId",@"user",@"idToken",@"token",nil]];
+//    [self.CbDelegate InitSDKCallBack:@"123456789"];
 }
 
 
@@ -53,8 +60,9 @@ didSignInForUser:(GIDGoogleUser *)user
   // Perform any operations on signed in user here.
   NSString *userId = user.userID;                  // For client-side use only!
   NSString *idToken = user.authentication.idToken; // Safe to send to the server
-
-    [IOSBridgeHelper LoginGoogleCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",userId,@"user",idToken,@"token",nil]];
+    [self.CbDelegate LoginGoogleCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",userId,@"user",idToken,@"token",nil]];
+    
+//    [IOSBridgeHelper LoginGoogleCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",userId,@"user",idToken,@"token",nil]];
 }
 
 - (void)signIn:(GIDSignIn *)signIn

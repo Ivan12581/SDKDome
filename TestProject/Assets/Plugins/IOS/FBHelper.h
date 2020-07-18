@@ -10,7 +10,9 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
+#import "cDelegate.h"
 @interface FBHelper : UIViewController <UIApplicationDelegate,FBSDKSharingDelegate>
+@property (nonatomic, weak) id<cDelegate> CbDelegate;
 -(void)InitSDK;
 -(void)Login;
 -(void)FBShareUrl;

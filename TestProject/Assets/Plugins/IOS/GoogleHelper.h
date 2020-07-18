@@ -6,7 +6,11 @@
 //
 #import <GoogleSignIn/GoogleSignIn.h>
 #import <Foundation/Foundation.h>
+#import "cDelegate.h"
+
 @interface GoogleHelper:UIViewController<GIDSignInDelegate>
+@property (nonatomic, weak) id<cDelegate> CbDelegate;
+
 -(void)InitSDK;
 -(void)Login;
 +(id)sharedInstance;

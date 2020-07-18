@@ -8,7 +8,7 @@
 //****************Apple相关
 //******************************************************
 #import "AppleHelper.h"
-#import "IOSBridgeHelper.h"
+//#import "IOSBridgeHelper.h"
 @implementation AppleHelper{
     NSString *accountName;
     NSString *forService;
@@ -19,8 +19,7 @@
     NSString *Extra;    //支付透传字段 用用户uid和服务器订单用‘&’拼接
     SKPaymentTransaction *order;
     NSArray *trans;
-  
-    BOOL IsFirst;
+    id IOSBridgeHelper;
 }
 static AppleHelper *AppleHelperInstance = nil;
 +(AppleHelper*)sharedInstance{
@@ -31,6 +30,10 @@ static AppleHelper *AppleHelperInstance = nil;
     }
     return AppleHelperInstance;
 }
+-(void)setDelegate:(id<cDelegate>)delegate{
+    self.CbDelegate = delegate;
+    IOSBridgeHelper = self.CbDelegate;
+}
 -(void)InitSDK{
     NSString * bundleID = [NSBundle mainBundle].bundleIdentifier;
     accountName = @"TWuserIdentifier";
@@ -40,6 +43,7 @@ static AppleHelper *AppleHelperInstance = nil;
     NSLog(@"-ios---AppleHelper---InitSDK---bundleID-%@",bundleID);
     //TODO：apple初始化的时候需要添加购买结果的监听 有可能之前支付ok 但是因为通信而导致存在未处理订单 但是此时还没链接服务器 所有购买监听应该在链接逻辑服成功后开启
 //    [self addListener];
+    IOSBridgeHelper = self.CbDelegate;
     if (@available(iOS 13.0, *)) {
             [IOSBridgeHelper InitSDKCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",accountName,@"TWuserIdentifier",forService,@"forService",nil]];
     }else{
@@ -165,7 +169,7 @@ static AppleHelper *AppleHelperInstance = nil;
 
         [self saveUserInKeychain:userIdentifier];
         
-        [IOSBridgeHelper LoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",userIdentifier,@"uid",identityTokenStr,@"token",nil]];
+        [IOSBridgeHelper AppleLoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",userIdentifier,@"uid",identityTokenStr,@"token",nil]];
         
     }else if ([authorization.credential isKindOfClass:[ASPasswordCredential class]]){
             NSLog(@"----这个获取的是iCloud记录的账号密码---------->");
@@ -179,13 +183,13 @@ static AppleHelper *AppleHelperInstance = nil;
         NSString *password = passwordCredential.password;
         [self toGameLogin];
         
-        [IOSBridgeHelper LoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",user,@"uid",password,@"password",nil]];
+        [IOSBridgeHelper AppleLoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",user,@"uid",password,@"password",nil]];
         
     }else{
         NSLog(@"授权信息均不符");
         //重新授权请求
         [self startRequest];
-        [IOSBridgeHelper LoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",@"授权信息均不符",@"errormsg",nil]];
+        [IOSBridgeHelper AppleLoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",@"授权信息均不符",@"errormsg",nil]];
     }
 }
 
@@ -262,7 +266,7 @@ static AppleHelper *AppleHelperInstance = nil;
 #pragma mark -- 开始注册登录自己的游戏服务器
 -(void)toGameLogin{
      NSLog(@ "--开始注册登录自己的游戏服务器--");
-    [IOSBridgeHelper LoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",userIdentifier,@"user",nil]];
+    [IOSBridgeHelper AppleLoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",userIdentifier,@"user",nil]];
 }
 
 
@@ -596,10 +600,10 @@ typedef NS_ENUM(NSInteger, PayType)
 }
 #pragma mark - In-App Purchase入口
 - (void)buyIAP:(NSMutableDictionary *) dict{
-//    goodID = [dict valueForKey:@"goodID"];
-    goodID = @"test1";
+    goodID = [dict valueForKey:@"goodID"];
     goodNum = [[dict valueForKey:@"GoodNum"] integerValue];
     Extra = [dict valueForKey:@"Extra"];
+     NSLog(@"--IOS--AppleHelper--buyIAP--goodID-->%@", goodID);
     //请求对应的产品信息
     NSArray *productArr = [[NSArray alloc] initWithObjects:goodID,nil];
     NSSet *nsset = [NSSet setWithArray:productArr];
