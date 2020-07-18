@@ -600,7 +600,7 @@ typedef NS_ENUM(NSInteger, PayType)
 }
 #pragma mark - In-App Purchase入口
 - (void)buyIAP:(NSMutableDictionary *) dict{
-    goodID = [dict valueForKey:@"goodID"];
+    goodID = [dict valueForKey:@"GoodID"];
     goodNum = [[dict valueForKey:@"GoodNum"] integerValue];
     Extra = [dict valueForKey:@"Extra"];
      NSLog(@"--IOS--AppleHelper--buyIAP--goodID-->%@", goodID);
