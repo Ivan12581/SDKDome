@@ -1,11 +1,11 @@
 ﻿<Properties StartupConfiguration="{4CE07701-134F-9DD0-F36C-F385BB4D61DF}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Network/NetworkManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/SDKManager/SDKManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/SDKManager/SDKIosProxy.cs" Line="34" Column="28" />
+      <File FileName="Assets/Scripts/SDKManager/SDKIosProxy.cs" Line="34" Column="1" />
       <File FileName="Assets/Scripts/Test/GameStart.cs" />
       <File FileName="Assets/Scripts/Test/LoginView.cs" />
       <File FileName="Assets/Scripts/Network/NetworkManager.cs" Line="607" Column="25" />
-      <File FileName="Assets/Scripts/SDKManager/SDKManager.cs" />
+      <File FileName="Assets/Scripts/SDKManager/SDKManager.cs" Line="242" Column="28" />
       <File FileName="Assets/Scripts/Network/AuthProcessor.cs" />
       <File FileName="Assets/Editor/AssetProcessManager.cs" />
       <File FileName="Assets/Editor/ShellHelper.cs" />
@@ -20,10 +20,10 @@
                 <Node name="CeliaBuilder" expanded="True" />
               </Node>
               <Node name="Scripts" expanded="True">
-                <Node name="Network" expanded="True">
-                  <Node name="NetworkManager.cs" selected="True" />
+                <Node name="Network" expanded="True" />
+                <Node name="SDKManager" expanded="True">
+                  <Node name="SDKManager.cs" selected="True" />
                 </Node>
-                <Node name="SDKManager" expanded="True" />
                 <Node name="Test" expanded="True" />
               </Node>
             </Node>
@@ -34,7 +34,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="845c7fae-c7e6-4d40-ab92-4a0036223851" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="f2a4baf7-a40b-44e8-a2d9-4f608045cd81" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
