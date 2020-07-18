@@ -107,7 +107,7 @@ namespace celia.game {
         /// </summary>
         /// <param name="commodityId">Apple配置的商品id</param>
         /// <param name="qutity">The default value is 1, the minimum value is 1, and the maximum value is 10</param>
-        public void Pay(string goodID = "test1",int qutity = 1)
+        public void Pay(string goodID = "throneofgirl.gem.2",int qutity = 1)
         {
             if (string.IsNullOrEmpty(goodID)){
                 Debug.LogError("--SDKPay-goodid is null---");

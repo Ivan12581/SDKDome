@@ -3000,19 +3000,6 @@ message l2c_unlock_cg_upd
 // -------------------------------------------------------------------------------------------------- CG
 
 // Google支付 ------------------------------------------------------------------------------------------
-message c2l_google_purchase_init {
-
-}
-
-message l2c_google_purchase_init {
-	message UnfinishInfo {
-		int32						app_order_no	= 1;	// 游戏订单号
-		int32 						commodity_id	= 2;	// 商品ID
-		string						product_id		= 3;	// 仅在客户端支付成功，关订单时可能会用到
-	}
-	
-	repeated UnfinishInfo 	unfinish_orders = 1; // 未完成订单 
-}
 
 message c2l_google_purchase_create {
 	int32 	commodity_id = 1;	// 商品ID
@@ -3038,12 +3025,5 @@ message l2c_google_purchase_token {
 	bool result				= 3;	// 服务器验证app_order_no结果。
 }
 
-message c2l_google_purchase_voided {
-	int32 app_order_no		= 1;	// 游戏订单序号
-}
-
-message l2c_google_purchase_voided {
-	bool	result			= 1;	// 是否取消成功
-}
 
 //  ------------------------------------------------------------------------------------------Google支付
