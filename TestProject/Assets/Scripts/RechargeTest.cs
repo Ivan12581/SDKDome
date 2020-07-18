@@ -22,7 +22,8 @@ namespace celia.game
                 Debug.LogError("---goodid is null---");
                 gooid = "test1";
             }
-            SDKPay.gi.Pay("throneofgirl.gem.2");
+            
+            SDKPay.gi.Pay("throneofgirl.gem."+ gooid);
         }
 
         string GetGoodsName(int id)
