@@ -124,7 +124,7 @@ namespace celia.game {
                 if (msg.Able)
                 {
                     data["PayType"] = ((int)PayType.Pay).ToString();
-                    data["GoodID"] = msg.CommodityId.ToString();
+                    data["GoodID"] = SwitchGoodID(msg.CommodityId).ToString();
                     data["GoodNum"] = msg.Qutity.ToString();
                     data["Extra"] = $"{msg.OrderIndex}&{AuthProcessor.gi.ID}";
                     AppleOrders.Clear();
@@ -135,6 +135,12 @@ namespace celia.game {
                 }
 
             });
+        }
+
+        public string SwitchGoodID(string str) {
+            int ID = int.Parse(str);
+            
+            return "throneofgirl.gem."+ ID/10;
         }
         public void SDKPayCallBack(int state,Dictionary<string, string> data)
         {
