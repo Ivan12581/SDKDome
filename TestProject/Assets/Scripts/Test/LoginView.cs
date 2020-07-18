@@ -74,7 +74,11 @@ public class LoginView : MonoBehaviour
         Debug.Log("---Unity---SDKPay---");
         SDKPay.gi.Pay("test1");
     }
-
+    public void AccountLogin()
+    {
+        Debug.Log("---Unity---AccountLogin---");
+        NetworkManager.gi.ConnectAuth_Login("user", "token");
+    }
     public void AppleLogin()
     {
         Debug.Log("---Unity---AppleLogin---");
