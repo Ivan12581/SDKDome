@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a0f4c4be069e5c4f9fe9ad24be9e7aa, type: 3}
   m_Name: GameSetting
   m_EditorClassIdentifier: 
-  CDN_ADDRESS: https://down-mb.resources.3737.com/xly-test
-  NET_ASSETS: NetAssets_Test
-  ip: 124.156.134.53
+  CDN_ADDRESS: https://xlycs.res.rastargame.com
+  NET_ASSETS: NetAssets_PublicNetwork
+  ip: 35.221.242.183
   port: 52001
   pf: 1
