@@ -36,7 +36,6 @@ namespace celia.game
         /// <param name="jsonString">json转化的字符串</param>
         public void CallSDK(SDKResultType type, string jsonString = "")
         {
-            Debug.Log("---Unity--SDKBridgeHelper-CallSDK---");
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
 
 #elif UNITY_ANDROID
@@ -44,7 +43,6 @@ namespace celia.game
             //currentActivity.Call("CallAndroidAPI",(int)type, jsonString);
             currentActivity.Call(type.ToString(), jsonString);
 #elif UNITY_IOS
-Debug.Log("---Unity--SDKBridgeHelper-CallSDK--00000000-");
            Call((int)type,jsonString);
 #endif
 
