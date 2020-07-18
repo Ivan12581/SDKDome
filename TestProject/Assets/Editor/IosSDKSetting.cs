@@ -42,6 +42,7 @@ namespace celia.game.editor
             PlayerSettings.iOS.appleDeveloperTeamID = "";
             PlayerSettings.iOS.iOSManualProvisioningProfileID = "";
             PlayerSettings.iOS.iOSManualProvisioningProfileType = ProvisioningProfileType.Automatic;
+            Debug.Log("--**--1.IOSPlayerSettings--**--");
         }
 
 
@@ -56,6 +57,7 @@ namespace celia.game.editor
             EditorUtility.SetDirty(sdkParams);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
+            Debug.Log("--**--2.IOSGameSettings--**--");
         }
 
 
@@ -73,12 +75,15 @@ namespace celia.game.editor
 
             if (summary.result == BuildResult.Succeeded)
             {
+                Debug.Log("--**--3.IOSBuildPlayer--**--");
                 Debug.Log("Building successed, the total size is:" + summary.totalSize + " bytes" + ";time is:" + summary.totalTime);
                 return true;
             }else {
+                Debug.Log("--**--3.IOSBuildPlayer--**--");
                 Debug.Log("Build failed");
                 return false;
             }
+
         }
 
         [MenuItem("出包设置/IOS/4.IOSXcodeSettings")]
@@ -179,11 +184,12 @@ namespace celia.game.editor
             //或者事先准备好了Base.entitlements 文件，文件类容 就是手动添加进去的内容，手动添加完成后生成的那个文件
             //proj.AddCapability(target, PBXCapabilityType.PushNotifications, entitlementsFileName);
 
-            ProjectCapabilityManager projectCapabilityManager = new ProjectCapabilityManager(path, "tw.entitlements", target);
+            ProjectCapabilityManager projectCapabilityManager = new ProjectCapabilityManager(path, "tw.entitlements", "Unity-iPhone");
             projectCapabilityManager.AddGameCenter();
             projectCapabilityManager.AddInAppPurchase();
             plist.WriteToFile(plistPath);
             proj.WriteToFile(projPath);
+            Debug.Log("--**--4.IOSXcodeSettings--**--");
         }
 
 
@@ -199,7 +205,7 @@ namespace celia.game.editor
             {
                 IOSXcodeSettings();
             }
-
+            Debug.Log("--**--S.一键打IOS测试包--**--");
         }
 
         [MenuItem("出包设置/还原默认配置")]
@@ -210,6 +216,7 @@ namespace celia.game.editor
             EditorUtility.SetDirty(sdkParams);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
+            Debug.Log("--**--还原默认配置--**--");
         }
         public static void IOSbuildApple()
         {
