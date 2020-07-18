@@ -129,6 +129,7 @@ namespace celia.game {
                     data["Extra"] = $"{msg.OrderIndex}&{AuthProcessor.gi.ID}";
                     AppleOrders.Clear();
                     SDKManager.gi.Pay(data);
+                    NetworkManager.gi.RegisterMsgHandler(LogicMsgID.LogicMsgL2CRechargeOrderUpd, HandleServerBuyCallback, true);
                 }
                 else {
                     Debug.Log("----不能购买此商品---");
@@ -136,7 +137,17 @@ namespace celia.game {
 
             });
         }
-
+        public void HandleServerBuyCallback(TcpClientEventArgs args)
+        {
+            if (args.hasErrors)
+            {
+                Debug.LogError("支付模块服务器回复支付结果出错");
+                return;
+            }
+            l2c_recharge_order_upd result = l2c_recharge_order_upd.Parser.ParseFrom(args.msg);
+            Debug.Log(Newtonsoft.Json.JsonConvert.SerializeObject(result));
+            Debug.Log("-----------------Buy success-----------------");
+        }
         public string SwitchGoodID(string str) {
             int ID = int.Parse(str);
             
