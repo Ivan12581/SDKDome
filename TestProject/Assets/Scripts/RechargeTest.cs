@@ -20,10 +20,10 @@ namespace celia.game
             if (string.IsNullOrEmpty(gooid))
             {
                 Debug.LogError("---goodid is null---");
-                gooid = "test1";
+                gooid = "20";
             }
             
-            SDKPay.gi.Pay("throneofgirl.gem."+ gooid);
+            SDKPay.gi.Pay(gooid);
         }
 
         string GetGoodsName(int id)
