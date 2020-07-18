@@ -8,24 +8,24 @@ namespace celia.game
     public class SDKIosProxy : SDKProxy
     {
 #if UNITY_IOS
-        [DllImport("__Internal")]
-        private static extern void cInit();
-        [DllImport("__Internal")]
-        private static extern void cLogin(string jsonString);
-        [DllImport("__Internal")]
-        private static extern void cSwitch();
-        [DllImport("__Internal")]
-        private static extern void cPay(string jsonString);
-        [DllImport("__Internal")]
-        private static extern void cUpLoadInfo(string jsonString);
-        [DllImport("__Internal")]
-        private static extern void cOpenService();
-        [DllImport("__Internal")]
-        private static extern void cGetConfigInfo();
-        [DllImport("__Internal")]
-        private static extern void cCustomerService(string jsonString);
-        [DllImport("__Internal")]
-        private static extern void cShare(string jsonString);
+        //[DllImport("__Internal")]
+        //private static extern void cInit();
+        //[DllImport("__Internal")]
+        //private static extern void cLogin(string jsonString);
+        //[DllImport("__Internal")]
+        //private static extern void cSwitch();
+        //[DllImport("__Internal")]
+        //private static extern void cPay(string jsonString);
+        //[DllImport("__Internal")]
+        //private static extern void cUpLoadInfo(string jsonString);
+        //[DllImport("__Internal")]
+        //private static extern void cOpenService();
+        //[DllImport("__Internal")]
+        //private static extern void cGetConfigInfo();
+        //[DllImport("__Internal")]
+        //private static extern void cCustomerService(string jsonString);
+        //[DllImport("__Internal")]
+        //private static extern void cShare(string jsonString);
 #endif
         public SDKIosProxy()
         {
@@ -35,7 +35,7 @@ namespace celia.game
         public override void Init()
         {
 #if UNITY_IOS
-            cInit();
+            //cInit();
 #endif
         }
 
@@ -43,21 +43,21 @@ namespace celia.game
         {
             //TODO:需要修改之前IOS那边的接口
 #if UNITY_IOS
-            cLogin(((int)type).ToString());
+            //cLogin(((int)type).ToString());
 #endif
         }
 
         public override void Switch()
         {
 #if UNITY_IOS
-            cSwitch();
+            //cSwitch();
 #endif
         }
 
         public override void Pay(string jsonString)
         {
 #if UNITY_IOS
-            cPay(jsonString);
+            //cPay(jsonString);
 #endif
         }
 
@@ -65,26 +65,26 @@ namespace celia.game
         {
 
 #if UNITY_IOS
-            cGetConfigInfo();
+            //cGetConfigInfo();
 #endif
         }
 
         public override void UploadInfo(string jsonString)
         {
 #if UNITY_IOS
-            cUpLoadInfo(jsonString);
+            //cUpLoadInfo(jsonString);
 #endif
         }
         public override void CustomerService(string jsonString)
         {
 #if UNITY_IOS
-            cCustomerService(jsonString);
+            //cCustomerService(jsonString);
 #endif
         }
         public override void Share(string jsonString)
         {
 #if UNITY_IOS
-            cShare(jsonString);
+            //cShare(jsonString);
 #endif
         }
         public override void ExitGame()
