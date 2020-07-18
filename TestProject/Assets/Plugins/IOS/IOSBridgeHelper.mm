@@ -68,13 +68,14 @@ static IOSBridgeHelper *BridgeHelperIns = nil;
 #pragma mark --init
 -(void)InitSDK{
 //    [self Init];
-//    [[AppleHelper sharedInstance] InitSDK];
+    [[AppleHelper sharedInstance] setDelegate:self];
+    [[AppleHelper sharedInstance] InitSDK];
 //    [[FBHelper sharedInstance] InitSDK];
-    [[GoogleHelper sharedInstance] setDelegate:self];
-    [[GoogleHelper sharedInstance] InitSDK];
-    if (BridgeHelperIns == nil) {
-        NSLog(@"-BridgeHelperIns == nil----");
-    }
+//    [[GoogleHelper sharedInstance] setDelegate:self];
+//    [[GoogleHelper sharedInstance] InitSDK];
+//    if (BridgeHelperIns == nil) {
+//        NSLog(@"-BridgeHelperIns == nil----");
+//    }
 }
 - (void)InitTestCallBack:(NSString *)dict {
     NSLog(@"-ios----IOSBridgeHelper---InitTestCallBack----");
@@ -82,7 +83,7 @@ static IOSBridgeHelper *BridgeHelperIns = nil;
 }
 -(void)InitSDKCallBack:(NSMutableDictionary *) dict{
     NSLog(@"-ios----IOSBridgeHelper---InitSDKCallBack----");
-    [BridgeHelperIns SendMessageToUnity: eInit DictData:dict];
+    [self SendMessageToUnity: eInit DictData:dict];
 }
 #pragma mark -- 登录 jsonString 为登录方式 就是一个字符串
 -(void)Login: (const char *) jsonString{
