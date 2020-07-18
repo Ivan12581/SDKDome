@@ -39,8 +39,8 @@ namespace celia.game.editor
             PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, "HOTFIX_ENABLE;CELIA_RELEASE;AOT");
 
             PlayerSettings.iOS.appleEnableAutomaticSigning = false;
-            PlayerSettings.iOS.appleDeveloperTeamID = "";
-            PlayerSettings.iOS.iOSManualProvisioningProfileID = "";
+            PlayerSettings.iOS.appleDeveloperTeamID = "5HK243M76T";
+            PlayerSettings.iOS.iOSManualProvisioningProfileID = "cc302810-fe11-4b7d-86e5-df0bf7bd2aac";
             PlayerSettings.iOS.iOSManualProvisioningProfileType = ProvisioningProfileType.Automatic;
             Debug.Log("--**--1.IOSPlayerSettings--**--");
         }
