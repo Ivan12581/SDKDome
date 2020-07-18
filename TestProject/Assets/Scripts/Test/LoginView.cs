@@ -100,7 +100,7 @@ public class LoginView : MonoBehaviour
     public void GCLogin()
     {
         Debug.Log("---Unity---GCLogin---");
-        SDKManager.gi.Login(SDKLoginType.FaceBook,(s, dataDict) => {
+        SDKManager.gi.Login(SDKLoginType.GameCenter,(s, dataDict) => {
             Debug.Log("---Unity---GCLogin--callback-");
             int state = int.Parse(dataDict["state"]);
             if (state == 1)
