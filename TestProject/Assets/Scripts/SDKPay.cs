@@ -209,22 +209,26 @@ namespace celia.game {
             data.TryGetValue("transaction_id", out string transaction_id);
             data.TryGetValue("quantity", out string quantity);
             data.TryGetValue("Extra", out string Extra);
-            if (string.IsNullOrEmpty(Extra))
-            {
-                Debug.Log("---uid is null---");
+            string orderIndex = "";
+            if (!string.IsNullOrEmpty(Extra)){
+                string[] Extras = Extra.Split('&');
+                if (Extras.Length == 2){
+                    string Uid = Extras[0];
+                    orderIndex = Extras[1];
+                    if (Uid.Equals(AuthProcessor.gi.ID.ToString()))
+                    {
+                        Debug.Log("---该订单不是自己的---");
+                    }
+                }else{
+                    //
+                    Debug.Log("---apple支付透传字段Extra is error---");
+                }
+            }
+            else {
+                //applicationUsername is nil 但是是正常逻辑
+                Debug.Log("---apple支付applicationUsername is nil---");
+            }
 
-            }
-            string[] Extras = Extra.Split('&');
-            if (Extras.Length!=2)
-            {
-                Debug.Log("---bug---");
-            }
-            string Uid = Extras[0];
-            string orderIndex = Extras[1];
-            if (Uid.Equals(AuthProcessor.gi.ID.ToString()))
-            {
-                Debug.Log("---该订单不是自己的---");
-            }
             c2l_ios_recharge.Types.transaction_info Info = new c2l_ios_recharge.Types.transaction_info
             {
                 TransactionId = transaction_id,
