@@ -1,11 +1,5 @@
 ﻿using celia.game;
 
-using Newtonsoft.Json;
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +10,7 @@ public class LoginView : MonoBehaviour
     public InputField passWord;
     public InputField serverIP;
     public InputField serverPort;
+
     /// <summary>
     /// 账号登陆
     /// </summary>
@@ -49,7 +44,6 @@ public class LoginView : MonoBehaviour
             }
             else
             {
-
                 Debug.Log("SDK login fail ----------------");
             }
         });
@@ -73,7 +67,6 @@ public class LoginView : MonoBehaviour
         SDKManager.gi.CustomerService((s, dataDict) =>
         {
             Debug.Log("---Unity---CustomerService--callback-");
-
         });
     }
 
@@ -85,7 +78,6 @@ public class LoginView : MonoBehaviour
         Debug.Log("---Unity---Exit---");
         SDKManager.gi.ExitGame((s, dataDict) =>
         {
-
         });
     }
 
@@ -126,7 +118,6 @@ public class LoginView : MonoBehaviour
         SDKManager.gi.Share((s, dataDict) =>
         {
             Debug.Log("---Unity---FBShare--callback-");
-
         });
     }
 
@@ -154,7 +145,6 @@ public class LoginView : MonoBehaviour
             {
                 Debug.Log("SDK login fail ----------------");
             }
-
         });
     }
 
@@ -176,7 +166,6 @@ public class LoginView : MonoBehaviour
                 }
                 else
                 {
-
                     Debug.Log("--userID is nil or token is nil--");
                 }
             }
@@ -184,7 +173,6 @@ public class LoginView : MonoBehaviour
             {
                 Debug.Log("SDK login fail ----------------");
             }
-
         });
     }
 
@@ -226,14 +214,13 @@ public class LoginView : MonoBehaviour
         Debug.Log("---Unity---Switch---");
         SDKManager.gi.Switch((s, dataDict) =>
         {
-
         });
     }
 
     //554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn.apps.googleusercontent.com
     //com.googleusercontent.apps.554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         Messenger.AddEventListener<int>(Notif.INHOUSE_LOGIN_INIT_DATA_COMPLETED, (m) =>
         {
@@ -256,7 +243,3 @@ public class LoginView : MonoBehaviour
         Debug.Log("---LoginView Start---");
     }
 }
-
-
-
-
