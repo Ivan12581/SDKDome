@@ -6204,7 +6204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e5c0d760bf41cc49b43f59ed2c17e49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoginView: {fileID: 0}
+  LoginView: {fileID: 321109488}
   "\u906E\u7F69": {fileID: 1584601701}
   inputField: {fileID: 389993031}
 --- !u!1 &1959614046
