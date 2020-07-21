@@ -185,7 +185,7 @@ namespace celia.game.editor
             //或者事先准备好了Base.entitlements 文件，文件类容 就是手动添加进去的内容，手动添加完成后生成的那个文件
             //proj.AddCapability(target, PBXCapabilityType.PushNotifications, entitlementsFileName);
 
-            ProjectCapabilityManager projectCapabilityManager = new ProjectCapabilityManager(path, "tw.entitlements", PBXProject.GetUnityTargetName());
+            ProjectCapabilityManager projectCapabilityManager = new ProjectCapabilityManager(projPath, "tw.entitlements", PBXProject.GetUnityTargetName());
             projectCapabilityManager.AddGameCenter();
             projectCapabilityManager.AddInAppPurchase();
             plist.WriteToFile(plistPath);
