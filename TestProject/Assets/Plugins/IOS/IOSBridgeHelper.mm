@@ -2,7 +2,7 @@
 #import "AppleHelper.h"
 #import "GoogleHelper.h"
 #import "FBHelper.h"
-#import "ApplePurchase.m"
+#import "ApplePurchase.h"
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
