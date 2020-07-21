@@ -255,8 +255,8 @@ namespace celia.game
                 string[] Extras = Extra.Split('&');
                 if (Extras.Length == 2)
                 {
-                    string Uid = Extras[0];
-                    orderIndex = Extras[1];
+                    orderIndex = Extras[0];
+                    string Uid = Extras[1];
                     if (Uid.Equals(AuthProcessor.gi.ID.ToString()))
                     {
                         Debug.Log("---该订单不是自己的---");
