@@ -371,15 +371,21 @@ static AppleHelper *AppleHelperInstance = nil;
 //******************************************************
 //****************Apple In-App Purchase
 //******************************************************
-//这里定义支付类型 0为初始化 打开支付监听 1去Apple为支付 2为删除订单
+//这里定义支付类型 0打开支付监听 1去Apple为支付 2为删除订单
 typedef NS_ENUM(NSInteger, PayType)
 {
-    cNone,
     cInit,
     cPay,
     cDelOrder,
 };
-
+typedef NS_ENUM(NSInteger, ApplePayState)
+{
+    Success,
+    Failed,
+    Cancel,
+    NotFound,
+    NotAllow,
+};
 #pragma mark -- Apple In-App Purchase 入口
 -(void)Pay: (const char *) jsonString{
        // const char* --> nnstring
@@ -505,9 +511,6 @@ typedef NS_ENUM(NSInteger, PayType)
     [self BackBridge:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",product_id,@"product_id",transaction_id,@"transaction_id",[NSString stringWithFormat:@"%ld",(long)quantity],@"quantity",applicationUsername,@"Extra",nil]];
 
     switch (PayModel) {
-        case cNone:
-            NSLog(@"--有问题啊--cNone");
-            break;
         case cInit:
                 break;
         case cPay:
@@ -618,6 +621,7 @@ typedef NS_ENUM(NSInteger, PayType)
 }
 //监听购买结果
 -(void)addListener{
+  
     [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
 }
 //移除监听购买结果
