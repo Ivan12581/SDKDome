@@ -2,6 +2,7 @@
 #import "AppleHelper.h"
 #import "GoogleHelper.h"
 #import "FBHelper.h"
+#import "ApplePurchase.m"
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
@@ -68,8 +69,12 @@ static IOSBridgeHelper *BridgeHelperIns = nil;
 #pragma mark --init
 -(void)InitSDK{
 //    [self Init];
-    [[AppleHelper sharedInstance] setDelegate:self];
-    [[AppleHelper sharedInstance] InitSDK];
+//    [[AppleHelper sharedInstance] setDelegate:self];
+//    [[AppleHelper sharedInstance] InitSDK];
+    
+    [[ApplePurchase sharedInstance] setDelegate:self];
+    [[ApplePurchase sharedInstance] InitSDK];
+    
 //    [[FBHelper sharedInstance] InitSDK];
 //    [[GoogleHelper sharedInstance] setDelegate:self];
 //    [[GoogleHelper sharedInstance] InitSDK];
@@ -144,7 +149,8 @@ static IOSBridgeHelper *BridgeHelperIns = nil;
 #pragma mark -- 支付
 -(void)Pay: (const char *) jsonString{
     NSLog(@"-ios--Pay----");
-    [[AppleHelper sharedInstance] Pay:jsonString];
+//    [[AppleHelper sharedInstance] Pay:jsonString];
+     [[ApplePurchase sharedInstance] Pay:jsonString];
 }
 
 -(void)PayCallBack:(NSMutableDictionary *) dict{
