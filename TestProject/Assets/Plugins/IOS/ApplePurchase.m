@@ -44,6 +44,10 @@ typedef NS_ENUM(NSInteger, PayState)
     NotFound,
     NotAllow,
 };
+-(void)InitSDK{
+    NSLog(@"---ApplePurchase  Init---");
+    [self.CbDelegate InitSDKCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",nil]];
+}
 //开启监听购买端口
 -(void)InitApplePay{
     curServiceName = @"com.elex.girlsthrone.tw";
@@ -98,7 +102,7 @@ typedef NS_ENUM(NSInteger, PayState)
 - (void)buyIAP:(NSMutableDictionary *) dict{
     goodID = [dict valueForKey:@"GoodID"];
     goodNum = [[dict valueForKey:@"GoodNum"] integerValue];
-
+    extra = [dict valueForKey:@"Extra"];
      NSLog(@"--IOS--AppleHelper--buyIAP--goodID-->%@", goodID);
     //请求对应的产品信息
     NSArray *productArr = [[NSArray alloc] initWithObjects:goodID,nil];
@@ -148,6 +152,7 @@ typedef NS_ENUM(NSInteger, PayState)
 }
 #pragma mark - 监听购买结果委托
 - (void)paymentQueue:(nonnull SKPaymentQueue *)queue updatedTransactions:(nonnull NSArray<SKPaymentTransaction *> *)transactions {
+    NSLog(@"监听购买结果委托-->%lu",(unsigned long)transactions.count);
         //缓存订单信息 为了送达服务器后后可以删除订单
         trans = transactions;
         int count = 0;
@@ -245,24 +250,28 @@ typedef NS_ENUM(NSInteger, PayState)
 
 #pragma mark -取出
 -(NSString *)getExtraWithPID:(NSString *)PID{
+        NSLog(@"---getExtraWithPID--PID-%@",PID);
     NSString *password = nil;
     //读取
     if (![SSKeychain passwordForService:curServiceName account:PID]) {
-        NSLog(@ "没有 getPasswordInkeychain--");
+        NSLog(@ "没有 PID--");
     }
     else{
         password = [SSKeychain passwordForService:curServiceName account:PID];
     }
+    NSLog(@"---password--PID-%@",password);
     return password;
 }
 #pragma mark - 保存
 -(void)saveExtraWithPID:(NSString *)PID AndExtra:(NSString *)Extra{
-//    NSLog(@ "--saveUserInKeychain--->%@",userIdentifier);
+    NSLog(@"---saveExtraWithPID--PID-%@",PID);
+    NSLog(@"---saveExtraWithPID--Extra-%@",Extra);
     //写入
     [SSKeychain setPassword:Extra forService:curServiceName account:PID];
 }
 #pragma mark -删除
 -(void)deleteExtraWithPID:(NSString *)PID{
+    NSLog(@"---deleteExtraWithPID--PID-%@",PID);
     [SSKeychain deletePasswordForService:curServiceName account:PID];
 //    NSError *error = nil;
 //    [SSKeychain deletePasswordForService:accountName account:PID error:&error];
