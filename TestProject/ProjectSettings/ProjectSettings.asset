@@ -184,7 +184,7 @@ PlayerSettings:
   uIStatusBarHidden: 1
   uIExitOnSuspend: 0
   uIStatusBarStyle: 0
-  iPhoneSplashScreen: {fileID: 0}
+  iPhoneSplashScreen: {fileID: 2800000, guid: 9d62c6badbf4f480d99e0dc72cd0762a, type: 3}
   iPhoneHighResSplashScreen: {fileID: 0}
   iPhoneTallHighResSplashScreen: {fileID: 0}
   iPhone47inSplashScreen: {fileID: 0}
@@ -246,7 +246,7 @@ PlayerSettings:
   templateDefaultScene: Assets/Scenes/SampleScene.unity
   AndroidTargetArchitectures: 3
   AndroidSplashScreenScale: 0
-  androidSplashScreen: {fileID: 0}
+  androidSplashScreen: {fileID: 2800000, guid: 9d62c6badbf4f480d99e0dc72cd0762a, type: 3}
   AndroidKeystoreName: D:/SDKDomeProject/TestProject/BuildSettings/AndSignature/zmxt.keystore
   AndroidKeyaliasName: key-zmxt
   AndroidBuildApkPerCpuArchitecture: 0
