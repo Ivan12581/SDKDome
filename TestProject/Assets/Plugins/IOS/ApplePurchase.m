@@ -5,14 +5,8 @@
 //  Created by mini on 7/21/20.
 //
 
-#import <Foundation/Foundation.h>
-#import <StoreKit/StoreKit.h>
-#import "SSKeychain.h"
-#import "cDelegate.h"
-@interface ApplePurchase:NSObject<SKProductsRequestDelegate,SKPaymentTransactionObserver>
-@property (nonatomic, weak) id<cDelegate> CbDelegate;
-+(id)sharedInstance;
-@end
+#import "ApplePurchase.h"
+
 @implementation ApplePurchase{
     NSString *curServiceName;   //保存的名称集
     NSString *goodID;   //商品ID
