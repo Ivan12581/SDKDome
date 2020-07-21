@@ -55,7 +55,7 @@ public class LoginView : MonoBehaviour
     public void ApplePay()
     {
         Debug.Log("---Unity---SDKPay---");
-        SDKPay.gi.Pay("test1");
+        //SDKPay.gi.Pay("test1");
     }
 
     /// <summary>
