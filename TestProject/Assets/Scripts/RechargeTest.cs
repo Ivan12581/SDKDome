@@ -19,7 +19,7 @@ namespace celia.game
 
         public void Buy()
         {
-
+            Debug.Log("--RechargeTest-Buy---");
             string gooid = inputField.text;
             
             if (string.IsNullOrEmpty(gooid))
