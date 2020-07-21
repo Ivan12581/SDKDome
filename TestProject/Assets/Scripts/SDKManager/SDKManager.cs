@@ -277,7 +277,7 @@ namespace celia.game
                     }
                     break;
                 case SDKResultType.Pay:
-                    SDKPay.gi.SDKPayCallBack(state,data);
+                    SDKPay.gi.SDKPayCallBack(data);
                     break;
                 case SDKResultType.ExitGame:
                     if (state == 1)

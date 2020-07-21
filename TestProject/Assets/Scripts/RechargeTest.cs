@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,14 +8,18 @@ namespace celia.game
 {
 	public class RechargeTest : MonoBehaviour
 	{
-        public void Init()
+        public GameObject LoginView;
+        public GameObject 遮罩;
+        public InputField inputField;
+        Action<bool> CallBack;
+        private void Start()
         {
-                
+            遮罩.SetActive(false);
         }
 
-        public InputField inputField;
         public void Buy()
         {
+
             string gooid = inputField.text;
             
             if (string.IsNullOrEmpty(gooid))
@@ -22,10 +27,17 @@ namespace celia.game
                 Debug.LogError("---goodid is null---");
                 gooid = "20";
             }
-            
-            SDKPay.gi.Pay(gooid);
+            CallBack = SetMaskState;
+            SDKPay.gi.Pay(gooid, CallBack);
         }
-
+        void SetMaskState(bool state) {
+            Debug.Log("---SetMaskState---"+ state);
+            gameObject.SetActive(false);
+        }
+        public void ReLogin() {
+            LoginView.gameObject.SetActive(true);
+            this.gameObject.SetActive(false);
+        }
         string GetGoodsName(int id)
         {
             switch (id)
