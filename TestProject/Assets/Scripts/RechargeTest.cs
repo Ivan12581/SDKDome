@@ -32,7 +32,7 @@ namespace celia.game
         }
         void SetMaskState(bool state) {
             Debug.Log("---SetMaskState---"+ state);
-            gameObject.SetActive(false);
+            遮罩.SetActive(false);
         }
         public void ReLogin() {
             LoginView.gameObject.SetActive(true);

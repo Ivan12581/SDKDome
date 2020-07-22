@@ -135,6 +135,9 @@ enum LogicMsgID {
 
 	LOGIC_MSG_C2L_ENDS_ENGAGEMENT			= 58809; // 约会结算
 	LOGIC_MSG_L2C_ENDS_ENGAGEMENT			= 58810;
+	
+	LOGIC_MSG_C2L_ENGAGEMENT_PRESENT		= 58811; // 送礼
+	LOGIC_MSG_L2C_RETURN_PRESENT			= 58812; // 触发回礼
 
 	// 钓鱼587--
 	LOGIC_MSG_C2L_FISH_INFO 				= 58701; // 请求钓鱼数据
@@ -199,6 +202,7 @@ enum LogicMsgID {
 	LOGIC_MSG_C2L_IOS_RECHARGE				= 58119; // 充值
 	LOGIC_MSG_L2C_IOS_RECHARGE_REP 			= 58120; // 回复	
 	LOGIC_MSG_C2L_IOS_RECHARGE_CLOSED		= 58121; // 已删除IOS交易订单信息
+	LOGIC_MSG_C2L_IOS_RECHARGE_FAIL			= 58122; // 订单失败
 	
 	// 换装小游戏579--
 	LOGIC_MSG_C2L_MINIGAME_CLOTHCHANGING_STAR		= 57901; // 换装
@@ -455,14 +459,10 @@ enum LogicMsgID {
 	LOGIC_MSG_L2C_UNLOCK_CG_UPD				= 54603; // 更新已解锁的CG
 	
 	// Google支付 544
-	LOGIC_MSG_C2L_GOOGLE_PURCHASE_INIT		= 54401; // 初始化没关闭的订单
-	LOGIC_MSG_L2C_GOOGLE_PURCHASE_INIT		= 54402; //
 	LOGIC_MSG_C2L_GOOGLE_PURCHASE_CREATE	= 54404; // 创建Google订单
 	LOGIC_MSG_L2C_GOOGLE_PURCHASE_CREATE	= 54405; // 
 	LOGIC_MSG_C2L_GOOGLE_PURCHASE_TOKEN		= 54407; // 验证token
 	LOGIC_MSG_L2C_GOOGLE_PURCHASE_TOKEN		= 54408; //
-	LOGIC_MSG_C2L_GOOGLE_PURCHASE_VOIDED	= 54410; // 取消logic生成的订单
-	LOGIC_MSG_L2C_GOOGLE_PURCHASE_VOIDED	= 54411; // 
 }
 
 // 错误返回--------------------------------------------------------------------------------------------------------------
@@ -1360,6 +1360,20 @@ message l2c_ends_engagement {
 	repeated PTGameElement rewards		= 4; // 奖励
 }
 
+//LOGIC_MSG_C2L_ENGAGEMENT_PRESENT
+message c2l_engagement_present {
+	int32 engagement_id			= 1;		// 羁绊id(通过这个找到男主角)
+	int32 charater_id			= 2;		// 被赠送角色id
+	int32 item_id				= 3;		// 约会单次赠送的礼物id(一次只能送一个)
+}
+
+//LOGIC_MSG_L2C_RETURN_PRESENT
+message l2c_return_present {
+	bool is_stage_present				= 1;	// 是否阶段礼包
+	int32 role_stage_id					= 2;	// 角色阶段ID(在该角色该阶段的回礼)
+	repeated PTGameElement rewards		= 3; 	// 礼物
+}
+
 // ---------------------------------------------------------------------------------------------------------------约会
 
 // 钓鱼---------------------------------------------------------------------------------------------------------------
@@ -1585,7 +1599,7 @@ message l2c_recharge_order_upd {
 message l2c_recharge_goods_upd {
 	message SumRechargeInfo {
 		int32			active_id		= 1;	// 活动ID，0:总累充 other:对应活动ID(总累充暂时没有档位奖励)
-		int64			sum_money		= 2;	// 累计金额（扩大100倍的金额）
+		int64			sum_money		= 2;	// 累计充值点数
 		repeated int32	can_award_id	= 3;	// 可领取奖励奖励档位ID
 		repeated int32	own_award_id	= 4;	// 已领取奖励奖励档位ID
 		int64			deadline		= 5;	// 剩余时间(单位:s，累充没有此值)
@@ -1624,20 +1638,28 @@ message c2l_ios_recharge_init {
 // LOGIC_MSG_L2C_IOS_RECHARGE_INIT
 message l2c_ios_recharge_init {
 	repeated string id_to_close		= 1;	// 未删除的订单
+	repeated string order_index		= 2;	// 是否有未结束的订单
 }
 
 // LOGIC_MSG_C2L_RECHARGE_COMMODITY_ASK 问询是否可购买
 message c2l_recharge_commodity_ask {
-	string commodity_id		= 1;		// 商品唯一id
+	string commodity_id		= 1;		// 商品唯一id(这里是游戏商品)
 	int32 qutity			= 2;		// 商品数量
 }
 
+enum IOSRechargeAskResult {
+	RECHARGE_ASK_SUCCESS 		= 0; 	// 可以充值
+	RECHARGE_ASK_NO_COMMODITY 	= 1; 	// 没有该商品
+	RECHARGE_ASK_LAST_NOT_END 	= 2; 	// 有未完成的订单
+	RECHARGE_ASK_NOT_ALLOW 		= 3; 	// 不符合条件
+	RECHARGE_ASK_ERROR 			= 4; 	// 购买异常
+}
 // LOGIC_MSG_L2C_RECHARGE_COMMODITY_REP
 message l2c_recharge_commodity_rep {
-	bool able				= 1;		// 能否购买
-	string commodity_id		= 2;		// 商品唯一id
-	int32 qutity			= 3;		// 商品数量
-	string order_index		= 4;		// 服务器订单索引
+	IOSRechargeAskResult result	= 1;		// 能否购买
+	string commodity_id			= 2;		// 商品唯一id(这里是游戏商品)
+	int32 qutity				= 3;		// 商品数量
+	string order_index			= 4;		// 服务器订单索引(从1开始)
 }
 
 // LOGIC_MSG_C2L_IOS_RECHARGE
@@ -1648,7 +1670,7 @@ message c2l_ios_recharge {
 	
 	message transaction_info {
 		string transaction_id			= 1;	// ios订单id(唯一标识)
-		string commodity_id				= 2;	// 商品id
+		string commodity_id				= 2;	// 商品id(这里是充值商品)
 		int32 num						= 3;	// 商品数量
 		string order_index				= 4;	// 服务器订单索引
 	}
@@ -1667,12 +1689,16 @@ enum IOSRechargeResult {
 message l2c_ios_recharge_rep {
 	IOSRechargeResult			recharge_result			= 1;	// 充值结果(0已收到/1充值成功&删除订单)
 	repeated	string	transaction_ids					= 2;	// 通知客户端去ios删除的交易id
-	repeated	PTGameElement 	eles 					= 3;	// 购买得到的元素
 }
 
 // LOGIC_MSG_C2L_IOS_RECHARGE_CLOSED
 message c2l_ios_recharge_closed {
 	repeated string order_deleted		= 1;	// 已删除的订单
+}
+
+// LOGIC_MSG_C2L_IOS_RECHARGE_FAIL
+message c2l_ios_recharge_fail {
+	string order_index		= 1;				// 订单充值失败
 }
 //  -------------------------------------------------------------------------------------------------------IOS充值
 
@@ -3000,7 +3026,6 @@ message l2c_unlock_cg_upd
 // -------------------------------------------------------------------------------------------------- CG
 
 // Google支付 ------------------------------------------------------------------------------------------
-
 message c2l_google_purchase_create {
 	int32 	commodity_id = 1;	// 商品ID
 }
@@ -3015,7 +3040,6 @@ message l2c_google_purchase_create {
 message c2l_google_purchase_token {
 	string product_id		= 1;	// The inapp product SKU (for example, 'com.some.thing.inapp1').
 	string token			= 2;	// The token provided to the user's device when the inapp product was purchased.
-	int32 	commodity_id	= 3;	// 商品ID
 	int32 app_order_no		= 5;	// 游戏订单序号
 }
 
@@ -3024,6 +3048,5 @@ message l2c_google_purchase_token {
 	string product_id		= 2;	// The inapp product SKU (for example, 'com.some.thing.inapp1').
 	bool result				= 3;	// 服务器验证app_order_no结果。
 }
-
 
 //  ------------------------------------------------------------------------------------------Google支付
