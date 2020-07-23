@@ -60,9 +60,9 @@ didSignInForUser:(GIDGoogleUser *)user
   // Perform any operations on signed in user here.
   NSString *userId = user.userID;                  // For client-side use only!
   NSString *idToken = user.authentication.idToken; // Safe to send to the server
-    [self.CbDelegate LoginGoogleCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",userId,@"user",idToken,@"token",nil]];
+    [self.CbDelegate LoginGoogleCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",userId,@"uid",idToken,@"token",nil]];
     
-//    [IOSBridgeHelper LoginGoogleCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",userId,@"user",idToken,@"token",nil]];
+//    [IOSBridgeHelper LoginGoogleCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",userId,@"uid",idToken,@"token",nil]];
 }
 
 - (void)signIn:(GIDSignIn *)signIn

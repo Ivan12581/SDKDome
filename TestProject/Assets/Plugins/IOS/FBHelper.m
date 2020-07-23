@@ -92,8 +92,8 @@ static FBHelper *_Instance = nil;
     NSString* Token = accessToken.tokenString;
     NSLog(@"---UserID--> %@", UserID);
     NSLog(@"---Token--> %@", Token);
-//        [IOSBridgeHelper LoginFaceBookCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",UserID,@"user",Token,@"token",nil]];
-    [self.CbDelegate LoginFaceBookCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",UserID,@"user",Token,@"token",nil]];
+//        [IOSBridgeHelper LoginFaceBookCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",UserID,@"uid",Token,@"token",nil]];
+    [self.CbDelegate LoginFaceBookCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",UserID,@"uid",Token,@"token",nil]];
 }
 #pragma mark -- 通过userID 来获取用户的详细信息
 -(void)GetUserInfoWithUserID:(NSString *)userID{
