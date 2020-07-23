@@ -43,6 +43,7 @@ typedef NS_ENUM(NSInteger, PayState)
     Cancel,
     NotFound,
     NotAllow,
+    Purchasing,
 };
 -(void)InitSDK{
     NSLog(@"---ApplePurchase  Init---");
@@ -54,7 +55,7 @@ typedef NS_ENUM(NSInteger, PayState)
         //允许程序内付费购买
     if ([SKPaymentQueue canMakePayments]) {
          [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
-//         [self CommonCallback:cInit AndPayState:Success];
+         [self CommonCallback:cInit AndPayState:Success];
     } else {
          NSLog(@"用户不允许内购");
         [self CommonCallback:cInit AndPayState:NotAllow];
@@ -75,28 +76,27 @@ typedef NS_ENUM(NSInteger, PayState)
               [self buyIAP:dict];
                 break;
         case cDelOrder:
-//              [self CheckTrans:dict];
+              [self CheckTrans:dict];
         default:
-
             break;
     }
 
 }
--(void)PurchaseCallback:(NSMutableDictionary *) dict{
-    [dict setValue: [NSNumber numberWithInt:(int)payModel] forKey: @"PayType"];
-    [dict setValue: [NSNumber numberWithInt:(int)Success] forKey: @"PayState"];
+
+-(void)CommonCallback:(int)type AndPayState:(int)state{
+    NSNumber *_type = [NSNumber numberWithInt:type];
+    NSNumber *_state = [NSNumber numberWithInt:state];
+    [self.CbDelegate PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",_type,@"PayType",_state,@"PayState",nil]];
+}
+-(void)CallBackWithDict:(NSMutableDictionary *) dict AndType:(int)type AndState:(int)state{
+    [dict setValue: [NSNumber numberWithInt:type] forKey: @"PayType"];
+    [dict setValue: [NSNumber numberWithInt:state] forKey: @"PayState"];
     [self.CbDelegate PayCallBack:dict];
 }
-//
--(void)CommonCallback:(int)PayType AndPayState:(int)PayState{
-    NSNumber *type = [NSNumber numberWithInt:PayType];
-    NSNumber *state = [NSNumber numberWithInt:PayState];
-    [self.CbDelegate PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",type,@"PayType",state,@"PayState",nil]];
-}
--(void)DelCallback:(int)PayState AndOrder:(NSString *)ordre{
-    NSNumber *type = [NSNumber numberWithInt:(int)payModel];
-    NSNumber *state = [NSNumber numberWithInt:PayState];
-    [self.CbDelegate PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",type,@"PayType",state,@"PayState",ordre,@"Order",nil]];
+-(void)CallBackWithOrder:(NSString *) order AndType:(int)type AndState:(int)state{
+    NSNumber *_type = [NSNumber numberWithInt:type];
+    NSNumber *_state = [NSNumber numberWithInt:state];
+    [self.CbDelegate PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",_type,@"PayType",_state,@"PayState",order,@"Order",nil]];
 }
 #pragma mark - In-App Purchase入口
 - (void)buyIAP:(NSMutableDictionary *) dict{
@@ -137,8 +137,8 @@ typedef NS_ENUM(NSInteger, PayState)
         SKMutablePayment *payment = [SKMutablePayment paymentWithProduct:requestProduct];
     //    The default value is 1, the minimum value is 1, and the maximum value is 10.
         payment.quantity = goodNum;
-        //applicationUsername 可透传 但是不用apple账号登录会为空 故舍弃
-//        payment.applicationUsername = Extra;
+        //applicationUsername 可透传 但是可能为空
+        payment.applicationUsername = extra;
         [[SKPaymentQueue defaultQueue] addPayment:payment];
 }
 #pragma mark - SKRequestDelegate
@@ -152,20 +152,25 @@ typedef NS_ENUM(NSInteger, PayState)
 }
 #pragma mark - 监听购买结果委托
 - (void)paymentQueue:(nonnull SKPaymentQueue *)queue updatedTransactions:(nonnull NSArray<SKPaymentTransaction *> *)transactions {
-    NSLog(@"监听购买结果委托-->%lu",(unsigned long)transactions.count);
+    NSLog(@"监听购买结果委托-transactions.count->%lu",(unsigned long)transactions.count);
         //缓存订单信息 为了送达服务器后后可以删除订单
         trans = transactions;
         int count = 0;
         for (SKPaymentTransaction *tran in transactions) {
             switch (tran.transactionState) {
                 case SKPaymentTransactionStatePurchased: // 交易完成
-                     NSLog(@"交易完成");
+                    NSLog(@"交易完成  productIdentifier-->%@",tran.payment.productIdentifier);
+                    NSLog(@"交易完成  transactionIdentifier-->%@",tran.transactionIdentifier);
+                    NSLog(@"交易完成  applicationUsername-->%@",tran.payment.applicationUsername);
                     // 发送自己服务器验证凭证
+//                    [[SKPaymentQueue defaultQueue] finishTransaction:tran];
+//                    [self deleteExtraWithPID:tran.payment.productIdentifier];
                     count = count + 1;
                    [self HandleAppleOrder:tran];
                     break;
                 case SKPaymentTransactionStatePurchasing: // 购买中
                     NSLog(@"购买中 ...... 商品已经添加进列表");
+                    [self CallBackWithOrder:tran.payment.applicationUsername AndType:(int)payModel AndState:Purchasing];
                     break;
                 case SKPaymentTransactionStateRestored: // 购买过 消耗型商品不用写
                     NSLog(@"购买过 消耗型商品不用处理");
@@ -173,13 +178,18 @@ typedef NS_ENUM(NSInteger, PayState)
                     [[SKPaymentQueue defaultQueue] finishTransaction:tran];
                     break;
                 case SKPaymentTransactionStateFailed: // 交易失败
-                     NSLog(@"交易失败");
-                    //apple删除订单
-                    [[SKPaymentQueue defaultQueue]finishTransaction:tran];
                     //删除钥匙串中的存储
                     [self deleteExtraWithPID:tran.payment.productIdentifier];
-                     //回调至游戏
-                    [self CommonCallback:cPay AndPayState:Fail];
+                    if (tran.error.code == SKErrorPaymentCancelled) {
+                         NSLog(@"交易取消");
+                         //回调至游戏
+                        [self CallBackWithOrder:tran.payment.applicationUsername AndType:(int)payModel AndState:Cancel];
+                    }else{
+                         NSLog(@"交易失败");
+                        [self CallBackWithOrder:tran.payment.applicationUsername AndType:(int)payModel AndState:Fail];
+                    }
+                    //apple删除订单
+                    [[SKPaymentQueue defaultQueue]finishTransaction:tran];
                     break;
                 default:
                     break;
@@ -197,15 +207,14 @@ typedef NS_ENUM(NSInteger, PayState)
     NSString * transaction_id = transaction.transactionIdentifier;
     //商品PID
     NSString *product_id = transaction.payment.productIdentifier;
-    
-    NSString *extra = [self getExtraWithPID:product_id];
-    if (extra) {
-           [self PurchaseCallback:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",product_id,@"product_id",transaction_id,@"transaction_id",extra,@"Extra",nil]];
-    }else{
-         NSLog(@"--钥匙串中没有该PID的存储--%@",product_id);
+    NSInteger quantity = transaction.payment.quantity;
+    NSString *extra = transaction.payment.applicationUsername;
+    //如果订单透传字段为空 就取本地钥匙串中保存的
+    if (extra == nil) {
+        extra = [self getExtraWithPID:product_id];
     }
-
-
+    NSMutableDictionary *data =[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",product_id,@"product_id",transaction_id,@"transaction_id",[NSString stringWithFormat:@"%ld",(long)quantity],@"quantity",extra,@"Extra",nil];
+    [self CallBackWithDict:data AndType:(int)payModel AndState:Success];
 }
 // 从沙盒中获取到购买凭据
 -(void)HandleReceipt{
@@ -213,7 +222,7 @@ typedef NS_ENUM(NSInteger, PayState)
     NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
     NSData *receiptData = [NSData dataWithContentsOfURL:receiptURL];
     NSString *encodeStr = [receiptData base64EncodedStringWithOptions:0];
-    [self PurchaseCallback:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",encodeStr,@"encodeStr",nil]];
+    [self CallBackWithDict:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",encodeStr,@"encodeStr",nil] AndType:(int)payModel AndState:Success];
     //发给自己服务器
 }
 
@@ -233,15 +242,13 @@ typedef NS_ENUM(NSInteger, PayState)
               NSLog(@"---找到并删除钥匙串存储、删除Apple交易订单---");
             [self deleteExtraWithPID:curtran.payment.productIdentifier];
             [[SKPaymentQueue defaultQueue] finishTransaction:curtran];
-            [self DelCallback:Success AndOrder:needDelOrder];
-
+            [self CallBackWithOrder:needDelOrder AndType:payModel AndState:(int)Success];
         }else{
              NSLog(@"---未找到该定单---");
-            [self DelCallback:NotFound AndOrder:needDelOrder];
-
+             [self CallBackWithOrder:needDelOrder AndType:payModel AndState:(int)NotFound];
         }
     }else{
-          [self DelCallback:Fail AndOrder:needDelOrder];
+        [self CallBackWithOrder:needDelOrder AndType:payModel AndState:(int)Fail];
          NSLog(@"---Error:Apple Order is nil---");
     }
 
@@ -250,28 +257,27 @@ typedef NS_ENUM(NSInteger, PayState)
 
 #pragma mark -取出
 -(NSString *)getExtraWithPID:(NSString *)PID{
-        NSLog(@"---getExtraWithPID--PID-%@",PID);
-    NSString *password = nil;
+    NSLog(@"---getExtraWithPID--PID-%@",PID);
+    NSString *Extra = nil;
     //读取
     if (![SSKeychain passwordForService:curServiceName account:PID]) {
-        NSLog(@ "没有 PID--");
+//        NSLog(@ "没有 PID--");
     }
     else{
-        password = [SSKeychain passwordForService:curServiceName account:PID];
+        Extra = [SSKeychain passwordForService:curServiceName account:PID];
     }
-    NSLog(@"---password--PID-%@",password);
-    return password;
+    NSLog(@"-取出--password--Extra-%@",Extra);
+    return Extra;
 }
 #pragma mark - 保存
 -(void)saveExtraWithPID:(NSString *)PID AndExtra:(NSString *)Extra{
-    NSLog(@"---saveExtraWithPID--PID-%@",PID);
-    NSLog(@"---saveExtraWithPID--Extra-%@",Extra);
+    NSLog(@"--保存-saveExtraWithPID--PID-%@--Extra->%@",PID,Extra);
     //写入
     [SSKeychain setPassword:Extra forService:curServiceName account:PID];
 }
 #pragma mark -删除
 -(void)deleteExtraWithPID:(NSString *)PID{
-    NSLog(@"---deleteExtraWithPID--PID-%@",PID);
+    NSLog(@"--删除-deleteExtraWithPID--PID-%@",PID);
     [SSKeychain deletePasswordForService:curServiceName account:PID];
 //    NSError *error = nil;
 //    [SSKeychain deletePasswordForService:accountName account:PID error:&error];
