@@ -35,6 +35,7 @@ namespace celia.game
 
             NetworkManager.gi.RegisterMsgHandler(LogicMsgID.LogicMsgL2CIosRechargeRep,
             new EventHandler<TcpClientEventArgs>(IosRechargeRep));
+            NetworkManager.gi.RegisterMsgHandler(LogicMsgID.LogicMsgL2CRechargeOrderUpd, HandleServerBuyCallback, true);
         }
 
         /// <summary>
