@@ -35,12 +35,12 @@ public class LoginView : MonoBehaviour
             if (state == 1)
             {
                 //第一次授权登陆 有identityTokenStr等信息
-                NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"], dataDict["token"]);
+                NetworkManager.gi.ConnectAuth_LoginApple(dataDict["uid"], dataDict["token"]);
             }
             else if (state == 2)
             {
                 //后续就没有identityTokenStr这些校验信息了
-                NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"]);
+                NetworkManager.gi.ConnectAuth_LoginApple(dataDict["uid"]);
             }
             else
             {
@@ -93,7 +93,7 @@ public class LoginView : MonoBehaviour
             int state = int.Parse(dataDict["state"]);
             if (state == 1)
             {
-                if (dataDict.TryGetValue("user", out string userID) && dataDict.TryGetValue("token", out string token))
+                if (dataDict.TryGetValue("uid", out string userID) && dataDict.TryGetValue("token", out string token))
                 {
                     NetworkManager.gi.ConnectAuth_LoginFaceBook(userID, token);
                 }
@@ -133,13 +133,15 @@ public class LoginView : MonoBehaviour
             int state = int.Parse(dataDict["state"]);
             if (state == 1)
             {
-                //第一次授权登陆 有identityTokenStr等信息
-                NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"], dataDict["token"]);
+                c2a_logon_apple_gamecenter arg = new c2a_logon_apple_gamecenter();
+                arg.UserIdentifier = dataDict["uid"];
+                NetworkManager.gi.ConnectAuth_LoginGameCenter(arg);
             }
             else if (state == 2)
             {
-                //后续就没有identityTokenStr这些校验信息了
-                NetworkManager.gi.ConnectAuth_LoginApple(dataDict["user"]);
+                c2a_logon_apple_gamecenter arg = new c2a_logon_apple_gamecenter();
+                arg.UserIdentifier = dataDict["uid"];
+                NetworkManager.gi.ConnectAuth_LoginGameCenter(arg);
             }
             else
             {
@@ -160,7 +162,7 @@ public class LoginView : MonoBehaviour
             int state = int.Parse(dataDict["state"]);
             if (state == 1)
             {
-                if (dataDict.TryGetValue("user", out string userID) && dataDict.TryGetValue("token", out string token))
+                if (dataDict.TryGetValue("uid", out string userID) && dataDict.TryGetValue("token", out string token))
                 {
                     NetworkManager.gi.ConnectAuth_LoginGoogle(userID, token);
                 }
