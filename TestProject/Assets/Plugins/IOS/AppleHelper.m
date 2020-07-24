@@ -45,9 +45,10 @@ static AppleHelper *AppleHelperInstance = nil;
 //    [self addListener];
     IOSBridgeHelper = self.CbDelegate;
     if (@available(iOS 13.0, *)) {
-            [IOSBridgeHelper InitSDKCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",accountName,@"TWuserIdentifier",forService,@"forService",nil]];
+        [IOSBridgeHelper InitSDKCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",nil]];
     }else{
-            [IOSBridgeHelper InitSDKCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",accountName,@"TWuserIdentifier",forService,@"forService",nil]];
+        //此处返回不能为0
+        [IOSBridgeHelper InitSDKCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",nil]];
     }
 
 }

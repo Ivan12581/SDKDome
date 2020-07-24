@@ -55,7 +55,8 @@ typedef NS_ENUM(NSInteger, PayState)
         //允许程序内付费购买
     if ([SKPaymentQueue canMakePayments]) {
          [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
-         [self CommonCallback:cInit AndPayState:Success];
+        //此处不能返回初始化成功
+//         [self CommonCallback:cInit AndPayState:Success];
     } else {
          NSLog(@"用户不允许内购");
         [self CommonCallback:cInit AndPayState:NotAllow];
@@ -242,13 +243,13 @@ typedef NS_ENUM(NSInteger, PayState)
               NSLog(@"---找到并删除钥匙串存储、删除Apple交易订单---");
             [self deleteExtraWithPID:curtran.payment.productIdentifier];
             [[SKPaymentQueue defaultQueue] finishTransaction:curtran];
-            [self CallBackWithOrder:needDelOrder AndType:payModel AndState:(int)Success];
+            [self CallBackWithOrder:needDelOrder AndType:(int)payModel AndState:(int)Success];
         }else{
              NSLog(@"---未找到该定单---");
-             [self CallBackWithOrder:needDelOrder AndType:payModel AndState:(int)NotFound];
+             [self CallBackWithOrder:needDelOrder AndType:(int)payModel AndState:(int)NotFound];
         }
     }else{
-        [self CallBackWithOrder:needDelOrder AndType:payModel AndState:(int)Fail];
+        [self CallBackWithOrder:needDelOrder AndType:(int)payModel AndState:(int)Fail];
          NSLog(@"---Error:Apple Order is nil---");
     }
 

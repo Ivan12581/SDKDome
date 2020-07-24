@@ -68,24 +68,19 @@ static IOSBridgeHelper *BridgeHelperIns = nil;
 
 #pragma mark --init
 -(void)InitSDK{
-//    [self Init];
-//    [[AppleHelper sharedInstance] setDelegate:self];
-//    [[AppleHelper sharedInstance] InitSDK];
+    [[AppleHelper sharedInstance] setDelegate:self];
+    [[AppleHelper sharedInstance] InitSDK];
     
     [[ApplePurchase sharedInstance] setDelegate:self];
     [[ApplePurchase sharedInstance] InitSDK];
     
-//    [[FBHelper sharedInstance] InitSDK];
-//    [[GoogleHelper sharedInstance] setDelegate:self];
-//    [[GoogleHelper sharedInstance] InitSDK];
-//    if (BridgeHelperIns == nil) {
-//        NSLog(@"-BridgeHelperIns == nil----");
-//    }
+    [[FBHelper sharedInstance] setDelegate:self];
+    [[FBHelper sharedInstance] InitSDK];
+    
+    [[GoogleHelper sharedInstance] setDelegate:self];
+    [[GoogleHelper sharedInstance] InitSDK];
 }
-- (void)InitTestCallBack:(NSString *)dict {
-    NSLog(@"-ios----IOSBridgeHelper---InitTestCallBack----");
-      NSLog(@"---InitTestCallBack--->%@", dict);
-}
+
 -(void)InitSDKCallBack:(NSMutableDictionary *) dict{
     NSLog(@"-ios----IOSBridgeHelper---InitSDKCallBack----");
     [self SendMessageToUnity: eInit DictData:dict];
@@ -149,7 +144,6 @@ static IOSBridgeHelper *BridgeHelperIns = nil;
 #pragma mark -- 支付
 -(void)Pay: (const char *) jsonString{
     NSLog(@"-ios--Pay----");
-//    [[AppleHelper sharedInstance] Pay:jsonString];
      [[ApplePurchase sharedInstance] Pay:jsonString];
 }
 
