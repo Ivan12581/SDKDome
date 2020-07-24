@@ -18,7 +18,6 @@ namespace celia.game
         private List<string> ServerOrders2;//从服务器那边拿到的服务器的订单
         private string VoucherData;//支付凭证
         private Action<bool> CallBack;
-        private string CurServerOrder;
         public SDKPay()
         {
             AppleOrders = new List<c2l_ios_recharge.Types.transaction_info>();
@@ -141,7 +140,6 @@ namespace celia.game
                 if (msg.Result == IOSRechargeAskResult.RechargeAskSuccess)
                 {
                     CallBack?.Invoke(true);//开启遮罩
-                    CurServerOrder = msg.OrderIndex;
                     data["PayType"] = ((int)ApplePayType.Pay).ToString();
                     data["GoodID"] = SwitchGoodID(msg.CommodityId).ToString();
                     data["GoodNum"] = msg.Qutity.ToString();
@@ -268,6 +266,9 @@ namespace celia.game
                 {
                     orderIndex = Extras[0];
                     string Uid = Extras[1];
+                    Debug.Log("---orderIndex---" + orderIndex);
+                    Debug.Log("---Uid---" + Uid);
+                    Debug.Log("---AuthProcessor.gi.ID---" + AuthProcessor.gi.ID);
                     if (!Uid.Equals(AuthProcessor.gi.ID.ToString()))
                     {
                         Debug.Log("---该订单不是自己的-应服务器强烈要求 不要发给服务器--");
