@@ -269,11 +269,11 @@ namespace celia.game
                     Debug.Log("---orderIndex---" + orderIndex);
                     Debug.Log("---Uid---" + Uid);
                     Debug.Log("---AuthProcessor.gi.ID---" + AuthProcessor.gi.ID);
-                    if (!Uid.Equals(AuthProcessor.gi.ID.ToString()))
-                    {
-                        Debug.Log("---该订单不是自己的-应服务器强烈要求 不要发给服务器--");
-                        return;
-                    }
+                    //if (!Uid.Equals(AuthProcessor.gi.ID.ToString()))
+                    //{
+                    //    Debug.Log("---该订单不是自己的-应服务器强烈要求 不要发给服务器--");
+                    //    return;
+                    //}
                 }
                 else
                 {
