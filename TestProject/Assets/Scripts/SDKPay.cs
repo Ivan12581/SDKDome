@@ -302,6 +302,10 @@ namespace celia.game
         private void PayCallBack(ApplePayState applePayState, Dictionary<string, string> data)
         {
             Debug.Log("---applePayState--->" + applePayState.ToString());
+            if (applePayState == ApplePayState.Purchasing)
+            {
+                return;
+            }
             if (applePayState == ApplePayState.Success)
             {
                 if (data.ContainsKey("encodeStr"))
@@ -348,6 +352,7 @@ namespace celia.game
                 {
                     orderIndex = transaction_id;
                 }
+
                 FailOrderToServer(orderIndex);
                 CallBack?.Invoke(false);
             }
