@@ -22,6 +22,7 @@ namespace celia.game
         {
             AppleOrders = new List<c2l_ios_recharge.Types.transaction_info>();
             ServerOrders = new List<string>();
+            ServerOrders2 = new List<string>();
             data = new Dictionary<string, string>
             {
                 { "PayType", "1" },
