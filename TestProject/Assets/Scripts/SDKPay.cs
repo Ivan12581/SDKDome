@@ -320,6 +320,13 @@ namespace celia.game
                 data.TryGetValue("Extra", out string Extra);
                 data.TryGetValue("transaction_id", out string transaction_id);
                 string orderIndex = "";
+                if (string.IsNullOrEmpty(Extra))
+                {
+                    if (data.ContainsKey("Order"))
+                    {
+                        Extra = data["Order"];
+                    }
+                }
                 if (!string.IsNullOrEmpty(Extra))
                 {
                     string[] Extras = Extra.Split('&');
