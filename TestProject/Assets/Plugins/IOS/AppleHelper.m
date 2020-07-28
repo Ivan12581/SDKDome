@@ -327,6 +327,7 @@ static AppleHelper *AppleHelperInstance = nil;
 //            } else {
 //                // Fallback on earlier versions
 //            }
+            //fetchItemsForIdentityVerificationSignature
             [[GKLocalPlayer localPlayer] generateIdentityVerificationSignatureWithCompletionHandler:^(NSURL * publicKeyUrl, NSData * signature, NSData * salt, uint64_t timestamp, NSError * error) {
                 if (error) {
                     NSLog(@"--ERROR: %@",error);
