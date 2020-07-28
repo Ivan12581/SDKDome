@@ -401,14 +401,12 @@ namespace celia.game
     }
     public enum SDKLoginType
     {
-        None,
-        /// <summary>
-        /// 星辉SDK
-        /// </summary>
+        Account,
+        SDKToken,//其实就是星辉
+        Super,
+        Google,
         Apple,
-        GameCenter,
         FaceBook,
-        Google,//新增加请在Google、Rastar之间加入
-        Rastar,
+        GameCenter,
     }
 }
