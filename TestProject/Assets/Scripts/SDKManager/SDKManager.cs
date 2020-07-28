@@ -397,7 +397,7 @@ namespace celia.game
         Native,
         NativeChukai,
         Oversea,
-        OverseaELEX,
+        CeliaOversea,
     }
     public enum SDKLoginType
     {

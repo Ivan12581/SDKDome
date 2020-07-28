@@ -19,7 +19,7 @@ namespace celia.game
             currentActivity.Call("Init");
         }
 
-        public override void Login(SDKLoginType type = SDKLoginType.Rastar)
+        public override void Login(SDKLoginType type)
         {
             //TODO:需要修改之前Android那边的接口
             currentActivity.Call("Login", ((int)type).ToString());

@@ -39,7 +39,7 @@ namespace celia.game
 #endif
         }
 
-        public override void Login(SDKLoginType type = SDKLoginType.Rastar)
+        public override void Login(SDKLoginType t)
         {
             //TODO:需要修改之前IOS那边的接口
 #if UNITY_IOS
