@@ -13,7 +13,7 @@ namespace celia.game.editor
         {
             group = BuildPipeline.GetBuildTargetGroup(option.ProcessCfg.Target);
             recordDefines = PlayerSettings.GetScriptingDefineSymbolsForGroup(group);
-            if (option.SDKType == SDKType.OverseaELEX)
+            if (option.SDKType == SDKType.CeliaOversea)
             {
                 string newDefines = recordDefines;
                 newDefines = "HOTFIX_ENABLE;CELIA_RELEASE;AOT;ELEX";
