@@ -50,12 +50,13 @@ extern void UnitySendMessage(const char *, const char *, const char *);
 
 typedef NS_ENUM(NSInteger, SDKLoginType)
 {
-    tNone,
+    tAccount,
+    tSDKToken,//其实就是星辉
+    tSuper,
+    tGoogle,
     tApple,
+    tFaceBook,
     tGameCenter,
-    tFacebook,
-    tGoogle,//新增加请在Google、Rastar之间加入
-    tRastar,
 
 };
 
@@ -91,15 +92,13 @@ static IOSBridgeHelper *BridgeHelperIns = nil;
     
     NSInteger  type = [[NSString stringWithUTF8String:jsonString] integerValue];
     switch (type) {
-        case tNone:
-            break;
         case tApple:
             [[AppleHelper sharedInstance] Login];
                 break;
         case tGameCenter:
             [[AppleHelper sharedInstance] authGamecnter];
                 break;
-        case tFacebook:
+        case tFaceBook:
             [[FBHelper sharedInstance] Login];
                 break;
         case tGoogle:
@@ -130,7 +129,7 @@ static IOSBridgeHelper *BridgeHelperIns = nil;
 }
 -(void)LoginFaceBookCallBack:(NSMutableDictionary *) dict{
     NSLog(@"-ios----IOSBridgeHelper---LoginFaceBookCallBack----");
-    [dict setValue: [NSNumber numberWithInt:tFacebook] forKey: @"type"];
+    [dict setValue: [NSNumber numberWithInt:tFaceBook] forKey: @"type"];
    [self SendMessageToUnity: eLogin DictData:dict];
 }
 
@@ -173,19 +172,19 @@ static IOSBridgeHelper *BridgeHelperIns = nil;
 }
 typedef NS_ENUM(NSInteger, MsgID)
 {
-    eInit,
-    eLogin,
-    eSwitch,
-    ePay,
-    eUploadInfo,
-    eExitGame,
-    eLogout,
+    eInit = 100,
+    eLogin = 101,
+    eSwitch = 102,
+    ePay = 103,
+    eUploadInfo = 104,
+    eExitGame = 105,
+    eLogout = 106,
     
-    eConfigInfo,
-    eGoogleTranslate,
-    eBind,
-    eShare,
-    eNaver,
+    eConfigInfo = 201,
+    eGoogleTranslate = 202,
+    eBind = 203,
+    eShare = 204,
+    eNaver = 205,
 };
 #pragma mark -- Unity To IOS
 -(void)Call:(int) type andJsonStr:(const char*) jsonstring{
@@ -215,7 +214,7 @@ IMPL_APP_CONTROLLER_SUBCLASS (IOSBridgeHelper)
 
 extern "C"
 {
-    void Call(int type, const char* jsonString){
+    void CallFromUnity(int type, const char* jsonString){
         [(IOSBridgeHelper*)[UIApplication sharedApplication].delegate Call:type andJsonStr:jsonString];
     }
 

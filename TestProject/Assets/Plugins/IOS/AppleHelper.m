@@ -267,7 +267,7 @@ static AppleHelper *AppleHelperInstance = nil;
 #pragma mark -- 开始注册登录自己的游戏服务器
 -(void)toGameLogin{
      NSLog(@ "--开始注册登录自己的游戏服务器--");
-    [IOSBridgeHelper AppleLoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",userIdentifier,@"uid",nil]];
+    [IOSBridgeHelper AppleLoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",userIdentifier,@"uid",nil]];
 }
 
 
