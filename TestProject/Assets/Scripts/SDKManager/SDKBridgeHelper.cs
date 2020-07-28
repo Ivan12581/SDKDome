@@ -13,7 +13,7 @@ namespace celia.game
         private static AndroidJavaObject currentActivity;
 #elif UNITY_IOS
         [DllImport("__Internal")]
-        private static extern void Call(int type,string jsonString);  
+        private static extern void CallFromUnity(int type,string jsonString);  
 #endif
         public SDKBridgeHelper() {
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
