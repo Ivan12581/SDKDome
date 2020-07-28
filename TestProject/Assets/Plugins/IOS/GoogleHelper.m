@@ -25,15 +25,11 @@ static GoogleHelper *GoogleHelperIns = nil;
 
 -(void)InitSDK{
     NSLog(@"---GoogleHelper  Init---");
-    
 //    [GIDSignIn sharedInstance].clientID = @"554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn.apps.googleusercontent.com";
    [GIDSignIn sharedInstance].clientID = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"GoogleClientID"];
     [GIDSignIn sharedInstance].delegate = self;
     [GIDSignIn sharedInstance].shouldFetchBasicProfile = YES;
     [GIDSignIn sharedInstance].presentingViewController = [[[UIApplication sharedApplication] delegate] window].rootViewController;
-    
-//    [self.CbDelegate LoginGoogleCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",@"userId",@"user",@"idToken",@"token",nil]];
-//    [self.CbDelegate InitSDKCallBack:@"123456789"];
 }
 
 
@@ -52,8 +48,10 @@ didSignInForUser:(GIDGoogleUser *)user
   if (error != nil) {
     if (error.code == kGIDSignInErrorCodeHasNoAuthInKeychain) {
       NSLog(@"The user has not signed in before or they have since signed out.");
+                [self.CbDelegate LoginGoogleCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"-1", @"state",nil]];
     } else {
-      NSLog(@"%@", error.localizedDescription);
+      NSLog(@"---didSignInForUser--->%@", error.localizedDescription);
+        [self.CbDelegate LoginGoogleCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",nil]];
     }
     return;
   }
@@ -61,8 +59,6 @@ didSignInForUser:(GIDGoogleUser *)user
   NSString *userId = user.userID;                  // For client-side use only!
   NSString *idToken = user.authentication.idToken; // Safe to send to the server
     [self.CbDelegate LoginGoogleCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",userId,@"uid",idToken,@"token",nil]];
-    
-//    [IOSBridgeHelper LoginGoogleCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",userId,@"uid",idToken,@"token",nil]];
 }
 
 - (void)signIn:(GIDSignIn *)signIn
@@ -80,7 +76,7 @@ didDisconnectWithUser:(GIDGoogleUser *)user
 
 - (void)Login {
      NSLog(@"---GoogleHelper  Login---");
-//     [[GIDSignIn sharedInstance] signIn];
+
     GIDSignIn *signIn = [GIDSignIn sharedInstance];
     if ([signIn hasPreviousSignIn]) {
         [signIn restorePreviousSignIn];
@@ -88,7 +84,7 @@ didDisconnectWithUser:(GIDGoogleUser *)user
     }else{
         [[GIDSignIn sharedInstance] signIn];
     }
-
+//     [[GIDSignIn sharedInstance] signIn];
       // Automatically sign in the user.
     //  [[GIDSignIn sharedInstance] restorePreviousSignIn];
 

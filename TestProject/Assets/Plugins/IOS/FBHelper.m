@@ -58,9 +58,11 @@ static FBHelper *_Instance = nil;
     [[FBSDKLoginManager new] logInWithPermissions:@[@"public_profile",@"email",@"user_friends"] fromViewController:[[[UIApplication sharedApplication] delegate] window].rootViewController handler:^(FBSDKLoginManagerLoginResult * _Nullable result, NSError * _Nullable error) {
         if (error) {
               NSLog(@"Unexpected login error: %@", error);
+                [self.CbDelegate LoginFaceBookCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"-1", @"state",nil]];
         }else{
             if (result.isCancelled) {
                 NSLog(@"--login isCancelled---");
+                [self.CbDelegate LoginFaceBookCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",nil]];
             }else{
                 NSLog(@"---result.token---> %@", result.token);
                 [self SendAccessTokenToServer:result.token];
@@ -92,7 +94,6 @@ static FBHelper *_Instance = nil;
     NSString* Token = accessToken.tokenString;
     NSLog(@"---UserID--> %@", UserID);
     NSLog(@"---Token--> %@", Token);
-//        [IOSBridgeHelper LoginFaceBookCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",UserID,@"uid",Token,@"token",nil]];
     [self.CbDelegate LoginFaceBookCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",UserID,@"uid",Token,@"token",nil]];
 }
 #pragma mark -- 通过userID 来获取用户的详细信息
