@@ -41,7 +41,7 @@ namespace celia.game
             //currentActivity.Call("CallAndroidAPI",(int)type, jsonString);
             currentActivity.Call(type.ToString(), jsonString);
 #elif UNITY_IOS
-           Call((int)type,jsonString);
+           CallFromUnity((int)type,jsonString);
 #endif
 
         }

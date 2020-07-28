@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 using UnityEngine;
 
@@ -357,42 +358,6 @@ namespace celia.game
                 FailOrderToServer(orderIndex);
                 CallBack?.Invoke(false);
             }
-
-            //switch (applePayState)
-            //{
-            //    case ApplePayState.Success:
-            //        if (data.ContainsKey("encodeStr"))
-            //        {
-            //            CallBack?.Invoke(true);
-            //            VoucherData = data["encodeStr"];
-            //            VerifyVoucherData();
-            //        }
-            //        else
-            //        {
-            //            AddAppleOrders(data);
-            //        }
-            //        return;
-            //    case ApplePayState.Fail:
-            //        Debug.Log("---苹果 交易失败---");
-            //        FailOrderToServer("");
-            //        break;
-            //    case ApplePayState.Cancel:
-            //        Debug.Log("---苹果 交易取消---");
-            //        break;
-            //    case ApplePayState.NotFound:
-            //        Debug.Log("---苹果后台那边没有查到该商品---");
-            //        break;
-            //    case ApplePayState.NotAllow:
-            //        Debug.Log("--苹果 不允许购买---");
-            //        break;
-            //    case ApplePayState.Purchasing:
-            //        Debug.Log("--苹果 购买中---");
-            //        break;
-            //    default:
-            //        break;
-            //}
-            //CallBack?.Invoke(false);
-
         }
 
         /// <summary>
@@ -504,7 +469,6 @@ namespace celia.game
             }
             else
             {
-                List<string> needDelOrders = new List<string>();
                 List<c2l_ios_recharge.Types.transaction_info> needVerifyData = new List<c2l_ios_recharge.Types.transaction_info>();
                 //需要check
                 bool IsFind = false;
@@ -515,7 +479,7 @@ namespace celia.game
                     {
                         if (string.Equals(aInfo.TransactionId, sInfo))
                         {
-                            needDelOrders.Add(sInfo);
+                            DelOrderInApple(sInfo);
                             IsFind = true;
                             break;
                         }
@@ -547,8 +511,6 @@ namespace celia.game
                 {
                     NetworkManager.gi.SendPkt(LogicMsgID.LogicMsgC2LIosRechargeClosed, pkg);
                 }
-
-                DelOrderInApple(needDelOrders);
                 AppleOrders = needVerifyData;
 
                 //发给服务器
@@ -577,7 +539,7 @@ namespace celia.game
                         }
                         if (!IsFind)//客户端有但是服务器没有  服务器强烈要求直接删掉 会漏单
                         {
-                            needDelOrders.Add(item.TransactionId);
+                            DelOrderInApple(item.TransactionId);
                         }
                     }
                     foreach (var item in ServerOrders2)
@@ -597,7 +559,6 @@ namespace celia.game
                         }
                     }
                     AppleOrders = needVerifyData;
-                    DelOrderInApple(needDelOrders);
                     VerifyVoucherData();
                 }
                 else {
@@ -607,23 +568,33 @@ namespace celia.game
                     }
                 }
             }
+            else
+            {
+                //AppleOrders.Count>0 ServerOrders.Count == 0 ServerOrders2.Count == 0
+                if (AppleOrders.Count > 0)
+                {
+                    //在测试阶段会经常切换服务器和账号 所以AppleOrders经常不是自己的 服务器又不要只能直接干掉 不然正式的支付流程都不能走
+                    foreach (var item in AppleOrders)
+                    {
+                        DelOrderInApple(item.TransactionId);
+                    }
+                }
+            }
         }
 
         /// <summary>
         /// 删除Apple订单
         /// </summary>
         /// <param name="Orders"></param>
-        private void DelOrderInApple(List<string> Orders)
+        private void DelOrderInApple(string AppleOrder)
         {
-            if (Orders.Count > 0)
+            Debug.Log("---Unity---DelOrderInApple---" + AppleOrder);
+            JObject jObj = new JObject
             {
-                foreach (string item in Orders)
-                {
-                    data["PayType"] = ((int)ApplePayType.DelOrder).ToString();
-                    data["Order"] = item;
-                    SDKManager.gi.Pay(data);
-                }
-            }
+                { "PayType", ((int)ApplePayType.DelOrder).ToString() },
+                { "Order", AppleOrder }
+            };
+            SDKManager.gi.Pay(jObj.ToString());
         }
         /// <summary>
         /// 将服务器订单取消掉

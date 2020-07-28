@@ -15,8 +15,8 @@ namespace celia.game.editor
     public class IosSDKSetting : Editor
     {
         //#if UNITY_EDITOR_OSX
-        //public const string path = "/Users/mini/Documents/SDKXCodeProj";
-        public const string path = "/Users/mini/Documents/NewSdkXCodeProj";
+        public const string path = "/Users/mini/Documents/SDKXCodeProj";
+        //public const string path = "/Users/mini/Documents/NewSdkXCodeProj";
         [MenuItem("出包设置/IOS/1.IOSPlayerSettings")]
         public static void IOSPlayerSettings()
         {

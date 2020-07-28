@@ -180,8 +180,10 @@ namespace celia.game
 
             c2a_logon_apple pkt = new c2a_logon_apple();
             pkt.UserIdentifier = user;
-            pkt.IdentityToken = identityTokenStr;
-
+            if (!string.IsNullOrEmpty(identityTokenStr))
+            {
+                pkt.IdentityToken = identityTokenStr;
+            }
             NetworkManager.gi.SendPkt(AuthMsgID.AuthMsgC2ALogonApple, pkt);
             // 状态变化
             state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_CHALLENGE));

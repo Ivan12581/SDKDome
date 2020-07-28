@@ -150,7 +150,11 @@ namespace celia.game
             CallSDK(SDKResultType.Pay, jsonData);
             //proxy?.Pay(jsonData);
         }
-
+        public void Pay(string jsonString, Action<int, Dictionary<string, string>> callBack = null)
+        {
+            callBackDict[SDKResultType.Pay] = callBack;
+            CallSDK(SDKResultType.Pay, jsonString);
+        }
         /// <summary>
         /// 上报数据
         /// </summary>
@@ -363,23 +367,27 @@ namespace celia.game
     // 该枚举与SDK接入层定义一致 Android为同名方法 IOS为枚举值 列如SDKResultType.Init 在Android中为“Init” 在IOS为0
     public enum SDKResultType
     {
-        Init,
-        Login,
-        Switch,
-        Pay,
-        UploadInfo,
-        ExitGame,
-        Logout,
+        Init = 100,
+        Login = 101,
+        Switch = 102,
+        Pay = 103,
+        UploadInfo = 104,
+        ExitGame = 105,
+        Logout = 106,
 
-        ConfigInfo,
-        GoogleTranslate,
-        Bind,
-        Share,
-        Naver,
+        ConfigInfo = 201,
+        GoogleTranslate = 202,
+        Bind = 203,
+        Share = 204,
+        Naver = 205,
+
+        WeiboShare = 301,
+
+        ConsumeGoogleOrder = 401,
         /// <summary>
         /// AIHelper 客服
         /// </summary>
-        CustomerService,
+        CustomerService = 501,
     }
 
     // SDK类型
