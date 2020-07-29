@@ -6,16 +6,17 @@ enum AccountOpResult
 {
   AOR_NULL = 0;
 
-  AOR_OK					= 1;  // 成功
-  AOR_NAME_TOO_LONG			= 2;  // 名字太长
-  AOR_PASS_WRONG_LENGTH		= 3;  // 密码长度异常
-  AOR_NAME_ALREADY_EXIST	= 4;  // 名字已存在
-  AOR_NAME_NOT_EXIST		= 5;  // 名字不存在
-  AOR_DB_INTERNAL_ERROR		= 6;  // 数据库内部错误
-  AOR_PASS_WRONG_ERROR		= 7;  // 密码错误
-  AOR_ID_OUT_RANGE			= 8;  // id范围越界
-  AOR_ACCOUNT_LOCKED		= 9;  // 账号被锁
-  AOR_SVC_MAINTENANCE   	= 10; // 服务维护中
+  AOR_OK								= 1;  // 成功
+  AOR_NAME_TOO_LONG						= 2;  // 名字太长
+  AOR_PASS_WRONG_LENGTH					= 3;  // 密码长度异常
+  AOR_NAME_ALREADY_EXIST				= 4;  // 名字已存在
+  AOR_NAME_NOT_EXIST					= 5;  // 名字不存在
+  AOR_DB_INTERNAL_ERROR					= 6;  // 数据库内部错误
+  AOR_PASS_WRONG_ERROR					= 7;  // 密码错误
+  AOR_ID_OUT_RANGE						= 8;  // id范围越界
+  AOR_ACCOUNT_LOCKED					= 9;  // 账号被锁
+  AOR_SVC_MAINTENANCE   				= 10; // 服务维护中
+  AOR_APPLE_IDENTITYTOKEN_EXCEPTION		= 11; // apple identity_token 解析异常
 };
 
 // 消息ID
