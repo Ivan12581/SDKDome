@@ -51,7 +51,8 @@ typedef NS_ENUM(NSInteger, PayState)
 }
 //开启监听购买端口
 -(void)InitApplePay{
-    curServiceName = @"com.elex.girlsthrone.tw";
+        curServiceName = [NSBundle mainBundle].bundleIdentifier;
+//    curServiceName = @"com.elex.girlsthrone.tw";
         //允许程序内付费购买
     if ([SKPaymentQueue canMakePayments]) {
          [[SKPaymentQueue defaultQueue] addTransactionObserver:self];

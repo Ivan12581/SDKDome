@@ -89,4 +89,7 @@ didDisconnectWithUser:(GIDGoogleUser *)user
     //  [[GIDSignIn sharedInstance] restorePreviousSignIn];
 
 }
+-(void)Logout{
+    [[GIDSignIn sharedInstance] signOut];
+}
 @end

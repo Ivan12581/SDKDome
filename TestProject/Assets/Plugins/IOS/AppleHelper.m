@@ -8,7 +8,6 @@
 //****************Apple相关
 //******************************************************
 #import "AppleHelper.h"
-//#import "IOSBridgeHelper.h"
 @implementation AppleHelper{
     NSString *accountName;
     NSString *forService;
@@ -29,19 +28,18 @@ static AppleHelper *AppleHelperInstance = nil;
     IOSBridgeHelper = self.CbDelegate;
 }
 -(void)InitSDK{
-    NSString * bundleID = [NSBundle mainBundle].bundleIdentifier;
+//    NSString * bundleID = [NSBundle mainBundle].bundleIdentifier;
     accountName = @"TWuserIdentifier";
-    forService = @"com.elex.girlsthrone.tw";
+//    forService = @"com.elex.girlsthrone.tw";
+    forService = [NSBundle mainBundle].bundleIdentifier;
     userIdentifier = @"nil";
 
-    NSLog(@"-ios---AppleHelper---InitSDK---bundleID-%@",bundleID);
-    //TODO：apple初始化的时候需要添加购买结果的监听 有可能之前支付ok 但是因为通信而导致存在未处理订单 但是此时还没链接服务器 所有购买监听应该在链接逻辑服成功后开启
-//    [self addListener];
+    NSLog(@"-ios---AppleHelper---InitSDK---bundleID-%@",forService);
     IOSBridgeHelper = self.CbDelegate;
     if (@available(iOS 13.0, *)) {
         [IOSBridgeHelper InitSDKCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",nil]];
     }else{
-        //此处返回不能为0
+        //此处返回不能为0 因为0代表失败 之前逻辑为初始化失败会重新初始化
         [IOSBridgeHelper InitSDKCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",nil]];
     }
 
@@ -217,8 +215,8 @@ static AppleHelper *AppleHelperInstance = nil;
 
 #pragma mark - 获取userIdentifier
 -(void)getPasswordInkeychain{
-    NSString *accountName = @"TWuserIdentifier";
-    NSString *forService = @"com.elex.girlsthrone.tw";
+//    NSString *accountName = @"TWuserIdentifier";
+//    NSString *forService = @"com.elex.girlsthrone.tw";
     NSString *password = nil;
     //读取
     if (![SSKeychain passwordForService:forService account:accountName]) {
@@ -228,7 +226,6 @@ static AppleHelper *AppleHelperInstance = nil;
         password = [SSKeychain passwordForService:forService account:accountName];
         NSLog(@ "--getPasswordInkeychain--->%@",[SSKeychain passwordForService:forService account:accountName]);
     }
-    
 }
 #pragma mark - 保存userIdentifier
 -(void)saveUserInKeychain:(NSString *)userIdentifier{
@@ -256,7 +253,9 @@ static AppleHelper *AppleHelperInstance = nil;
         [self observeAuthticationState: userIdentifier];
     }
 }
-
+-(void)Logout{
+    [SSKeychain deletePasswordForService:forService account:accountName];
+}
 #pragma mark -- 开始注册登录自己的游戏服务器
 -(void)toGameLogin{
      NSLog(@ "--开始注册登录自己的游戏服务器--");
@@ -305,7 +304,8 @@ static AppleHelper *AppleHelperInstance = nil;
         }
     };
 }
--(void)authGamecnter{
+#pragma mark - GameCenter 授权状态查询
+-(void)GamecnterLogin{
        NSLog(@"尝试获取GameCenter授权");
     [[GKLocalPlayer localPlayer] authenticateWithCompletionHandler:^(NSError * _Nullable error){
         if (error == nil) {
@@ -315,12 +315,6 @@ static AppleHelper *AppleHelperInstance = nil;
             NSLog(@"3--isFriend--%d",[GKLocalPlayer localPlayer].isFriend);
             NSLog(@"4--playerID--%@",[GKLocalPlayer localPlayer].playerID);
             NSLog(@"4--displayName--%@",[GKLocalPlayer localPlayer].displayName);
-//            if (@available(iOS 12.4, *)) {
-//                NSLog(@"4--playerID--%@",[GKLocalPlayer localPlayer].teamPlayerID);
-//            } else {
-//                // Fallback on earlier versions
-//            }
-            //fetchItemsForIdentityVerificationSignature
             [[GKLocalPlayer localPlayer] generateIdentityVerificationSignatureWithCompletionHandler:^(NSURL * publicKeyUrl, NSData * signature, NSData * salt, uint64_t timestamp, NSError * error) {
                 if (error) {
                     NSLog(@"--ERROR: %@",error);
@@ -348,7 +342,6 @@ static AppleHelper *AppleHelperInstance = nil;
             [IOSBridgeHelper LoginGameCenterCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",nil]];
         }
     }];
-    
 }
 //用戶變更檢測
 - (void)registerFoeAuthenticationNotification{
@@ -363,10 +356,11 @@ static AppleHelper *AppleHelperInstance = nil;
         
     }
 }
-
-
+-(void)GameCenterLogout{
+    
+}
 - (void)gameCenterViewControllerDidFinish:(nonnull GKGameCenterViewController *)gameCenterViewController { 
-    NSLog(@"----gameCenterViewControllerDidFinish----这个是干嘛的------>");
+    NSLog(@"----gameCenterViewControllerDidFinish------>");
 }
 
 @end

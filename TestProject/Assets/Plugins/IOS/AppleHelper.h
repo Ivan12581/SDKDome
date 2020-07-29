@@ -15,7 +15,9 @@
 @property (nonatomic, weak) id<cDelegate> CbDelegate;
 -(void)InitSDK;
 -(void)Login;
--(void)authGamecnter;
+-(void)Logout;
+-(void)GamecnterLogin;
+-(void)GameCenterLogout;
 +(id)sharedInstance;
 @end
 

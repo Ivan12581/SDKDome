@@ -15,6 +15,7 @@
 @property (nonatomic, weak) id<cDelegate> CbDelegate;
 -(void)InitSDK;
 -(void)Login;
+-(void)Logout;
 -(void)FBShareUrl;
 -(void)FBShareImage;
 +(id)sharedInstance;

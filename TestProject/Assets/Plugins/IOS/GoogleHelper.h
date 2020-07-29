@@ -13,5 +13,6 @@
 
 -(void)InitSDK;
 -(void)Login;
+-(void)Logout;
 +(id)sharedInstance;
 @end

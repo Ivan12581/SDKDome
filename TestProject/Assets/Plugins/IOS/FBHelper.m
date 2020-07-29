@@ -6,7 +6,6 @@
 //
 
 #import "FBHelper.h"
-//#import "IOSBridgeHelper.h"
 
 @implementation FBHelper{
     UIViewController* RVC;
@@ -27,7 +26,6 @@ static FBHelper *_Instance = nil;
 -(void)InitSDK{
 //      [FBSDKSettings setAppID:@"949004278872387"];
     [FBSDKSettings setAppID:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"FacebookAppID"]];
-    
     NSLog(@"---FBHelper---InitSDK---");
     RVC = [[[UIApplication sharedApplication] delegate] window].rootViewController;
 }
@@ -50,9 +48,6 @@ static FBHelper *_Instance = nil;
     }
 }
 
-//- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary*)options{
-//    return [[FBSDKApplicationDelegate sharedInstance] application:app openURL:url sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey] annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
-//}
 #pragma mark -- FaceBook Login
 -(void)FBLogin{
     [[FBSDKLoginManager new] logInWithPermissions:@[@"public_profile",@"email",@"user_friends"] fromViewController:[[[UIApplication sharedApplication] delegate] window].rootViewController handler:^(FBSDKLoginManagerLoginResult * _Nullable result, NSError * _Nullable error) {
@@ -96,6 +91,9 @@ static FBHelper *_Instance = nil;
     NSLog(@"---Token--> %@", Token);
     [self.CbDelegate LoginFaceBookCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",UserID,@"uid",Token,@"token",nil]];
 }
+-(void)Logout{
+    [[FBSDKLoginManager new] logOut];
+}
 #pragma mark -- 通过userID 来获取用户的详细信息
 -(void)GetUserInfoWithUserID:(NSString *)userID{
         NSDictionary*params= @{@"fields":@"id,name,email,age_range,first_name,last_name,link,gender,locale,picture,timezone,updated_time,verified"};
@@ -106,7 +104,7 @@ static FBHelper *_Instance = nil;
                                       HTTPMethod:@"GET"];
         [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id info, NSError *error) {
             NSLog(@"%@",info);
-            // 下边的部分 是我用公司提供的开发者测试账号获取到的信息，剩下的信息可能是公司因为没有申请到权限，也有可能是该账号本身就没有公开那部分信息
+            // 下边的部分 是用公司提供的开发者测试账号获取到的信息，剩下的信息可能是公司因为没有申请到权限，也有可能是该账号本身就没有公开那部分信息
 //            {
 //            email = "yfwpsttxgd_1594605349@tfbnw.net";
 //            "first_name" = Ava;
@@ -126,9 +124,7 @@ static FBHelper *_Instance = nil;
         }];
 }
 
--(void)Logout{
-    [[FBSDKLoginManager new] logOut];
-}
+
 //******************************************************
 //****************FaceBook Share
 //******************************************************

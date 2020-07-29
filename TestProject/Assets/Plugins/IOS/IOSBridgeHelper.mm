@@ -96,7 +96,7 @@ static IOSBridgeHelper *BridgeHelperIns = nil;
             [[AppleHelper sharedInstance] Login];
                 break;
         case tGameCenter:
-            [[AppleHelper sharedInstance] authGamecnter];
+            [[AppleHelper sharedInstance] GamecnterLogin];
                 break;
         case tFaceBook:
             [[FBHelper sharedInstance] Login];
@@ -107,8 +107,27 @@ static IOSBridgeHelper *BridgeHelperIns = nil;
         default:
             break;
     }
-
-    
+}
+#pragma mark -- 登出
+-(void)Logout: (const char *) jsonString{
+    NSLog(@"ios登出类型: %s", jsonString);
+    NSInteger  type = [[NSString stringWithUTF8String:jsonString] integerValue];
+    switch (type) {
+        case tApple:
+            [[AppleHelper sharedInstance] Logout];
+                break;
+        case tGameCenter:
+            [[AppleHelper sharedInstance] GameCenterLogout];
+                break;
+        case tFaceBook:
+            [[FBHelper sharedInstance] Logout];
+                break;
+        case tGoogle:
+            [[GoogleHelper sharedInstance] Logout];
+                break;
+        default:
+            break;
+    }
 }
 //cDelegate
 -(void)AppleLoginCallBack:(NSMutableDictionary *) dict{
