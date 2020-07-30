@@ -35,8 +35,8 @@ public class LoginView : MonoBehaviour
             if (state == 1)
             {
                 //第一次授权登陆 有identityTokenStr等信息
-                dataDict.TryGetValue(dataDict["uid"],out string uid);
-                dataDict.TryGetValue(dataDict["token"], out string token);
+                dataDict.TryGetValue("uid",out string uid);
+                dataDict.TryGetValue("token", out string token);
                 NetworkManager.gi.ConnectAuth_LoginApple(uid, token);
             }
             else
