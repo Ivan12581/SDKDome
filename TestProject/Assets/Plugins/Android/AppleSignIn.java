@@ -129,8 +129,8 @@ public class AppleSignIn {
                 {
                     put("state","1");
                     put("code",jsonObject.getString("code"));
-                    put("user_identifier",jsonObject.getString("user_identifier"));
-                    put("id_token",jsonObject.getString("id_token"));
+                    put("uid",jsonObject.getString("user_identifier"));
+                    put("token",jsonObject.getString("id_token"));
                 } });
             CloseWeb();
         }catch (JSONException e){
