@@ -71,7 +71,6 @@ namespace celia.game
         string account;
         string password;
         string token;
-        string UserID;
         c2a_logon_apple_gamecenter GCpkt;
         NetworkManager()
         {
@@ -103,12 +102,20 @@ namespace celia.game
             Debug.Log(Utils.ip + "/" + Utils.port);
             GameTcpClient.gi.Connect(Utils.ip, Utils.port);
         }
-        public void ConnectAuth_LoginApple(string _account, string _password = "")
+        public void ConnectAuth_LoginApple(string _UserID, string _token)
         {
-            account = _account;
-            password = _password;
+            account = _UserID;
+            token = _token;
             loginType = LoginType.Apple;
-
+            //AppleUserToken只有在第一次授权才会拿到 如果登陆认证服失败 就后续拿不到
+            if (string.IsNullOrEmpty(_token))
+            {
+                token = PlayerPrefs.GetString("AppleUserToken");
+            }
+            else
+            {
+                PlayerPrefs.SetString("AppleUserToken", _token);
+            }
             // 连接认证服
             state = NetState.NET_STATE_AUTH_CONNECTING;
             Debug.Log(Utils.ip + "/" + Utils.port);
@@ -118,7 +125,7 @@ namespace celia.game
         {
 
             loginType = LoginType.Google;
-            UserID = _UserID;
+            account = _UserID;
             token = _token;
             // 连接认证服
             state = NetState.NET_STATE_AUTH_CONNECTING;
@@ -127,7 +134,7 @@ namespace celia.game
         }
         public void ConnectAuth_LoginFaceBook(string _UserID, string _token)
         {
-            UserID = _UserID;
+            account = _UserID;
             token = _token;
             loginType = LoginType.FaceBook;
 
@@ -793,16 +800,16 @@ namespace celia.game
                                 AuthProcessor.gi.Login(account);
                                 break;
                             case LoginType.Apple:
-                                AuthProcessor.gi.LoginApple(account, password);
+                                AuthProcessor.gi.LoginApple(account, token);
                                 break;
                             case LoginType.GameCenter:
                                 AuthProcessor.gi.LoginGameCenter(GCpkt);
                                 break;
                             case LoginType.Google:
-                                AuthProcessor.gi.LoginGoogle(UserID, token);
+                                AuthProcessor.gi.LoginGoogle(account, token);
                                 break;
                             case LoginType.FaceBook:
-                                AuthProcessor.gi.LoginFaceBook(UserID, token);
+                                AuthProcessor.gi.LoginFaceBook(account, token);
                                 break;
                         }
                     }

@@ -174,12 +174,18 @@ namespace celia.game
             // 状态变化
             state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_CHALLENGE));
         }
-        public void LoginApple(string user, string identityTokenStr)
+        public void LoginApple(string user, string identityTokenStr = "")
         {
             loginType = LoginType.Apple;
 
             c2a_logon_apple pkt = new c2a_logon_apple();
             pkt.UserIdentifier = user;
+
+            string SessionKey = PlayerPrefs.GetString("AppleSessionKey","");
+            if (!string.IsNullOrEmpty(SessionKey))
+            {
+                pkt.SessionKey = SessionKey;
+            }
             if (!string.IsNullOrEmpty(identityTokenStr))
             {
                 pkt.IdentityToken = identityTokenStr;
@@ -409,6 +415,13 @@ namespace celia.game
                     case LoginType.SDKToken:
                     case LoginType.Super:
                     case LoginType.Apple:
+                        if (msg.Result == AccountOpResult.AorPassWrongError)
+                        {
+                            //apple 登陆auth失败  SessionKey过期 重新登陆
+                            PlayerPrefs.SetString("AppleSessionKey", "");
+                            LoginApple(Account);
+                        }
+                        break;
                     case LoginType.GameCenter:
                     case LoginType.Google:
                     case LoginType.FaceBook:
@@ -422,6 +435,14 @@ namespace celia.game
                 account_id = msg.AccountId;
                 I = msg.Username;
                 guid = msg.Guid;
+                if (loginType == LoginType.Apple)
+                {
+                    string SessionKey = msg.SessionKey;
+                    if (!string.IsNullOrEmpty(SessionKey))
+                    {
+                        PlayerPrefs.SetString("AppleSessionKey", SessionKey);
+                    }
+                }
 
                 // 状态变化
                 state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_WAIT_LOGIC_INFO));

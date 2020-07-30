@@ -28,38 +28,39 @@ public static partial class AuthReflection {
           "ASgOMhAuQWNjb3VudE9wUmVzdWx0IicKE2MyYV9sb2dvbl9jaGFsbGVuZ2US",
           "EAoIdXNlcm5hbWUYASABKAkiLgoNYTJjX2xvZ29uX2FzaxISCgpwdWJsaWNf",
           "a2V5GAEgASgJEgkKAXMYAiABKAkiKAoPYzJhX2xvZ29uX3Byb29mEgkKAUEY",
-          "ASABKAkSCgoCTTEYAiABKAkisAEKDWEyY19sb2dvbl9yZXASIAoGcmVzdWx0",
+          "ASABKAkSCgoCTTEYAiABKAkixQEKDWEyY19sb2dvbl9yZXASIAoGcmVzdWx0",
           "GAEgASgOMhAuQWNjb3VudE9wUmVzdWx0EhAKCHVzZXJuYW1lGAIgASgJEhIK",
           "CmFjY291bnRfaWQYAyABKA0SDAoEZ3VpZBgEIAEoDRIQCghzZGtfY29kZRgF",
           "IAEoBRILCgNhZ2UYBiABKAUSFQoNaXNfaWRlbnRpZmllZBgHIAEoCBITCgt1",
-          "bmxvY2tfdGltZRgIIAEoAyJCChBhMmNfbG9nb25fcmVnaW9uEgoKAmlwGAEg",
-          "ASgJEgwKBHBvcnQYAiABKA0SFAoMaHR0cF9hZGRyZXNzGAMgASgJInkKDWMy",
-          "YV9sb2dvbl9zZGsSDwoHb3Blbl9pZBgBIAEoCRIOCgZhcHBfaWQYAiABKAkS",
-          "DgoGY2NoX2lkGAMgASgJEhQKDGFjY2Vzc190b2tlbhgEIAEoCRIPCgdhcHBf",
-          "a2V5GAUgASgJEhAKCHNka190eXBlGAYgASgJIkIKD2MyYV9sb2dvbl9hcHBs",
-          "ZRIXCg91c2VyX2lkZW50aWZpZXIYASABKAkSFgoOaWRlbnRpdHlfdG9rZW4Y",
-          "AiABKAkiNwoQYzJhX2xvZ29uX2dvb2dsZRIRCglnb29nbGVfaWQYASABKAkS",
-          "EAoIaWRfdG9rZW4YAiABKAkiPwoSYzJhX2xvZ29uX2ZhY2Vib29rEhMKC2Zh",
-          "Y2Vib29rX2lkGAEgASgJEhQKDGFjY2Vzc190b2tlbhgCIAEoCSIjCg9jMmFf",
-          "bG9nb25fc3VwZXISEAoIdXNlcm5hbWUYAiABKAkiNQoaYzJhX2xvZ29uX2Fw",
-          "cGxlX2dhbWVjZW50ZXISFwoPdXNlcl9pZGVudGlmaWVyGAEgASgJKo0CCg9B",
-          "Y2NvdW50T3BSZXN1bHQSDAoIQU9SX05VTEwQABIKCgZBT1JfT0sQARIVChFB",
-          "T1JfTkFNRV9UT09fTE9ORxACEhkKFUFPUl9QQVNTX1dST05HX0xFTkdUSBAD",
-          "EhoKFkFPUl9OQU1FX0FMUkVBRFlfRVhJU1QQBBIWChJBT1JfTkFNRV9OT1Rf",
-          "RVhJU1QQBRIZChVBT1JfREJfSU5URVJOQUxfRVJST1IQBhIYChRBT1JfUEFT",
-          "U19XUk9OR19FUlJPUhAHEhQKEEFPUl9JRF9PVVRfUkFOR0UQCBIWChJBT1Jf",
-          "QUNDT1VOVF9MT0NLRUQQCRIXChNBT1JfU1ZDX01BSU5URU5BTkNFEAoqzgMK",
-          "CUF1dGhNc2dJRBIRCg1BVVRIX01TR19OVUxMEAASHwoZQVVUSF9NU0dfQzJB",
-          "X1JFR0lTVEVSX1JFURDJ3AMSHwoZQVVUSF9NU0dfQTJDX1JFR0lTVEVSX1JF",
-          "UBDK3AMSIgocQVVUSF9NU0dfQzJBX0xPR09OX0NIQUxMRU5HRRCx5AMSHAoW",
-          "QVVUSF9NU0dfQTJDX0xPR09OX0FTSxCy5AMSHgoYQVVUSF9NU0dfQzJBX0xP",
-          "R09OX1BST09GELPkAxIcChZBVVRIX01TR19BMkNfTE9HT05fUkVQELTkAxIf",
-          "ChlBVVRIX01TR19BMkNfTE9HT05fUkVHSU9OELXkAxIcChZBVVRIX01TR19D",
-          "MkFfTE9HT05fU0RLELbkAxIeChhBVVRIX01TR19DMkFfTE9HT05fU1VQRVIQ",
-          "uOQDEh4KGEFVVEhfTVNHX0MyQV9MT0dPTl9BUFBMRRC65AMSKQojQVVUSF9N",
-          "U0dfQzJBX0xPR09OX0FQUExFX0dBTUVDRU5URVIQu+QDEh8KGUFVVEhfTVNH",
-          "X0MyQV9MT0dPTl9HT09HTEUQvOQDEiEKG0FVVEhfTVNHX0MyQV9MT0dPTl9G",
-          "QUNFQk9PSxC95ANiBnByb3RvMw=="));
+          "bmxvY2tfdGltZRgIIAEoAxITCgtzZXNzaW9uX2tleRgJIAEoCSJCChBhMmNf",
+          "bG9nb25fcmVnaW9uEgoKAmlwGAEgASgJEgwKBHBvcnQYAiABKA0SFAoMaHR0",
+          "cF9hZGRyZXNzGAMgASgJInkKDWMyYV9sb2dvbl9zZGsSDwoHb3Blbl9pZBgB",
+          "IAEoCRIOCgZhcHBfaWQYAiABKAkSDgoGY2NoX2lkGAMgASgJEhQKDGFjY2Vz",
+          "c190b2tlbhgEIAEoCRIPCgdhcHBfa2V5GAUgASgJEhAKCHNka190eXBlGAYg",
+          "ASgJIlcKD2MyYV9sb2dvbl9hcHBsZRIXCg91c2VyX2lkZW50aWZpZXIYASAB",
+          "KAkSFgoOaWRlbnRpdHlfdG9rZW4YAiABKAkSEwoLc2Vzc2lvbl9rZXkYAyAB",
+          "KAkiNwoQYzJhX2xvZ29uX2dvb2dsZRIRCglnb29nbGVfaWQYASABKAkSEAoI",
+          "aWRfdG9rZW4YAiABKAkiPwoSYzJhX2xvZ29uX2ZhY2Vib29rEhMKC2ZhY2Vi",
+          "b29rX2lkGAEgASgJEhQKDGFjY2Vzc190b2tlbhgCIAEoCSIjCg9jMmFfbG9n",
+          "b25fc3VwZXISEAoIdXNlcm5hbWUYAiABKAkiNQoaYzJhX2xvZ29uX2FwcGxl",
+          "X2dhbWVjZW50ZXISFwoPdXNlcl9pZGVudGlmaWVyGAEgASgJKo0CCg9BY2Nv",
+          "dW50T3BSZXN1bHQSDAoIQU9SX05VTEwQABIKCgZBT1JfT0sQARIVChFBT1Jf",
+          "TkFNRV9UT09fTE9ORxACEhkKFUFPUl9QQVNTX1dST05HX0xFTkdUSBADEhoK",
+          "FkFPUl9OQU1FX0FMUkVBRFlfRVhJU1QQBBIWChJBT1JfTkFNRV9OT1RfRVhJ",
+          "U1QQBRIZChVBT1JfREJfSU5URVJOQUxfRVJST1IQBhIYChRBT1JfUEFTU19X",
+          "Uk9OR19FUlJPUhAHEhQKEEFPUl9JRF9PVVRfUkFOR0UQCBIWChJBT1JfQUND",
+          "T1VOVF9MT0NLRUQQCRIXChNBT1JfU1ZDX01BSU5URU5BTkNFEAoqzgMKCUF1",
+          "dGhNc2dJRBIRCg1BVVRIX01TR19OVUxMEAASHwoZQVVUSF9NU0dfQzJBX1JF",
+          "R0lTVEVSX1JFURDJ3AMSHwoZQVVUSF9NU0dfQTJDX1JFR0lTVEVSX1JFUBDK",
+          "3AMSIgocQVVUSF9NU0dfQzJBX0xPR09OX0NIQUxMRU5HRRCx5AMSHAoWQVVU",
+          "SF9NU0dfQTJDX0xPR09OX0FTSxCy5AMSHgoYQVVUSF9NU0dfQzJBX0xPR09O",
+          "X1BST09GELPkAxIcChZBVVRIX01TR19BMkNfTE9HT05fUkVQELTkAxIfChlB",
+          "VVRIX01TR19BMkNfTE9HT05fUkVHSU9OELXkAxIcChZBVVRIX01TR19DMkFf",
+          "TE9HT05fU0RLELbkAxIeChhBVVRIX01TR19DMkFfTE9HT05fU1VQRVIQuOQD",
+          "Eh4KGEFVVEhfTVNHX0MyQV9MT0dPTl9BUFBMRRC65AMSKQojQVVUSF9NU0df",
+          "QzJBX0xPR09OX0FQUExFX0dBTUVDRU5URVIQu+QDEh8KGUFVVEhfTVNHX0My",
+          "QV9MT0dPTl9HT09HTEUQvOQDEiEKG0FVVEhfTVNHX0MyQV9MT0dPTl9GQUNF",
+          "Qk9PSxC95ANiBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::AccountOpResult), typeof(global::AuthMsgID), }, new pbr::GeneratedClrTypeInfo[] {
@@ -68,10 +69,10 @@ public static partial class AuthReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::c2a_logon_challenge), global::c2a_logon_challenge.Parser, new[]{ "Username" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::a2c_logon_ask), global::a2c_logon_ask.Parser, new[]{ "PublicKey", "S" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::c2a_logon_proof), global::c2a_logon_proof.Parser, new[]{ "A", "M1" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::a2c_logon_rep), global::a2c_logon_rep.Parser, new[]{ "Result", "Username", "AccountId", "Guid", "SdkCode", "Age", "IsIdentified", "UnlockTime" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::a2c_logon_rep), global::a2c_logon_rep.Parser, new[]{ "Result", "Username", "AccountId", "Guid", "SdkCode", "Age", "IsIdentified", "UnlockTime", "SessionKey" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::a2c_logon_region), global::a2c_logon_region.Parser, new[]{ "Ip", "Port", "HttpAddress" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::c2a_logon_sdk), global::c2a_logon_sdk.Parser, new[]{ "OpenId", "AppId", "CchId", "AccessToken", "AppKey", "SdkType" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::c2a_logon_apple), global::c2a_logon_apple.Parser, new[]{ "UserIdentifier", "IdentityToken" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::c2a_logon_apple), global::c2a_logon_apple.Parser, new[]{ "UserIdentifier", "IdentityToken", "SessionKey" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::c2a_logon_google), global::c2a_logon_google.Parser, new[]{ "GoogleId", "IdToken" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::c2a_logon_facebook), global::c2a_logon_facebook.Parser, new[]{ "FacebookId", "AccessToken" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::c2a_logon_super), global::c2a_logon_super.Parser, new[]{ "Username" }, null, null, null),
@@ -1040,6 +1041,7 @@ public sealed partial class a2c_logon_rep : pb::IMessage<a2c_logon_rep> {
     age_ = other.age_;
     isIdentified_ = other.isIdentified_;
     unlockTime_ = other.unlockTime_;
+    sessionKey_ = other.sessionKey_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -1160,6 +1162,20 @@ public sealed partial class a2c_logon_rep : pb::IMessage<a2c_logon_rep> {
     }
   }
 
+  /// <summary>Field number for the "session_key" field.</summary>
+  public const int SessionKeyFieldNumber = 9;
+  private string sessionKey_ = "";
+  /// <summary>
+  /// √‹‘ø
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string SessionKey {
+    get { return sessionKey_; }
+    set {
+      sessionKey_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
     return Equals(other as a2c_logon_rep);
@@ -1181,6 +1197,7 @@ public sealed partial class a2c_logon_rep : pb::IMessage<a2c_logon_rep> {
     if (Age != other.Age) return false;
     if (IsIdentified != other.IsIdentified) return false;
     if (UnlockTime != other.UnlockTime) return false;
+    if (SessionKey != other.SessionKey) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -1195,6 +1212,7 @@ public sealed partial class a2c_logon_rep : pb::IMessage<a2c_logon_rep> {
     if (Age != 0) hash ^= Age.GetHashCode();
     if (IsIdentified != false) hash ^= IsIdentified.GetHashCode();
     if (UnlockTime != 0L) hash ^= UnlockTime.GetHashCode();
+    if (SessionKey.Length != 0) hash ^= SessionKey.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -1240,6 +1258,10 @@ public sealed partial class a2c_logon_rep : pb::IMessage<a2c_logon_rep> {
       output.WriteRawTag(64);
       output.WriteInt64(UnlockTime);
     }
+    if (SessionKey.Length != 0) {
+      output.WriteRawTag(74);
+      output.WriteString(SessionKey);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -1271,6 +1293,9 @@ public sealed partial class a2c_logon_rep : pb::IMessage<a2c_logon_rep> {
     }
     if (UnlockTime != 0L) {
       size += 1 + pb::CodedOutputStream.ComputeInt64Size(UnlockTime);
+    }
+    if (SessionKey.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionKey);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -1306,6 +1331,9 @@ public sealed partial class a2c_logon_rep : pb::IMessage<a2c_logon_rep> {
     }
     if (other.UnlockTime != 0L) {
       UnlockTime = other.UnlockTime;
+    }
+    if (other.SessionKey.Length != 0) {
+      SessionKey = other.SessionKey;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -1348,6 +1376,10 @@ public sealed partial class a2c_logon_rep : pb::IMessage<a2c_logon_rep> {
         }
         case 64: {
           UnlockTime = input.ReadInt64();
+          break;
+        }
+        case 74: {
+          SessionKey = input.ReadString();
           break;
         }
       }
@@ -1855,6 +1887,7 @@ public sealed partial class c2a_logon_apple : pb::IMessage<c2a_logon_apple> {
   public c2a_logon_apple(c2a_logon_apple other) : this() {
     userIdentifier_ = other.userIdentifier_;
     identityToken_ = other.identityToken_;
+    sessionKey_ = other.sessionKey_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -1891,6 +1924,20 @@ public sealed partial class c2a_logon_apple : pb::IMessage<c2a_logon_apple> {
     }
   }
 
+  /// <summary>Field number for the "session_key" field.</summary>
+  public const int SessionKeyFieldNumber = 3;
+  private string sessionKey_ = "";
+  /// <summary>
+  /// √‹‘ø
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string SessionKey {
+    get { return sessionKey_; }
+    set {
+      sessionKey_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
     return Equals(other as c2a_logon_apple);
@@ -1906,6 +1953,7 @@ public sealed partial class c2a_logon_apple : pb::IMessage<c2a_logon_apple> {
     }
     if (UserIdentifier != other.UserIdentifier) return false;
     if (IdentityToken != other.IdentityToken) return false;
+    if (SessionKey != other.SessionKey) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -1914,6 +1962,7 @@ public sealed partial class c2a_logon_apple : pb::IMessage<c2a_logon_apple> {
     int hash = 1;
     if (UserIdentifier.Length != 0) hash ^= UserIdentifier.GetHashCode();
     if (IdentityToken.Length != 0) hash ^= IdentityToken.GetHashCode();
+    if (SessionKey.Length != 0) hash ^= SessionKey.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -1935,6 +1984,10 @@ public sealed partial class c2a_logon_apple : pb::IMessage<c2a_logon_apple> {
       output.WriteRawTag(18);
       output.WriteString(IdentityToken);
     }
+    if (SessionKey.Length != 0) {
+      output.WriteRawTag(26);
+      output.WriteString(SessionKey);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -1948,6 +2001,9 @@ public sealed partial class c2a_logon_apple : pb::IMessage<c2a_logon_apple> {
     }
     if (IdentityToken.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(IdentityToken);
+    }
+    if (SessionKey.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionKey);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -1966,6 +2022,9 @@ public sealed partial class c2a_logon_apple : pb::IMessage<c2a_logon_apple> {
     if (other.IdentityToken.Length != 0) {
       IdentityToken = other.IdentityToken;
     }
+    if (other.SessionKey.Length != 0) {
+      SessionKey = other.SessionKey;
+    }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
 
@@ -1983,6 +2042,10 @@ public sealed partial class c2a_logon_apple : pb::IMessage<c2a_logon_apple> {
         }
         case 18: {
           IdentityToken = input.ReadString();
+          break;
+        }
+        case 26: {
+          SessionKey = input.ReadString();
           break;
         }
       }

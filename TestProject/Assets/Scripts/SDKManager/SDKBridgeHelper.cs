@@ -19,7 +19,7 @@ namespace celia.game
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
 
 #elif UNITY_ANDROID
-            var unityPlayer = new AndroidJavaClass("com.elex.girlsthrone.tw.gp.MainActivity");
+            var unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
             currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
 #elif UNITY_IOS
            
@@ -38,8 +38,8 @@ namespace celia.game
 
 #elif UNITY_ANDROID
             //Android需要一个统一的接口
-            //currentActivity.Call("CallAndroidAPI",(int)type, jsonString);
-            currentActivity.Call(type.ToString(), jsonString);
+            currentActivity.Call("CallFromUnity",(int)type, jsonString);
+  
 #elif UNITY_IOS
            CallFromUnity((int)type,jsonString);
 #endif

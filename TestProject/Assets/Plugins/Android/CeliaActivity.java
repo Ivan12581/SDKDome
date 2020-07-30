@@ -214,14 +214,21 @@ public class CeliaActivity extends UnityPlayerActivity
     public void Login(String type)
     {
         ShowLog("Login...:" + type);
-        if (type == null || type == "Google")
-        {
-            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-            startActivityForResult(signInIntent, RC_GET_TOKEN);
-        }else{
-            appleSignIn.OpenWeb();
-        }
+        try {
+            int loginType = Integer.parseInt(type);
+            if (loginType == 3){//apple
+                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                startActivityForResult(signInIntent, RC_GET_TOKEN);
+            }else if (loginType == 4){//apple
+                appleSignIn.OpenWeb();
+            }else if (loginType == 5){//facebook
 
+            }
+        } catch (NumberFormatException e) {
+
+            e.printStackTrace();
+
+        }
     }
     public void Switch()
     {

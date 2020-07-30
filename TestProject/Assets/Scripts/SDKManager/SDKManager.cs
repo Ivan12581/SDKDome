@@ -43,7 +43,7 @@ namespace celia.game
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
             proxy = new SDKWindowsProxy();
 #elif UNITY_ANDROID
-            proxy = new SDKAndroidProxy();
+            //proxy = new SDKAndroidProxy();
 #elif UNITY_IOS
             //proxy = new SDKIosProxy();
             //SDKPay.gi.ApplePayInit();
@@ -336,23 +336,6 @@ namespace celia.game
             //    changingScene = false;
             //});
         }
-        
-#region 打点
-        /// <summary>
-        /// 设备阶段打点(上报数据)
-        /// </summary>
-        /// <param name="uploadType">步骤</param>
-        //public void UploadDeviceInfo(DeviceUpload uploadType)
-        //{
-        //    GetConfigInfo((state, dict) =>
-        //    {
-        //        if (state == 1)
-        //        {
-        //            //OpenApiManager.gi.UploadDeviceInfo(uploadType, dict["deviceID"], dict["cchID"]);
-        //        }
-        //    });
-        //}
-#endregion
     }
 
     // 该枚举与SDK接入层定义一致
