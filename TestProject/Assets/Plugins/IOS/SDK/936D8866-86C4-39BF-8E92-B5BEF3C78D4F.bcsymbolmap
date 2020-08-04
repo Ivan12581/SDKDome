@@ -1,0 +1,2676 @@
+BCSymbolMap Version: 2.0
++[ADJUserDefaults savePushTokenData:]
++[ADJUserDefaults savePushTokenString:]
++[ADJUserDefaults getPushTokenData]
++[ADJUserDefaults getPushTokenString]
++[ADJUserDefaults removePushToken]
++[ADJUserDefaults setInstallTracked]
++[ADJUserDefaults getInstallTracked]
++[ADJUserDefaults setGdprForgetMe]
++[ADJUserDefaults getGdprForgetMe]
++[ADJUserDefaults removeGdprForgetMe]
++[ADJUserDefaults saveDeeplinkUrl:andClickTime:]
++[ADJUserDefaults getDeeplinkUrl]
++[ADJUserDefaults getDeeplinkClickTime]
++[ADJUserDefaults removeDeeplink]
++[ADJUserDefaults setDisableThirdPartySharing]
++[ADJUserDefaults getDisableThirdPartySharing]
++[ADJUserDefaults removeDisableThirdPartySharing]
++[ADJUserDefaults saveiAdErrorKey:]
++[ADJUserDefaults getiAdErrors]
++[ADJUserDefaults cleariAdErrors]
++[ADJUserDefaults clearAdjustStuff]
+_OBJC_CLASSLIST_REFERENCES_$_
+_OBJC_SELECTOR_REFERENCES_
+_OBJC_SELECTOR_REFERENCES_.16
+_OBJC_SELECTOR_REFERENCES_.18
+_OBJC_SELECTOR_REFERENCES_.20
+_OBJC_SELECTOR_REFERENCES_.22
+_OBJC_SELECTOR_REFERENCES_.24
+_OBJC_SELECTOR_REFERENCES_.26
+_OBJC_SELECTOR_REFERENCES_.28
+_OBJC_SELECTOR_REFERENCES_.30
+_OBJC_SELECTOR_REFERENCES_.32
+_OBJC_SELECTOR_REFERENCES_.34
+_OBJC_CLASSLIST_REFERENCES_$_.35
+_OBJC_SELECTOR_REFERENCES_.37
+_OBJC_SELECTOR_REFERENCES_.39
+_OBJC_SELECTOR_REFERENCES_.41
+__OBJC_$_CLASS_METHODS_ADJUserDefaults
+__OBJC_METACLASS_RO_$_ADJUserDefaults
+__OBJC_CLASS_RO_$_ADJUserDefaults
+_OBJC_LABEL_CLASS_$
+-[NSData(ADJAdditions) adjEncodeBase64]
+_OBJC_SELECTOR_REFERENCES_.2
+__base64EncodingTable
+_OBJC_SELECTOR_REFERENCES_.4
+__OBJC_$_CATEGORY_INSTANCE_METHODS_NSData_$_ADJAdditions
+__OBJC_$_CATEGORY_NSData_$_ADJAdditions
+_OBJC_LABEL_CATEGORY_$
+-[NSString(ADJAdditions) adjTrim]
+-[NSString(ADJAdditions) adjUrlEncode]
+-[NSString(ADJAdditions) adjUrlDecode]
+-[NSString(ADJAdditions) adjRemoveColons]
+-[NSString(ADJAdditions) adjMd5]
+-[NSString(ADJAdditions) adjSha1]
+-[NSString(ADJAdditions) adjSha256]
++[NSString(ADJAdditions) adjJoin:]
++[NSString(ADJAdditions) adjIsEqual:toString:]
+_OBJC_SELECTOR_REFERENCES_.8
+_OBJC_SELECTOR_REFERENCES_.10
+_OBJC_CLASSLIST_REFERENCES_$_.11
+_OBJC_SELECTOR_REFERENCES_.13
+_OBJC_SELECTOR_REFERENCES_.17
+_OBJC_SELECTOR_REFERENCES_.19
+_OBJC_SELECTOR_REFERENCES_.21
+_OBJC_SELECTOR_REFERENCES_.23
+_OBJC_SELECTOR_REFERENCES_.25
+_OBJC_SELECTOR_REFERENCES_.27
+_OBJC_SELECTOR_REFERENCES_.29
+__OBJC_$_CATEGORY_INSTANCE_METHODS_NSString_$_ADJAdditions
+__OBJC_$_CATEGORY_CLASS_METHODS_NSString_$_ADJAdditions
+__OBJC_$_CATEGORY_NSString_$_ADJAdditions
+-[UIDevice(ADJAdditions) adjTrackingEnabled]
+-[UIDevice(ADJAdditions) adjIdForAdvertisers]
+-[UIDevice(ADJAdditions) adjFbAnonymousId]
+-[UIDevice(ADJAdditions) adjDeviceType]
+-[UIDevice(ADJAdditions) adjDeviceName]
+-[UIDevice(ADJAdditions) adjCreateUuid]
+-[UIDevice(ADJAdditions) adjVendorId]
+-[UIDevice(ADJAdditions) adjCheckForiAd:queue:]
+-[UIDevice(ADJAdditions) setiAdWithDetails:adcClientSharedInstance:queue:]
+___74-[UIDevice(ADJAdditions) setiAdWithDetails:adcClientSharedInstance:queue:]_block_invoke
+___copy_helper_block_e4_20s24r28r
+___destroy_helper_block_e4_20s24r28r
+___74-[UIDevice(ADJAdditions) setiAdWithDetails:adcClientSharedInstance:queue:]_block_invoke.86
+_OBJC_SELECTOR_REFERENCES_.12
+_OBJC_SELECTOR_REFERENCES_.38
+_OBJC_SELECTOR_REFERENCES_.43
+_OBJC_CLASSLIST_REFERENCES_$_.44
+_OBJC_SELECTOR_REFERENCES_.46
+_OBJC_SELECTOR_REFERENCES_.48
+_OBJC_SELECTOR_REFERENCES_.50
+_OBJC_CLASSLIST_REFERENCES_$_.51
+_OBJC_SELECTOR_REFERENCES_.53
+_OBJC_SELECTOR_REFERENCES_.57
+_OBJC_SELECTOR_REFERENCES_.63
+_OBJC_SELECTOR_REFERENCES_.73
+_OBJC_CLASSLIST_REFERENCES_$_.78
+_OBJC_SELECTOR_REFERENCES_.80
+_OBJC_SELECTOR_REFERENCES_.82
+___block_descriptor_32_e4_20s24r28r_e33_v12?0"NSDictionary"4"NSError"8l
+_OBJC_SELECTOR_REFERENCES_.85
+_OBJC_CLASSLIST_REFERENCES_$_.87
+_OBJC_CLASSLIST_REFERENCES_$_.94
+_OBJC_SELECTOR_REFERENCES_.96
+_OBJC_SELECTOR_REFERENCES_.98
+___block_descriptor_32_e4_20s24r28r_e5_v4?0l
+__OBJC_$_CATEGORY_INSTANCE_METHODS_UIDevice_$_ADJAdditions
+__OBJC_$_CATEGORY_UIDevice_$_ADJAdditions
+-[AdjustTestOptions baseUrl]
+-[AdjustTestOptions setBaseUrl:]
+-[AdjustTestOptions gdprUrl]
+-[AdjustTestOptions setGdprUrl:]
+-[AdjustTestOptions subscriptionUrl]
+-[AdjustTestOptions setSubscriptionUrl:]
+-[AdjustTestOptions extraPath]
+-[AdjustTestOptions setExtraPath:]
+-[AdjustTestOptions timerIntervalInMilliseconds]
+-[AdjustTestOptions setTimerIntervalInMilliseconds:]
+-[AdjustTestOptions timerStartInMilliseconds]
+-[AdjustTestOptions setTimerStartInMilliseconds:]
+-[AdjustTestOptions sessionIntervalInMilliseconds]
+-[AdjustTestOptions setSessionIntervalInMilliseconds:]
+-[AdjustTestOptions subsessionIntervalInMilliseconds]
+-[AdjustTestOptions setSubsessionIntervalInMilliseconds:]
+-[AdjustTestOptions teardown]
+-[AdjustTestOptions setTeardown:]
+-[AdjustTestOptions deleteState]
+-[AdjustTestOptions setDeleteState:]
+-[AdjustTestOptions noBackoffWait]
+-[AdjustTestOptions setNoBackoffWait:]
+-[AdjustTestOptions iAdFrameworkEnabled]
+-[AdjustTestOptions setIAdFrameworkEnabled:]
+-[AdjustTestOptions enableSigning]
+-[AdjustTestOptions setEnableSigning:]
+-[AdjustTestOptions disableSigning]
+-[AdjustTestOptions setDisableSigning:]
+-[AdjustTestOptions .cxx_destruct]
++[Adjust getInstance]
+___21+[Adjust getInstance]_block_invoke
+___copy_helper_block_e4_
+___destroy_helper_block_e4_
+-[Adjust init]
++[Adjust appDidLaunch:]
++[Adjust trackEvent:]
++[Adjust trackSubsessionStart]
++[Adjust trackSubsessionEnd]
++[Adjust setEnabled:]
++[Adjust isEnabled]
++[Adjust appWillOpenUrl:]
++[Adjust setDeviceToken:]
++[Adjust setPushToken:]
++[Adjust setOfflineMode:]
++[Adjust sendAdWordsRequest]
++[Adjust idfa]
++[Adjust sdkVersion]
++[Adjust convertUniversalLink:scheme:]
++[Adjust sendFirstPackages]
++[Adjust addSessionCallbackParameter:value:]
++[Adjust addSessionPartnerParameter:value:]
++[Adjust removeSessionCallbackParameter:]
++[Adjust removeSessionPartnerParameter:]
++[Adjust resetSessionCallbackParameters]
++[Adjust resetSessionPartnerParameters]
++[Adjust gdprForgetMe]
++[Adjust trackAdRevenue:payload:]
++[Adjust disableThirdPartySharing]
++[Adjust trackSubscription:]
++[Adjust attribution]
++[Adjust adid]
++[Adjust setTestOptions:]
+-[Adjust appDidLaunch:]
+-[Adjust trackEvent:]
+-[Adjust trackSubsessionStart]
+-[Adjust trackSubsessionEnd]
+-[Adjust setEnabled:]
+-[Adjust isEnabled]
+-[Adjust appWillOpenUrl:]
+-[Adjust setDeviceToken:]
+-[Adjust setPushToken:]
+-[Adjust setOfflineMode:]
+-[Adjust idfa]
+-[Adjust convertUniversalLink:scheme:]
+-[Adjust sendFirstPackages]
+-[Adjust addSessionCallbackParameter:value:]
+___44-[Adjust addSessionCallbackParameter:value:]_block_invoke
+___copy_helper_block_e4_20s24s
+___destroy_helper_block_e4_20s24s
+-[Adjust addSessionPartnerParameter:value:]
+___43-[Adjust addSessionPartnerParameter:value:]_block_invoke
+-[Adjust removeSessionCallbackParameter:]
+___41-[Adjust removeSessionCallbackParameter:]_block_invoke
+___copy_helper_block_e4_20s
+___destroy_helper_block_e4_20s
+-[Adjust removeSessionPartnerParameter:]
+___40-[Adjust removeSessionPartnerParameter:]_block_invoke
+-[Adjust resetSessionCallbackParameters]
+___40-[Adjust resetSessionCallbackParameters]_block_invoke
+-[Adjust resetSessionPartnerParameters]
+___39-[Adjust resetSessionPartnerParameters]_block_invoke
+-[Adjust gdprForgetMe]
+-[Adjust trackAdRevenue:payload:]
+-[Adjust disableThirdPartySharing]
+-[Adjust trackSubscription:]
+-[Adjust attribution]
+-[Adjust adid]
+-[Adjust sdkVersion]
+-[Adjust teardown]
+-[Adjust setTestOptions:]
+-[Adjust checkActivityHandler]
+-[Adjust checkActivityHandler:trueMessage:falseMessage:]
+-[Adjust checkActivityHandler:]
+-[Adjust isInstanceEnabled]
+-[Adjust logger]
+-[Adjust setLogger:]
+-[Adjust activityHandler]
+-[Adjust setActivityHandler:]
+-[Adjust savedPreLaunch]
+-[Adjust setSavedPreLaunch:]
+-[Adjust .cxx_destruct]
+__OBJC_METACLASS_RO_$_AdjustTestOptions
+__OBJC_$_INSTANCE_METHODS_AdjustTestOptions
+_OBJC_IVAR_$_AdjustTestOptions._teardown
+_OBJC_IVAR_$_AdjustTestOptions._deleteState
+_OBJC_IVAR_$_AdjustTestOptions._noBackoffWait
+_OBJC_IVAR_$_AdjustTestOptions._iAdFrameworkEnabled
+_OBJC_IVAR_$_AdjustTestOptions._enableSigning
+_OBJC_IVAR_$_AdjustTestOptions._disableSigning
+_OBJC_IVAR_$_AdjustTestOptions._baseUrl
+_OBJC_IVAR_$_AdjustTestOptions._gdprUrl
+_OBJC_IVAR_$_AdjustTestOptions._subscriptionUrl
+_OBJC_IVAR_$_AdjustTestOptions._extraPath
+_OBJC_IVAR_$_AdjustTestOptions._timerIntervalInMilliseconds
+_OBJC_IVAR_$_AdjustTestOptions._timerStartInMilliseconds
+_OBJC_IVAR_$_AdjustTestOptions._sessionIntervalInMilliseconds
+_OBJC_IVAR_$_AdjustTestOptions._subsessionIntervalInMilliseconds
+__OBJC_$_INSTANCE_VARIABLES_AdjustTestOptions
+__OBJC_$_PROP_LIST_AdjustTestOptions
+__OBJC_CLASS_RO_$_AdjustTestOptions
+_defaultInstance
+_onceToken
+___block_descriptor_24_e4__e5_v4?0l
+_OBJC_CLASSLIST_SUP_REFS_$_
+_OBJC_SELECTOR_REFERENCES_.120
+_OBJC_SELECTOR_REFERENCES_.122
+_OBJC_SELECTOR_REFERENCES_.124
+_OBJC_CLASSLIST_REFERENCES_$_.125
+_OBJC_SELECTOR_REFERENCES_.127
+_OBJC_CLASSLIST_REFERENCES_$_.128
+_OBJC_SELECTOR_REFERENCES_.130
+_OBJC_SELECTOR_REFERENCES_.132
+_OBJC_SELECTOR_REFERENCES_.134
+_OBJC_SELECTOR_REFERENCES_.136
+_OBJC_SELECTOR_REFERENCES_.138
+_OBJC_SELECTOR_REFERENCES_.140
+_OBJC_SELECTOR_REFERENCES_.142
+_OBJC_SELECTOR_REFERENCES_.144
+_OBJC_SELECTOR_REFERENCES_.146
+_OBJC_SELECTOR_REFERENCES_.148
+_OBJC_SELECTOR_REFERENCES_.150
+_OBJC_SELECTOR_REFERENCES_.152
+_OBJC_SELECTOR_REFERENCES_.156
+_OBJC_SELECTOR_REFERENCES_.158
+_OBJC_SELECTOR_REFERENCES_.160
+_OBJC_SELECTOR_REFERENCES_.162
+_OBJC_SELECTOR_REFERENCES_.164
+_OBJC_SELECTOR_REFERENCES_.166
+_OBJC_SELECTOR_REFERENCES_.168
+_OBJC_SELECTOR_REFERENCES_.170
+_OBJC_SELECTOR_REFERENCES_.172
+_OBJC_SELECTOR_REFERENCES_.174
+_OBJC_SELECTOR_REFERENCES_.176
+_OBJC_SELECTOR_REFERENCES_.178
+_OBJC_SELECTOR_REFERENCES_.180
+_OBJC_SELECTOR_REFERENCES_.182
+_OBJC_SELECTOR_REFERENCES_.184
+_OBJC_SELECTOR_REFERENCES_.186
+_OBJC_SELECTOR_REFERENCES_.188
+_OBJC_SELECTOR_REFERENCES_.189
+_OBJC_SELECTOR_REFERENCES_.190
+_OBJC_SELECTOR_REFERENCES_.192
+_OBJC_SELECTOR_REFERENCES_.194
+_OBJC_SELECTOR_REFERENCES_.196
+_OBJC_SELECTOR_REFERENCES_.200
+_OBJC_CLASSLIST_REFERENCES_$_.201
+_OBJC_SELECTOR_REFERENCES_.203
+_OBJC_SELECTOR_REFERENCES_.205
+_OBJC_SELECTOR_REFERENCES_.207
+_OBJC_SELECTOR_REFERENCES_.209
+_OBJC_SELECTOR_REFERENCES_.211
+_OBJC_CLASSLIST_REFERENCES_$_.212
+_OBJC_SELECTOR_REFERENCES_.214
+_OBJC_SELECTOR_REFERENCES_.220
+_OBJC_SELECTOR_REFERENCES_.222
+_OBJC_CLASSLIST_REFERENCES_$_.223
+_OBJC_SELECTOR_REFERENCES_.225
+_OBJC_CLASSLIST_REFERENCES_$_.226
+_OBJC_SELECTOR_REFERENCES_.228
+_OBJC_SELECTOR_REFERENCES_.230
+_OBJC_SELECTOR_REFERENCES_.232
+_OBJC_SELECTOR_REFERENCES_.236
+_OBJC_SELECTOR_REFERENCES_.238
+_OBJC_SELECTOR_REFERENCES_.244
+_OBJC_CLASSLIST_REFERENCES_$_.245
+_OBJC_SELECTOR_REFERENCES_.249
+_OBJC_CLASSLIST_REFERENCES_$_.250
+_OBJC_SELECTOR_REFERENCES_.252
+_OBJC_SELECTOR_REFERENCES_.254
+___block_descriptor_28_e4_20s24s_e27_v8?0"ADJActivityHandler"4l
+_OBJC_SELECTOR_REFERENCES_.257
+_OBJC_SELECTOR_REFERENCES_.261
+_OBJC_SELECTOR_REFERENCES_.265
+___block_descriptor_24_e4_20s_e27_v8?0"ADJActivityHandler"4l
+_OBJC_SELECTOR_REFERENCES_.269
+___block_descriptor_20_e27_v8?0"ADJActivityHandler"4l
+___block_literal_global
+_OBJC_SELECTOR_REFERENCES_.273
+___block_literal_global.276
+_OBJC_SELECTOR_REFERENCES_.278
+_OBJC_SELECTOR_REFERENCES_.280
+_OBJC_SELECTOR_REFERENCES_.286
+_OBJC_SELECTOR_REFERENCES_.289
+_OBJC_SELECTOR_REFERENCES_.290
+_OBJC_SELECTOR_REFERENCES_.291
+_OBJC_SELECTOR_REFERENCES_.292
+_OBJC_SELECTOR_REFERENCES_.293
+_OBJC_SELECTOR_REFERENCES_.294
+_OBJC_SELECTOR_REFERENCES_.295
+_OBJC_SELECTOR_REFERENCES_.296
+_OBJC_SELECTOR_REFERENCES_.297
+_OBJC_SELECTOR_REFERENCES_.299
+_OBJC_SELECTOR_REFERENCES_.301
+_OBJC_SELECTOR_REFERENCES_.302
+_OBJC_SELECTOR_REFERENCES_.304
+_OBJC_SELECTOR_REFERENCES_.305
+_OBJC_SELECTOR_REFERENCES_.307
+_OBJC_SELECTOR_REFERENCES_.308
+_OBJC_SELECTOR_REFERENCES_.310
+_OBJC_SELECTOR_REFERENCES_.311
+_OBJC_CLASSLIST_REFERENCES_$_.312
+_OBJC_SELECTOR_REFERENCES_.314
+_OBJC_SELECTOR_REFERENCES_.316
+_OBJC_SELECTOR_REFERENCES_.318
+_OBJC_SELECTOR_REFERENCES_.319
+_OBJC_SELECTOR_REFERENCES_.320
+_OBJC_SELECTOR_REFERENCES_.321
+_OBJC_SELECTOR_REFERENCES_.323
+_OBJC_SELECTOR_REFERENCES_.329
+__OBJC_$_CLASS_METHODS_Adjust
+__OBJC_METACLASS_RO_$_Adjust
+__OBJC_$_INSTANCE_METHODS_Adjust
+_OBJC_IVAR_$_Adjust._logger
+_OBJC_IVAR_$_Adjust._activityHandler
+_OBJC_IVAR_$_Adjust._savedPreLaunch
+__OBJC_$_INSTANCE_VARIABLES_Adjust
+__OBJC_$_PROP_LIST_Adjust
+__OBJC_CLASS_RO_$_Adjust
+-[ADJInternalState init]
+-[ADJInternalState isEnabled]
+-[ADJInternalState isDisabled]
+-[ADJInternalState isOffline]
+-[ADJInternalState isOnline]
+-[ADJInternalState isInBackground]
+-[ADJInternalState isInForeground]
+-[ADJInternalState isInDelayedStart]
+-[ADJInternalState isNotInDelayedStart]
+-[ADJInternalState itHasToUpdatePackages]
+-[ADJInternalState isFirstLaunch]
+-[ADJInternalState hasSessionResponseNotBeenProcessed]
+-[ADJInternalState enabled]
+-[ADJInternalState setEnabled:]
+-[ADJInternalState offline]
+-[ADJInternalState setOffline:]
+-[ADJInternalState background]
+-[ADJInternalState setBackground:]
+-[ADJInternalState delayStart]
+-[ADJInternalState setDelayStart:]
+-[ADJInternalState updatePackages]
+-[ADJInternalState setUpdatePackages:]
+-[ADJInternalState firstLaunch]
+-[ADJInternalState setFirstLaunch:]
+-[ADJInternalState sessionResponseProcessed]
+-[ADJInternalState setSessionResponseProcessed:]
+-[ADJSavedPreLaunch init]
+-[ADJSavedPreLaunch preLaunchActionsArray]
+-[ADJSavedPreLaunch setPreLaunchActionsArray:]
+-[ADJSavedPreLaunch deviceTokenData]
+-[ADJSavedPreLaunch setDeviceTokenData:]
+-[ADJSavedPreLaunch enabled]
+-[ADJSavedPreLaunch setEnabled:]
+-[ADJSavedPreLaunch offline]
+-[ADJSavedPreLaunch setOffline:]
+-[ADJSavedPreLaunch extraPath]
+-[ADJSavedPreLaunch setExtraPath:]
+-[ADJSavedPreLaunch .cxx_destruct]
+-[ADJActivityHandler initWithConfig:savedPreLaunch:]
+___52-[ADJActivityHandler initWithConfig:savedPreLaunch:]_block_invoke
+___52-[ADJActivityHandler initWithConfig:savedPreLaunch:]_block_invoke.153
+___52-[ADJActivityHandler initWithConfig:savedPreLaunch:]_block_invoke_2
+-[ADJActivityHandler applicationDidBecomeActive]
+___48-[ADJActivityHandler applicationDidBecomeActive]_block_invoke
+-[ADJActivityHandler applicationWillResignActive]
+___49-[ADJActivityHandler applicationWillResignActive]_block_invoke
+-[ADJActivityHandler trackEvent:]
+___33-[ADJActivityHandler trackEvent:]_block_invoke
+-[ADJActivityHandler finishedTracking:]
+-[ADJActivityHandler launchEventResponseTasks:]
+___47-[ADJActivityHandler launchEventResponseTasks:]_block_invoke
+-[ADJActivityHandler launchSessionResponseTasks:]
+___49-[ADJActivityHandler launchSessionResponseTasks:]_block_invoke
+-[ADJActivityHandler launchSdkClickResponseTasks:]
+___50-[ADJActivityHandler launchSdkClickResponseTasks:]_block_invoke
+-[ADJActivityHandler launchAttributionResponseTasks:]
+___53-[ADJActivityHandler launchAttributionResponseTasks:]_block_invoke
+-[ADJActivityHandler setEnabled:]
+___33-[ADJActivityHandler setEnabled:]_block_invoke
+-[ADJActivityHandler setOfflineMode:]
+___37-[ADJActivityHandler setOfflineMode:]_block_invoke
+-[ADJActivityHandler isEnabled]
+-[ADJActivityHandler isGdprForgotten]
+-[ADJActivityHandler adid]
+-[ADJActivityHandler appWillOpenUrl:withClickTime:]
+___51-[ADJActivityHandler appWillOpenUrl:withClickTime:]_block_invoke
+-[ADJActivityHandler setDeviceToken:]
+___37-[ADJActivityHandler setDeviceToken:]_block_invoke
+-[ADJActivityHandler setPushToken:]
+___35-[ADJActivityHandler setPushToken:]_block_invoke
+-[ADJActivityHandler setGdprForgetMe]
+___37-[ADJActivityHandler setGdprForgetMe]_block_invoke
+-[ADJActivityHandler setTrackingStateOptedOut]
+___46-[ADJActivityHandler setTrackingStateOptedOut]_block_invoke
+-[ADJActivityHandler setAttributionDetails:error:]
+___50-[ADJActivityHandler setAttributionDetails:error:]_block_invoke
+___50-[ADJActivityHandler setAttributionDetails:error:]_block_invoke_2
+___50-[ADJActivityHandler setAttributionDetails:error:]_block_invoke_3
+-[ADJActivityHandler saveiAdErrorCode:]
+-[ADJActivityHandler sendIad3ClickPackage:attributionDetails:]
+___62-[ADJActivityHandler sendIad3ClickPackage:attributionDetails:]_block_invoke
+___copy_helper_block_e8_20s
+___destroy_helper_block_e8_20s
+-[ADJActivityHandler saveAttributionDetailsI:attributionDetails:]
+___65-[ADJActivityHandler saveAttributionDetailsI:attributionDetails:]_block_invoke
+-[ADJActivityHandler setAskingAttribution:]
+___43-[ADJActivityHandler setAskingAttribution:]_block_invoke
+-[ADJActivityHandler foregroundTimerFired]
+___42-[ADJActivityHandler foregroundTimerFired]_block_invoke
+-[ADJActivityHandler backgroundTimerFired]
+___42-[ADJActivityHandler backgroundTimerFired]_block_invoke
+-[ADJActivityHandler sendFirstPackages]
+___39-[ADJActivityHandler sendFirstPackages]_block_invoke
+-[ADJActivityHandler addSessionCallbackParameter:value:]
+___56-[ADJActivityHandler addSessionCallbackParameter:value:]_block_invoke
+-[ADJActivityHandler addSessionPartnerParameter:value:]
+___55-[ADJActivityHandler addSessionPartnerParameter:value:]_block_invoke
+-[ADJActivityHandler removeSessionCallbackParameter:]
+___53-[ADJActivityHandler removeSessionCallbackParameter:]_block_invoke
+-[ADJActivityHandler removeSessionPartnerParameter:]
+___52-[ADJActivityHandler removeSessionPartnerParameter:]_block_invoke
+-[ADJActivityHandler resetSessionCallbackParameters]
+___52-[ADJActivityHandler resetSessionCallbackParameters]_block_invoke
+-[ADJActivityHandler resetSessionPartnerParameters]
+___51-[ADJActivityHandler resetSessionPartnerParameters]_block_invoke
+-[ADJActivityHandler trackAdRevenue:payload:]
+___45-[ADJActivityHandler trackAdRevenue:payload:]_block_invoke
+-[ADJActivityHandler trackSubscription:]
+___40-[ADJActivityHandler trackSubscription:]_block_invoke
+-[ADJActivityHandler disableThirdPartySharing]
+___46-[ADJActivityHandler disableThirdPartySharing]_block_invoke
+-[ADJActivityHandler getBasePath]
+-[ADJActivityHandler getGdprPath]
+-[ADJActivityHandler getSubscriptionPath]
+-[ADJActivityHandler teardown]
++[ADJActivityHandler deleteState]
++[ADJActivityHandler deleteActivityState]
++[ADJActivityHandler deleteAttribution]
++[ADJActivityHandler deleteSessionCallbackParameter]
++[ADJActivityHandler deleteSessionPartnerParameter]
+-[ADJActivityHandler initI:preLaunchActions:]
+___45-[ADJActivityHandler initI:preLaunchActions:]_block_invoke
+___45-[ADJActivityHandler initI:preLaunchActions:]_block_invoke_2
+___45-[ADJActivityHandler initI:preLaunchActions:]_block_invoke_3
+___45-[ADJActivityHandler initI:preLaunchActions:]_block_invoke_4
+___45-[ADJActivityHandler initI:preLaunchActions:]_block_invoke_5
+-[ADJActivityHandler startI:]
+-[ADJActivityHandler processSessionI:]
+___38-[ADJActivityHandler processSessionI:]_block_invoke
+___copy_helper_block_e4_20s24s28s
+___destroy_helper_block_e4_20s24s28s
+___38-[ADJActivityHandler processSessionI:]_block_invoke.504
+___38-[ADJActivityHandler processSessionI:]_block_invoke_2
+___38-[ADJActivityHandler processSessionI:]_block_invoke_3
+___38-[ADJActivityHandler processSessionI:]_block_invoke_4
+-[ADJActivityHandler trackNewSessionI:withActivityHandler:]
+___59-[ADJActivityHandler trackNewSessionI:withActivityHandler:]_block_invoke
+___59-[ADJActivityHandler trackNewSessionI:withActivityHandler:]_block_invoke_2
+-[ADJActivityHandler transferSessionPackageI:now:]
+-[ADJActivityHandler checkAttributionStateI:]
+-[ADJActivityHandler processCachedDeeplinkI:]
+-[ADJActivityHandler endI:]
+-[ADJActivityHandler eventI:event:]
+___35-[ADJActivityHandler eventI:event:]_block_invoke
+-[ADJActivityHandler adRevenueI:source:payload:]
+-[ADJActivityHandler trackSubscriptionI:subscription:]
+-[ADJActivityHandler disableThirdPartySharingI:]
+___48-[ADJActivityHandler disableThirdPartySharingI:]_block_invoke
+-[ADJActivityHandler launchEventResponseTasksI:eventResponseData:]
+-[ADJActivityHandler launchSessionResponseTasksI:sessionResponseData:]
+-[ADJActivityHandler launchSdkClickResponseTasksI:sdkClickResponseData:]
+-[ADJActivityHandler launchAttributionResponseTasksI:attributionResponseData:]
+-[ADJActivityHandler prepareDeeplinkI:responseData:]
+___52-[ADJActivityHandler prepareDeeplinkI:responseData:]_block_invoke
+-[ADJActivityHandler updateAdidI:adid:]
+___39-[ADJActivityHandler updateAdidI:adid:]_block_invoke
+-[ADJActivityHandler updateAttributionI:attribution:]
+-[ADJActivityHandler setEnabledI:enabled:]
+___42-[ADJActivityHandler setEnabledI:enabled:]_block_invoke
+-[ADJActivityHandler checkForiAdI:]
+-[ADJActivityHandler setOfflineModeI:offline:]
+-[ADJActivityHandler hasChangedStateI:previousState:nextState:trueMessage:falseMessage:]
+-[ADJActivityHandler checkStatusI:pausingState:pausingMessage:remainsPausedMessage:unPausingMessage:]
+-[ADJActivityHandler appWillOpenUrlI:url:clickTime:]
+___52-[ADJActivityHandler appWillOpenUrlI:url:clickTime:]_block_invoke
+-[ADJActivityHandler readDeeplinkQueryStringI:queryString:adjustDeepLinks:attribution:]
+-[ADJActivityHandler trySetAttributionDeeplink:withKey:withValue:]
+-[ADJActivityHandler setDeviceTokenI:deviceToken:]
+___50-[ADJActivityHandler setDeviceTokenI:deviceToken:]_block_invoke
+-[ADJActivityHandler setPushTokenI:pushToken:]
+___46-[ADJActivityHandler setPushTokenI:pushToken:]_block_invoke
+-[ADJActivityHandler setGdprForgetMeI:]
+___39-[ADJActivityHandler setGdprForgetMeI:]_block_invoke
+-[ADJActivityHandler setTrackingStateOptedOutI:]
+___48-[ADJActivityHandler setTrackingStateOptedOutI:]_block_invoke
+-[ADJActivityHandler isEnabledI:]
+-[ADJActivityHandler isGdprForgottenI:]
+-[ADJActivityHandler itHasToUpdatePackagesI:]
+-[ADJActivityHandler updateActivityStateI:now:]
+___47-[ADJActivityHandler updateActivityStateI:now:]_block_invoke
+___47-[ADJActivityHandler updateActivityStateI:now:]_block_invoke_2
+-[ADJActivityHandler writeActivityStateI:]
+___42-[ADJActivityHandler writeActivityStateI:]_block_invoke
+-[ADJActivityHandler teardownActivityStateS]
+-[ADJActivityHandler writeAttributionI:]
+-[ADJActivityHandler teardownAttributionS]
+-[ADJActivityHandler readActivityState]
+___39-[ADJActivityHandler readActivityState]_block_invoke
+-[ADJActivityHandler readAttribution]
+-[ADJActivityHandler writeSessionCallbackParametersI:]
+-[ADJActivityHandler writeSessionPartnerParametersI:]
+-[ADJActivityHandler teardownAllSessionParametersS]
+-[ADJActivityHandler readSessionCallbackParametersI:]
+-[ADJActivityHandler readSessionPartnerParametersI:]
+-[ADJActivityHandler updateHandlersStatusAndSendI:]
+-[ADJActivityHandler pauseSendingI:]
+-[ADJActivityHandler resumeSendingI:]
+-[ADJActivityHandler pausedI:]
+-[ADJActivityHandler pausedI:sdkClickHandlerOnly:]
+-[ADJActivityHandler toSendI:]
+-[ADJActivityHandler toSendI:sdkClickHandlerOnly:]
+-[ADJActivityHandler setAskingAttributionI:askingAttribution:]
+___62-[ADJActivityHandler setAskingAttributionI:askingAttribution:]_block_invoke
+-[ADJActivityHandler startForegroundTimerI:]
+-[ADJActivityHandler stopForegroundTimerI:]
+-[ADJActivityHandler foregroundTimerFiredI:]
+-[ADJActivityHandler startBackgroundTimerI:]
+-[ADJActivityHandler stopBackgroundTimerI:]
+-[ADJActivityHandler backgroundTimerFiredI:]
+-[ADJActivityHandler delayStartI:]
+___34-[ADJActivityHandler delayStartI:]_block_invoke
+-[ADJActivityHandler sendFirstPackagesI:]
+-[ADJActivityHandler updatePackagesI:]
+___38-[ADJActivityHandler updatePackagesI:]_block_invoke
+-[ADJActivityHandler addSessionCallbackParameterI:key:value:]
+-[ADJActivityHandler addSessionPartnerParameterI:key:value:]
+-[ADJActivityHandler removeSessionCallbackParameterI:key:]
+-[ADJActivityHandler removeSessionPartnerParameterI:key:]
+-[ADJActivityHandler resetSessionCallbackParametersI:]
+-[ADJActivityHandler resetSessionPartnerParametersI:]
+-[ADJActivityHandler preLaunchActionsI:preLaunchActionsArray:]
+-[ADJActivityHandler addNotificationObserver]
+-[ADJActivityHandler removeNotificationObserver]
+-[ADJActivityHandler checkTransactionIdI:transactionId:]
+-[ADJActivityHandler checkEventI:event:]
+-[ADJActivityHandler checkActivityStateI:]
+-[ADJActivityHandler attribution]
+-[ADJActivityHandler setAttribution:]
+-[ADJActivityHandler internalQueue]
+-[ADJActivityHandler setInternalQueue:]
+-[ADJActivityHandler packageHandler]
+-[ADJActivityHandler setPackageHandler:]
+-[ADJActivityHandler attributionHandler]
+-[ADJActivityHandler setAttributionHandler:]
+-[ADJActivityHandler sdkClickHandler]
+-[ADJActivityHandler setSdkClickHandler:]
+-[ADJActivityHandler activityState]
+-[ADJActivityHandler setActivityState:]
+-[ADJActivityHandler foregroundTimer]
+-[ADJActivityHandler setForegroundTimer:]
+-[ADJActivityHandler backgroundTimer]
+-[ADJActivityHandler setBackgroundTimer:]
+-[ADJActivityHandler iAdRetriesLeft]
+-[ADJActivityHandler setIAdRetriesLeft:]
+-[ADJActivityHandler internalState]
+-[ADJActivityHandler setInternalState:]
+-[ADJActivityHandler deviceInfo]
+-[ADJActivityHandler setDeviceInfo:]
+-[ADJActivityHandler delayStartTimer]
+-[ADJActivityHandler setDelayStartTimer:]
+-[ADJActivityHandler sessionParameters]
+-[ADJActivityHandler setSessionParameters:]
+-[ADJActivityHandler logger]
+-[ADJActivityHandler setLogger:]
+-[ADJActivityHandler adjustDelegate]
+-[ADJActivityHandler setAdjustDelegate:]
+-[ADJActivityHandler adjustConfig]
+-[ADJActivityHandler setAdjustConfig:]
+-[ADJActivityHandler deviceTokenData]
+-[ADJActivityHandler setDeviceTokenData:]
+-[ADJActivityHandler basePath]
+-[ADJActivityHandler setBasePath:]
+-[ADJActivityHandler gdprPath]
+-[ADJActivityHandler setGdprPath:]
+-[ADJActivityHandler subscriptionPath]
+-[ADJActivityHandler setSubscriptionPath:]
+-[ADJActivityHandler .cxx_destruct]
+__OBJC_METACLASS_RO_$_ADJInternalState
+__OBJC_$_INSTANCE_METHODS_ADJInternalState
+_OBJC_IVAR_$_ADJInternalState._enabled
+_OBJC_IVAR_$_ADJInternalState._offline
+_OBJC_IVAR_$_ADJInternalState._background
+_OBJC_IVAR_$_ADJInternalState._delayStart
+_OBJC_IVAR_$_ADJInternalState._updatePackages
+_OBJC_IVAR_$_ADJInternalState._firstLaunch
+_OBJC_IVAR_$_ADJInternalState._sessionResponseProcessed
+__OBJC_$_INSTANCE_VARIABLES_ADJInternalState
+__OBJC_$_PROP_LIST_ADJInternalState
+__OBJC_CLASS_RO_$_ADJInternalState
+_OBJC_CLASSLIST_SUP_REFS_$_.72
+__OBJC_METACLASS_RO_$_ADJSavedPreLaunch
+__OBJC_$_INSTANCE_METHODS_ADJSavedPreLaunch
+_OBJC_IVAR_$_ADJSavedPreLaunch._offline
+_OBJC_IVAR_$_ADJSavedPreLaunch._preLaunchActionsArray
+_OBJC_IVAR_$_ADJSavedPreLaunch._deviceTokenData
+_OBJC_IVAR_$_ADJSavedPreLaunch._enabled
+_OBJC_IVAR_$_ADJSavedPreLaunch._extraPath
+__OBJC_$_INSTANCE_VARIABLES_ADJSavedPreLaunch
+__OBJC_$_PROP_LIST_ADJSavedPreLaunch
+__OBJC_CLASS_RO_$_ADJSavedPreLaunch
+_OBJC_CLASSLIST_SUP_REFS_$_.99
+_OBJC_SELECTOR_REFERENCES_.101
+_OBJC_SELECTOR_REFERENCES_.105
+_OBJC_SELECTOR_REFERENCES_.107
+_OBJC_SELECTOR_REFERENCES_.111
+_OBJC_SELECTOR_REFERENCES_.115
+_OBJC_SELECTOR_REFERENCES_.117
+_OBJC_SELECTOR_REFERENCES_.121
+_OBJC_SELECTOR_REFERENCES_.123
+_OBJC_SELECTOR_REFERENCES_.125
+_OBJC_SELECTOR_REFERENCES_.129
+_OBJC_CLASSLIST_REFERENCES_$_.130
+_OBJC_CLASSLIST_REFERENCES_$_.131
+_OBJC_SELECTOR_REFERENCES_.133
+_OBJC_SELECTOR_REFERENCES_.135
+_OBJC_SELECTOR_REFERENCES_.137
+___block_descriptor_24_e4_20s_e5_v4?0l
+_OBJC_CLASSLIST_REFERENCES_$_.145
+_OBJC_SELECTOR_REFERENCES_.147
+_OBJC_CLASSLIST_REFERENCES_$_.149
+_OBJC_SELECTOR_REFERENCES_.155
+___block_descriptor_21_e27_v8?0"ADJActivityHandler"4l
+_OBJC_SELECTOR_REFERENCES_.159
+_OBJC_SELECTOR_REFERENCES_.161
+_OBJC_SELECTOR_REFERENCES_.163
+_OBJC_SELECTOR_REFERENCES_.167
+_OBJC_SELECTOR_REFERENCES_.169
+_OBJC_SELECTOR_REFERENCES_.171
+___block_literal_global.195
+_OBJC_SELECTOR_REFERENCES_.197
+_OBJC_SELECTOR_REFERENCES_.199
+_OBJC_CLASSLIST_REFERENCES_$_.206
+_OBJC_SELECTOR_REFERENCES_.208
+_OBJC_SELECTOR_REFERENCES_.210
+_OBJC_SELECTOR_REFERENCES_.212
+_OBJC_CLASSLIST_REFERENCES_$_.213
+_OBJC_SELECTOR_REFERENCES_.215
+_OBJC_CLASSLIST_REFERENCES_$_.216
+_OBJC_SELECTOR_REFERENCES_.218
+_OBJC_SELECTOR_REFERENCES_.224
+_OBJC_SELECTOR_REFERENCES_.226
+_OBJC_SELECTOR_REFERENCES_.234
+_OBJC_SELECTOR_REFERENCES_.240
+___block_literal_global.241
+_OBJC_SELECTOR_REFERENCES_.243
+___block_literal_global.244
+_OBJC_SELECTOR_REFERENCES_.246
+_OBJC_SELECTOR_REFERENCES_.248
+_OBJC_SELECTOR_REFERENCES_.256
+_OBJC_SELECTOR_REFERENCES_.258
+_OBJC_SELECTOR_REFERENCES_.260
+_OBJC_SELECTOR_REFERENCES_.262
+_OBJC_SELECTOR_REFERENCES_.264
+_OBJC_SELECTOR_REFERENCES_.266
+_OBJC_SELECTOR_REFERENCES_.268
+_OBJC_SELECTOR_REFERENCES_.270
+_OBJC_SELECTOR_REFERENCES_.282
+_OBJC_CLASSLIST_REFERENCES_$_.283
+_OBJC_SELECTOR_REFERENCES_.285
+_OBJC_SELECTOR_REFERENCES_.287
+_OBJC_CLASSLIST_REFERENCES_$_.290
+_OBJC_SELECTOR_REFERENCES_.298
+___block_descriptor_36_e8_20s_e5_v4?0l
+_OBJC_CLASSLIST_REFERENCES_$_.299
+_OBJC_SELECTOR_REFERENCES_.303
+_OBJC_SELECTOR_REFERENCES_.309
+_OBJC_SELECTOR_REFERENCES_.313
+_OBJC_SELECTOR_REFERENCES_.315
+___block_descriptor_28_e4_20s24s_e5_v4?0l
+_OBJC_SELECTOR_REFERENCES_.317
+___block_literal_global.320
+_OBJC_SELECTOR_REFERENCES_.322
+___block_literal_global.323
+_OBJC_SELECTOR_REFERENCES_.325
+___block_literal_global.326
+_OBJC_SELECTOR_REFERENCES_.328
+_OBJC_SELECTOR_REFERENCES_.330
+_OBJC_SELECTOR_REFERENCES_.332
+_OBJC_SELECTOR_REFERENCES_.334
+_OBJC_SELECTOR_REFERENCES_.336
+___block_literal_global.337
+_OBJC_SELECTOR_REFERENCES_.339
+___block_literal_global.340
+_OBJC_SELECTOR_REFERENCES_.342
+_OBJC_SELECTOR_REFERENCES_.344
+_OBJC_SELECTOR_REFERENCES_.346
+___block_literal_global.347
+_OBJC_SELECTOR_REFERENCES_.349
+_OBJC_SELECTOR_REFERENCES_.353
+_OBJC_SELECTOR_REFERENCES_.355
+_OBJC_SELECTOR_REFERENCES_.357
+_OBJC_SELECTOR_REFERENCES_.359
+_OBJC_SELECTOR_REFERENCES_.361
+_OBJC_SELECTOR_REFERENCES_.363
+_OBJC_SELECTOR_REFERENCES_.365
+_OBJC_SELECTOR_REFERENCES_.367
+_OBJC_SELECTOR_REFERENCES_.369
+_OBJC_SELECTOR_REFERENCES_.371
+_OBJC_SELECTOR_REFERENCES_.373
+_OBJC_SELECTOR_REFERENCES_.375
+_OBJC_SELECTOR_REFERENCES_.377
+_OBJC_SELECTOR_REFERENCES_.379
+_OBJC_SELECTOR_REFERENCES_.381
+_OBJC_SELECTOR_REFERENCES_.383
+_OBJC_SELECTOR_REFERENCES_.385
+_OBJC_CLASSLIST_REFERENCES_$_.386
+_OBJC_SELECTOR_REFERENCES_.388
+_OBJC_SELECTOR_REFERENCES_.390
+_OBJC_SELECTOR_REFERENCES_.392
+_OBJC_SELECTOR_REFERENCES_.394
+_OBJC_SELECTOR_REFERENCES_.396
+_OBJC_SELECTOR_REFERENCES_.398
+_OBJC_SELECTOR_REFERENCES_.400
+_kSessionInterval
+_OBJC_SELECTOR_REFERENCES_.402
+_kSubSessionInterval
+_OBJC_SELECTOR_REFERENCES_.404
+_kForegroundTimerStart
+_OBJC_SELECTOR_REFERENCES_.406
+_kForegroundTimerInterval
+_kBackgroundTimerInterval
+_OBJC_CLASSLIST_REFERENCES_$_.407
+_OBJC_SELECTOR_REFERENCES_.409
+_OBJC_SELECTOR_REFERENCES_.411
+_OBJC_CLASSLIST_REFERENCES_$_.412
+_OBJC_SELECTOR_REFERENCES_.414
+_OBJC_SELECTOR_REFERENCES_.416
+_OBJC_SELECTOR_REFERENCES_.418
+_OBJC_SELECTOR_REFERENCES_.420
+_OBJC_SELECTOR_REFERENCES_.424
+_OBJC_SELECTOR_REFERENCES_.426
+_OBJC_SELECTOR_REFERENCES_.429
+_OBJC_SELECTOR_REFERENCES_.433
+_OBJC_SELECTOR_REFERENCES_.435
+_OBJC_SELECTOR_REFERENCES_.437
+_OBJC_SELECTOR_REFERENCES_.439
+_OBJC_SELECTOR_REFERENCES_.441
+_OBJC_SELECTOR_REFERENCES_.443
+_OBJC_CLASSLIST_REFERENCES_$_.444
+_OBJC_SELECTOR_REFERENCES_.446
+_OBJC_SELECTOR_REFERENCES_.448
+_OBJC_SELECTOR_REFERENCES_.450
+_OBJC_CLASSLIST_REFERENCES_$_.453
+_OBJC_SELECTOR_REFERENCES_.455
+_OBJC_SELECTOR_REFERENCES_.457
+_OBJC_SELECTOR_REFERENCES_.461
+_OBJC_SELECTOR_REFERENCES_.463
+_OBJC_CLASSLIST_REFERENCES_$_.464
+_OBJC_SELECTOR_REFERENCES_.466
+_OBJC_SELECTOR_REFERENCES_.468
+_OBJC_SELECTOR_REFERENCES_.469
+_OBJC_SELECTOR_REFERENCES_.471
+_OBJC_SELECTOR_REFERENCES_.473
+_OBJC_SELECTOR_REFERENCES_.475
+_OBJC_CLASSLIST_REFERENCES_$_.476
+_OBJC_CLASSLIST_REFERENCES_$_.477
+_OBJC_SELECTOR_REFERENCES_.479
+_OBJC_SELECTOR_REFERENCES_.483
+___block_descriptor_24_e4_20s_e7_v8?0c4l
+_OBJC_SELECTOR_REFERENCES_.488
+_OBJC_SELECTOR_REFERENCES_.490
+_OBJC_SELECTOR_REFERENCES_.492
+_OBJC_SELECTOR_REFERENCES_.494
+_OBJC_SELECTOR_REFERENCES_.496
+_OBJC_SELECTOR_REFERENCES_.498
+_OBJC_SELECTOR_REFERENCES_.500
+___block_descriptor_32_e4_20s24s28s_e5_v4?0l
+_OBJC_SELECTOR_REFERENCES_.501
+_OBJC_SELECTOR_REFERENCES_.503
+_OBJC_SELECTOR_REFERENCES_.506
+_OBJC_SELECTOR_REFERENCES_.508
+_OBJC_SELECTOR_REFERENCES_.510
+_OBJC_SELECTOR_REFERENCES_.511
+_OBJC_SELECTOR_REFERENCES_.513
+_OBJC_SELECTOR_REFERENCES_.515
+_OBJC_SELECTOR_REFERENCES_.517
+_OBJC_SELECTOR_REFERENCES_.521
+_OBJC_SELECTOR_REFERENCES_.523
+_OBJC_SELECTOR_REFERENCES_.525
+_OBJC_SELECTOR_REFERENCES_.527
+_OBJC_SELECTOR_REFERENCES_.529
+_OBJC_SELECTOR_REFERENCES_.531
+___block_descriptor_44_e8_20s_e5_v4?0l
+_OBJC_SELECTOR_REFERENCES_.535
+_OBJC_SELECTOR_REFERENCES_.539
+_OBJC_SELECTOR_REFERENCES_.540
+_OBJC_SELECTOR_REFERENCES_.542
+_OBJC_SELECTOR_REFERENCES_.544
+_OBJC_SELECTOR_REFERENCES_.546
+_OBJC_SELECTOR_REFERENCES_.548
+_OBJC_SELECTOR_REFERENCES_.549
+_OBJC_SELECTOR_REFERENCES_.550
+_OBJC_SELECTOR_REFERENCES_.552
+_OBJC_SELECTOR_REFERENCES_.554
+_OBJC_SELECTOR_REFERENCES_.556
+_OBJC_SELECTOR_REFERENCES_.558
+_OBJC_SELECTOR_REFERENCES_.560
+_OBJC_SELECTOR_REFERENCES_.562
+_OBJC_SELECTOR_REFERENCES_.564
+_OBJC_SELECTOR_REFERENCES_.566
+_OBJC_SELECTOR_REFERENCES_.568
+_OBJC_SELECTOR_REFERENCES_.570
+_OBJC_SELECTOR_REFERENCES_.572
+_OBJC_SELECTOR_REFERENCES_.574
+_OBJC_SELECTOR_REFERENCES_.576
+_OBJC_SELECTOR_REFERENCES_.578
+_OBJC_SELECTOR_REFERENCES_.580
+_OBJC_SELECTOR_REFERENCES_.584
+_OBJC_SELECTOR_REFERENCES_.585
+_OBJC_SELECTOR_REFERENCES_.587
+_OBJC_SELECTOR_REFERENCES_.589
+_OBJC_SELECTOR_REFERENCES_.591
+_OBJC_SELECTOR_REFERENCES_.593
+_OBJC_SELECTOR_REFERENCES_.595
+_OBJC_SELECTOR_REFERENCES_.597
+_OBJC_SELECTOR_REFERENCES_.599
+_OBJC_SELECTOR_REFERENCES_.601
+_OBJC_SELECTOR_REFERENCES_.603
+_OBJC_SELECTOR_REFERENCES_.605
+_OBJC_SELECTOR_REFERENCES_.607
+_OBJC_SELECTOR_REFERENCES_.611
+_OBJC_SELECTOR_REFERENCES_.613
+_OBJC_SELECTOR_REFERENCES_.615
+_OBJC_SELECTOR_REFERENCES_.619
+_OBJC_SELECTOR_REFERENCES_.621
+_OBJC_SELECTOR_REFERENCES_.623
+_OBJC_SELECTOR_REFERENCES_.625
+_OBJC_SELECTOR_REFERENCES_.629
+_OBJC_SELECTOR_REFERENCES_.635
+_OBJC_SELECTOR_REFERENCES_.637
+_OBJC_SELECTOR_REFERENCES_.639
+_OBJC_SELECTOR_REFERENCES_.643
+_OBJC_SELECTOR_REFERENCES_.645
+_OBJC_SELECTOR_REFERENCES_.647
+_OBJC_SELECTOR_REFERENCES_.649
+_OBJC_SELECTOR_REFERENCES_.651
+_OBJC_SELECTOR_REFERENCES_.653
+_OBJC_SELECTOR_REFERENCES_.655
+_OBJC_SELECTOR_REFERENCES_.661
+_OBJC_SELECTOR_REFERENCES_.671
+___block_descriptor_25_e4_20s_e5_v4?0l
+_OBJC_SELECTOR_REFERENCES_.673
+_OBJC_SELECTOR_REFERENCES_.675
+_OBJC_SELECTOR_REFERENCES_.677
+_OBJC_CLASSLIST_REFERENCES_$_.684
+_OBJC_SELECTOR_REFERENCES_.686
+_OBJC_SELECTOR_REFERENCES_.688
+_OBJC_SELECTOR_REFERENCES_.689
+_OBJC_SELECTOR_REFERENCES_.703
+_OBJC_SELECTOR_REFERENCES_.707
+_OBJC_SELECTOR_REFERENCES_.709
+_OBJC_SELECTOR_REFERENCES_.711
+_OBJC_SELECTOR_REFERENCES_.715
+_OBJC_CLASSLIST_REFERENCES_$_.716
+_OBJC_SELECTOR_REFERENCES_.718
+_OBJC_CLASSLIST_REFERENCES_$_.719
+_OBJC_SELECTOR_REFERENCES_.721
+_OBJC_CLASSLIST_REFERENCES_$_.722
+_OBJC_SELECTOR_REFERENCES_.724
+_OBJC_SELECTOR_REFERENCES_.726
+_OBJC_SELECTOR_REFERENCES_.728
+_OBJC_SELECTOR_REFERENCES_.730
+_OBJC_SELECTOR_REFERENCES_.732
+_OBJC_SELECTOR_REFERENCES_.734
+_OBJC_SELECTOR_REFERENCES_.740
+_OBJC_SELECTOR_REFERENCES_.742
+_OBJC_SELECTOR_REFERENCES_.744
+_OBJC_SELECTOR_REFERENCES_.746
+_OBJC_SELECTOR_REFERENCES_.748
+_OBJC_SELECTOR_REFERENCES_.750
+_OBJC_SELECTOR_REFERENCES_.752
+_OBJC_SELECTOR_REFERENCES_.754
+_OBJC_SELECTOR_REFERENCES_.758
+_OBJC_SELECTOR_REFERENCES_.762
+_OBJC_SELECTOR_REFERENCES_.766
+_OBJC_SELECTOR_REFERENCES_.770
+_OBJC_SELECTOR_REFERENCES_.774
+_OBJC_SELECTOR_REFERENCES_.778
+_OBJC_SELECTOR_REFERENCES_.780
+_OBJC_SELECTOR_REFERENCES_.782
+_OBJC_SELECTOR_REFERENCES_.786
+_OBJC_SELECTOR_REFERENCES_.788
+_OBJC_SELECTOR_REFERENCES_.790
+_OBJC_SELECTOR_REFERENCES_.794
+_OBJC_CLASSLIST_REFERENCES_$_.797
+_OBJC_SELECTOR_REFERENCES_.801
+_OBJC_SELECTOR_REFERENCES_.803
+_OBJC_SELECTOR_REFERENCES_.805
+_OBJC_SELECTOR_REFERENCES_.809
+_OBJC_SELECTOR_REFERENCES_.813
+_OBJC_CLASSLIST_REFERENCES_$_.814
+_OBJC_SELECTOR_REFERENCES_.816
+_OBJC_SELECTOR_REFERENCES_.818
+_OBJC_SELECTOR_REFERENCES_.820
+_OBJC_SELECTOR_REFERENCES_.822
+_OBJC_SELECTOR_REFERENCES_.824
+_OBJC_SELECTOR_REFERENCES_.825
+_OBJC_SELECTOR_REFERENCES_.827
+_OBJC_SELECTOR_REFERENCES_.829
+_OBJC_SELECTOR_REFERENCES_.831
+_OBJC_SELECTOR_REFERENCES_.833
+_OBJC_SELECTOR_REFERENCES_.835
+_OBJC_SELECTOR_REFERENCES_.836
+_OBJC_SELECTOR_REFERENCES_.838
+_OBJC_SELECTOR_REFERENCES_.840
+_OBJC_SELECTOR_REFERENCES_.848
+_OBJC_SELECTOR_REFERENCES_.854
+_OBJC_SELECTOR_REFERENCES_.858
+_OBJC_SELECTOR_REFERENCES_.864
+_OBJC_SELECTOR_REFERENCES_.868
+_OBJC_SELECTOR_REFERENCES_.876
+_OBJC_CLASSLIST_REFERENCES_$_.879
+_OBJC_SELECTOR_REFERENCES_.881
+_OBJC_SELECTOR_REFERENCES_.883
+_OBJC_SELECTOR_REFERENCES_.885
+_OBJC_SELECTOR_REFERENCES_.887
+_OBJC_SELECTOR_REFERENCES_.889
+_OBJC_SELECTOR_REFERENCES_.891
+_OBJC_SELECTOR_REFERENCES_.897
+_OBJC_SELECTOR_REFERENCES_.899
+__OBJC_$_CLASS_METHODS_ADJActivityHandler
+__OBJC_$_PROTOCOL_INSTANCE_METHODS_NSObject
+__OBJC_$_PROTOCOL_INSTANCE_METHODS_OPT_NSObject
+__OBJC_$_PROP_LIST_NSObject
+__OBJC_$_PROTOCOL_METHOD_TYPES_NSObject
+__OBJC_PROTOCOL_$_NSObject
+__OBJC_LABEL_PROTOCOL_$_NSObject
+__OBJC_$_PROTOCOL_REFS_ADJActivityHandler
+__OBJC_$_PROTOCOL_INSTANCE_METHODS_ADJActivityHandler
+__OBJC_$_PROTOCOL_CLASS_METHODS_ADJActivityHandler
+__OBJC_$_PROP_LIST_ADJActivityHandler
+__OBJC_$_PROTOCOL_METHOD_TYPES_ADJActivityHandler
+__OBJC_PROTOCOL_$_ADJActivityHandler
+__OBJC_LABEL_PROTOCOL_$_ADJActivityHandler
+__OBJC_CLASS_PROTOCOLS_$_ADJActivityHandler
+__OBJC_METACLASS_RO_$_ADJActivityHandler
+__OBJC_$_INSTANCE_METHODS_ADJActivityHandler
+_OBJC_IVAR_$_ADJActivityHandler._attribution
+_OBJC_IVAR_$_ADJActivityHandler._internalQueue
+_OBJC_IVAR_$_ADJActivityHandler._packageHandler
+_OBJC_IVAR_$_ADJActivityHandler._attributionHandler
+_OBJC_IVAR_$_ADJActivityHandler._sdkClickHandler
+_OBJC_IVAR_$_ADJActivityHandler._activityState
+_OBJC_IVAR_$_ADJActivityHandler._foregroundTimer
+_OBJC_IVAR_$_ADJActivityHandler._backgroundTimer
+_OBJC_IVAR_$_ADJActivityHandler._iAdRetriesLeft
+_OBJC_IVAR_$_ADJActivityHandler._internalState
+_OBJC_IVAR_$_ADJActivityHandler._deviceInfo
+_OBJC_IVAR_$_ADJActivityHandler._delayStartTimer
+_OBJC_IVAR_$_ADJActivityHandler._sessionParameters
+_OBJC_IVAR_$_ADJActivityHandler._logger
+_OBJC_IVAR_$_ADJActivityHandler._adjustDelegate
+_OBJC_IVAR_$_ADJActivityHandler._adjustConfig
+_OBJC_IVAR_$_ADJActivityHandler._deviceTokenData
+_OBJC_IVAR_$_ADJActivityHandler._basePath
+_OBJC_IVAR_$_ADJActivityHandler._gdprPath
+_OBJC_IVAR_$_ADJActivityHandler._subscriptionPath
+__OBJC_$_INSTANCE_VARIABLES_ADJActivityHandler
+__OBJC_$_PROP_LIST_ADJActivityHandler.1085
+__OBJC_CLASS_RO_$_ADJActivityHandler
++[ADJActivityKindUtil activityKindFromString:]
++[ADJActivityKindUtil activityKindToString:]
+__OBJC_$_CLASS_METHODS_ADJActivityKindUtil
+__OBJC_METACLASS_RO_$_ADJActivityKindUtil
+__OBJC_CLASS_RO_$_ADJActivityKindUtil
+-[ADJActivityPackage extendedString]
+-[ADJActivityPackage description]
+-[ADJActivityPackage successMessage]
+-[ADJActivityPackage failureMessage]
+-[ADJActivityPackage initWithCoder:]
+-[ADJActivityPackage encodeWithCoder:]
+-[ADJActivityPackage path]
+-[ADJActivityPackage setPath:]
+-[ADJActivityPackage clientSdk]
+-[ADJActivityPackage setClientSdk:]
+-[ADJActivityPackage parameters]
+-[ADJActivityPackage setParameters:]
+-[ADJActivityPackage partnerParameters]
+-[ADJActivityPackage setPartnerParameters:]
+-[ADJActivityPackage callbackParameters]
+-[ADJActivityPackage setCallbackParameters:]
+-[ADJActivityPackage suffix]
+-[ADJActivityPackage setSuffix:]
+-[ADJActivityPackage activityKind]
+-[ADJActivityPackage setActivityKind:]
+-[ADJActivityPackage .cxx_destruct]
+_OBJC_SELECTOR_REFERENCES_.31
+_OBJC_SELECTOR_REFERENCES_.33
+_OBJC_SELECTOR_REFERENCES_.45
+_OBJC_CLASSLIST_REFERENCES_$_.46
+_OBJC_CLASSLIST_REFERENCES_$_.49
+_OBJC_SELECTOR_REFERENCES_.51
+_OBJC_SELECTOR_REFERENCES_.55
+_OBJC_SELECTOR_REFERENCES_.67
+_OBJC_SELECTOR_REFERENCES_.69
+_OBJC_SELECTOR_REFERENCES_.77
+_OBJC_SELECTOR_REFERENCES_.81
+_OBJC_SELECTOR_REFERENCES_.89
+_OBJC_SELECTOR_REFERENCES_.93
+_OBJC_SELECTOR_REFERENCES_.95
+_OBJC_SELECTOR_REFERENCES_.97
+_OBJC_SELECTOR_REFERENCES_.99
+__OBJC_$_PROTOCOL_INSTANCE_METHODS_NSCoding
+__OBJC_$_PROTOCOL_METHOD_TYPES_NSCoding
+__OBJC_PROTOCOL_$_NSCoding
+__OBJC_LABEL_PROTOCOL_$_NSCoding
+__OBJC_CLASS_PROTOCOLS_$_ADJActivityPackage
+__OBJC_METACLASS_RO_$_ADJActivityPackage
+__OBJC_$_INSTANCE_METHODS_ADJActivityPackage
+_OBJC_IVAR_$_ADJActivityPackage._path
+_OBJC_IVAR_$_ADJActivityPackage._clientSdk
+_OBJC_IVAR_$_ADJActivityPackage._parameters
+_OBJC_IVAR_$_ADJActivityPackage._partnerParameters
+_OBJC_IVAR_$_ADJActivityPackage._callbackParameters
+_OBJC_IVAR_$_ADJActivityPackage._suffix
+_OBJC_IVAR_$_ADJActivityPackage._activityKind
+__OBJC_$_INSTANCE_VARIABLES_ADJActivityPackage
+__OBJC_$_PROP_LIST_ADJActivityPackage
+__OBJC_CLASS_RO_$_ADJActivityPackage
+-[ADJActivityState init]
++[ADJActivityState saveAppToken:]
+-[ADJActivityState resetSessionAttributes:]
+-[ADJActivityState addTransactionId:]
+-[ADJActivityState findTransactionId:]
+-[ADJActivityState assignUuid:]
+-[ADJActivityState generateUniqueKey]
+-[ADJActivityState description]
+-[ADJActivityState initWithCoder:]
+-[ADJActivityState encodeWithCoder:]
+-[ADJActivityState copyWithZone:]
+-[ADJActivityState enabled]
+-[ADJActivityState setEnabled:]
+-[ADJActivityState isGdprForgotten]
+-[ADJActivityState setIsGdprForgotten:]
+-[ADJActivityState askingAttribution]
+-[ADJActivityState setAskingAttribution:]
+-[ADJActivityState isThirdPartySharingDisabled]
+-[ADJActivityState setIsThirdPartySharingDisabled:]
+-[ADJActivityState uuid]
+-[ADJActivityState setUuid:]
+-[ADJActivityState deviceToken]
+-[ADJActivityState setDeviceToken:]
+-[ADJActivityState updatePackages]
+-[ADJActivityState setUpdatePackages:]
+-[ADJActivityState adid]
+-[ADJActivityState setAdid:]
+-[ADJActivityState attributionDetails]
+-[ADJActivityState setAttributionDetails:]
+-[ADJActivityState eventCount]
+-[ADJActivityState setEventCount:]
+-[ADJActivityState sessionCount]
+-[ADJActivityState setSessionCount:]
+-[ADJActivityState subsessionCount]
+-[ADJActivityState setSubsessionCount:]
+-[ADJActivityState timeSpent]
+-[ADJActivityState setTimeSpent:]
+-[ADJActivityState lastActivity]
+-[ADJActivityState setLastActivity:]
+-[ADJActivityState sessionLength]
+-[ADJActivityState setSessionLength:]
+-[ADJActivityState transactionIds]
+-[ADJActivityState setTransactionIds:]
+-[ADJActivityState isPersisted]
+-[ADJActivityState setIsPersisted:]
+-[ADJActivityState lastInterval]
+-[ADJActivityState setLastInterval:]
+-[ADJActivityState .cxx_destruct]
+_appToken
+_OBJC_SELECTOR_REFERENCES_.6
+_OBJC_SELECTOR_REFERENCES_.14
+_OBJC_CLASSLIST_REFERENCES_$_.31
+_OBJC_SELECTOR_REFERENCES_.35
+_OBJC_SELECTOR_REFERENCES_.47
+_OBJC_CLASSLIST_REFERENCES_$_.48
+_OBJC_SELECTOR_REFERENCES_.52
+_OBJC_CLASSLIST_REFERENCES_$_.53
+_OBJC_CLASSLIST_REFERENCES_$_.56
+_OBJC_SELECTOR_REFERENCES_.58
+_OBJC_SELECTOR_REFERENCES_.62
+_OBJC_SELECTOR_REFERENCES_.64
+_OBJC_SELECTOR_REFERENCES_.66
+_OBJC_SELECTOR_REFERENCES_.68
+_OBJC_SELECTOR_REFERENCES_.70
+_OBJC_CLASSLIST_REFERENCES_$_.71
+_OBJC_SELECTOR_REFERENCES_.75
+_OBJC_CLASSLIST_REFERENCES_$_.76
+_OBJC_SELECTOR_REFERENCES_.86
+_OBJC_SELECTOR_REFERENCES_.88
+_OBJC_SELECTOR_REFERENCES_.90
+_OBJC_SELECTOR_REFERENCES_.92
+_OBJC_SELECTOR_REFERENCES_.94
+_OBJC_SELECTOR_REFERENCES_.100
+_OBJC_SELECTOR_REFERENCES_.102
+_OBJC_SELECTOR_REFERENCES_.104
+_OBJC_SELECTOR_REFERENCES_.108
+_OBJC_SELECTOR_REFERENCES_.116
+_OBJC_SELECTOR_REFERENCES_.126
+_OBJC_SELECTOR_REFERENCES_.154
+__OBJC_$_CLASS_METHODS_ADJActivityState
+__OBJC_$_PROTOCOL_INSTANCE_METHODS_NSCopying
+__OBJC_$_PROTOCOL_METHOD_TYPES_NSCopying
+__OBJC_PROTOCOL_$_NSCopying
+__OBJC_LABEL_PROTOCOL_$_NSCopying
+__OBJC_CLASS_PROTOCOLS_$_ADJActivityState
+__OBJC_METACLASS_RO_$_ADJActivityState
+__OBJC_$_INSTANCE_METHODS_ADJActivityState
+_OBJC_IVAR_$_ADJActivityState._enabled
+_OBJC_IVAR_$_ADJActivityState._isGdprForgotten
+_OBJC_IVAR_$_ADJActivityState._askingAttribution
+_OBJC_IVAR_$_ADJActivityState._isThirdPartySharingDisabled
+_OBJC_IVAR_$_ADJActivityState._updatePackages
+_OBJC_IVAR_$_ADJActivityState._isPersisted
+_OBJC_IVAR_$_ADJActivityState._uuid
+_OBJC_IVAR_$_ADJActivityState._deviceToken
+_OBJC_IVAR_$_ADJActivityState._adid
+_OBJC_IVAR_$_ADJActivityState._attributionDetails
+_OBJC_IVAR_$_ADJActivityState._eventCount
+_OBJC_IVAR_$_ADJActivityState._sessionCount
+_OBJC_IVAR_$_ADJActivityState._subsessionCount
+_OBJC_IVAR_$_ADJActivityState._transactionIds
+_OBJC_IVAR_$_ADJActivityState._timeSpent
+_OBJC_IVAR_$_ADJActivityState._lastActivity
+_OBJC_IVAR_$_ADJActivityState._sessionLength
+_OBJC_IVAR_$_ADJActivityState._lastInterval
+__OBJC_$_INSTANCE_VARIABLES_ADJActivityState
+__OBJC_$_PROP_LIST_ADJActivityState
+__OBJC_CLASS_RO_$_ADJActivityState
++[ADJAdjustFactory logger]
++[ADJAdjustFactory sessionInterval]
++[ADJAdjustFactory subsessionInterval]
++[ADJAdjustFactory requestTimeout]
++[ADJAdjustFactory timerInterval]
++[ADJAdjustFactory timerStart]
++[ADJAdjustFactory packageHandlerBackoffStrategy]
++[ADJAdjustFactory sdkClickHandlerBackoffStrategy]
++[ADJAdjustFactory installSessionBackoffStrategy]
++[ADJAdjustFactory testing]
++[ADJAdjustFactory iAdFrameworkEnabled]
++[ADJAdjustFactory maxDelayStart]
++[ADJAdjustFactory baseUrl]
++[ADJAdjustFactory gdprUrl]
++[ADJAdjustFactory subscriptionUrl]
++[ADJAdjustFactory setLogger:]
++[ADJAdjustFactory setSessionInterval:]
++[ADJAdjustFactory setSubsessionInterval:]
++[ADJAdjustFactory setRequestTimeout:]
++[ADJAdjustFactory setTimerInterval:]
++[ADJAdjustFactory setTimerStart:]
++[ADJAdjustFactory setPackageHandlerBackoffStrategy:]
++[ADJAdjustFactory setSdkClickHandlerBackoffStrategy:]
++[ADJAdjustFactory setTesting:]
++[ADJAdjustFactory setiAdFrameworkEnabled:]
++[ADJAdjustFactory setMaxDelayStart:]
++[ADJAdjustFactory setBaseUrl:]
++[ADJAdjustFactory setGdprUrl:]
++[ADJAdjustFactory setSubscriptionUrl:]
++[ADJAdjustFactory enableSigning]
++[ADJAdjustFactory disableSigning]
++[ADJAdjustFactory teardown:]
+_internalLogger
+_packageHandlerBackoffStrategy
+_sdkClickHandlerBackoffStrategy
+_internalBaseUrl
+_internalGdprUrl
+_internalSubscriptionUrl
+_internalSessionInterval
+_intervalSubsessionInterval
+_internalRequestTimeout
+_internalTimerInterval
+_intervalTimerStart
+_OBJC_CLASSLIST_REFERENCES_$_.5
+_OBJC_SELECTOR_REFERENCES_.7
+_internalTesting
+_internaliAdFrameworkEnabled
+_internalMaxDelayStart
+_OBJC_SELECTOR_REFERENCES_.15
+_OBJC_CLASSLIST_REFERENCES_$_.18
+_OBJC_CLASSLIST_REFERENCES_$_.21
+__OBJC_$_CLASS_METHODS_ADJAdjustFactory
+__OBJC_METACLASS_RO_$_ADJAdjustFactory
+__OBJC_CLASS_RO_$_ADJAdjustFactory
+-[ADJLogger init]
+-[ADJLogger setLogLevel:isProductionEnvironment:]
+-[ADJLogger lockLogLevel]
+-[ADJLogger verbose:]
+-[ADJLogger debug:]
+-[ADJLogger info:]
+-[ADJLogger warn:]
+-[ADJLogger warnInProduction:]
+-[ADJLogger error:]
+-[ADJLogger assert:]
+-[ADJLogger logLevel:format:parameters:]
++[ADJLogger logLevelFromString:]
+-[ADJLogger loglevel]
+-[ADJLogger setLoglevel:]
+-[ADJLogger logLevelLocked]
+-[ADJLogger setLogLevelLocked:]
+-[ADJLogger isProductionEnvironment]
+-[ADJLogger setIsProductionEnvironment:]
+__OBJC_$_CLASS_METHODS_ADJLogger
+__OBJC_$_PROTOCOL_INSTANCE_METHODS_ADJLogger
+__OBJC_$_PROTOCOL_METHOD_TYPES_ADJLogger
+__OBJC_PROTOCOL_$_ADJLogger
+__OBJC_LABEL_PROTOCOL_$_ADJLogger
+__OBJC_CLASS_PROTOCOLS_$_ADJLogger
+__OBJC_METACLASS_RO_$_ADJLogger
+__OBJC_$_INSTANCE_METHODS_ADJLogger
+_OBJC_IVAR_$_ADJLogger._logLevelLocked
+_OBJC_IVAR_$_ADJLogger._isProductionEnvironment
+_OBJC_IVAR_$_ADJLogger._loglevel
+__OBJC_$_INSTANCE_VARIABLES_ADJLogger
+__OBJC_$_PROP_LIST_ADJLogger
+__OBJC_CLASS_RO_$_ADJLogger
+-[ADJPackageBuilder initWithDeviceInfo:activityState:config:sessionParameters:createdAt:]
+-[ADJPackageBuilder buildSessionPackage:]
+-[ADJPackageBuilder buildEventPackage:isInDelay:]
+-[ADJPackageBuilder buildInfoPackage:]
+-[ADJPackageBuilder buildAdRevenuePackage:payload:]
+-[ADJPackageBuilder buildClickPackage:]
+-[ADJPackageBuilder buildAttributionPackage:]
+-[ADJPackageBuilder buildGdprPackage]
+-[ADJPackageBuilder buildDisableThirdPartySharingPackage]
+-[ADJPackageBuilder buildSubscriptionPackage:isInDelay:]
++[ADJPackageBuilder parameters:setDictionary:forKey:]
++[ADJPackageBuilder parameters:setString:forKey:]
+-[ADJPackageBuilder signWithSigV2Plugin:]
+-[ADJPackageBuilder getSessionParameters:]
+-[ADJPackageBuilder getEventParameters:forEventPackage:]
+-[ADJPackageBuilder getInfoParameters:]
+-[ADJPackageBuilder getAdRevenueParameters:payload:]
+-[ADJPackageBuilder getClickParameters:]
+-[ADJPackageBuilder getAttributionParameters:]
+-[ADJPackageBuilder getGdprParameters]
+-[ADJPackageBuilder getDisableThirdPartySharingParameters]
+-[ADJPackageBuilder getSubscriptionParameters:forSubscriptionPackage:]
+-[ADJPackageBuilder defaultActivityPackage]
+-[ADJPackageBuilder eventSuffix:]
++[ADJPackageBuilder parameters:setInt:forKey:]
++[ADJPackageBuilder parameters:setDate1970:forKey:]
++[ADJPackageBuilder parameters:setDate:forKey:]
++[ADJPackageBuilder parameters:setDuration:forKey:]
++[ADJPackageBuilder parameters:setDictionaryJson:forKey:]
++[ADJPackageBuilder parameters:setBool:forKey:]
++[ADJPackageBuilder parameters:setNumber:forKey:]
++[ADJPackageBuilder parameters:setNumberInt:forKey:]
++[ADJPackageBuilder parameters:setData:forKey:]
+-[ADJPackageBuilder deeplink]
+-[ADJPackageBuilder setDeeplink:]
+-[ADJPackageBuilder clickTime]
+-[ADJPackageBuilder setClickTime:]
+-[ADJPackageBuilder purchaseTime]
+-[ADJPackageBuilder setPurchaseTime:]
+-[ADJPackageBuilder attributionDetails]
+-[ADJPackageBuilder setAttributionDetails:]
+-[ADJPackageBuilder deeplinkParameters]
+-[ADJPackageBuilder setDeeplinkParameters:]
+-[ADJPackageBuilder attribution]
+-[ADJPackageBuilder setAttribution:]
+-[ADJPackageBuilder createdAt]
+-[ADJPackageBuilder setCreatedAt:]
+-[ADJPackageBuilder adjustConfig]
+-[ADJPackageBuilder setAdjustConfig:]
+-[ADJPackageBuilder deviceInfo]
+-[ADJPackageBuilder setDeviceInfo:]
+-[ADJPackageBuilder activityState]
+-[ADJPackageBuilder setActivityState:]
+-[ADJPackageBuilder sessionParameters]
+-[ADJPackageBuilder setSessionParameters:]
+-[ADJPackageBuilder .cxx_destruct]
+_OBJC_SELECTOR_REFERENCES_.36
+_OBJC_SELECTOR_REFERENCES_.40
+_OBJC_SELECTOR_REFERENCES_.42
+_OBJC_SELECTOR_REFERENCES_.54
+_OBJC_CLASSLIST_REFERENCES_$_.55
+_OBJC_CLASSLIST_REFERENCES_$_.58
+_OBJC_SELECTOR_REFERENCES_.60
+_OBJC_SELECTOR_REFERENCES_.72
+_OBJC_SELECTOR_REFERENCES_.76
+_OBJC_SELECTOR_REFERENCES_.84
+_OBJC_CLASSLIST_REFERENCES_$_.85
+_OBJC_SELECTOR_REFERENCES_.87
+_OBJC_CLASSLIST_REFERENCES_$_.88
+_OBJC_CLASSLIST_REFERENCES_$_.101
+_OBJC_SELECTOR_REFERENCES_.103
+_OBJC_SELECTOR_REFERENCES_.109
+_OBJC_CLASSLIST_REFERENCES_$_.112
+_OBJC_SELECTOR_REFERENCES_.114
+_OBJC_SELECTOR_REFERENCES_.118
+_OBJC_SELECTOR_REFERENCES_.128
+_OBJC_CLASSLIST_REFERENCES_$_.135
+_OBJC_SELECTOR_REFERENCES_.139
+_OBJC_SELECTOR_REFERENCES_.141
+_OBJC_SELECTOR_REFERENCES_.145
+_OBJC_SELECTOR_REFERENCES_.149
+_OBJC_SELECTOR_REFERENCES_.153
+_OBJC_SELECTOR_REFERENCES_.165
+_OBJC_SELECTOR_REFERENCES_.175
+_OBJC_SELECTOR_REFERENCES_.177
+_OBJC_SELECTOR_REFERENCES_.181
+_OBJC_SELECTOR_REFERENCES_.185
+_OBJC_SELECTOR_REFERENCES_.191
+_OBJC_SELECTOR_REFERENCES_.195
+_OBJC_SELECTOR_REFERENCES_.219
+_OBJC_SELECTOR_REFERENCES_.223
+_OBJC_CLASSLIST_REFERENCES_$_.224
+_OBJC_SELECTOR_REFERENCES_.250
+_OBJC_SELECTOR_REFERENCES_.272
+_OBJC_SELECTOR_REFERENCES_.276
+_OBJC_SELECTOR_REFERENCES_.284
+_OBJC_SELECTOR_REFERENCES_.288
+_OBJC_SELECTOR_REFERENCES_.300
+_OBJC_SELECTOR_REFERENCES_.306
+_OBJC_SELECTOR_REFERENCES_.312
+_OBJC_SELECTOR_REFERENCES_.326
+_OBJC_SELECTOR_REFERENCES_.338
+_OBJC_SELECTOR_REFERENCES_.350
+_OBJC_SELECTOR_REFERENCES_.352
+_OBJC_SELECTOR_REFERENCES_.358
+_OBJC_SELECTOR_REFERENCES_.362
+_OBJC_SELECTOR_REFERENCES_.368
+_OBJC_SELECTOR_REFERENCES_.372
+_OBJC_SELECTOR_REFERENCES_.374
+_OBJC_SELECTOR_REFERENCES_.380
+_OBJC_SELECTOR_REFERENCES_.382
+_OBJC_SELECTOR_REFERENCES_.386
+_OBJC_SELECTOR_REFERENCES_.410
+_OBJC_SELECTOR_REFERENCES_.430
+_OBJC_SELECTOR_REFERENCES_.434
+_OBJC_CLASSLIST_REFERENCES_$_.437
+_OBJC_SELECTOR_REFERENCES_.447
+_OBJC_SELECTOR_REFERENCES_.451
+_OBJC_SELECTOR_REFERENCES_.453
+_OBJC_CLASSLIST_REFERENCES_$_.456
+_OBJC_SELECTOR_REFERENCES_.458
+_OBJC_SELECTOR_REFERENCES_.460
+__OBJC_$_CLASS_METHODS_ADJPackageBuilder
+__OBJC_METACLASS_RO_$_ADJPackageBuilder
+__OBJC_$_INSTANCE_METHODS_ADJPackageBuilder
+_OBJC_IVAR_$_ADJPackageBuilder._deeplink
+_OBJC_IVAR_$_ADJPackageBuilder._clickTime
+_OBJC_IVAR_$_ADJPackageBuilder._purchaseTime
+_OBJC_IVAR_$_ADJPackageBuilder._attributionDetails
+_OBJC_IVAR_$_ADJPackageBuilder._deeplinkParameters
+_OBJC_IVAR_$_ADJPackageBuilder._attribution
+_OBJC_IVAR_$_ADJPackageBuilder._adjustConfig
+_OBJC_IVAR_$_ADJPackageBuilder._deviceInfo
+_OBJC_IVAR_$_ADJPackageBuilder._activityState
+_OBJC_IVAR_$_ADJPackageBuilder._sessionParameters
+_OBJC_IVAR_$_ADJPackageBuilder._createdAt
+__OBJC_$_INSTANCE_VARIABLES_ADJPackageBuilder
+__OBJC_$_PROP_LIST_ADJPackageBuilder
+__OBJC_CLASS_RO_$_ADJPackageBuilder
+-[ADJPackageHandler initWithActivityHandler:startsSending:userAgent:extraPath:]
+___79-[ADJPackageHandler initWithActivityHandler:startsSending:userAgent:extraPath:]_block_invoke
+-[ADJPackageHandler addPackage:]
+___32-[ADJPackageHandler addPackage:]_block_invoke
+-[ADJPackageHandler sendFirstPackage]
+___37-[ADJPackageHandler sendFirstPackage]_block_invoke
+-[ADJPackageHandler responseCallback:]
+-[ADJPackageHandler sendNextPackage:]
+___37-[ADJPackageHandler sendNextPackage:]_block_invoke
+-[ADJPackageHandler closeFirstPackage:]
+___39-[ADJPackageHandler closeFirstPackage:]_block_invoke
+-[ADJPackageHandler pauseSending]
+-[ADJPackageHandler resumeSending]
+-[ADJPackageHandler updatePackages:]
+___36-[ADJPackageHandler updatePackages:]_block_invoke
+-[ADJPackageHandler flush]
+___26-[ADJPackageHandler flush]_block_invoke
+-[ADJPackageHandler teardown]
++[ADJPackageHandler deleteState]
++[ADJPackageHandler deletePackageQueue]
+-[ADJPackageHandler initI:activityHandler:startsSending:userAgent:extraPath:]
+-[ADJPackageHandler addI:package:]
+___34-[ADJPackageHandler addI:package:]_block_invoke
+-[ADJPackageHandler sendFirstI:]
+-[ADJPackageHandler sendNextI:]
+___31-[ADJPackageHandler sendNextI:]_block_invoke
+-[ADJPackageHandler updatePackagesI:sessionParameters:]
+___55-[ADJPackageHandler updatePackagesI:sessionParameters:]_block_invoke
+-[ADJPackageHandler flushI:]
+___28-[ADJPackageHandler flushI:]_block_invoke
+-[ADJPackageHandler readPackageQueueI:]
+___39-[ADJPackageHandler readPackageQueueI:]_block_invoke
+-[ADJPackageHandler writePackageQueueS:]
+___40-[ADJPackageHandler writePackageQueueS:]_block_invoke
+-[ADJPackageHandler teardownPackageQueueS]
+___42-[ADJPackageHandler teardownPackageQueueS]_block_invoke
+-[ADJPackageHandler dealloc]
+-[ADJPackageHandler internalQueue]
+-[ADJPackageHandler setInternalQueue:]
+-[ADJPackageHandler sendingSemaphore]
+-[ADJPackageHandler setSendingSemaphore:]
+-[ADJPackageHandler requestHandler]
+-[ADJPackageHandler setRequestHandler:]
+-[ADJPackageHandler packageQueue]
+-[ADJPackageHandler setPackageQueue:]
+-[ADJPackageHandler backoffStrategy]
+-[ADJPackageHandler setBackoffStrategy:]
+-[ADJPackageHandler backoffStrategyForInstallSession]
+-[ADJPackageHandler setBackoffStrategyForInstallSession:]
+-[ADJPackageHandler paused]
+-[ADJPackageHandler setPaused:]
+-[ADJPackageHandler activityHandler]
+-[ADJPackageHandler setActivityHandler:]
+-[ADJPackageHandler logger]
+-[ADJPackageHandler setLogger:]
+-[ADJPackageHandler lastPackageRetriesCount]
+-[ADJPackageHandler setLastPackageRetriesCount:]
+-[ADJPackageHandler .cxx_destruct]
+_OBJC_SELECTOR_REFERENCES_.3
+_OBJC_SELECTOR_REFERENCES_.5
+_OBJC_SELECTOR_REFERENCES_.9
+_OBJC_SELECTOR_REFERENCES_.11
+_OBJC_CLASSLIST_REFERENCES_$_.14
+___block_descriptor_33_e4_20s24s28s_e26_v8?0"ADJPackageHandler"4l
+___block_descriptor_24_e4_20s_e26_v8?0"ADJPackageHandler"4l
+___block_descriptor_20_e26_v8?0"ADJPackageHandler"4l
+_OBJC_SELECTOR_REFERENCES_.49
+___block_literal_global.50
+_OBJC_SELECTOR_REFERENCES_.56
+_OBJC_CLASSLIST_REFERENCES_$_.61
+_OBJC_SELECTOR_REFERENCES_.65
+_OBJC_SELECTOR_REFERENCES_.71
+_OBJC_SELECTOR_REFERENCES_.79
+___block_literal_global.89
+_OBJC_SELECTOR_REFERENCES_.91
+_OBJC_CLASSLIST_REFERENCES_$_.104
+_OBJC_SELECTOR_REFERENCES_.106
+_OBJC_CLASSLIST_REFERENCES_$_.109
+_OBJC_SELECTOR_REFERENCES_.113
+_OBJC_SELECTOR_REFERENCES_.119
+_OBJC_CLASSLIST_REFERENCES_$_.148
+_OBJC_CLASSLIST_REFERENCES_$_.153
+_OBJC_CLASSLIST_REFERENCES_$_.156
+_OBJC_CLASSLIST_REFERENCES_$_.161
+_OBJC_SELECTOR_REFERENCES_.173
+_OBJC_SELECTOR_REFERENCES_.183
+_OBJC_SELECTOR_REFERENCES_.187
+_OBJC_SELECTOR_REFERENCES_.193
+_OBJC_SELECTOR_REFERENCES_.217
+_OBJC_CLASSLIST_REFERENCES_$_.218
+__OBJC_$_CLASS_METHODS_ADJPackageHandler
+__OBJC_$_PROTOCOL_REFS_ADJResponseCallback
+__OBJC_$_PROTOCOL_INSTANCE_METHODS_ADJResponseCallback
+__OBJC_$_PROTOCOL_METHOD_TYPES_ADJResponseCallback
+__OBJC_PROTOCOL_$_ADJResponseCallback
+__OBJC_LABEL_PROTOCOL_$_ADJResponseCallback
+__OBJC_CLASS_PROTOCOLS_$_ADJPackageHandler
+__OBJC_METACLASS_RO_$_ADJPackageHandler
+__OBJC_$_INSTANCE_METHODS_ADJPackageHandler
+_OBJC_IVAR_$_ADJPackageHandler._paused
+_OBJC_IVAR_$_ADJPackageHandler._internalQueue
+_OBJC_IVAR_$_ADJPackageHandler._sendingSemaphore
+_OBJC_IVAR_$_ADJPackageHandler._requestHandler
+_OBJC_IVAR_$_ADJPackageHandler._packageQueue
+_OBJC_IVAR_$_ADJPackageHandler._backoffStrategy
+_OBJC_IVAR_$_ADJPackageHandler._backoffStrategyForInstallSession
+_OBJC_IVAR_$_ADJPackageHandler._activityHandler
+_OBJC_IVAR_$_ADJPackageHandler._logger
+_OBJC_IVAR_$_ADJPackageHandler._lastPackageRetriesCount
+__OBJC_$_INSTANCE_VARIABLES_ADJPackageHandler
+__OBJC_$_PROP_LIST_ADJPackageHandler
+__OBJC_CLASS_RO_$_ADJPackageHandler
++[ADJReachability reachabilityWithHostName:]
++[ADJReachability reachabilityWithAddress:]
++[ADJReachability reachabilityForInternetConnection]
+-[ADJReachability startNotifier]
+-[ADJReachability stopNotifier]
+-[ADJReachability dealloc]
+-[ADJReachability networkStatusForFlags:]
+-[ADJReachability connectionRequired]
+-[ADJReachability currentReachabilityStatus]
+-[ADJReachability currentReachabilityFlags]
+__OBJC_$_CLASS_METHODS_ADJReachability
+__OBJC_METACLASS_RO_$_ADJReachability
+__OBJC_$_INSTANCE_METHODS_ADJReachability
+_OBJC_IVAR_$_ADJReachability._reachabilityRef
+__OBJC_$_INSTANCE_VARIABLES_ADJReachability
+__OBJC_CLASS_RO_$_ADJReachability
+-[ADJSubscription initWithPrice:currency:transactionId:andReceipt:]
+-[ADJSubscription setTransactionDate:]
+-[ADJSubscription setSalesRegion:]
+-[ADJSubscription addCallbackParameter:value:]
+-[ADJSubscription addPartnerParameter:value:]
+-[ADJSubscription callbackParameters]
+-[ADJSubscription partnerParameters]
+-[ADJSubscription copyWithZone:]
+-[ADJSubscription price]
+-[ADJSubscription currency]
+-[ADJSubscription transactionId]
+-[ADJSubscription receipt]
+-[ADJSubscription billingStore]
+-[ADJSubscription transactionDate]
+-[ADJSubscription salesRegion]
+-[ADJSubscription logger]
+-[ADJSubscription setLogger:]
+-[ADJSubscription mutableCallbackParameters]
+-[ADJSubscription setMutableCallbackParameters:]
+-[ADJSubscription mutablePartnerParameters]
+-[ADJSubscription setMutablePartnerParameters:]
+-[ADJSubscription .cxx_destruct]
+_OBJC_CLASSLIST_REFERENCES_$_.16
+_OBJC_SELECTOR_REFERENCES_.44
+__OBJC_CLASS_PROTOCOLS_$_ADJSubscription
+__OBJC_METACLASS_RO_$_ADJSubscription
+__OBJC_$_INSTANCE_METHODS_ADJSubscription
+_OBJC_IVAR_$_ADJSubscription._price
+_OBJC_IVAR_$_ADJSubscription._currency
+_OBJC_IVAR_$_ADJSubscription._transactionId
+_OBJC_IVAR_$_ADJSubscription._receipt
+_OBJC_IVAR_$_ADJSubscription._billingStore
+_OBJC_IVAR_$_ADJSubscription._transactionDate
+_OBJC_IVAR_$_ADJSubscription._salesRegion
+_OBJC_IVAR_$_ADJSubscription._logger
+_OBJC_IVAR_$_ADJSubscription._mutableCallbackParameters
+_OBJC_IVAR_$_ADJSubscription._mutablePartnerParameters
+__OBJC_$_INSTANCE_VARIABLES_ADJSubscription
+__OBJC_$_PROP_LIST_ADJSubscription
+__OBJC_CLASS_RO_$_ADJSubscription
+-[ADJRequestHandler initWithResponseCallback:extraPath:baseUrl:gdprUrl:subscriptionUrl:userAgent:requestTimeout:]
+-[ADJRequestHandler sendPackageByPOST:sendingParameters:]
+-[ADJRequestHandler sendPackageByGET:sendingParameters:]
+-[ADJRequestHandler sendRequest:authorizationHeader:responseData:]
+-[ADJRequestHandler sendNSURLSessionRequest:responseData:]
+___58-[ADJRequestHandler sendNSURLSessionRequest:responseData:]_block_invoke
+-[ADJRequestHandler sendNSURLConnectionRequest:responseData:]
+___61-[ADJRequestHandler sendNSURLConnectionRequest:responseData:]_block_invoke
+-[ADJRequestHandler handleResponseWithData:response:error:responseData:]
+-[ADJRequestHandler requestForPostPackage:clientSdk:parameters:urlHostString:sendingParameters:]
+-[ADJRequestHandler requestForGetPackage:clientSdk:parameters:urlHostString:sendingParameters:]
+-[ADJRequestHandler injectParameters:kvArray:]
+-[ADJRequestHandler buildAuthorizationHeader:activityKind:]
+-[ADJRequestHandler buildAuthorizationHeaderV2:secretId:headersId:nativeVersion:algorithm:]
+-[ADJRequestHandler buildAuthorizationHeaderV1:secretId:parameters:activityKind:]
+-[ADJRequestHandler buildSignatureParameters:appSecret:activityKindS:]
+-[ADJRequestHandler checkAndAddEntry:key:value:]
+-[ADJRequestHandler getValidIdentifier:]
+-[ADJRequestHandler saveJsonResponse:responseData:]
+-[ADJRequestHandler buildJsonDict:exceptionPtr:errorPtr:]
+-[ADJRequestHandler baseUrlString]
+-[ADJRequestHandler setBaseUrlString:]
+-[ADJRequestHandler gdrpUrlString]
+-[ADJRequestHandler setGdrpUrlString:]
+-[ADJRequestHandler subscriptionUrlString]
+-[ADJRequestHandler setSubscriptionUrlString:]
+-[ADJRequestHandler extraPath]
+-[ADJRequestHandler setExtraPath:]
+-[ADJRequestHandler userAgent]
+-[ADJRequestHandler setUserAgent:]
+-[ADJRequestHandler requestTimeout]
+-[ADJRequestHandler setRequestTimeout:]
+-[ADJRequestHandler responseCallback]
+-[ADJRequestHandler setResponseCallback:]
+-[ADJRequestHandler logger]
+-[ADJRequestHandler setLogger:]
+-[ADJRequestHandler defaultSessionConfiguration]
+-[ADJRequestHandler setDefaultSessionConfiguration:]
+-[ADJRequestHandler exceptionKeys]
+-[ADJRequestHandler setExceptionKeys:]
+-[ADJRequestHandler .cxx_destruct]
+_OBJC_CLASSLIST_REFERENCES_$_.19
+_OBJC_CLASSLIST_REFERENCES_$_.24
+_OBJC_CLASSLIST_REFERENCES_$_.47
+_OBJC_SELECTOR_REFERENCES_.59
+_OBJC_SELECTOR_REFERENCES_.61
+_OBJC_CLASSLIST_REFERENCES_$_.66
+_OBJC_SELECTOR_REFERENCES_.74
+_OBJC_CLASSLIST_REFERENCES_$_.95
+___block_descriptor_28_e4_20s24s_e45_v16?0"NSData"4"NSURLResponse"8"NSError"12l
+_OBJC_CLASSLIST_REFERENCES_$_.107
+_OBJC_SELECTOR_REFERENCES_.112
+_OBJC_CLASSLIST_REFERENCES_$_.119
+_OBJC_CLASSLIST_REFERENCES_$_.124
+_OBJC_CLASSLIST_REFERENCES_$_.169
+_OBJC_CLASSLIST_REFERENCES_$_.172
+_OBJC_CLASSLIST_REFERENCES_$_.191
+_OBJC_CLASSLIST_REFERENCES_$_.200
+_OBJC_SELECTOR_REFERENCES_.202
+_OBJC_SELECTOR_REFERENCES_.204
+_OBJC_SELECTOR_REFERENCES_.206
+_OBJC_SELECTOR_REFERENCES_.216
+_OBJC_CLASSLIST_REFERENCES_$_.243
+_OBJC_SELECTOR_REFERENCES_.245
+_OBJC_SELECTOR_REFERENCES_.247
+_OBJC_CLASSLIST_REFERENCES_$_.248
+_OBJC_SELECTOR_REFERENCES_.274
+_OBJC_CLASSLIST_REFERENCES_$_.275
+_OBJC_SELECTOR_REFERENCES_.277
+_OBJC_SELECTOR_REFERENCES_.279
+_OBJC_SELECTOR_REFERENCES_.281
+_OBJC_CLASSLIST_REFERENCES_$_.298
+__OBJC_METACLASS_RO_$_ADJRequestHandler
+__OBJC_$_INSTANCE_METHODS_ADJRequestHandler
+_OBJC_IVAR_$_ADJRequestHandler._baseUrlString
+_OBJC_IVAR_$_ADJRequestHandler._gdrpUrlString
+_OBJC_IVAR_$_ADJRequestHandler._subscriptionUrlString
+_OBJC_IVAR_$_ADJRequestHandler._extraPath
+_OBJC_IVAR_$_ADJRequestHandler._userAgent
+_OBJC_IVAR_$_ADJRequestHandler._responseCallback
+_OBJC_IVAR_$_ADJRequestHandler._logger
+_OBJC_IVAR_$_ADJRequestHandler._defaultSessionConfiguration
+_OBJC_IVAR_$_ADJRequestHandler._exceptionKeys
+_OBJC_IVAR_$_ADJRequestHandler._requestTimeout
+__OBJC_$_INSTANCE_VARIABLES_ADJRequestHandler
+__OBJC_$_PROP_LIST_ADJRequestHandler
+__OBJC_CLASS_RO_$_ADJRequestHandler
++[ADJUtil initialize]
++[ADJUtil teardown]
++[ADJUtil initializeUniversalLinkRegex]
++[ADJUtil initializeShortUniversalLinkRegex]
++[ADJUtil initializeOptionalRedirectRegex]
++[ADJUtil initializeExcludedDeeplinkRegex]
++[ADJUtil initializeSecondsNumberFormatter]
++[ADJUtil initializeNetworkInfoAndCarrier]
++[ADJUtil initializeReachability]
++[ADJUtil updateUrlSessionConfiguration:]
++[ADJUtil clientSdk]
++[ADJUtil getDateFormatter]
++[ADJUtil excludeFromBackup:]
++[ADJUtil formatSeconds1970:]
++[ADJUtil formatDate:]
++[ADJUtil readObject:objectName:class:syncObject:]
++[ADJUtil writeObject:fileName:objectName:syncObject:]
++[ADJUtil migrateFileFromPath:toPath:]
++[ADJUtil getFilePathInDocumentsDir:]
++[ADJUtil getFilePathInAppSupportDir:]
++[ADJUtil checkForDirectoryPresenceInPath:forFolder:]
++[ADJUtil queryString:]
++[ADJUtil queryString:queueSize:]
++[ADJUtil isNull:]
++[ADJUtil isNotNull:]
++[ADJUtil convertDictionaryValues:]
++[ADJUtil idfa]
++[ADJUtil getUpdateTime]
++[ADJUtil getInstallTime]
++[ADJUtil convertUniversalLink:scheme:]
++[ADJUtil removeOptionalRedirect:]
++[ADJUtil secondsNumberFormat:]
++[ADJUtil randomInRange:maxRange:]
+___34+[ADJUtil randomInRange:maxRange:]_block_invoke
++[ADJUtil waitingTime:backoffStrategy:]
++[ADJUtil launchInMainThread:selector:withObject:]
++[ADJUtil launchInMainThread:]
++[ADJUtil isMainThread]
++[ADJUtil isInactive]
++[ADJUtil launchInMainThreadWithInactive:]
+___42+[ADJUtil launchInMainThreadWithInactive:]_block_invoke
+___copy_helper_block_e4_20b
++[ADJUtil isValidParameter:attributeType:parameterName:]
++[ADJUtil mergeParameters:source:parameterName:]
+___48+[ADJUtil mergeParameters:source:parameterName:]_block_invoke
++[ADJUtil launchInQueue:selfInject:block:]
+___42+[ADJUtil launchInQueue:selfInject:block:]_block_invoke
+___copy_helper_block_e4_20b24w
+___destroy_helper_block_e4_20s24w
++[ADJUtil launchSynchronisedWithObject:block:]
++[ADJUtil deleteFileWithName:]
++[ADJUtil deleteFileInPath:]
++[ADJUtil launchDeepLinkMain:]
+___30+[ADJUtil launchDeepLinkMain:]_block_invoke
++[ADJUtil convertDeviceToken:]
++[ADJUtil checkAttributionDetails:]
++[ADJUtil contains:key:value:]
++[ADJUtil readReachabilityFlags]
++[ADJUtil isDeeplinkValid:]
++[ADJUtil sdkVersion]
++[ADJUtil readMCC]
++[ADJUtil readMNC]
++[ADJUtil readCurrentRadioAccessTechnology]
+_userAgent
+_reachability
+_universalLinkRegex
+_secondsNumberFormatter
+_optionalRedirectRegex
+_shortUniversalLinkRegex
+_excludedDeeplinkRegex
+_carrier
+_networkInfo
+_OBJC_CLASSLIST_REFERENCES_$_.36
+_OBJC_CLASSLIST_REFERENCES_$_.68
+_OBJC_CLASSLIST_REFERENCES_$_.69
+_OBJC_SELECTOR_REFERENCES_.78
+_OBJC_CLASSLIST_REFERENCES_$_.83
+_OBJC_CLASSLIST_REFERENCES_$_.106
+_OBJC_SELECTOR_REFERENCES_.110
+_OBJC_CLASSLIST_REFERENCES_$_.142
+_OBJC_CLASSLIST_REFERENCES_$_.167
+_OBJC_CLASSLIST_REFERENCES_$_.184
+_OBJC_CLASSLIST_REFERENCES_$_.251
+_OBJC_SELECTOR_REFERENCES_.253
+_OBJC_SELECTOR_REFERENCES_.255
+_OBJC_SELECTOR_REFERENCES_.259
+_OBJC_CLASSLIST_REFERENCES_$_.260
+_randomInRange:maxRange:.onceToken
+___block_descriptor_20_e5_v4?0l
+_OBJC_SELECTOR_REFERENCES_.351
+_OBJC_CLASSLIST_REFERENCES_$_.368
+_OBJC_SELECTOR_REFERENCES_.370
+_OBJC_CLASSLIST_REFERENCES_$_.373
+___block_descriptor_24_e4_20bs_e5_v4?0l
+_OBJC_SELECTOR_REFERENCES_.387
+___block_descriptor_28_e4_20s24s_e34_v16?0"NSString"4"NSString"8^c12l
+___block_descriptor_28_e4_20bs24w_e5_v4?0l
+_OBJC_CLASSLIST_REFERENCES_$_.405
+_OBJC_SELECTOR_REFERENCES_.407
+_OBJC_SELECTOR_REFERENCES_.413
+_OBJC_SELECTOR_REFERENCES_.422
+_OBJC_CLASSLIST_REFERENCES_$_.427
+_OBJC_SELECTOR_REFERENCES_.485
+_OBJC_SELECTOR_REFERENCES_.487
+_OBJC_SELECTOR_REFERENCES_.491
+__OBJC_$_CLASS_METHODS_ADJUtil
+__OBJC_METACLASS_RO_$_ADJUtil
+__OBJC_CLASS_RO_$_ADJUtil
++[ADJEvent eventWithEventToken:]
+-[ADJEvent initWithEventToken:]
+-[ADJEvent addCallbackParameter:value:]
+-[ADJEvent addPartnerParameter:value:]
+-[ADJEvent setRevenue:currency:]
+-[ADJEvent setTransactionId:]
+-[ADJEvent setCallbackId:]
+-[ADJEvent callbackParameters]
+-[ADJEvent partnerParameters]
+-[ADJEvent checkEventToken:]
+-[ADJEvent checkRevenue:currency:]
+-[ADJEvent isValid]
+-[ADJEvent setReceipt:transactionId:]
+-[ADJEvent checkReceipt:transactionId:]
+-[ADJEvent copyWithZone:]
+-[ADJEvent revenue]
+-[ADJEvent eventToken]
+-[ADJEvent transactionId]
+-[ADJEvent callbackId]
+-[ADJEvent currency]
+-[ADJEvent receipt]
+-[ADJEvent emptyReceipt]
+-[ADJEvent logger]
+-[ADJEvent setLogger:]
+-[ADJEvent callbackMutableParameters]
+-[ADJEvent setCallbackMutableParameters:]
+-[ADJEvent partnerMutableParameters]
+-[ADJEvent setPartnerMutableParameters:]
+-[ADJEvent .cxx_destruct]
+_OBJC_CLASSLIST_REFERENCES_$_.3
+_OBJC_CLASSLIST_REFERENCES_$_.12
+_OBJC_CLASSLIST_REFERENCES_$_.40
+__OBJC_$_CLASS_METHODS_ADJEvent
+__OBJC_CLASS_PROTOCOLS_$_ADJEvent
+__OBJC_METACLASS_RO_$_ADJEvent
+__OBJC_$_INSTANCE_METHODS_ADJEvent
+_OBJC_IVAR_$_ADJEvent._emptyReceipt
+_OBJC_IVAR_$_ADJEvent._revenue
+_OBJC_IVAR_$_ADJEvent._eventToken
+_OBJC_IVAR_$_ADJEvent._transactionId
+_OBJC_IVAR_$_ADJEvent._callbackId
+_OBJC_IVAR_$_ADJEvent._currency
+_OBJC_IVAR_$_ADJEvent._receipt
+_OBJC_IVAR_$_ADJEvent._logger
+_OBJC_IVAR_$_ADJEvent._callbackMutableParameters
+_OBJC_IVAR_$_ADJEvent._partnerMutableParameters
+__OBJC_$_INSTANCE_VARIABLES_ADJEvent
+__OBJC_$_PROP_LIST_ADJEvent
+__OBJC_CLASS_RO_$_ADJEvent
++[ADJDeviceInfo deviceInfoWithSdkPrefix:]
+-[ADJDeviceInfo initWithSdkPrefix:]
+-[ADJDeviceInfo injectInstallReceipt:]
+-[ADJDeviceInfo idForAdvertisers]
+-[ADJDeviceInfo setIdForAdvertisers:]
+-[ADJDeviceInfo fbAnonymousId]
+-[ADJDeviceInfo setFbAnonymousId:]
+-[ADJDeviceInfo trackingEnabled]
+-[ADJDeviceInfo setTrackingEnabled:]
+-[ADJDeviceInfo vendorId]
+-[ADJDeviceInfo setVendorId:]
+-[ADJDeviceInfo clientSdk]
+-[ADJDeviceInfo setClientSdk:]
+-[ADJDeviceInfo bundeIdentifier]
+-[ADJDeviceInfo setBundeIdentifier:]
+-[ADJDeviceInfo bundleVersion]
+-[ADJDeviceInfo setBundleVersion:]
+-[ADJDeviceInfo bundleShortVersion]
+-[ADJDeviceInfo setBundleShortVersion:]
+-[ADJDeviceInfo deviceType]
+-[ADJDeviceInfo setDeviceType:]
+-[ADJDeviceInfo deviceName]
+-[ADJDeviceInfo setDeviceName:]
+-[ADJDeviceInfo osName]
+-[ADJDeviceInfo setOsName:]
+-[ADJDeviceInfo systemVersion]
+-[ADJDeviceInfo setSystemVersion:]
+-[ADJDeviceInfo languageCode]
+-[ADJDeviceInfo setLanguageCode:]
+-[ADJDeviceInfo countryCode]
+-[ADJDeviceInfo setCountryCode:]
+-[ADJDeviceInfo machineModel]
+-[ADJDeviceInfo setMachineModel:]
+-[ADJDeviceInfo cpuSubtype]
+-[ADJDeviceInfo setCpuSubtype:]
+-[ADJDeviceInfo installReceiptBase64]
+-[ADJDeviceInfo setInstallReceiptBase64:]
+-[ADJDeviceInfo osBuild]
+-[ADJDeviceInfo setOsBuild:]
+-[ADJDeviceInfo .cxx_destruct]
+_OBJC_CLASSLIST_REFERENCES_$_.6
+_OBJC_CLASSLIST_REFERENCES_$_.9
+_OBJC_CLASSLIST_REFERENCES_$_.60
+_OBJC_CLASSLIST_REFERENCES_$_.73
+_OBJC_CLASSLIST_REFERENCES_$_.89
+__OBJC_$_CLASS_METHODS_ADJDeviceInfo
+__OBJC_METACLASS_RO_$_ADJDeviceInfo
+__OBJC_$_INSTANCE_METHODS_ADJDeviceInfo
+_OBJC_IVAR_$_ADJDeviceInfo._trackingEnabled
+_OBJC_IVAR_$_ADJDeviceInfo._idForAdvertisers
+_OBJC_IVAR_$_ADJDeviceInfo._fbAnonymousId
+_OBJC_IVAR_$_ADJDeviceInfo._vendorId
+_OBJC_IVAR_$_ADJDeviceInfo._clientSdk
+_OBJC_IVAR_$_ADJDeviceInfo._bundeIdentifier
+_OBJC_IVAR_$_ADJDeviceInfo._bundleVersion
+_OBJC_IVAR_$_ADJDeviceInfo._bundleShortVersion
+_OBJC_IVAR_$_ADJDeviceInfo._deviceType
+_OBJC_IVAR_$_ADJDeviceInfo._deviceName
+_OBJC_IVAR_$_ADJDeviceInfo._osName
+_OBJC_IVAR_$_ADJDeviceInfo._systemVersion
+_OBJC_IVAR_$_ADJDeviceInfo._languageCode
+_OBJC_IVAR_$_ADJDeviceInfo._countryCode
+_OBJC_IVAR_$_ADJDeviceInfo._machineModel
+_OBJC_IVAR_$_ADJDeviceInfo._cpuSubtype
+_OBJC_IVAR_$_ADJDeviceInfo._installReceiptBase64
+_OBJC_IVAR_$_ADJDeviceInfo._osBuild
+__OBJC_$_INSTANCE_VARIABLES_ADJDeviceInfo
+__OBJC_$_PROP_LIST_ADJDeviceInfo
+__OBJC_CLASS_RO_$_ADJDeviceInfo
+-[ADJAttributionHandler initWithActivityHandler:startsSending:userAgent:extraPath:]
+___83-[ADJAttributionHandler initWithActivityHandler:startsSending:userAgent:extraPath:]_block_invoke
+___copy_helper_block_e4_20w
+___destroy_helper_block_e4_20w
+-[ADJAttributionHandler checkSessionResponse:]
+___46-[ADJAttributionHandler checkSessionResponse:]_block_invoke
+-[ADJAttributionHandler checkSdkClickResponse:]
+___47-[ADJAttributionHandler checkSdkClickResponse:]_block_invoke
+-[ADJAttributionHandler checkAttributionResponse:]
+___50-[ADJAttributionHandler checkAttributionResponse:]_block_invoke
+-[ADJAttributionHandler getAttribution]
+___39-[ADJAttributionHandler getAttribution]_block_invoke
+-[ADJAttributionHandler pauseSending]
+-[ADJAttributionHandler resumeSending]
+-[ADJAttributionHandler checkSessionResponseI:sessionResponseData:]
+-[ADJAttributionHandler checkSdkClickResponseI:sdkClickResponseData:]
+-[ADJAttributionHandler checkAttributionResponseI:attributionResponseData:]
+-[ADJAttributionHandler checkAttributionI:responseData:]
+-[ADJAttributionHandler checkDeeplinkI:attributionResponseData:]
+-[ADJAttributionHandler requestAttributionI:]
+-[ADJAttributionHandler responseCallback:]
+-[ADJAttributionHandler waitRequestAttributionWithDelayI:milliSecondsDelay:]
+-[ADJAttributionHandler buildAndGetAttributionPackageI:]
+-[ADJAttributionHandler teardown]
+-[ADJAttributionHandler internalQueue]
+-[ADJAttributionHandler setInternalQueue:]
+-[ADJAttributionHandler requestHandler]
+-[ADJAttributionHandler setRequestHandler:]
+-[ADJAttributionHandler activityHandler]
+-[ADJAttributionHandler setActivityHandler:]
+-[ADJAttributionHandler logger]
+-[ADJAttributionHandler setLogger:]
+-[ADJAttributionHandler attributionTimer]
+-[ADJAttributionHandler setAttributionTimer:]
+-[ADJAttributionHandler paused]
+-[ADJAttributionHandler setPaused:]
+-[ADJAttributionHandler lastInitiatedBy]
+-[ADJAttributionHandler setLastInitiatedBy:]
+-[ADJAttributionHandler .cxx_destruct]
+_OBJC_CLASSLIST_REFERENCES_$_.4
+_OBJC_CLASSLIST_REFERENCES_$_.25
+___block_descriptor_24_e4_20w_e5_v4?0l
+___block_descriptor_24_e4_20s_e30_v8?0"ADJAttributionHandler"4l
+___block_descriptor_20_e30_v8?0"ADJAttributionHandler"4l
+_OBJC_CLASSLIST_REFERENCES_$_.77
+_OBJC_SELECTOR_REFERENCES_.83
+_OBJC_CLASSLIST_REFERENCES_$_.86
+_OBJC_CLASSLIST_REFERENCES_$_.111
+_OBJC_CLASSLIST_REFERENCES_$_.118
+_OBJC_CLASSLIST_REFERENCES_$_.137
+_OBJC_SELECTOR_REFERENCES_.143
+_OBJC_SELECTOR_REFERENCES_.151
+_OBJC_CLASSLIST_REFERENCES_$_.152
+__OBJC_CLASS_PROTOCOLS_$_ADJAttributionHandler
+__OBJC_METACLASS_RO_$_ADJAttributionHandler
+__OBJC_$_INSTANCE_METHODS_ADJAttributionHandler
+_OBJC_IVAR_$_ADJAttributionHandler._paused
+_OBJC_IVAR_$_ADJAttributionHandler._internalQueue
+_OBJC_IVAR_$_ADJAttributionHandler._requestHandler
+_OBJC_IVAR_$_ADJAttributionHandler._activityHandler
+_OBJC_IVAR_$_ADJAttributionHandler._logger
+_OBJC_IVAR_$_ADJAttributionHandler._attributionTimer
+_OBJC_IVAR_$_ADJAttributionHandler._lastInitiatedBy
+__OBJC_$_INSTANCE_VARIABLES_ADJAttributionHandler
+__OBJC_$_PROP_LIST_ADJAttributionHandler
+__OBJC_CLASS_RO_$_ADJAttributionHandler
++[ADJAttribution dataWithJsonDict:adid:]
+-[ADJAttribution initWithJsonDict:adid:]
+-[ADJAttribution isEqualToAttribution:]
+-[ADJAttribution dictionary]
+-[ADJAttribution description]
+-[ADJAttribution isEqual:]
+-[ADJAttribution hash]
+-[ADJAttribution copyWithZone:]
+-[ADJAttribution initWithCoder:]
+-[ADJAttribution encodeWithCoder:]
+-[ADJAttribution trackerToken]
+-[ADJAttribution setTrackerToken:]
+-[ADJAttribution trackerName]
+-[ADJAttribution setTrackerName:]
+-[ADJAttribution network]
+-[ADJAttribution setNetwork:]
+-[ADJAttribution campaign]
+-[ADJAttribution setCampaign:]
+-[ADJAttribution adgroup]
+-[ADJAttribution setAdgroup:]
+-[ADJAttribution creative]
+-[ADJAttribution setCreative:]
+-[ADJAttribution clickLabel]
+-[ADJAttribution setClickLabel:]
+-[ADJAttribution adid]
+-[ADJAttribution setAdid:]
+-[ADJAttribution .cxx_destruct]
+__OBJC_$_CLASS_METHODS_ADJAttribution
+__OBJC_CLASS_PROTOCOLS_$_ADJAttribution
+__OBJC_METACLASS_RO_$_ADJAttribution
+__OBJC_$_INSTANCE_METHODS_ADJAttribution
+_OBJC_IVAR_$_ADJAttribution._trackerToken
+_OBJC_IVAR_$_ADJAttribution._trackerName
+_OBJC_IVAR_$_ADJAttribution._network
+_OBJC_IVAR_$_ADJAttribution._campaign
+_OBJC_IVAR_$_ADJAttribution._adgroup
+_OBJC_IVAR_$_ADJAttribution._creative
+_OBJC_IVAR_$_ADJAttribution._clickLabel
+_OBJC_IVAR_$_ADJAttribution._adid
+__OBJC_$_INSTANCE_VARIABLES_ADJAttribution
+__OBJC_$_PROP_LIST_ADJAttribution
+__OBJC_CLASS_RO_$_ADJAttribution
++[ADJConfig configWithAppToken:environment:]
++[ADJConfig configWithAppToken:environment:allowSuppressLogLevel:]
+-[ADJConfig initWithAppToken:environment:]
+-[ADJConfig initWithAppToken:environment:allowSuppressLogLevel:]
+-[ADJConfig setLogLevel:]
+-[ADJConfig setLogLevel:environment:]
+-[ADJConfig setDelegate:]
+-[ADJConfig checkEnvironment:]
+-[ADJConfig checkAppToken:]
+-[ADJConfig isValid]
+-[ADJConfig setAppSecret:info1:info2:info3:info4:]
+-[ADJConfig copyWithZone:]
+-[ADJConfig sdkPrefix]
+-[ADJConfig setSdkPrefix:]
+-[ADJConfig defaultTracker]
+-[ADJConfig setDefaultTracker:]
+-[ADJConfig externalDeviceId]
+-[ADJConfig setExternalDeviceId:]
+-[ADJConfig appToken]
+-[ADJConfig environment]
+-[ADJConfig logLevel]
+-[ADJConfig eventBufferingEnabled]
+-[ADJConfig setEventBufferingEnabled:]
+-[ADJConfig delegate]
+-[ADJConfig sendInBackground]
+-[ADJConfig setSendInBackground:]
+-[ADJConfig allowiAdInfoReading]
+-[ADJConfig setAllowiAdInfoReading:]
+-[ADJConfig allowIdfaReading]
+-[ADJConfig setAllowIdfaReading:]
+-[ADJConfig delayStart]
+-[ADJConfig setDelayStart:]
+-[ADJConfig userAgent]
+-[ADJConfig setUserAgent:]
+-[ADJConfig isDeviceKnown]
+-[ADJConfig setIsDeviceKnown:]
+-[ADJConfig secretId]
+-[ADJConfig appSecret]
+-[ADJConfig logger]
+-[ADJConfig setLogger:]
+-[ADJConfig .cxx_destruct]
+_OBJC_CLASSLIST_REFERENCES_$_.30
+_OBJC_SELECTOR_REFERENCES_.131
+__OBJC_$_CLASS_METHODS_ADJConfig
+__OBJC_CLASS_PROTOCOLS_$_ADJConfig
+__OBJC_METACLASS_RO_$_ADJConfig
+__OBJC_$_INSTANCE_METHODS_ADJConfig
+_OBJC_IVAR_$_ADJConfig._eventBufferingEnabled
+_OBJC_IVAR_$_ADJConfig._sendInBackground
+_OBJC_IVAR_$_ADJConfig._allowiAdInfoReading
+_OBJC_IVAR_$_ADJConfig._allowIdfaReading
+_OBJC_IVAR_$_ADJConfig._isDeviceKnown
+_OBJC_IVAR_$_ADJConfig._sdkPrefix
+_OBJC_IVAR_$_ADJConfig._defaultTracker
+_OBJC_IVAR_$_ADJConfig._externalDeviceId
+_OBJC_IVAR_$_ADJConfig._appToken
+_OBJC_IVAR_$_ADJConfig._environment
+_OBJC_IVAR_$_ADJConfig._logLevel
+_OBJC_IVAR_$_ADJConfig._delegate
+_OBJC_IVAR_$_ADJConfig._userAgent
+_OBJC_IVAR_$_ADJConfig._secretId
+_OBJC_IVAR_$_ADJConfig._appSecret
+_OBJC_IVAR_$_ADJConfig._logger
+_OBJC_IVAR_$_ADJConfig._delayStart
+__OBJC_$_INSTANCE_VARIABLES_ADJConfig
+__OBJC_$_PROP_LIST_ADJConfig
+__OBJC_CLASS_RO_$_ADJConfig
++[ADJTimerOnce timerWithBlock:queue:name:]
+-[ADJTimerOnce initBlock:queue:name:]
+___37-[ADJTimerOnce initBlock:queue:name:]_block_invoke
+___copy_helper_block_e4_20s24b
+-[ADJTimerOnce fireIn]
+-[ADJTimerOnce startIn:]
+-[ADJTimerOnce cancel:]
+-[ADJTimerOnce cancel]
+-[ADJTimerOnce dealloc]
+-[ADJTimerOnce internalQueue]
+-[ADJTimerOnce setInternalQueue:]
+-[ADJTimerOnce source]
+-[ADJTimerOnce setSource:]
+-[ADJTimerOnce block]
+-[ADJTimerOnce setBlock:]
+-[ADJTimerOnce start]
+-[ADJTimerOnce fireDate]
+-[ADJTimerOnce setFireDate:]
+-[ADJTimerOnce logger]
+-[ADJTimerOnce setLogger:]
+-[ADJTimerOnce name]
+-[ADJTimerOnce setName:]
+-[ADJTimerOnce .cxx_destruct]
+___block_descriptor_28_e4_20s24bs_e5_v4?0l
+_OBJC_CLASSLIST_REFERENCES_$_.23
+_OBJC_CLASSLIST_REFERENCES_$_.28
+__OBJC_$_CLASS_METHODS_ADJTimerOnce
+__OBJC_METACLASS_RO_$_ADJTimerOnce
+__OBJC_$_INSTANCE_METHODS_ADJTimerOnce
+_OBJC_IVAR_$_ADJTimerOnce._internalQueue
+_OBJC_IVAR_$_ADJTimerOnce._source
+_OBJC_IVAR_$_ADJTimerOnce._block
+_OBJC_IVAR_$_ADJTimerOnce._fireDate
+_OBJC_IVAR_$_ADJTimerOnce._logger
+_OBJC_IVAR_$_ADJTimerOnce._name
+_OBJC_IVAR_$_ADJTimerOnce._start
+__OBJC_$_INSTANCE_VARIABLES_ADJTimerOnce
+__OBJC_$_PROP_LIST_ADJTimerOnce
+__OBJC_CLASS_RO_$_ADJTimerOnce
++[ADJTimerCycle timerWithBlock:queue:startTime:intervalTime:name:]
+-[ADJTimerCycle initBlock:queue:startTime:intervalTime:name:]
+___61-[ADJTimerCycle initBlock:queue:startTime:intervalTime:name:]_block_invoke
+-[ADJTimerCycle resume]
+-[ADJTimerCycle suspend]
+-[ADJTimerCycle cancel]
+-[ADJTimerCycle dealloc]
+-[ADJTimerCycle source]
+-[ADJTimerCycle setSource:]
+-[ADJTimerCycle suspended]
+-[ADJTimerCycle setSuspended:]
+-[ADJTimerCycle logger]
+-[ADJTimerCycle setLogger:]
+-[ADJTimerCycle name]
+-[ADJTimerCycle setName:]
+-[ADJTimerCycle .cxx_destruct]
+__OBJC_$_CLASS_METHODS_ADJTimerCycle
+__OBJC_METACLASS_RO_$_ADJTimerCycle
+__OBJC_$_INSTANCE_METHODS_ADJTimerCycle
+_OBJC_IVAR_$_ADJTimerCycle._suspended
+_OBJC_IVAR_$_ADJTimerCycle._source
+_OBJC_IVAR_$_ADJTimerCycle._logger
+_OBJC_IVAR_$_ADJTimerCycle._name
+__OBJC_$_INSTANCE_VARIABLES_ADJTimerCycle
+__OBJC_$_PROP_LIST_ADJTimerCycle
+__OBJC_CLASS_RO_$_ADJTimerCycle
+-[ADJResponseData init]
++[ADJResponseData responseData]
++[ADJResponseData buildResponseData:]
+-[ADJResponseData description]
+-[ADJResponseData copyWithZone:]
+-[ADJResponseData activityKind]
+-[ADJResponseData setActivityKind:]
+-[ADJResponseData message]
+-[ADJResponseData setMessage:]
+-[ADJResponseData timeStamp]
+-[ADJResponseData setTimeStamp:]
+-[ADJResponseData adid]
+-[ADJResponseData setAdid:]
+-[ADJResponseData success]
+-[ADJResponseData setSuccess:]
+-[ADJResponseData willRetry]
+-[ADJResponseData setWillRetry:]
+-[ADJResponseData trackingState]
+-[ADJResponseData setTrackingState:]
+-[ADJResponseData jsonResponse]
+-[ADJResponseData setJsonResponse:]
+-[ADJResponseData attribution]
+-[ADJResponseData setAttribution:]
+-[ADJResponseData sendingParameters]
+-[ADJResponseData setSendingParameters:]
+-[ADJResponseData sdkClickPackage]
+-[ADJResponseData setSdkClickPackage:]
+-[ADJResponseData .cxx_destruct]
+-[ADJSessionResponseData successResponseData]
+-[ADJSessionResponseData failureResponseData]
+-[ADJSessionResponseData copyWithZone:]
+-[ADJEventResponseData initWithEventToken:callbackId:]
+-[ADJEventResponseData successResponseData]
+-[ADJEventResponseData failureResponseData]
+-[ADJEventResponseData description]
+-[ADJEventResponseData copyWithZone:]
+-[ADJEventResponseData eventToken]
+-[ADJEventResponseData setEventToken:]
+-[ADJEventResponseData callbackId]
+-[ADJEventResponseData setCallbackId:]
+-[ADJEventResponseData .cxx_destruct]
+-[ADJAttributionResponseData copyWithZone:]
+-[ADJAttributionResponseData description]
+-[ADJAttributionResponseData deeplink]
+-[ADJAttributionResponseData setDeeplink:]
+-[ADJAttributionResponseData .cxx_destruct]
+_OBJC_CLASSLIST_REFERENCES_$_.7
+__OBJC_$_CLASS_METHODS_ADJResponseData
+__OBJC_CLASS_PROTOCOLS_$_ADJResponseData
+__OBJC_METACLASS_RO_$_ADJResponseData
+__OBJC_$_INSTANCE_METHODS_ADJResponseData
+_OBJC_IVAR_$_ADJResponseData._success
+_OBJC_IVAR_$_ADJResponseData._willRetry
+_OBJC_IVAR_$_ADJResponseData._activityKind
+_OBJC_IVAR_$_ADJResponseData._message
+_OBJC_IVAR_$_ADJResponseData._timeStamp
+_OBJC_IVAR_$_ADJResponseData._adid
+_OBJC_IVAR_$_ADJResponseData._trackingState
+_OBJC_IVAR_$_ADJResponseData._jsonResponse
+_OBJC_IVAR_$_ADJResponseData._attribution
+_OBJC_IVAR_$_ADJResponseData._sendingParameters
+_OBJC_IVAR_$_ADJResponseData._sdkClickPackage
+__OBJC_$_INSTANCE_VARIABLES_ADJResponseData
+__OBJC_$_PROP_LIST_ADJResponseData
+__OBJC_CLASS_RO_$_ADJResponseData
+_OBJC_CLASSLIST_REFERENCES_$_.116
+_OBJC_CLASSLIST_SUP_REFS_$_.122
+__OBJC_METACLASS_RO_$_ADJSessionResponseData
+__OBJC_$_INSTANCE_METHODS_ADJSessionResponseData
+__OBJC_CLASS_RO_$_ADJSessionResponseData
+__OBJC_METACLASS_RO_$_ADJSdkClickResponseData
+__OBJC_CLASS_RO_$_ADJSdkClickResponseData
+_OBJC_CLASSLIST_SUP_REFS_$_.127
+_OBJC_CLASSLIST_REFERENCES_$_.132
+_OBJC_CLASSLIST_REFERENCES_$_.139
+_OBJC_IVAR_$_ADJEventResponseData._eventToken
+_OBJC_IVAR_$_ADJEventResponseData._callbackId
+__OBJC_METACLASS_RO_$_ADJEventResponseData
+__OBJC_$_INSTANCE_METHODS_ADJEventResponseData
+__OBJC_$_INSTANCE_VARIABLES_ADJEventResponseData
+__OBJC_$_PROP_LIST_ADJEventResponseData
+__OBJC_CLASS_RO_$_ADJEventResponseData
+_OBJC_CLASSLIST_SUP_REFS_$_.153
+_OBJC_SELECTOR_REFERENCES_.157
+_OBJC_IVAR_$_ADJAttributionResponseData._deeplink
+__OBJC_METACLASS_RO_$_ADJAttributionResponseData
+__OBJC_$_INSTANCE_METHODS_ADJAttributionResponseData
+__OBJC_$_INSTANCE_VARIABLES_ADJAttributionResponseData
+__OBJC_$_PROP_LIST_ADJAttributionResponseData
+__OBJC_CLASS_RO_$_ADJAttributionResponseData
+-[ADJSessionSuccess init]
++[ADJSessionSuccess sessionSuccessResponseData]
+-[ADJSessionSuccess copyWithZone:]
+-[ADJSessionSuccess description]
+-[ADJSessionSuccess message]
+-[ADJSessionSuccess setMessage:]
+-[ADJSessionSuccess timeStamp]
+-[ADJSessionSuccess setTimeStamp:]
+-[ADJSessionSuccess adid]
+-[ADJSessionSuccess setAdid:]
+-[ADJSessionSuccess jsonResponse]
+-[ADJSessionSuccess setJsonResponse:]
+-[ADJSessionSuccess .cxx_destruct]
+__OBJC_$_CLASS_METHODS_ADJSessionSuccess
+__OBJC_CLASS_PROTOCOLS_$_ADJSessionSuccess
+__OBJC_METACLASS_RO_$_ADJSessionSuccess
+__OBJC_$_INSTANCE_METHODS_ADJSessionSuccess
+_OBJC_IVAR_$_ADJSessionSuccess._message
+_OBJC_IVAR_$_ADJSessionSuccess._timeStamp
+_OBJC_IVAR_$_ADJSessionSuccess._adid
+_OBJC_IVAR_$_ADJSessionSuccess._jsonResponse
+__OBJC_$_INSTANCE_VARIABLES_ADJSessionSuccess
+__OBJC_$_PROP_LIST_ADJSessionSuccess
+__OBJC_CLASS_RO_$_ADJSessionSuccess
+-[ADJSessionFailure init]
++[ADJSessionFailure sessionFailureResponseData]
+-[ADJSessionFailure copyWithZone:]
+-[ADJSessionFailure description]
+-[ADJSessionFailure message]
+-[ADJSessionFailure setMessage:]
+-[ADJSessionFailure timeStamp]
+-[ADJSessionFailure setTimeStamp:]
+-[ADJSessionFailure adid]
+-[ADJSessionFailure setAdid:]
+-[ADJSessionFailure willRetry]
+-[ADJSessionFailure setWillRetry:]
+-[ADJSessionFailure jsonResponse]
+-[ADJSessionFailure setJsonResponse:]
+-[ADJSessionFailure .cxx_destruct]
+_OBJC_CLASSLIST_REFERENCES_$_.27
+__OBJC_$_CLASS_METHODS_ADJSessionFailure
+__OBJC_CLASS_PROTOCOLS_$_ADJSessionFailure
+__OBJC_METACLASS_RO_$_ADJSessionFailure
+__OBJC_$_INSTANCE_METHODS_ADJSessionFailure
+_OBJC_IVAR_$_ADJSessionFailure._willRetry
+_OBJC_IVAR_$_ADJSessionFailure._message
+_OBJC_IVAR_$_ADJSessionFailure._timeStamp
+_OBJC_IVAR_$_ADJSessionFailure._adid
+_OBJC_IVAR_$_ADJSessionFailure._jsonResponse
+__OBJC_$_INSTANCE_VARIABLES_ADJSessionFailure
+__OBJC_$_PROP_LIST_ADJSessionFailure
+__OBJC_CLASS_RO_$_ADJSessionFailure
+-[ADJEventSuccess init]
++[ADJEventSuccess eventSuccessResponseData]
+-[ADJEventSuccess copyWithZone:]
+-[ADJEventSuccess description]
+-[ADJEventSuccess message]
+-[ADJEventSuccess setMessage:]
+-[ADJEventSuccess timeStamp]
+-[ADJEventSuccess setTimeStamp:]
+-[ADJEventSuccess adid]
+-[ADJEventSuccess setAdid:]
+-[ADJEventSuccess eventToken]
+-[ADJEventSuccess setEventToken:]
+-[ADJEventSuccess callbackId]
+-[ADJEventSuccess setCallbackId:]
+-[ADJEventSuccess jsonResponse]
+-[ADJEventSuccess setJsonResponse:]
+-[ADJEventSuccess .cxx_destruct]
+__OBJC_$_CLASS_METHODS_ADJEventSuccess
+__OBJC_METACLASS_RO_$_ADJEventSuccess
+__OBJC_$_INSTANCE_METHODS_ADJEventSuccess
+_OBJC_IVAR_$_ADJEventSuccess._message
+_OBJC_IVAR_$_ADJEventSuccess._timeStamp
+_OBJC_IVAR_$_ADJEventSuccess._adid
+_OBJC_IVAR_$_ADJEventSuccess._eventToken
+_OBJC_IVAR_$_ADJEventSuccess._callbackId
+_OBJC_IVAR_$_ADJEventSuccess._jsonResponse
+__OBJC_$_INSTANCE_VARIABLES_ADJEventSuccess
+__OBJC_$_PROP_LIST_ADJEventSuccess
+__OBJC_CLASS_RO_$_ADJEventSuccess
+-[ADJEventFailure init]
++[ADJEventFailure eventFailureResponseData]
+-[ADJEventFailure copyWithZone:]
+-[ADJEventFailure description]
+-[ADJEventFailure message]
+-[ADJEventFailure setMessage:]
+-[ADJEventFailure timeStamp]
+-[ADJEventFailure setTimeStamp:]
+-[ADJEventFailure adid]
+-[ADJEventFailure setAdid:]
+-[ADJEventFailure eventToken]
+-[ADJEventFailure setEventToken:]
+-[ADJEventFailure callbackId]
+-[ADJEventFailure setCallbackId:]
+-[ADJEventFailure willRetry]
+-[ADJEventFailure setWillRetry:]
+-[ADJEventFailure jsonResponse]
+-[ADJEventFailure setJsonResponse:]
+-[ADJEventFailure .cxx_destruct]
+__OBJC_$_CLASS_METHODS_ADJEventFailure
+__OBJC_METACLASS_RO_$_ADJEventFailure
+__OBJC_$_INSTANCE_METHODS_ADJEventFailure
+_OBJC_IVAR_$_ADJEventFailure._willRetry
+_OBJC_IVAR_$_ADJEventFailure._message
+_OBJC_IVAR_$_ADJEventFailure._timeStamp
+_OBJC_IVAR_$_ADJEventFailure._adid
+_OBJC_IVAR_$_ADJEventFailure._eventToken
+_OBJC_IVAR_$_ADJEventFailure._callbackId
+_OBJC_IVAR_$_ADJEventFailure._jsonResponse
+__OBJC_$_INSTANCE_VARIABLES_ADJEventFailure
+__OBJC_$_PROP_LIST_ADJEventFailure
+__OBJC_CLASS_RO_$_ADJEventFailure
++[ADJSystemProfile is64bit]
++[ADJSystemProfile cpuFamily]
++[ADJSystemProfile cpuCount]
++[ADJSystemProfile machineArch]
++[ADJSystemProfile machineModel]
++[ADJSystemProfile cpuBrand]
++[ADJSystemProfile cpuFeatures]
++[ADJSystemProfile cpuVendor]
++[ADJSystemProfile osVersion]
++[ADJSystemProfile readSysctlbByNameString:errorLog:]
++[ADJSystemProfile appleLanguage]
++[ADJSystemProfile cpuSpeed]
++[ADJSystemProfile ramsize]
++[ADJSystemProfile cpuType]
++[ADJSystemProfile cpuSubtype]
++[ADJSystemProfile readCpuTypeSubtype:readSubType:cpusubtype:]
+_OBJC_CLASSLIST_REFERENCES_$_.57
+__OBJC_$_CLASS_METHODS_ADJSystemProfile
+__OBJC_METACLASS_RO_$_ADJSystemProfile
+__OBJC_CLASS_RO_$_ADJSystemProfile
+-[ADJBackoffStrategy initWithType:]
++[ADJBackoffStrategy backoffStrategyWithType:]
+-[ADJBackoffStrategy saveStrategy:secondMultiplier:maxWait:minRange:maxRange:]
+-[ADJBackoffStrategy minRange]
+-[ADJBackoffStrategy setMinRange:]
+-[ADJBackoffStrategy maxRange]
+-[ADJBackoffStrategy setMaxRange:]
+-[ADJBackoffStrategy minRetries]
+-[ADJBackoffStrategy setMinRetries:]
+-[ADJBackoffStrategy maxWait]
+-[ADJBackoffStrategy setMaxWait:]
+-[ADJBackoffStrategy secondMultiplier]
+-[ADJBackoffStrategy setSecondMultiplier:]
+__OBJC_$_CLASS_METHODS_ADJBackoffStrategy
+__OBJC_METACLASS_RO_$_ADJBackoffStrategy
+__OBJC_$_INSTANCE_METHODS_ADJBackoffStrategy
+_OBJC_IVAR_$_ADJBackoffStrategy._minRetries
+_OBJC_IVAR_$_ADJBackoffStrategy._minRange
+_OBJC_IVAR_$_ADJBackoffStrategy._maxRange
+_OBJC_IVAR_$_ADJBackoffStrategy._maxWait
+_OBJC_IVAR_$_ADJBackoffStrategy._secondMultiplier
+__OBJC_$_INSTANCE_VARIABLES_ADJBackoffStrategy
+__OBJC_$_PROP_LIST_ADJBackoffStrategy
+__OBJC_CLASS_RO_$_ADJBackoffStrategy
+-[ADJSdkClickHandler initWithActivityHandler:startsSending:userAgent:extraPath:]
+___80-[ADJSdkClickHandler initWithActivityHandler:startsSending:userAgent:extraPath:]_block_invoke
+-[ADJSdkClickHandler pauseSending]
+-[ADJSdkClickHandler resumeSending]
+-[ADJSdkClickHandler sendSdkClick:]
+___35-[ADJSdkClickHandler sendSdkClick:]_block_invoke
+-[ADJSdkClickHandler sendNextSdkClick]
+___38-[ADJSdkClickHandler sendNextSdkClick]_block_invoke
+-[ADJSdkClickHandler teardown]
+-[ADJSdkClickHandler initI:activityHandler:startsSending:]
+-[ADJSdkClickHandler sendSdkClickI:sdkClickPackage:]
+-[ADJSdkClickHandler sendNextSdkClickI:]
+___40-[ADJSdkClickHandler sendNextSdkClickI:]_block_invoke
+-[ADJSdkClickHandler responseCallback:]
+-[ADJSdkClickHandler packageQueue]
+-[ADJSdkClickHandler setPackageQueue:]
+-[ADJSdkClickHandler internalQueue]
+-[ADJSdkClickHandler setInternalQueue:]
+-[ADJSdkClickHandler requestHandler]
+-[ADJSdkClickHandler setRequestHandler:]
+-[ADJSdkClickHandler paused]
+-[ADJSdkClickHandler setPaused:]
+-[ADJSdkClickHandler backoffStrategy]
+-[ADJSdkClickHandler setBackoffStrategy:]
+-[ADJSdkClickHandler logger]
+-[ADJSdkClickHandler setLogger:]
+-[ADJSdkClickHandler activityHandler]
+-[ADJSdkClickHandler setActivityHandler:]
+-[ADJSdkClickHandler lastPackageRetriesCount]
+-[ADJSdkClickHandler setLastPackageRetriesCount:]
+-[ADJSdkClickHandler .cxx_destruct]
+_OBJC_CLASSLIST_REFERENCES_$_.22
+___block_descriptor_25_e4_20s_e27_v8?0"ADJSdkClickHandler"4l
+___block_descriptor_24_e4_20s_e27_v8?0"ADJSdkClickHandler"4l
+___block_descriptor_20_e27_v8?0"ADJSdkClickHandler"4l
+_OBJC_CLASSLIST_REFERENCES_$_.80
+_OBJC_CLASSLIST_REFERENCES_$_.91
+_OBJC_CLASSLIST_REFERENCES_$_.98
+_OBJC_CLASSLIST_REFERENCES_$_.140
+__OBJC_CLASS_PROTOCOLS_$_ADJSdkClickHandler
+__OBJC_METACLASS_RO_$_ADJSdkClickHandler
+__OBJC_$_INSTANCE_METHODS_ADJSdkClickHandler
+_OBJC_IVAR_$_ADJSdkClickHandler._paused
+_OBJC_IVAR_$_ADJSdkClickHandler._packageQueue
+_OBJC_IVAR_$_ADJSdkClickHandler._internalQueue
+_OBJC_IVAR_$_ADJSdkClickHandler._requestHandler
+_OBJC_IVAR_$_ADJSdkClickHandler._backoffStrategy
+_OBJC_IVAR_$_ADJSdkClickHandler._logger
+_OBJC_IVAR_$_ADJSdkClickHandler._activityHandler
+_OBJC_IVAR_$_ADJSdkClickHandler._lastPackageRetriesCount
+__OBJC_$_INSTANCE_VARIABLES_ADJSdkClickHandler
+__OBJC_$_PROP_LIST_ADJSdkClickHandler
+__OBJC_CLASS_RO_$_ADJSdkClickHandler
++[ADJKeychain getInstance]
+___26+[ADJKeychain getInstance]_block_invoke
+-[ADJKeychain init]
++[ADJKeychain setValue:forKeychainKey:inService:]
++[ADJKeychain valueForKeychainKey:service:]
+-[ADJKeychain setValue:forKeychainKey:inService:]
+-[ADJKeychain setValueWithStatus:forKeychainKey:inService:]
+-[ADJKeychain valueForKeychainKey:service:]
+-[ADJKeychain valueForKeychainItem:key:service:]
+-[ADJKeychain keychainItemForKey:service:]
+-[ADJKeychain keychainItemForKey:key:service:]
+-[ADJKeychain wasWritingSuccessful:forKeychainKey:inService:]
+_getInstance.defaultInstance
+_getInstance.onceToken
+_OBJC_CLASSLIST_REFERENCES_$_.29
+_OBJC_CLASSLIST_REFERENCES_$_.32
+__OBJC_$_CLASS_METHODS_ADJKeychain
+__OBJC_METACLASS_RO_$_ADJKeychain
+__OBJC_$_INSTANCE_METHODS_ADJKeychain
+__OBJC_CLASS_RO_$_ADJKeychain
+-[ADJSessionParameters initWithCoder:]
+-[ADJSessionParameters copyWithZone:]
+-[ADJSessionParameters callbackParameters]
+-[ADJSessionParameters setCallbackParameters:]
+-[ADJSessionParameters partnerParameters]
+-[ADJSessionParameters setPartnerParameters:]
+-[ADJSessionParameters .cxx_destruct]
+__OBJC_CLASS_PROTOCOLS_$_ADJSessionParameters
+__OBJC_METACLASS_RO_$_ADJSessionParameters
+__OBJC_$_INSTANCE_METHODS_ADJSessionParameters
+_OBJC_IVAR_$_ADJSessionParameters._callbackParameters
+_OBJC_IVAR_$_ADJSessionParameters._partnerParameters
+__OBJC_$_INSTANCE_VARIABLES_ADJSessionParameters
+__OBJC_$_PROP_LIST_ADJSessionParameters
+__OBJC_CLASS_RO_$_ADJSessionParameters
+__ZL15__ARCLite__loadv
+__ZL30add_image_hook_autoreleasepoolPK11mach_headerl
+__ZL34__arclite_objc_autoreleasePoolPushv
+__ZL33__arclite_objc_autoreleasePoolPopPv
+__ZL19patch_lazy_pointersPK11mach_headerP7patch_tm
+__ZL42__arclite_NSArray_objectAtIndexedSubscriptP7NSArrayP13objc_selectorj
+__ZL53__arclite_NSMutableArray_setObject_atIndexedSubscriptP14NSMutableArrayP13objc_selectorP11objc_objectj
+__ZL46__arclite_NSDictionary_objectForKeyedSubscriptP12NSDictionaryP13objc_selectorP11objc_object
+__ZL47__arclite_NSOrderedSet_objectAtIndexedSubscriptP12NSOrderedSetP13objc_selectorj
+__ZL58__arclite_NSMutableOrderedSet_setObject_atIndexedSubscriptP19NSMutableOrderedSetP13objc_selectorP11objc_objectj
+__ZL58__arclite_NSMutableDictionary__setObject_forKeyedSubscriptP19NSMutableDictionaryP13objc_selectorP11objc_objectS4_
+__ZL18add_image_hook_ARCPK11mach_headerl
+__ZL27__arclite_objc_loadClassrefPP10objc_class
+__ZL36__arclite_object_setInstanceVariableP11objc_objectPKcPv
+__ZL24__arclite_object_setIvarP11objc_objectP9objc_ivarS0_
+__ZL21__arclite_object_copyP11objc_objectm
+__ZL21__arclite_objc_retainP11objc_object
+__ZL26__arclite_objc_retainBlockP11objc_object
+__ZL22__arclite_objc_releaseP11objc_object
+__ZL26__arclite_objc_autoreleaseP11objc_object
+__ZL32__arclite_objc_retainAutoreleaseP11objc_object
+__ZL37__arclite_objc_autoreleaseReturnValueP11objc_object
+__ZL43__arclite_objc_retainAutoreleaseReturnValueP11objc_object
+__ZL44__arclite_objc_retainAutoreleasedReturnValueP11objc_object
+__ZL26__arclite_objc_storeStrongPP11objc_objectS0_
+__ZL22add_image_hook_swiftV1PK11mach_headerl
+__ZL42__arclite_NSUndoManagerProxy_isKindOfClassP11objc_objectP13objc_selectorP10objc_class
+__ZL30__arclite_NSManagedObject_initP11objc_objectP13objc_selector
+__ZL41__arclite_NSManagedObject_allocWithEntityP11objc_objectP13objc_selectorS0_
+__ZL36__arclite_NSManagedObject_allocBatchP11objc_objectP13objc_selectorPS0_S0_j
+__ZL37__arclite_NSKKMS_fastIndexForKnownKeyP11objc_objectP13objc_selectorS0_
+__ZL28__arclite_NSKKMS_indexForKeyP11objc_objectP13objc_selectorS0_
+__ZL29__arclite_NSKKsD_objectForKeyP11objc_objectP13objc_selectorS0_
+__ZL35__arclite_NSKKsD_removeObjectForKeyP11objc_objectP13objc_selectorS0_
+__ZL33__arclite_NSKKsD_setObject_forKeyP11objc_objectP13objc_selectorS0_S0_
+__ZL41__arclite_NSKKsD_addEntriesFromDictionaryP11objc_objectP13objc_selectorP12NSDictionary
+__ZL28__arclite_objc_readClassPairP10objc_classPK15objc_image_info
+__ZL32__arclite_objc_allocateClassPairP10objc_classPKcm
+__ZL32__arclite_object_getIndexedIvarsP11objc_object
+__ZL23__arclite_objc_getClassPKc
+__ZL27__arclite_objc_getMetaClassPKc
+__ZL31__arclite_objc_getRequiredClassPKc
+__ZL26__arclite_objc_lookUpClassPKc
+__ZL26__arclite_objc_getProtocolPKc
+__ZL23__arclite_class_getNameP10objc_class
+__ZL26__arclite_protocol_getNameP8Protocol
+__ZL37__arclite_objc_copyClassNamesForImagePKcPj
+__ZL17transcribeMethodsP10objc_classP15glue_class_ro_t
+__ZL19transcribeProtocolsP10objc_classP15glue_class_ro_t
+__ZL20transcribePropertiesP10objc_classP15glue_class_ro_t
+__ZL14initialize_impP11objc_objectP13objc_selector
+__ZL18allocateMaybeSwiftP18glue_swift_class_tm
+__ZL22copySwiftV1MangledNamePKcb
+__ZL13demangledNamePKcb
+__ZL16scanMangledFieldRPKcS0_S1_Ri
+__ZL30arclite_uninitialized_functionv
+__ZL12cxxConstructP11objc_object
+__ZL20fixStringForCoreDataP11objc_object
+_OBJC_METACLASS_$___ARCLite__
+__ZL24OBJC_CLASS_$___ARCLite__
+__ZL31OBJC_METACLASS_RO_$___ARCLite__
+__non_lazy_classes
+__ZL27OBJC_CLASS_RO_$___ARCLite__
+__ZL11_class_name
+__ZL32OBJC_$_CLASS_METHODS___ARCLite__
+__ZL17_load_method_name
+__ZL17_load_method_type
+__ZL23NSAutoreleasePool_class
+__ZZL30add_image_hook_autoreleasepoolPK11mach_headerlE7patches
+__ZGVZL30add_image_hook_autoreleasepoolPK11mach_headerlE7patches
+__OBJC_$_PROTOCOL_INSTANCE_METHODS___ARCLiteIndexedSubscripting__
+__OBJC_$_PROTOCOL_METHOD_TYPES___ARCLiteIndexedSubscripting__
+__OBJC_PROTOCOL_$___ARCLiteIndexedSubscripting__
+__OBJC_LABEL_PROTOCOL_$___ARCLiteIndexedSubscripting__
+__OBJC_PROTOCOL_REFERENCE_$___ARCLiteIndexedSubscripting__
+__OBJC_$_PROTOCOL_INSTANCE_METHODS___ARCLiteKeyedSubscripting__
+__OBJC_$_PROTOCOL_METHOD_TYPES___ARCLiteKeyedSubscripting__
+__OBJC_PROTOCOL_$___ARCLiteKeyedSubscripting__
+__OBJC_LABEL_PROTOCOL_$___ARCLiteKeyedSubscripting__
+__OBJC_PROTOCOL_REFERENCE_$___ARCLiteKeyedSubscripting__
+__ZZL18add_image_hook_ARCPK11mach_headerlE7patches
+__ZGVZL18add_image_hook_ARCPK11mach_headerlE7patches
+__ZL30NSUndoManagerProxy_targetClass
+__ZL29original_NSManagedObject_init
+__ZL40original_NSManagedObject_allocWithEntity
+__ZL35original_NSManagedObject_allocBatch
+__ZL25NSMutableDictionary_class
+__ZL22NSConstantString_class
+__ZL14NSString_class
+__ZL36original_NSKKMS_fastIndexForKnownKey
+__ZL27original_NSKKMS_indexForKey
+__ZL28original_NSKKsD_objectForKey
+__ZL34original_NSKKsD_removeObjectForKey
+__ZL32original_NSKKsD_setObject_forKey
+__ZL40original_NSKKsD_addEntriesFromDictionary
+__ZZL22add_image_hook_swiftV1PK11mach_headerlE7patches
+__ZGVZL22add_image_hook_swiftV1PK11mach_headerlE7patches
+__ZL31original_objc_allocateClassPair
+__ZL31original_object_getIndexedIvars
+__ZL22original_objc_getClass
+__ZL26original_objc_getMetaClass
+__ZL30original_objc_getRequiredClass
+__ZL25original_objc_lookUpClass
+__ZL25original_objc_getProtocol
+__ZL22original_class_getName
+__ZL25original_protocol_getName
+__ZL36original_objc_copyClassNamesForImage
+__ZL12demangleLock
+__ZL9Demangled
+Apple clang version 11.0.3 (clang-1103.0.32.62)
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c++ --target=armv7-apple-ios4.3 -fmessage-length=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -std=c++11 -Wno-trigraphs -fno-exceptions -fno-rtti -fno-sanitize=vptr -mpascal-strings -Os -Wno-missing-field-initializers -Wmissing-prototypes -Wno-implicit-atomic-properties -Wno-objc-interface-ivars -Wno-arc-repeated-use-of-weak -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-bool-conversion -Wno-enum-conversion -Wno-float-conversion -Wno-non-literal-null-conversion -Wno-objc-literal-conversion -Wshorten-64-to-32 -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -Wno-c++11-extensions -D NDEBUG=1 -D OBJC_OLD_DISPATCH_PROTOTYPES=0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.4.Internal.sdk -fstrict-aliasing -Wprotocol -Wdeprecated-declarations -Winvalid-offsetof -g -fno-threadsafe-statics -Wno-sign-conversion -Wno-infinite-recursion -Wno-move -Wno-comma -Wno-block-capture-autoreleasing -Wno-strict-prototypes -Wno-range-loop-analysis -Wno-semicolon-before-method-body -fembed-bitcode=all -iquote /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/arclite_iphoneos-generated-files.hmap -I /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/arclite_iphoneos-own-target-headers.hmap -I /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/arclite_iphoneos-all-target-headers.hmap -iquote /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/arclite_iphoneos-project-headers.hmap -I /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/Symbols/BuiltProducts/include -I /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/DerivedSources-normal/armv7 -I /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/DerivedSources/armv7 -I /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/DerivedSources -F/Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/Symbols/BuiltProducts -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.4.Internal.sdk/System/Library/PrivateFrameworks -Wall -Wextra -Wno-gcc-compat -Wno-error=incomplete-umbrella -Wno-error=invalid-ios-deployment-target -Wno-error=deprecated-declarations -Wno-error=documentation -Wno-error=incomplete-umbrella -Wno-error=invalid-ios-deployment-target -Wno-error=deprecated-declarations -Wno-error=documentation -MMD -MT dependencies -MF /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/Objects-normal/armv7/arclite.d --serialize-diagnostics /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/Objects-normal/armv7/arclite.dia -c /Library/Caches/com.apple.xbs/Sources/arclite_iOS/arclite-76/source/arclite.mm -o /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/Objects-normal/armv7/arclite.o -Wno-objc-signed-char-bool-implicit-int-conversion -Wno-extra-semi-stmt -Wno-quoted-include-in-framework-header -mlinker-version=556.6 -march=armv7a
+/Library/Caches/com.apple.xbs/Sources/arclite_iOS/arclite-76/source/arclite.mm
+/Library/Caches/com.apple.xbs/Sources/arclite_iOS/arclite-76
+fixStringForCoreData
+source/arclite.mm
+cxxConstruct
+arclite_uninitialized_function
+scanMangledField
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.4.Internal.sdk/usr/include/_ctype.h
+__isctype
+demangledName
+copySwiftV1DemangledName
+copySwiftV1MangledName
+allocateMaybeSwift
+word_align
+isSwift
+initialize_imp
+transcribeProperties
+property_list_nth
+transcribeProtocols
+transcribeMethods
+data
+method_list_nth
+__arclite_objc_copyClassNamesForImage
+__arclite_protocol_getName
+__arclite_class_getName
+__arclite_objc_getProtocol
+__arclite_objc_lookUpClass
+__arclite_objc_getRequiredClass
+__arclite_objc_getMetaClass
+__arclite_objc_getClass
+__arclite_object_getIndexedIvars
+__arclite_objc_allocateClassPair
+metaclass
+__arclite_objc_readClassPair
+transcribeIvars
+ivar_list_nth
+max
+alignment
+ro
+fastFlags
+__arclite_NSKKsD_addEntriesFromDictionary
+__arclite_NSKKsD_setObject_forKey
+__arclite_NSKKsD_removeObjectForKey
+__arclite_NSKKsD_objectForKey
+__arclite_NSKKMS_indexForKey
+__arclite_NSKKMS_fastIndexForKnownKey
+__arclite_NSManagedObject_allocBatch
+__arclite_NSManagedObject_allocWithEntity
+__arclite_NSManagedObject_init
+__arclite_NSUndoManagerProxy_isKindOfClass
+add_image_hook_swiftV1
+patch_t<const char **(const char *, unsigned int *)>
+patch_t<const char *(Protocol *)>
+patch_t<const char *(Class)>
+patch_t<Protocol *(const char *)>
+patch_t<Class (const char *)>
+patch_t<void *(id)>
+patch_t<Class (Class, const char *, unsigned long)>
+patch_t<Class (Class, const objc_image_info *)>
+__arclite_objc_storeStrong
+__arclite_objc_release
+__arclite_objc_retain
+__arclite_objc_retainAutoreleasedReturnValue
+__arclite_objc_retainAutoreleaseReturnValue
+__arclite_objc_autoreleaseReturnValue
+__arclite_objc_retainAutorelease
+__arclite_objc_autorelease
+__arclite_objc_retainBlock
+__arclite_object_copy
+fixupCopiedReferences
+_class_getInstanceStart
+alignedInstanceStart
+__arclite_class_usesAutomaticRetainRelease
+classOrSuperClassesUseARR
+__arclite_object_setIvar
+isScannedOffset
+_ivar_getClass
+__arclite_object_setInstanceVariable
+__arclite_objc_loadClassref
+add_image_hook_ARC
+patch_t<void (id *, id)>
+patch_t<id (id)>
+patch_t<void (id)>
+patch_t<id (id, unsigned long)>
+patch_t<void (id, objc_ivar *, id)>
+patch_t<objc_ivar *(id, const char *, void *)>
+patch_t<Class (Class *)>
+__arclite_NSMutableDictionary__setObject_forKeyedSubscript
+__arclite_NSMutableOrderedSet_setObject_atIndexedSubscript
+__arclite_NSOrderedSet_objectAtIndexedSubscript
+__arclite_NSDictionary_objectForKeyedSubscript
+__arclite_NSMutableArray_setObject_atIndexedSubscript
+__arclite_NSArray_objectAtIndexedSubscript
+patch_lazy_pointers
+__arclite_objc_autoreleasePoolPop
+__arclite_objc_autoreleasePoolPush
+add_image_hook_autoreleasepool
+patch_t<void (void *)>
+patch_t<void *()>
+__ARCLite__load
+install_swiftV1
+replaceMethod
+install_ARC
+install_dict_nil_value
+addOrReplaceMethod
+keyedGetter
+install_subscripting
+addMethod
+indexedGetter
+install_autoreleasepool
