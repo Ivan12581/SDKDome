@@ -1,7 +1,10 @@
 package celia.sdk;
 
 // Unity3D
+import com.adjust.sdk.Adjust;
+import com.adjust.sdk.AdjustConfig;
 import com.elex.girlsthrone.tw.gp.R;
+import com.ljoy.chatbot.sdk.ELvaChatServiceSdk;
 import com.unity3d.player.*;
 // Android
 import android.app.Application;
@@ -118,7 +121,10 @@ public class CeliaActivity extends UnityPlayerActivity
 
     GooglePay googlePay;
     AppleSignIn appleSignIn;
-    FaceBookHelper FaceBookHelper;
+    FaceBookHelper faceBookHelper;
+    AdjustHelper adjustHelper;
+    ElvaHelper elvaHelper;
+    int CurLoginType;
     public void ShowLog(String msg) {
         if (isDebug == 0) {
             return;
@@ -149,18 +155,13 @@ public class CeliaActivity extends UnityPlayerActivity
 
     public void Init()
     {
-        String server_client_id = Constant.google_server_client_id;
-        ShowLog("google_server_client_id" + server_client_id);
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(server_client_id)
-                .requestEmail()
-                .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
+        InitFaceBook();
+        InitApple();
+        InitGoogle();
+        InitElva();
+        InitAdjust();
         SendMessageToUnity(MsgID.Init.getCode(), new HashMap<String, String>(){ {put("state","1");} });
-        googlePay = new GooglePay(this);
-        appleSignIn = new AppleSignIn(mUnityPlayer,this );
-        FaceBookHelper = new FaceBookHelper(this);
+        CurLoginType = 3;
         SendMessageToUnity(MsgID.ConfigInfo.getCode(), new HashMap<String, String>(){ {
             put("state", "1");
             put("appID", "0");
@@ -169,8 +170,32 @@ public class CeliaActivity extends UnityPlayerActivity
             put("sdkVersion","0");
             put("deviceID", "0");
         } });
-    }
 
+    }
+    public void InitAdjust(){
+        adjustHelper = new AdjustHelper(this);
+    }
+    public void InitFaceBook(){
+        faceBookHelper = new FaceBookHelper(this);
+    }
+    public void InitGoogle(){
+        String server_client_id = Constant.google_server_client_id;
+        ShowLog("google_server_client_id" + server_client_id);
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(server_client_id)
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        googlePay = new GooglePay(this);
+    }
+    public void InitApple(){
+        appleSignIn = new AppleSignIn(mUnityPlayer,this );
+    }
+    public void InitElva(){
+        // 初始化AIHelpSDK
+        ELvaChatServiceSdk.init(this,Constant.Elva_AppKey,Constant.Elva_Domain,Constant.Elva_AppId);
+        elvaHelper = new ElvaHelper(this);
+    }
 
 //region login
     @Override
@@ -179,12 +204,18 @@ public class CeliaActivity extends UnityPlayerActivity
         ShowLog("code:" + requestCode);
         ShowLog("resultCode:" + resultCode);
         ShowLog("data:" + data);
-        FaceBookHelper.callbackManager.onActivityResult(requestCode, resultCode, data);
 
-//       if (requestCode == RC_GET_TOKEN) {
-//           Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-//            handelGetToken(task);
-//        }
+        if (CurLoginType == 3){//google
+           if (requestCode == RC_GET_TOKEN) {
+               Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                handelGetToken(task);
+            }
+        }else if (CurLoginType == 4){//apple
+
+        }else if (CurLoginType == 5){//facebook
+            faceBookHelper.callbackManager.onActivityResult(requestCode, resultCode, data);
+        }
+
     }
 
     private void handelGetToken(Task<GoogleSignInAccount> completedTask) {
@@ -217,20 +248,21 @@ public class CeliaActivity extends UnityPlayerActivity
     public void Login(String type)
     {
         ShowLog("Login...:" + type);
+        adjustHelper.EventStatistics("d5z9hd");
         try {
             int loginType = Integer.parseInt(type);
-            if (loginType == 3){//apple
+            CurLoginType = loginType;
+            if (loginType == 3){//google
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                 startActivityForResult(signInIntent, RC_GET_TOKEN);
             }else if (loginType == 4){//apple
                 appleSignIn.OpenWeb();
             }else if (loginType == 5){//facebook
-                FaceBookHelper.Login();
+//                faceBookHelper.Login();
+                elvaHelper.showFAQs();
             }
         } catch (NumberFormatException e) {
-
             e.printStackTrace();
-
         }
     }
     public void Switch()
@@ -294,11 +326,13 @@ public class CeliaActivity extends UnityPlayerActivity
     @Override protected void onPause()
     {
         super.onPause();
+        Adjust.onPause();
     }
     // Resume Unity
     @Override protected void onResume()
     {
         super.onResume();
+        Adjust.onResume();
     }
 //endregion
 

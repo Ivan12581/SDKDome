@@ -32,10 +32,15 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.google.android.gms:play-services-auth:18.0.0'
     implementation 'com.android.billingclient:billing:3.0.0'
+    implementation 'com.facebook.android:facebook-login:[5,6)'
+    implementation 'net.aihelp:elva:1.7.4.2'
+    implementation 'com.adjust.sdk:adjust-android:4.23.0'
+    implementation 'com.android.installreferrer:installreferrer:2.1'
+    implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion '29.0.3'
 
     compileOptions {
@@ -44,11 +49,11 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion **MINSDKVERSION**
-        targetSdkVersion **TARGETSDKVERSION**
+        minSdkVersion 23
+        targetSdkVersion 29
         applicationId 'com.elex.girlsthrone.tw.gp'
         ndk {
-            abiFilters **ABIFILTERS**
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
         }
         versionCode 2
         versionName '0.2'
@@ -61,7 +66,16 @@ android {
     aaptOptions {
         noCompress = ['.unity3d', '.ress', '.resource', '.obb']
     }
-**SIGN**
+
+
+    signingConfigs {
+        release {
+            storeFile file('D:/SDKDomeProject/TestProject/BuildSettings/AndSignature/zmxt.keystore')
+            storePassword 'zmxt123'
+            keyAlias 'key-zmxt'
+            keyPassword 'zmxt123'
+        }
+    }
     buildTypes {
         debug {
             minifyEnabled false
@@ -77,7 +91,12 @@ android {
         }
     }
 
-**PACKAGING_OPTIONS**
+
+
+    packagingOptions {
+        doNotStrip '*/armeabi-v7a/*.so'
+        doNotStrip '*/arm64-v8a/*.so'
+    }
 
     bundle {
         language {
