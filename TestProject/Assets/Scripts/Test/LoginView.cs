@@ -1,4 +1,6 @@
-﻿using celia.game;
+﻿using System.Net.NetworkInformation;
+
+using celia.game;
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -242,5 +244,15 @@ public class LoginView : MonoBehaviour
             });
         });
         Debug.Log("---LoginView Start--SystemInfo.deviceUniqueIdentifier-" + SystemInfo.deviceUniqueIdentifier);
+
+        NetworkInterface[] nis = NetworkInterface.GetAllNetworkInterfaces();
+        foreach (NetworkInterface ni in nis)
+        {
+            Debug.Log("Name = " + ni.Name);
+            Debug.Log("Des = " + ni.Description);
+            Debug.Log("Type = " + ni.NetworkInterfaceType.ToString());
+            Debug.Log("Mac地址 = " + ni.GetPhysicalAddress().ToString());
+            Debug.Log("------------------------------------------------");
+
+        }
     }
-}
