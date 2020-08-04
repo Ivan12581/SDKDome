@@ -7,6 +7,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <GoogleSignIn/GoogleSignIn.h>
+#import <AdjustSdk/Adjust.h>
 //******************************************************
 //****************IOS中间文件
 //******************************************************
@@ -16,7 +17,16 @@
 
      [super application:application didFinishLaunchingWithOptions:launchOptions];
      //Google 启动
+     NSString *yourAppToken = @"1k2jm7bpansw";
+     NSString *environment = ADJEnvironmentSandbox;
+     ADJConfig *adjustConfig = [ADJConfig configWithAppToken:yourAppToken
+                                                 environment:environment];
 
+     [Adjust appDidLaunch:adjustConfig];
+     [adjustConfig setLogLevel:ADJLogLevelVerbose];
+     ADJEvent *event = [ADJEvent eventWithEventToken:@"4pvqgy"];
+     [Adjust trackEvent:event];
+     
 //    FaceBook 启动调用必接
      [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
      [FBSDKSettings setAppID:@"949004278872387"];
