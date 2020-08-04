@@ -118,7 +118,7 @@ public class CeliaActivity extends UnityPlayerActivity
 
     GooglePay googlePay;
     AppleSignIn appleSignIn;
-
+    FaceBookHelper FaceBookHelper;
     public void ShowLog(String msg) {
         if (isDebug == 0) {
             return;
@@ -160,7 +160,7 @@ public class CeliaActivity extends UnityPlayerActivity
         SendMessageToUnity(MsgID.Init.getCode(), new HashMap<String, String>(){ {put("state","1");} });
         googlePay = new GooglePay(this);
         appleSignIn = new AppleSignIn(mUnityPlayer,this );
-
+        FaceBookHelper = new FaceBookHelper(this);
         SendMessageToUnity(MsgID.ConfigInfo.getCode(), new HashMap<String, String>(){ {
             put("state", "1");
             put("appID", "0");
@@ -177,11 +177,14 @@ public class CeliaActivity extends UnityPlayerActivity
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         ShowLog("code:" + requestCode);
+        ShowLog("resultCode:" + resultCode);
+        ShowLog("data:" + data);
+        FaceBookHelper.callbackManager.onActivityResult(requestCode, resultCode, data);
 
-       if (requestCode == RC_GET_TOKEN) {
-           Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            handelGetToken(task);
-        }
+//       if (requestCode == RC_GET_TOKEN) {
+//           Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+//            handelGetToken(task);
+//        }
     }
 
     private void handelGetToken(Task<GoogleSignInAccount> completedTask) {
@@ -222,7 +225,7 @@ public class CeliaActivity extends UnityPlayerActivity
             }else if (loginType == 4){//apple
                 appleSignIn.OpenWeb();
             }else if (loginType == 5){//facebook
-
+                FaceBookHelper.Login();
             }
         } catch (NumberFormatException e) {
 
@@ -246,6 +249,11 @@ public class CeliaActivity extends UnityPlayerActivity
             e.printStackTrace();
         }
 
+
+    }
+    public void Logout()
+    {
+        ShowLog("Logout...");
 
     }
     public void ExitGame()

@@ -180,16 +180,18 @@ namespace celia.game
 
             c2a_logon_apple pkt = new c2a_logon_apple();
             pkt.UserIdentifier = user;
-
-            string SessionKey = PlayerPrefs.GetString("AppleSessionKey","");
+            
+            string SessionKey = SDKManager.gi.AppleSessionKey;
             if (!string.IsNullOrEmpty(SessionKey))
             {
                 pkt.SessionKey = SessionKey;
             }
+            Debug.Log("--pkt.SessionKey--"+pkt.SessionKey);
             if (!string.IsNullOrEmpty(identityTokenStr))
             {
                 pkt.IdentityToken = identityTokenStr;
             }
+
             NetworkManager.gi.SendPkt(AuthMsgID.AuthMsgC2ALogonApple, pkt);
             // 状态变化
             state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_CHALLENGE));
@@ -418,7 +420,7 @@ namespace celia.game
                         if (msg.Result == AccountOpResult.AorPassWrongError)
                         {
                             //apple 登陆auth失败  SessionKey过期 重新登陆
-                            PlayerPrefs.SetString("AppleSessionKey", "");
+                            SDKManager.gi.AppleSessionKey = "";
                             LoginApple(Account);
                         }
                         break;
@@ -440,7 +442,8 @@ namespace celia.game
                     string SessionKey = msg.SessionKey;
                     if (!string.IsNullOrEmpty(SessionKey))
                     {
-                        PlayerPrefs.SetString("AppleSessionKey", SessionKey);
+                        SDKManager.gi.AppleSessionKey = SessionKey;
+                        //PlayerPrefs.SetString("AppleSessionKey", SessionKey);
                     }
                 }
 

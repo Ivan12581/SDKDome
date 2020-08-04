@@ -23,7 +23,7 @@ namespace celia.game
 
         private SDKProxy proxy;
         private Dictionary<SDKResultType, Action<int, Dictionary<string, string>>> callBackDict = new Dictionary<SDKResultType, Action<int, Dictionary<string, string>>>();
-        
+        public string AppleSessionKey;
         // 切换帐号流程控制相关
         public bool DoingSwitch;
         public string SwitchToken;
@@ -39,6 +39,7 @@ namespace celia.game
             //}
 
             InitListener();
+            AppleSessionKey = PlayerPrefs.GetString("AppleSessionKey", "");
 
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
             proxy = new SDKWindowsProxy();
@@ -57,7 +58,8 @@ namespace celia.game
             //监听登录，数据上报
             Messenger.AddEventListener<int>(Notif.INHOUSE_LOGIN_INIT_DATA_COMPLETED, (m) =>
             {
-             //   UploadDeviceInfo(DeviceUpload.GameStart);
+                PlayerPrefs.SetString("AppleSessionKey", AppleSessionKey);
+                //   UploadDeviceInfo(DeviceUpload.GameStart);
                 UploadInfo(SDKUploadType.RoleEnterGame);
             });
             //监听升级，数据上报

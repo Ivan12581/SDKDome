@@ -125,14 +125,23 @@ public class AppleSignIn {
         try
         {
             JSONObject jsonObject = new JSONObject(json);
-            mainActivity.SendMessageToUnity(CeliaActivity.MsgID.Login.getCode(), new HashMap<String, String>(){
-                {
-                    put("state","1");
-                    put("code",jsonObject.getString("code"));
-                    put("uid",jsonObject.getString("user_identifier"));
-                    put("token",jsonObject.getString("id_token"));
-                } });
-            CloseWeb();
+            if (jsonObject.has("error_code")){
+                mainActivity.SendMessageToUnity(CeliaActivity.MsgID.Login.getCode(), new HashMap<String, String>(){
+                    {
+                        put("state","0");
+                    } });
+                CloseWeb();
+            }else {
+                mainActivity.SendMessageToUnity(CeliaActivity.MsgID.Login.getCode(), new HashMap<String, String>(){
+                    {
+                        put("state","1");
+                        put("code",jsonObject.getString("code"));
+                        put("uid",jsonObject.getString("user_identifier"));
+                        put("token",jsonObject.getString("id_token"));
+                    } });
+                CloseWeb();
+            }
+
         }catch (JSONException e){
             e.printStackTrace();
         }
