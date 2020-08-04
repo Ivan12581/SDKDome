@@ -19,7 +19,9 @@ public class LoginView : MonoBehaviour
         Debug.Log("---Unity---AccountLogin---");
         Debug.Log("---accountName.text---" + accountName.text);
         Debug.Log("---passWord.text---" + passWord.text);
-        NetworkManager.gi.ConnectAuth_Login(accountName.text, passWord.text);
+        Debug.Log("---SystemInfo.deviceUniqueIdentifier---" + SystemInfo.deviceUniqueIdentifier);
+        string name = SystemInfo.deviceUniqueIdentifier;
+        NetworkManager.gi.ConnectAuth_Login(name, "");
     }
 
     /// <summary>
