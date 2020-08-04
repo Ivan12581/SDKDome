@@ -39,7 +39,7 @@ public class LoginView : MonoBehaviour
             if (state == 1)
             {
                 //第一次授权登陆 有identityTokenStr等信息
-                dataDict.TryGetValue("uid",out string uid);
+                dataDict.TryGetValue("uid", out string uid);
                 dataDict.TryGetValue("token", out string token);
                 NetworkManager.gi.ConnectAuth_LoginApple(uid, token);
             }
@@ -253,6 +253,6 @@ public class LoginView : MonoBehaviour
             Debug.Log("Type = " + ni.NetworkInterfaceType.ToString());
             Debug.Log("Mac地址 = " + ni.GetPhysicalAddress().ToString());
             Debug.Log("------------------------------------------------");
-
         }
     }
+}
