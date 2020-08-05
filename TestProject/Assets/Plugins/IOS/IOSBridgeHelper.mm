@@ -3,6 +3,8 @@
 #import "GoogleHelper.h"
 #import "FBHelper.h"
 #import "ApplePurchase.h"
+#import "AdjustHelper.h"
+#import "Utils.h"
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
@@ -17,19 +19,27 @@
 
      [super application:application didFinishLaunchingWithOptions:launchOptions];
      //Google 启动
+     //Adjust 启动
      NSString *yourAppToken = @"1k2jm7bpansw";
      NSString *environment = ADJEnvironmentSandbox;
+//     NSString *environment = ADJEnvironmentProduction;
      ADJConfig *adjustConfig = [ADJConfig configWithAppToken:yourAppToken
                                                  environment:environment];
 
      [Adjust appDidLaunch:adjustConfig];
+     
      [adjustConfig setLogLevel:ADJLogLevelVerbose];
+//     [adjustConfig setLogLevel:ADJLogLevelSuppress];
      ADJEvent *event = [ADJEvent eventWithEventToken:@"4pvqgy"];
      [Adjust trackEvent:event];
+     
+
      
 //    FaceBook 启动调用必接
      [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
      [FBSDKSettings setAppID:@"949004278872387"];
+     
+     [self InitSDK];
      return YES;
  }
 
@@ -70,13 +80,6 @@ typedef NS_ENUM(NSInteger, SDKLoginType)
 
 };
 
-static IOSBridgeHelper *BridgeHelperIns = nil;
--(void)Init{
-    if (BridgeHelperIns == nil) {
-        BridgeHelperIns = [IOSBridgeHelper new];
-    }
-}
-
 #pragma mark --init
 -(void)InitSDK{
     [[AppleHelper sharedInstance] setDelegate:self];
@@ -90,6 +93,16 @@ static IOSBridgeHelper *BridgeHelperIns = nil;
     
     [[GoogleHelper sharedInstance] setDelegate:self];
     [[GoogleHelper sharedInstance] InitSDK];
+    
+    ADJEvent *event = [ADJEvent eventWithEventToken:@"9cyokq"];
+    [Adjust trackEvent:event];
+    NSString *adid = [Adjust adid];
+     NSLog(@"-ios----InitSDK---adid----%@",adid);
+    ADJEvent *event2 = [ADJEvent eventWithEventToken:@"q5u2a6"];
+
+    [event setRevenue:6.66 currency:@"EUR"];
+
+    [Adjust trackEvent:event2];
 }
 
 -(void)InitSDKCallBack:(NSMutableDictionary *) dict{
@@ -179,6 +192,14 @@ static IOSBridgeHelper *BridgeHelperIns = nil;
     NSLog(@"-ios----IOSBridgeHelper---PayCallBack----");
     [self SendMessageToUnity: ePay DictData:dict];
 }
+#pragma mark -- 获取设备UUID
+-(void)GetDeviceId{
+    NSString *UUID = [[Utils sharedInstance] GetUUID];;
+         NSLog(@"-ios----didFinishLaunchingWithOptions---UUID----%@",UUID);
+}
+-(void)GetDeviceIdCallBack{
+    
+}
 #pragma mark -- 上报数据
 -(void)UploadInfo:(const char*) jsonData{
 
@@ -209,6 +230,7 @@ typedef NS_ENUM(NSInteger, MsgID)
     eExitGame = 105,
     eLogout = 106,
     
+    eGetDeviceId = 200,
     eConfigInfo = 201,
     eGoogleTranslate = 202,
     eBind = 203,
@@ -230,7 +252,8 @@ typedef NS_ENUM(NSInteger, MsgID)
                 break;
             case eShare:
                 break;
-            case eNaver:
+            case eGetDeviceId:
+                [self GetDeviceId];
                 break;
             default:
             NSLog(@"-ios----IOSBridgeHelper---该接口ios未实现----%i",type);
@@ -246,35 +269,6 @@ extern "C"
     void CallFromUnity(int type, const char* jsonString){
         [(IOSBridgeHelper*)[UIApplication sharedApplication].delegate Call:type andJsonStr:jsonString];
     }
-
-//    void cInit(){
-//        [(IOSBridgeHelper*)[UIApplication sharedApplication].delegate InitSDK];
-//    }
-//    void cLogin(const char* jsonString){
-//        [(IOSBridgeHelper*)[UIApplication sharedApplication].delegate Login:jsonString];
-//    }
-//    void cSwitch(){
-//        [(IOSBridgeHelper*)[UIApplication sharedApplication].delegate Switch];
-//    }
-//    void cPay(const char* jsonString){
-//        [(IOSBridgeHelper*)[UIApplication sharedApplication].delegate Pay:jsonString];
-//    }
-//    void cUpLoadInfo(const char* jsonString){
-//        [(IOSBridgeHelper*)[UIApplication sharedApplication].delegate UploadInfo:jsonString];
-//    }
-//    void cOpenService(){
-//        [(IOSBridgeHelper*)[UIApplication sharedApplication].delegate OpenService];
-//    }
-//    void cGetConfigInfo(){
-//        [(IOSBridgeHelper*)[UIApplication sharedApplication].delegate GetConfigInfo];
-//    }
-//void cCustomerService(const char* jsonString){
-//    [(IOSBridgeHelper*)[UIApplication sharedApplication].delegate UploadInfo:jsonString];
-//}
-//void cShare(const char* jsonString){
-//    [(IOSBridgeHelper*)[UIApplication sharedApplication].delegate UploadInfo:jsonString];
-//}
-
 }
 
 

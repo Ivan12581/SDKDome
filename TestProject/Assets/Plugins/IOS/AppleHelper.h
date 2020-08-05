@@ -7,7 +7,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "SSKeychain.h"
-
+#import <AdjustSdk/Adjust.h>
 #import <AuthenticationServices/AuthenticationServices.h>
 #import <GameKit/GameKit.h>
 #import "cDelegate.h"
