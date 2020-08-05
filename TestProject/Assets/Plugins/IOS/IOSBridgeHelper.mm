@@ -19,6 +19,10 @@
 
      [super application:application didFinishLaunchingWithOptions:launchOptions];
      //Google 启动
+      //Elava 启动
+     NSString *AIHelpAppID = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"AIHelpAppID"];
+     NSString *AIHelpAppKey = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"AIHelpAppKey"];
+     NSString *AIHelpDomain = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"AIHelpDomain"];
      //Adjust 启动
      NSString *yourAppToken = @"1k2jm7bpansw";
      NSString *environment = ADJEnvironmentSandbox;
