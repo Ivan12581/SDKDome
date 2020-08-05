@@ -140,7 +140,15 @@ namespace celia.game.editor
             rootDict.SetString("AIHelpAppID", "elextech_platform_15ce9b10-f784-4ab5-8ee4-45efab40bd6a");
             rootDict.SetString("AIHelpAppKey", "ELEXTECH_app_50dd4661c57843778d850769a02f8a09");
             rootDict.SetString("AIHelpDomain", "elextech@aihelp.net");
-
+            // Set encryption usage boolean
+            string encryptKey = "ITSAppUsesNonExemptEncryption";
+            rootDict.SetBoolean(encryptKey, false);
+            // remove exit on suspend if it exists.ios13新增
+            string exitsOnSuspendKey = "UIApplicationExitsOnSuspend";
+            if (rootDict.values.ContainsKey(exitsOnSuspendKey))
+            {
+                rootDict.values.Remove(exitsOnSuspendKey);
+            }
             // URL types配置
             PlistElementArray URLTypes = rootDict.CreateArray("CFBundleURLTypes");
             //Facebook
