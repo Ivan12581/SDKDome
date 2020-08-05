@@ -359,7 +359,10 @@ namespace celia.game
         UploadInfo = 104,
         ExitGame = 105,
         Logout = 106,
-
+        /// <summary>
+        /// 获取设备唯一标识
+        /// </summary>
+        GetDeviceId = 200,
         ConfigInfo = 201,
         GoogleTranslate = 202,
         Bind = 203,

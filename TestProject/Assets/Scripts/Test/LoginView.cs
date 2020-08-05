@@ -243,16 +243,7 @@ public class LoginView : MonoBehaviour
                 Debug.LogWarning(Newtonsoft.Json.JsonConvert.SerializeObject(msg));
             });
         });
-        Debug.Log("---LoginView Start--SystemInfo.deviceUniqueIdentifier-" + SystemInfo.deviceUniqueIdentifier);
+        Debug.Log("---LoginView Start--");
 
-        NetworkInterface[] nis = NetworkInterface.GetAllNetworkInterfaces();
-        foreach (NetworkInterface ni in nis)
-        {
-            Debug.Log("Name = " + ni.Name);
-            Debug.Log("Des = " + ni.Description);
-            Debug.Log("Type = " + ni.NetworkInterfaceType.ToString());
-            Debug.Log("Mac地址 = " + ni.GetPhysicalAddress().ToString());
-            Debug.Log("------------------------------------------------");
-        }
     }
 }
