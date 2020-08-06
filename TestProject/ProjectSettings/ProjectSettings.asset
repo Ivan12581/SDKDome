@@ -118,7 +118,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 0.1
+  bundleVersion: 0.3
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -157,10 +157,10 @@ PlayerSettings:
     Android: com.elex.girlsthrone.tw.gp
     iOS: com.elex.girlsthrone.tw
   buildNumber:
-    iOS: 1
-  AndroidBundleVersionCode: 2
-  AndroidMinSdkVersion: 28
-  AndroidTargetSdkVersion: 0
+    iOS: 3
+  AndroidBundleVersionCode: 3
+  AndroidMinSdkVersion: 23
+  AndroidTargetSdkVersion: 28
   AndroidPreferredInstallLocation: 1
   aotOptions: 
   stripEngineCode: 1
