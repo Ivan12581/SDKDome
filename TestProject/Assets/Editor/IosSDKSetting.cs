@@ -98,7 +98,6 @@ namespace celia.game.editor
             // BuildSetting修改
             proj.SetBuildProperty(target, "ENABLE_BITCODE", "NO");//这个好像是bugly需要的
             proj.AddBuildProperty(target, "OTHER_LDFLAGS", "-ObjC");//这个google等其他sdk非常需要的
-            //proj.AddBuildProperty(target, "OTHER_LDFLAGS", "-all_load");
             #region 添加XCode引用的Framework
             // SDK依赖 --AIHelp
             proj.AddFrameworkToProject(target, "libsqlite3.tbd", false);
@@ -115,7 +114,7 @@ namespace celia.game.editor
             proj.AddFrameworkToProject(target, "gamekit.framework", false);
             #endregion
 
-            string plistPath = Path.Combine(path, "Info.plist");
+            string plistPath = Path.Combine(Otherpath, "Info.plist");
             PlistDocument plist = new PlistDocument();
             plist.ReadFromFile(plistPath);
             PlistElementDict rootDict = plist.root;
@@ -284,9 +283,9 @@ namespace celia.game.editor
             LSApplicationQueriesSchemes.AddString("fbauth2");
             LSApplicationQueriesSchemes.AddString("fbshareextension");
             // Line接入配置
-            //LSApplicationQueriesSchemes.AddString("lineauth");
-            //LSApplicationQueriesSchemes.AddString("line3rdp.$(APP_IDENTIFIER)");
-            //LSApplicationQueriesSchemes.AddString("line");
+            LSApplicationQueriesSchemes.AddString("lineauth");
+            LSApplicationQueriesSchemes.AddString("line3rdp.$(APP_IDENTIFIER)");
+            LSApplicationQueriesSchemes.AddString("line");
             #endregion
 
 
