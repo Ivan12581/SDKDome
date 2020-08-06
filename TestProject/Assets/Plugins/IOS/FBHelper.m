@@ -208,4 +208,10 @@ static FBHelper *_Instance = nil;
 - (void)sharerDidCancel:(id<FBSDKSharing>)sharer {
     NSLog(@"sahre Cancel");
 }
+//******************************************************
+//****************FaceBook Event
+//******************************************************
+- (void)commonEvent{
+    [FBSDKAppEvents logEvent:@"123"];
+}
 @end

@@ -28,6 +28,10 @@ static ApplePurchase *ApplePurchaseIns = nil;
 -(void)setDelegate:(id<cDelegate>)delegate{
     self.CbDelegate = delegate;
 }
+-(void)InitSDK{
+    NSLog(@"---ApplePurchase  Init---");
+    [self.CbDelegate InitSDKCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",nil]];
+}
 //这里定义支付类型 0为初始化 打开支付监听 1去Apple为支付 2为删除订单
 typedef NS_ENUM(NSInteger, PayType)
 {
@@ -45,10 +49,7 @@ typedef NS_ENUM(NSInteger, PayState)
     NotAllow,
     Purchasing,
 };
--(void)InitSDK{
-    NSLog(@"---ApplePurchase  Init---");
-    [self.CbDelegate InitSDKCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",nil]];
-}
+
 //开启监听购买端口
 -(void)InitApplePay{
         curServiceName = [NSBundle mainBundle].bundleIdentifier;

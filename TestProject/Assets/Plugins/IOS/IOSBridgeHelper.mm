@@ -4,12 +4,15 @@
 #import "FBHelper.h"
 #import "ApplePurchase.h"
 #import "AdjustHelper.h"
+#import "LineHelper.h"
+#import "ElvaHelper.h"
 #import "Utils.h"
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <GoogleSignIn/GoogleSignIn.h>
 #import <AdjustSdk/Adjust.h>
+#import <ElvaChatServiceSDK/ElvaChatServiceSDK.h>
 //******************************************************
 //****************IOS中间文件
 //******************************************************
@@ -23,6 +26,7 @@
      NSString *AIHelpAppID = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"AIHelpAppID"];
      NSString *AIHelpAppKey = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"AIHelpAppKey"];
      NSString *AIHelpDomain = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"AIHelpDomain"];
+     [ECServiceSdk init:AIHelpAppKey Domain:AIHelpDomain AppId:AIHelpAppID];
      //Adjust 启动
      NSString *yourAppToken = @"1k2jm7bpansw";
      NSString *environment = ADJEnvironmentSandbox;
@@ -116,24 +120,24 @@ typedef NS_ENUM(NSInteger, SDKLoginType)
 #pragma mark -- 登录 jsonString 为登录方式 就是一个字符串
 -(void)Login: (const char *) jsonString{
     NSLog(@"ios登录类型: %s", jsonString);
-    
-    NSInteger  type = [[NSString stringWithUTF8String:jsonString] integerValue];
-    switch (type) {
-        case tApple:
-            [[AppleHelper sharedInstance] Login];
-                break;
-        case tGameCenter:
-            [[AppleHelper sharedInstance] GamecnterLogin];
-                break;
-        case tFaceBook:
-            [[FBHelper sharedInstance] Login];
-                break;
-        case tGoogle:
-            [[GoogleHelper sharedInstance] Login];
-                break;
-        default:
-            break;
-    }
+    [[LineHelper sharedInstance] shareMessage:@"132456789"];
+//    NSInteger  type = [[NSString stringWithUTF8String:jsonString] integerValue];
+//    switch (type) {
+//        case tApple:
+//            [[AppleHelper sharedInstance] Login];
+//                break;
+//        case tGameCenter:
+//            [[AppleHelper sharedInstance] GamecnterLogin];
+//                break;
+//        case tFaceBook:
+//            [[FBHelper sharedInstance] Login];
+//                break;
+//        case tGoogle:
+//            [[GoogleHelper sharedInstance] Login];
+//                break;
+//        default:
+//            break;
+//    }
 }
 #pragma mark -- 登出
 -(void)Logout: (const char *) jsonString{
