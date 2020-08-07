@@ -207,6 +207,8 @@ public class LoginView : MonoBehaviour
         {
             GameSetting.gi.port = uint.Parse(serverPort.text);
         }
+        Debug.Log("---开始测试--Application.OpenURL--接口-");
+        Application.OpenURL("https://www.baidu.com/");
     }
 
     /// <summary>
