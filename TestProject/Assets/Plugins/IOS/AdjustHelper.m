@@ -21,7 +21,7 @@ static AdjustHelper *AdjustHelperIns = nil;
     [Adjust trackEvent:event];
 }
 #pragma mark --上报支付数据
--(void)purchaseEvent:(NSString *)evnetToken andRevenue:(double *)revenue andCurrency:(NSString *)currencyName{
+-(void)purchaseEvent:(NSString *)evnetToken andRevenue:(double * _Nonnull)revenue andCurrency:(NSString *)currencyName{
     ADJEvent *event = [ADJEvent eventWithEventToken:evnetToken];
 
 //MOP澳门币  CNY人名币 EUR欧元 GBP英镑 HKD港元 JPY日元 KRW 韩元 THB泰铢 TWD新台币 VND越南盾 AUD 澳元

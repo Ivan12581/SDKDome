@@ -15,6 +15,7 @@ static LineHelper *LineHelperIns = nil;
     }
     return LineHelperIns;
 }
+
 - (BOOL)shareMessage:(NSString *)message
 {
     NSString *contentType = @"text";
