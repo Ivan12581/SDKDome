@@ -22,11 +22,7 @@
 
      [super application:application didFinishLaunchingWithOptions:launchOptions];
      //Google 启动
-      //Elava 启动
-     NSString *AIHelpAppID = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"AIHelpAppID"];
-     NSString *AIHelpAppKey = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"AIHelpAppKey"];
-     NSString *AIHelpDomain = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"AIHelpDomain"];
-     [ECServiceSdk init:AIHelpAppKey Domain:AIHelpDomain AppId:AIHelpAppID];
+
      //Adjust 启动
      NSString *yourAppToken = @"1k2jm7bpansw";
      NSString *environment = ADJEnvironmentSandbox;
@@ -102,15 +98,12 @@ typedef NS_ENUM(NSInteger, SDKLoginType)
     [[GoogleHelper sharedInstance] setDelegate:self];
     [[GoogleHelper sharedInstance] InitSDK];
     
-    ADJEvent *event = [ADJEvent eventWithEventToken:@"9cyokq"];
-    [Adjust trackEvent:event];
-    NSString *adid = [Adjust adid];
-     NSLog(@"-ios----InitSDK---adid----%@",adid);
-    ADJEvent *event2 = [ADJEvent eventWithEventToken:@"q5u2a6"];
-
-    [event setRevenue:6.66 currency:@"EUR"];
-
-    [Adjust trackEvent:event2];
+    [[ElvaHelper sharedInstance] InitSDK];
+    
+    [[AdjustHelper sharedInstance] commonEvent:@"9cyokq"];
+//    double test = 88.88;
+//    [[AdjustHelper sharedInstance] purchaseEvent:@"q5u2a6" andRevenue:&test andCurrency:@"TWD"];
+    
 }
 
 -(void)InitSDKCallBack:(NSMutableDictionary *) dict{
@@ -120,7 +113,10 @@ typedef NS_ENUM(NSInteger, SDKLoginType)
 #pragma mark -- 登录 jsonString 为登录方式 就是一个字符串
 -(void)Login: (const char *) jsonString{
     NSLog(@"ios登录类型: %s", jsonString);
-    [[LineHelper sharedInstance] shareMessage:@"132456789"];
+//    [[ElvaHelper sharedInstance] showFAQs];
+//    [[ElvaHelper sharedInstance] showElva];
+    [[ElvaHelper sharedInstance] showElvaOP];
+//    [[LineHelper sharedInstance] shareMessage:@"132456789"];
 //    NSInteger  type = [[NSString stringWithUTF8String:jsonString] integerValue];
 //    switch (type) {
 //        case tApple:

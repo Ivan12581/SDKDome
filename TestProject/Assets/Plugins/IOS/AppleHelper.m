@@ -27,6 +27,7 @@ static AppleHelper *AppleHelperInstance = nil;
     self.CbDelegate = delegate;
     IOSBridgeHelper = self.CbDelegate;
 }
+
 -(void)InitSDK{
 //    NSString * bundleID = [NSBundle mainBundle].bundleIdentifier;
     accountName = @"TWuserIdentifier";
@@ -35,7 +36,6 @@ static AppleHelper *AppleHelperInstance = nil;
     userIdentifier = @"nil";
 
     NSLog(@"-ios---AppleHelper---InitSDK---bundleID-%@",forService);
-    IOSBridgeHelper = self.CbDelegate;
     if (@available(iOS 13.0, *)) {
         [IOSBridgeHelper InitSDKCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",nil]];
     }else{
