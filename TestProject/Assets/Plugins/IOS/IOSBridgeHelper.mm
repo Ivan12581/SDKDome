@@ -101,11 +101,6 @@ typedef NS_ENUM(NSInteger, SDKLoginType)
     [[GoogleHelper sharedInstance] InitSDK];
     
     [[ElvaHelper sharedInstance] InitSDK];
-    
-    [[AdjustHelper sharedInstance] commonEvent:@"9cyokq"];
-    double test = 88.88;
-    [[AdjustHelper sharedInstance] purchaseEvent:@"q5u2a6" andRevenue:&test andCurrency:@"TWD"];
-    
 }
 
 -(void)InitSDKCallBack:(NSMutableDictionary *) dict{
@@ -115,10 +110,6 @@ typedef NS_ENUM(NSInteger, SDKLoginType)
 #pragma mark -- 登录 jsonString 为登录方式 就是一个字符串
 -(void)Login: (const char *) jsonString{
     NSLog(@"ios登录类型: %s", jsonString);
-//    [[ElvaHelper sharedInstance] showFAQs];
-//    [[ElvaHelper sharedInstance] showElva];
-//    [[ElvaHelper sharedInstance] showElvaOP];
-//    [[LineHelper sharedInstance] shareMessage:@"132456789"];
     NSInteger  type = [[NSString stringWithUTF8String:jsonString] integerValue];
     switch (type) {
         case tApple:
@@ -201,30 +192,38 @@ typedef NS_ENUM(NSInteger, SDKLoginType)
 #pragma mark -- 获取设备UUID
 -(void)GetDeviceId{
     NSString *UUID = [[Utils sharedInstance] GetUUID];;
-         NSLog(@"-ios----didFinishLaunchingWithOptions---UUID----%@",UUID);
+     NSLog(@"-ios----didFinishLaunchingWithOptions---UUID----%@",UUID);
+    [self SendMessageToUnity: eGetDeviceId DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",UUID, @"UUID",nil]];
 }
--(void)GetDeviceIdCallBack{
-    
-}
-#pragma mark -- 上报数据
--(void)UploadInfo:(const char*) jsonData{
 
-}
--(void)UploadInfoCallBack{
-    
-}
 #pragma mark -- 展示客服界面
--(void)GetConfigInfo{
-
+-(void)CustomerService:(const char*) jsonData{
+    [[ElvaHelper sharedInstance] show:jsonData];
 }
--(void)GetConfigInfoCallBack{
+-(void)CustomerServiceCallBack{
     
 }
--(void)OpenService{
-
+#pragma mark -- FaccBook分享
+-(void)FaceBookShare:(const char*) jsonData{
+    [[FBHelper sharedInstance] share:jsonData];
 }
--(void)OpenServiceCallBack{
+-(void)FaceBookShareCallBack:(NSMutableDictionary *) dict{
     
+}
+#pragma mark -- Line分享
+-(void)LineShare:(const char*) jsonData{
+    [[LineHelper sharedInstance] share:jsonData];
+}
+-(void)LineShareCallBack:(NSMutableDictionary *) dict{
+    
+}
+#pragma mark -- FaccBook统计
+-(void)FaceBookEvent:(const char*) jsonData{
+    [[FBHelper sharedInstance] Event:jsonData];
+}
+#pragma mark -- Adjust统计
+-(void)AdjustEvent:(const char*) jsonData{
+    [[AdjustHelper sharedInstance] Event:jsonData];
 }
 typedef NS_ENUM(NSInteger, MsgID)
 {
@@ -243,13 +242,13 @@ typedef NS_ENUM(NSInteger, MsgID)
     eShare = 204,
     eNaver = 205,
     
-    WeiboShare = 301,
-    FaceBookShare = 302,
-    LineShare = 303,
-    ConsumeGoogleOrder = 401,
-    CustomerService = 501,
-    FaceBookEvent = 601,
-    AdjustEvent = 602,
+    eWeiboShare = 301,
+    eFaceBookShare = 302,
+    eLineShare = 303,
+    eConsumeGoogleOrder = 401,
+    eCustomerService = 501,
+    eFaceBookEvent = 601,
+    eAdjustEvent = 602,
 };
 #pragma mark -- Unity To IOS
 -(void)Call:(int) type andJsonStr:(const char*) jsonstring{
@@ -268,6 +267,16 @@ typedef NS_ENUM(NSInteger, MsgID)
                 break;
             case eGetDeviceId:
                 [self GetDeviceId];
+                break;
+            case eFaceBookShare:
+                break;
+            case eLineShare:
+                break;
+            case eCustomerService:
+                break;
+            case eFaceBookEvent:
+                break;
+            case eAdjustEvent:
                 break;
             default:
             NSLog(@"-ios----IOSBridgeHelper---该接口ios未实现----%i",type);

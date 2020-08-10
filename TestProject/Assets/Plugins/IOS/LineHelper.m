@@ -69,6 +69,9 @@ static LineHelper *LineHelperIns = nil;
 //        }];
 //     */
 }
+-(void)share:(const char*) jsonData{
+    
+}
 - (BOOL)shareMessage:(NSString *)message
 {
 

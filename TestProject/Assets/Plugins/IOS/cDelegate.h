@@ -33,5 +33,9 @@
 
 - (void)OpenServiceCallBack:(NSMutableDictionary *) dict;
 
+- (void)FaceBookShareCallBack:(NSMutableDictionary *) dict;
+- (void)LineShareCallBack:(NSMutableDictionary *) dict;
+
+
 @end
 #endif /* cDelegate_h */

@@ -132,6 +132,9 @@ static FBHelper *_Instance = nil;
 //******************************************************
 //****************FaceBook Share
 //******************************************************
+-(void)share:(const char*) jsonData{
+    
+}
 - (void)facebookShareWithMessage:(id)message {
     NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
@@ -215,6 +218,9 @@ static FBHelper *_Instance = nil;
 //******************************************************
 //****************FaceBook Event
 //******************************************************
+-(void)Event:(const char*) jsonData{
+
+}
 -(void)CustomEvent:(NSString *)eventName{
     [FBSDKAppEvents logEvent:eventName];
 }

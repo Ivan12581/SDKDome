@@ -29,7 +29,10 @@ static ElvaHelper *ElvaHelperIns = nil;
     [ECServiceSdk setSDKInterfaceOrientationMask:UIInterfaceOrientationMaskPortrait];
         [ECServiceSdk init:AIHelpAppKey Domain:AIHelpDomain AppId:AIHelpAppID];
 }
-
+#pragma mark --入口
+-(void)show:(const char*) jsonData{
+    
+}
 #pragma mark --智能客服主界面启动，调用 showElva 方法，启动机器人界面
 -(void)showElva{
     //您需要将相同的标签添加到“AIHELP Web控制台”才能生效。

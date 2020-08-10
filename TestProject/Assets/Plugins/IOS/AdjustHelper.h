@@ -11,6 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AdjustHelper : NSObject
 +(id)sharedInstance;
+-(void)Event:(const char*) jsonData;
 -(void)commonEvent:(NSString *)evnetToken;
 -(void)purchaseEvent:(NSString *)appleOrderID;
 @end

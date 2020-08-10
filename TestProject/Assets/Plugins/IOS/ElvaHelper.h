@@ -11,10 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ElvaHelper : NSObject
 +(id)sharedInstance;
--(void)showElva;
--(void)showConversation;
--(void)showFAQs;
--(void)showElvaOP;
+-(void)show:(const char*) jsonData;
 @end
 
 NS_ASSUME_NONNULL_END

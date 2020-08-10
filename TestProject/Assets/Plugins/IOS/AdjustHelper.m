@@ -15,6 +15,9 @@ static AdjustHelper *AdjustHelperIns = nil;
     }
     return AdjustHelperIns;
 }
+-(void)Event:(const char*) jsonData{
+    
+}
 #pragma mark --上报普通事件
 -(void)commonEvent:(NSString *)evnetToken{
     ADJEvent *event = [ADJEvent eventWithEventToken:evnetToken];

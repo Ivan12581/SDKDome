@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface LineHelper : NSObject
 //@property (nonatomic, strong) LineSDKAPI *apiClient;
 +(id)sharedInstance;
+-(void)share:(const char*) jsonData;
 - (BOOL)shareMessage:(NSString *)message;
 @end
 
