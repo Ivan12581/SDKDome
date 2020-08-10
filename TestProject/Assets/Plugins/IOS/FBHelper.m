@@ -6,7 +6,7 @@
 //
 
 #import "FBHelper.h"
-
+#import "Utils.h"
 @implementation FBHelper{
     UIViewController* RVC;
 }
@@ -28,6 +28,10 @@ static FBHelper *_Instance = nil;
     [FBSDKSettings setAppID:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"FacebookAppID"]];
     NSLog(@"---FBHelper---InitSDK---");
     RVC = [[[UIApplication sharedApplication] delegate] window].rootViewController;
+    [FBSDKSettings setAutoLogAppEventsEnabled:YES];
+    [FBSDKSettings setAutoInitEnabled: YES ];
+
+    [FBSDKSettings setAdvertiserIDCollectionEnabled:@YES];
 }
 
 //******************************************************
@@ -50,7 +54,7 @@ static FBHelper *_Instance = nil;
 
 #pragma mark -- FaceBook Login
 -(void)FBLogin{
-    [[FBSDKLoginManager new] logInWithPermissions:@[@"public_profile",@"email",@"user_friends"] fromViewController:[[[UIApplication sharedApplication] delegate] window].rootViewController handler:^(FBSDKLoginManagerLoginResult * _Nullable result, NSError * _Nullable error) {
+    [[FBSDKLoginManager new] logInWithPermissions:@[@"public_profile",@"email"] fromViewController:[[[UIApplication sharedApplication] delegate] window].rootViewController handler:^(FBSDKLoginManagerLoginResult * _Nullable result, NSError * _Nullable error) {
         if (error) {
               NSLog(@"Unexpected login error: %@", error);
                 [self.CbDelegate LoginFaceBookCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"-1", @"state",nil]];
@@ -179,7 +183,7 @@ static FBHelper *_Instance = nil;
 }
 //分享成功回调
 #pragma mark - FaceBook Share Delegate
-- (void)sharer:(id<FBSDKSharing>)sharer didCompleteWithResults:(NSDictionary *)results {
+-(void)sharer:(id<FBSDKSharing>)sharer didCompleteWithResults:(NSDictionary *)results {
     NSString *postId = results[@"postId"];
     FBSDKShareDialog *dialog = (FBSDKShareDialog *)sharer;
     if (dialog.mode == FBSDKShareDialogModeBrowser && (postId == nil || [postId isEqualToString:@""])) {
@@ -192,7 +196,7 @@ static FBHelper *_Instance = nil;
     
 }
 //分享失败回调
-- (void)sharer:(id<FBSDKSharing>)sharer didFailWithError:(NSError *)error {
+-(void)sharer:(id<FBSDKSharing>)sharer didFailWithError:(NSError *)error {
     FBSDKShareDialog *dialog = (FBSDKShareDialog *)sharer;
     if (error == nil && dialog.mode == FBSDKShareDialogModeNative) {
          NSLog(@"---用户没有安装Facebook app---");
@@ -205,13 +209,52 @@ static FBHelper *_Instance = nil;
     }
 }
 //分享取消回调
-- (void)sharerDidCancel:(id<FBSDKSharing>)sharer {
+-(void)sharerDidCancel:(id<FBSDKSharing>)sharer {
     NSLog(@"sahre Cancel");
 }
 //******************************************************
 //****************FaceBook Event
 //******************************************************
-- (void)commonEvent{
-    [FBSDKAppEvents logEvent:@"123"];
+-(void)CustomEvent:(NSString *)eventName{
+    [FBSDKAppEvents logEvent:eventName];
 }
+#pragma mark --完成关卡-->玩家通过关卡“1-13”后，触发该事件
+-(void)AchieveLevelEvent:(NSString *)level{
+    NSDictionary *params =
+    @{FBSDKAppEventParameterNameLevel : level};
+    [FBSDKAppEvents
+     logEvent:FBSDKAppEventNameAchievedLevel
+     parameters:params];
+}
+#pragma mark --完成教程学习-->玩家通过关卡“1-2”后，触发该事件
+-(void)CompleteTutorialEvent:(NSString *)contentData contentId:(NSString *)contentId success:(BOOL)success{
+    NSDictionary *params =
+    @{
+      FBSDKAppEventParameterNameContent : contentData,
+      FBSDKAppEventParameterNameContentID : contentId,
+      FBSDKAppEventParameterNameSuccess : @(success ? 1 : 0)
+      };
+    [FBSDKAppEvents
+     logEvent:FBSDKAppEventNameCompletedTutorial
+     parameters:params];
+}
+#pragma mark --上报支付数据
+-(void)purchaseEvent:(NSString *)appleOrderID AndProductID:(NSString *)productID{
+    if(![[Utils sharedInstance] getValueWithKey:@"price"]){
+        return;
+    }
+    NSString *priceStr = [[Utils sharedInstance] getValueWithKey:@"price"];
+    double priceDouble = [priceStr doubleValue];
+    NSString *currency = [[Utils sharedInstance] getValueWithKey:@"CurrencyCode"];
+    NSDictionary *params =
+    @{
+        FBSDKAppEventParameterNameContentType : productID,
+        FBSDKAppEventParameterNameOrderID : @"orderID",
+        FBSDKAppEventParameterNameCurrency : appleOrderID
+    };
+    [FBSDKAppEvents logPurchase:priceDouble
+    currency:currency
+    parameters: params];
+}
+
 @end

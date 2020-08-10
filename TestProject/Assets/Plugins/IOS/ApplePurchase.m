@@ -6,7 +6,8 @@
 //
 
 #import "ApplePurchase.h"
-
+#import "Utils.h"
+#import "AdjustHelper.h"
 @implementation ApplePurchase{
     NSString *curServiceName;   //保存的名称集
     NSString *goodID;   //商品ID
@@ -125,8 +126,27 @@ typedef NS_ENUM(NSInteger, PayState)
         }
        SKProduct *requestProduct = nil;
         for (SKProduct *product in myProduct) {
+            NSLog(@"product info");
+            NSLog(@"  基本描述: %@", [product description]);
+            NSLog(@"  IAP的id: %@", product.productIdentifier);
+            NSLog(@"  地区编码: %@", product.priceLocale.localeIdentifier);
+            NSLog(@"  本地价格: %@", product.price);
+            NSLog(@"  语言代码: %@", [product.priceLocale objectForKey:NSLocaleLanguageCode]);
+            NSLog(@"  国家代码: %@", [product.priceLocale objectForKey:NSLocaleCountryCode]);
+            NSLog(@"  货币代码: %@", [product.priceLocale objectForKey:NSLocaleCurrencyCode]);
+            NSLog(@"  货币符号: %@", [product.priceLocale objectForKey:NSLocaleCurrencySymbol]);
+            NSLog(@"  本地标题: %@", product.localizedTitle);
+            NSLog(@"  本地描述: %@", product.localizedDescription);
             if([product.productIdentifier isEqualToString:goodID]){
                 requestProduct = product;
+                
+                // Create formatter
+                NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+                [formatter setNumberStyle:NSNumberFormatterDecimalStyle]; // adjust this
+                NSString *formattedOutput = [formatter stringFromNumber:product.price];
+                
+                [[Utils sharedInstance] saveValueWithKey:@"price" value:formattedOutput];
+                [[Utils sharedInstance] saveValueWithKey:@"CurrencyCode" value:[product.priceLocale objectForKey:NSLocaleCurrencyCode]];
                     break;
             }
         }
@@ -165,6 +185,9 @@ typedef NS_ENUM(NSInteger, PayState)
                     NSLog(@"交易完成  productIdentifier-->%@",tran.payment.productIdentifier);
                     NSLog(@"交易完成  transactionIdentifier-->%@",tran.transactionIdentifier);
                     NSLog(@"交易完成  applicationUsername-->%@",tran.payment.applicationUsername);
+                    
+                    //支付统计
+                    [[AdjustHelper sharedInstance] purchaseEvent:tran.transactionIdentifier];
                     // 发送自己服务器验证凭证
 //                    [[SKPaymentQueue defaultQueue] finishTransaction:tran];
 //                    [self deleteExtraWithPID:tran.payment.productIdentifier];

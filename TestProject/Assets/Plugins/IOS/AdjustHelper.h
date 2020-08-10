@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AdjustHelper : NSObject
 +(id)sharedInstance;
 -(void)commonEvent:(NSString *)evnetToken;
--(void)purchaseEvent:(NSString *)evnetToken andRevenue:(double *)revenue andCurrency:(NSString *)currencyName;
+-(void)purchaseEvent:(NSString *)appleOrderID;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -34,6 +34,7 @@
      
      [adjustConfig setLogLevel:ADJLogLevelVerbose];
 //     [adjustConfig setLogLevel:ADJLogLevelSuppress];
+     //ad启动统计
      ADJEvent *event = [ADJEvent eventWithEventToken:@"4pvqgy"];
      [Adjust trackEvent:event];
      
@@ -42,12 +43,13 @@
 //    FaceBook 启动调用必接
      [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
      [FBSDKSettings setAppID:@"949004278872387"];
-     
+
      [self InitSDK];
      return YES;
  }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary*)options{
+//    return [[LineSDKLogin sharedInstance] handleOpenURL:url];
     return [[FBSDKApplicationDelegate sharedInstance] application:app openURL:url sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey] annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
 }
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -101,8 +103,8 @@ typedef NS_ENUM(NSInteger, SDKLoginType)
     [[ElvaHelper sharedInstance] InitSDK];
     
     [[AdjustHelper sharedInstance] commonEvent:@"9cyokq"];
-//    double test = 88.88;
-//    [[AdjustHelper sharedInstance] purchaseEvent:@"q5u2a6" andRevenue:&test andCurrency:@"TWD"];
+    double test = 88.88;
+    [[AdjustHelper sharedInstance] purchaseEvent:@"q5u2a6" andRevenue:&test andCurrency:@"TWD"];
     
 }
 
@@ -115,25 +117,25 @@ typedef NS_ENUM(NSInteger, SDKLoginType)
     NSLog(@"ios登录类型: %s", jsonString);
 //    [[ElvaHelper sharedInstance] showFAQs];
 //    [[ElvaHelper sharedInstance] showElva];
-    [[ElvaHelper sharedInstance] showElvaOP];
+//    [[ElvaHelper sharedInstance] showElvaOP];
 //    [[LineHelper sharedInstance] shareMessage:@"132456789"];
-//    NSInteger  type = [[NSString stringWithUTF8String:jsonString] integerValue];
-//    switch (type) {
-//        case tApple:
-//            [[AppleHelper sharedInstance] Login];
-//                break;
-//        case tGameCenter:
-//            [[AppleHelper sharedInstance] GamecnterLogin];
-//                break;
-//        case tFaceBook:
-//            [[FBHelper sharedInstance] Login];
-//                break;
-//        case tGoogle:
-//            [[GoogleHelper sharedInstance] Login];
-//                break;
-//        default:
-//            break;
-//    }
+    NSInteger  type = [[NSString stringWithUTF8String:jsonString] integerValue];
+    switch (type) {
+        case tApple:
+            [[AppleHelper sharedInstance] Login];
+                break;
+        case tGameCenter:
+            [[AppleHelper sharedInstance] GamecnterLogin];
+                break;
+        case tFaceBook:
+            [[FBHelper sharedInstance] Login];
+                break;
+        case tGoogle:
+            [[GoogleHelper sharedInstance] Login];
+                break;
+        default:
+            break;
+    }
 }
 #pragma mark -- 登出
 -(void)Logout: (const char *) jsonString{
@@ -240,6 +242,14 @@ typedef NS_ENUM(NSInteger, MsgID)
     eBind = 203,
     eShare = 204,
     eNaver = 205,
+    
+    WeiboShare = 301,
+    FaceBookShare = 302,
+    LineShare = 303,
+    ConsumeGoogleOrder = 401,
+    CustomerService = 501,
+    FaceBookEvent = 601,
+    AdjustEvent = 602,
 };
 #pragma mark -- Unity To IOS
 -(void)Call:(int) type andJsonStr:(const char*) jsonstring{

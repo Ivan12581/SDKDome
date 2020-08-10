@@ -13,13 +13,14 @@
 #import "cDelegate.h"
 @interface FBHelper : UIViewController <UIApplicationDelegate,FBSDKSharingDelegate>
 @property (nonatomic, weak) id<cDelegate> CbDelegate;
++(id)sharedInstance;
 -(void)InitSDK;
 -(void)Login;
 -(void)Logout;
 -(void)FBShareUrl;
 -(void)FBShareImage;
-+(id)sharedInstance;
-- (void)sharer:(id<FBSDKSharing>)sharer didCompleteWithResults:(NSDictionary *)results;
-- (void)sharer:(id<FBSDKSharing>)sharer didFailWithError:(NSError *)error;
-- (void)sharerDidCancel:(id<FBSDKSharing>)sharer;
+-(void)CustomEvent:(NSString *)eventName;
+-(void)AchieveLevelEvent:(NSString *)level;
+-(void)CompleteTutorialEvent:(NSString *)contentData contentId:(NSString *)contentId success:(BOOL)success;
+-(void)purchaseEvent:(NSString *)appleOrderID AndProductID:(NSString *)productID;
 @end
