@@ -8,6 +8,7 @@
 #import "ApplePurchase.h"
 #import "Utils.h"
 #import "AdjustHelper.h"
+#import "FBHelper.h"
 @implementation ApplePurchase{
     NSString *curServiceName;   //保存的名称集
     NSString *goodID;   //商品ID
@@ -185,13 +186,12 @@ typedef NS_ENUM(NSInteger, PayState)
                     NSLog(@"交易完成  productIdentifier-->%@",tran.payment.productIdentifier);
                     NSLog(@"交易完成  transactionIdentifier-->%@",tran.transactionIdentifier);
                     NSLog(@"交易完成  applicationUsername-->%@",tran.payment.applicationUsername);
-                    
-                    //支付统计
-                    [[AdjustHelper sharedInstance] purchaseEvent:tran.transactionIdentifier];
+
                     // 发送自己服务器验证凭证
 //                    [[SKPaymentQueue defaultQueue] finishTransaction:tran];
 //                    [self deleteExtraWithPID:tran.payment.productIdentifier];
                     count = count + 1;
+                    [self eventpurchase:tran];
                    [self HandleAppleOrder:tran];
                     break;
                 case SKPaymentTransactionStatePurchasing: // 购买中
@@ -225,6 +225,11 @@ typedef NS_ENUM(NSInteger, PayState)
     if (count > 0) {
             [self HandleReceipt];
         }
+}
+//支付统计
+-(void)eventpurchase:(SKPaymentTransaction *)transaction{
+    [[AdjustHelper sharedInstance] purchaseEvent:transaction.transactionIdentifier];
+    [[FBHelper sharedInstance] purchaseEvent:transaction.transactionIdentifier AndProductID:transaction.payment.productIdentifier];
 }
 //预处理并统计Apple订单
 -(void)HandleAppleOrder:(SKPaymentTransaction *)transaction{

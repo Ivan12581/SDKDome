@@ -26,21 +26,19 @@
      //Google 启动
 
      //Adjust 启动
-     NSString *yourAppToken = @"1k2jm7bpansw";
+     NSString *yourAppToken = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"AdjustAppToken"];
      NSString *environment = ADJEnvironmentSandbox;
 //     NSString *environment = ADJEnvironmentProduction;
-     ADJConfig *adjustConfig = [ADJConfig configWithAppToken:yourAppToken
-                                                 environment:environment];
-
+     ADJConfig *adjustConfig = [ADJConfig configWithAppToken:yourAppToken environment:environment];
+     [adjustConfig setAppSecret:1 info1:750848352 info2:1884995334 info3:181661496 info4:1073918938];
+      [adjustConfig setLogLevel:ADJLogLevelVerbose];
+ //     [adjustConfig setLogLevel:ADJLogLevelSuppress];
+     [adjustConfig setSendInBackground:YES];
      [Adjust appDidLaunch:adjustConfig];
-     
-     [adjustConfig setLogLevel:ADJLogLevelVerbose];
-//     [adjustConfig setLogLevel:ADJLogLevelSuppress];
-     //ad启动统计
-     ADJEvent *event = [ADJEvent eventWithEventToken:@"4pvqgy"];
-     [Adjust trackEvent:event];
-     
 
+
+
+     
 //    FaceBook 启动调用必接
      [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
 

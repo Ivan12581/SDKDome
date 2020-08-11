@@ -24,12 +24,11 @@ static FBHelper *_Instance = nil;
 
 -(void)InitSDK:(id<cDelegate>)delegate{
     IOSBridgeHelper = delegate;
-    [FBSDKSettings setAppID:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"FacebookAppID"]];
-
     RVC = [[[UIApplication sharedApplication] delegate] window].rootViewController;
+    
+    [FBSDKSettings setAppID:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"FacebookAppID"]];
     [FBSDKSettings setAutoLogAppEventsEnabled:YES];
     [FBSDKSettings setAutoInitEnabled: YES ];
-
     [FBSDKSettings setAdvertiserIDCollectionEnabled:@YES];
     NSLog(@"---FBHelper---InitSDK---");
 }
@@ -218,13 +217,26 @@ static FBHelper *_Instance = nil;
 //******************************************************
 //****************FaceBook Event
 //******************************************************
--(void)Event:(const char*) jsonData{
-
+-(void)Event:(const char*) jsonString{
+    NSString *jsonNSString = [NSString stringWithUTF8String:jsonString];
+    NSData *data = [jsonNSString dataUsingEncoding:NSUTF8StringEncoding];
+    NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@" ---ios FBHelper--Event-: %@", dict);
+    int type = [[dict valueForKey:@"Type"] intValue];
+     NSString *level = [dict valueForKey:@"level"];
+     NSString *contentData = [dict valueForKey:@"contentData"];
+     NSString *contentId = [dict valueForKey:@"contentId"];
+     NSString *success = [dict valueForKey:@"success"];
+    if(type == 1){
+        [self AchieveLevelEvent:level];//-->玩家通过关卡“1-13”后，触发该事件
+    }else if(type == 2){
+        [self CompleteTutorialEvent:contentData contentId:contentId success:success];  //-->玩家通过关卡“1-2”后，触发该事件
+    }
 }
 -(void)CustomEvent:(NSString *)eventName{
     [FBSDKAppEvents logEvent:eventName];
 }
-#pragma mark --完成关卡-->玩家通过关卡“1-13”后，触发该事件
+#pragma mark --完成关卡
 -(void)AchieveLevelEvent:(NSString *)level{
     NSDictionary *params =
     @{FBSDKAppEventParameterNameLevel : level};
@@ -232,13 +244,13 @@ static FBHelper *_Instance = nil;
      logEvent:FBSDKAppEventNameAchievedLevel
      parameters:params];
 }
-#pragma mark --完成教程学习-->玩家通过关卡“1-2”后，触发该事件
--(void)CompleteTutorialEvent:(NSString *)contentData contentId:(NSString *)contentId success:(BOOL)success{
+#pragma mark --完成教程学习
+-(void)CompleteTutorialEvent:(NSString *)contentData contentId:(NSString *)contentId success:(NSString *)success{
     NSDictionary *params =
     @{
       FBSDKAppEventParameterNameContent : contentData,
       FBSDKAppEventParameterNameContentID : contentId,
-      FBSDKAppEventParameterNameSuccess : @(success ? 1 : 0)
+      FBSDKAppEventParameterNameSuccess : success //“1”或“0”
       };
     [FBSDKAppEvents
      logEvent:FBSDKAppEventNameCompletedTutorial
@@ -255,8 +267,8 @@ static FBHelper *_Instance = nil;
     NSDictionary *params =
     @{
         FBSDKAppEventParameterNameContentType : productID,
-        FBSDKAppEventParameterNameOrderID : @"orderID",
-        FBSDKAppEventParameterNameCurrency : appleOrderID
+        FBSDKAppEventParameterNameOrderID : appleOrderID,
+        FBSDKAppEventParameterNameCurrency : currency
     };
     [FBSDKAppEvents logPurchase:priceDouble
     currency:currency

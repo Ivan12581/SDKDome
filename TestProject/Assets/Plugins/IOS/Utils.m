@@ -49,4 +49,10 @@ static Utils *UtilsIns = nil;
     }
     return UUID;
 }
+#pragma mark -取UUID
+-(NSString *)GetDisPalyName{
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *app_Name = [infoDictionary objectForKey:@"CFBundleDisplayName"];
+    return app_Name;
+}
 @end

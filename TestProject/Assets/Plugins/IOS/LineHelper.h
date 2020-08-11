@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 //@property (nonatomic, strong) LineSDKAPI *apiClient;
 +(id)sharedInstance;
 -(void)InitSDK:(id<cDelegate>)Delegate;
--(void)share:(const char*) jsonData;
+-(void)share:(const char*) jsonString;
 - (BOOL)shareMessage:(NSString *)message;
 @end
 
