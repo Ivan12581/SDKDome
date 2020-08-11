@@ -21,7 +21,7 @@ namespace celia.game.editor
         public static void IOSPlayerSettings()
         {
             PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.iOS, "com.elex.girlsthrone.tw");
-            PlayerSettings.productName = "Girl for the Throne TW";
+            PlayerSettings.productName = "少女的王座";
             PlayerSettings.companyName = "EMG TECHNOLOGY LIMITED";
             PlayerSettings.bundleVersion = "0.1";
 
@@ -134,7 +134,7 @@ namespace celia.game.editor
             // SDK相关参数设置
             rootDict.SetString("FacebookAppID", "949004278872387");
             rootDict.SetString("GoogleClientID", "554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn.apps.googleusercontent.com");
-            rootDict.SetString("FacebookAppDisplayName", "Girl for the Throne TW");
+            rootDict.SetString("FacebookAppDisplayName", "少女的王座");
             rootDict.SetString("AIHelpAppID", "elextech_platform_15ce9b10-f784-4ab5-8ee4-45efab40bd6a");
             rootDict.SetString("AIHelpAppKey", "ELEXTECH_app_50dd4661c57843778d850769a02f8a09");
             rootDict.SetString("AIHelpDomain", "elextech@aihelp.net");
@@ -165,6 +165,11 @@ namespace celia.game.editor
             PlistElementArray LSApplicationQueriesSchemes = rootDict.CreateArray("LSApplicationQueriesSchemes");
             // facebook接入配置
             LSApplicationQueriesSchemes.AddString("fbapi");
+            LSApplicationQueriesSchemes.AddString("fbapi20130214");
+            LSApplicationQueriesSchemes.AddString("fbapi20130410");
+            LSApplicationQueriesSchemes.AddString("fbapi20130702");
+            LSApplicationQueriesSchemes.AddString("fbapi20131010");
+            LSApplicationQueriesSchemes.AddString("fbapi20131219");
             LSApplicationQueriesSchemes.AddString("fb-messenger-share-api");
             LSApplicationQueriesSchemes.AddString("fbauth2");
             LSApplicationQueriesSchemes.AddString("fbshareextension");

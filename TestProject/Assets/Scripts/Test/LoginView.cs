@@ -116,12 +116,22 @@ public class LoginView : MonoBehaviour
     public void FBShare()
     {
         Debug.Log("---Unity---FBShare---");
-        SDKManager.gi.Share((s, dataDict) =>
+        SDKManager.gi.FBShare((s, dataDict) =>
         {
             Debug.Log("---Unity---FBShare--callback-");
         });
     }
-
+    /// <summary>
+    /// Line分享
+    /// </summary>
+    public void LineShare()
+    {
+        Debug.Log("---Unity---FBShare---");
+        SDKManager.gi.LineShare((s, dataDict) =>
+        {
+            Debug.Log("---Unity---FBShare--callback-");
+        });
+    }
     /// <summary>
     /// Apple GameCenter登陆
     /// </summary>

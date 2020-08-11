@@ -203,7 +203,16 @@ namespace celia.game
         {
             callBackDict[SDKResultType.ConfigInfo] = callBack;
             CallSDK(SDKResultType.ConfigInfo);
-            //proxy?.GetConfigInfo();
+        }
+        /// <summary>
+        /// 获取设备唯一ID
+        /// </summary>
+        /// <param name="callBack"></param>
+        public void GetDeviceId(Action<int, Dictionary<string, string>> callBack = null)
+        {
+            callBackDict[SDKResultType.GetDeviceId] = callBack;
+            JObject jobj = new JObject();
+            CallSDK(SDKResultType.GetDeviceId, jobj.ToString());
         }
         /// <summary>
         /// 客服入口
@@ -220,18 +229,46 @@ namespace celia.game
             jobj.Add("PlayershowConversationFlag", "001"); //参数的值是 “0” 或 “1”，标识是否开启人工入口。为 “1” 时，将在机器人客服聊天界面右上角，提供人工客服聊天的入口
             jobj.Add("Config", "001");//可选参数，自定义Dictionary信息。可以在此处设置特定的Tag信息。说明: elva - tags对应的值为array类型，此处传入自定义的标签，需要在AIHelp 客服后台配置同名称的标签才能生效。
             CallSDK(SDKResultType.CustomerService, jobj.ToString());
-            //proxy?.CustomerService(jobj.ToString());
         }
         /// <summary>
-        /// 分享
+        /// FaceBook分享
         /// </summary>
         /// <param name="callBack">分享回调</param>
-        public void Share(Action<int, Dictionary<string, string>> callBack = null)
+        public void FBShare(Action<int, Dictionary<string, string>> callBack = null)
         {
-            callBackDict[SDKResultType.Share] = callBack;
+            callBackDict[SDKResultType.FaceBookShare] = callBack;
             JObject jobj = new JObject();
-            CallSDK(SDKResultType.Share, jobj.ToString());
-            //proxy?.Share(jobj.ToString());
+            CallSDK(SDKResultType.FaceBookShare, jobj.ToString());
+        }
+        /// <summary>
+        /// Line分享
+        /// </summary>
+        /// <param name="callBack"></param>
+        public void LineShare(Action<int, Dictionary<string, string>> callBack = null)
+        {
+            callBackDict[SDKResultType.LineShare] = callBack;
+            JObject jobj = new JObject();
+            CallSDK(SDKResultType.LineShare, jobj.ToString());
+        }
+        /// <summary>
+        /// FaceBook统计事件
+        /// </summary>
+        /// <param name="callBack"></param>
+        public void FBEvent(FBEventType type, Action<int, Dictionary<string, string>> callBack = null)
+        {
+            callBackDict[SDKResultType.FaceBookEvent] = callBack;
+            JObject jobj = new JObject();
+            CallSDK(SDKResultType.FaceBookEvent, jobj.ToString());
+        }
+        /// <summary>
+        /// Adjust统计事件
+        /// </summary>
+        /// <param name="callBack"></param>
+        public void ADEvent(Action<int, Dictionary<string, string>> callBack = null)
+        {
+            callBackDict[SDKResultType.AdjustEvent] = callBack;
+            JObject jobj = new JObject();
+            CallSDK(SDKResultType.AdjustEvent, jobj.ToString());
         }
         /// <summary>
         /// 退出游戏数据
@@ -370,12 +407,16 @@ namespace celia.game
         Naver = 205,
 
         WeiboShare = 301,
+        FaceBookShare = 302,
+        LineShare = 303,
 
         ConsumeGoogleOrder = 401,
         /// <summary>
         /// AIHelper 客服
         /// </summary>
         CustomerService = 501,
+        FaceBookEvent = 601,
+        AdjustEvent = 602,
     }
 
     // SDK类型
