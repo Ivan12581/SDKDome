@@ -170,6 +170,11 @@ namespace celia.game.editor
             LSApplicationQueriesSchemes.AddString("fbapi20130702");
             LSApplicationQueriesSchemes.AddString("fbapi20131010");
             LSApplicationQueriesSchemes.AddString("fbapi20131219");
+            LSApplicationQueriesSchemes.AddString("fbapi20140410");
+            LSApplicationQueriesSchemes.AddString("fbapi20140116");
+            LSApplicationQueriesSchemes.AddString("fbapi20150313");
+            LSApplicationQueriesSchemes.AddString("fbapi20150629");
+            LSApplicationQueriesSchemes.AddString("fbapi20160328");
             LSApplicationQueriesSchemes.AddString("fb-messenger-share-api");
             LSApplicationQueriesSchemes.AddString("fbauth2");
             LSApplicationQueriesSchemes.AddString("fbshareextension");
