@@ -126,10 +126,10 @@ public class LoginView : MonoBehaviour
     /// </summary>
     public void LineShare()
     {
-        Debug.Log("---Unity---FBShare---");
+        Debug.Log("---Unity---LineShare---");
         SDKManager.gi.LineShare((s, dataDict) =>
         {
-            Debug.Log("---Unity---FBShare--callback-");
+            Debug.Log("---Unity---LineShare--callback-");
         });
     }
     /// <summary>
