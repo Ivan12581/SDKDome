@@ -225,9 +225,12 @@ namespace celia.game
             jobj.Add("playerName", "123"); //游戏中用户名称。如果拿不到userName，传入空字符串@""，会使用默认昵称"anonymous"
             jobj.Add("playerUid", "123");   //用户在游戏里的唯一标示id。如果拿不到uid，传入空字符串@""，系统会生成一个唯一设备id
             jobj.Add("ServerID", "001");    //用户所在的服务器编号
-            jobj.Add("PlayerParseId", "001");   //传空字符串
-            jobj.Add("PlayershowConversationFlag", "001"); //参数的值是 “0” 或 “1”，标识是否开启人工入口。为 “1” 时，将在机器人客服聊天界面右上角，提供人工客服聊天的入口
-            jobj.Add("Config", "001");//可选参数，自定义Dictionary信息。可以在此处设置特定的Tag信息。说明: elva - tags对应的值为array类型，此处传入自定义的标签，需要在AIHelp 客服后台配置同名称的标签才能生效。
+            jobj.Add("PlayershowConversationFlag", "1"); //参数的值是 “0” 或 “1”，标识是否开启人工入口。为 “1” 时，将在机器人客服聊天界面右上角，提供人工客服聊天的入口
+            jobj.Add("Type", "1");
+            //1.智能客服主界面启动，调用 showElva 方法，启动机器人界面
+            //2.展示FAQ列表
+            //3.运营主界面启动
+            //4.直接进行人工客服聊天
             CallSDK(SDKResultType.CustomerService, jobj.ToString());
         }
         /// <summary>
@@ -253,21 +256,27 @@ namespace celia.game
         /// <summary>
         /// FaceBook统计事件
         /// </summary>
-        /// <param name="callBack"></param>
-        public void FBEvent(FBEventType type, Action<int, Dictionary<string, string>> callBack = null)
+        public void FBEvent()
         {
-            callBackDict[SDKResultType.FaceBookEvent] = callBack;
             JObject jobj = new JObject();
+            jobj.Add("level", "1-13"); //1.完成关卡
+            jobj.Add("contentData", "CompletedTutorial");//2.教程学习 描述
+            jobj.Add("contentId", "1-2"); //2.教程学习 到哪一步
+            jobj.Add("success", "1");//2.教程学习 成功与否 
+            jobj.Add("Type", "1");
+            // 暂时这2个值统计一次 但接口已经实现
+            //1.完成关卡（玩家通过关卡“1-13”后，触发该事件） 
+            //2.教程学习（玩家通过关卡“1-2”后，触发该事件）
             CallSDK(SDKResultType.FaceBookEvent, jobj.ToString());
         }
         /// <summary>
         /// Adjust统计事件
         /// </summary>
         /// <param name="callBack"></param>
-        public void ADEvent(Action<int, Dictionary<string, string>> callBack = null)
+        public void ADEvent(string evnetToken)
         {
-            callBackDict[SDKResultType.AdjustEvent] = callBack;
             JObject jobj = new JObject();
+            jobj.Add("evnetToken", evnetToken);//通过配置 还要区分平台
             CallSDK(SDKResultType.AdjustEvent, jobj.ToString());
         }
         /// <summary>
