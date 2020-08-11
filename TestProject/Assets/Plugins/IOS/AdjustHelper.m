@@ -19,9 +19,12 @@ static AdjustHelper *AdjustHelperIns = nil;
 }
 -(void)InitSDK:(id<cDelegate>)Delegate{
     IOSBridgeHelper = Delegate;
+    //点击游戏图标，启动游戏后，触发该事件      //ad启动统计
+    [self commonEvent:@"4pvqgy"];
 }
--(void)Event:(const char*) jsonData{
-    
+-(void)Event:(const char*) jsonString{
+    NSString *evnetToken = [NSString stringWithUTF8String:jsonString];
+    [self commonEvent:evnetToken];
 }
 #pragma mark --上报普通事件
 -(void)commonEvent:(NSString *)evnetToken{
@@ -42,16 +45,6 @@ static AdjustHelper *AdjustHelperIns = nil;
     [Adjust trackEvent:event];
 //    [[AdjustHelper sharedInstance] purchaseEvent:@"q5u2a6" andRevenue:&test andCurrency:currency];
 }
-
-
-//-(void)purchaseEvent:(NSString *)evnetToken andRevenue:(double * _Nonnull)revenue andCurrency:(NSString *)currencyName{
-//    ADJEvent *event = [ADJEvent eventWithEventToken:evnetToken];
-//
-////MOP澳门币  CNY人名币 EUR欧元 GBP英镑 HKD港元 JPY日元 KRW 韩元 THB泰铢 TWD新台币 VND越南盾 AUD 澳元
-//    [event setRevenue:*revenue currency:currencyName];
-//    [event setTransactionId:@"AppleOrderID"]; // avoid duplicates
-//    [Adjust trackEvent:event];
-//}
 #pragma mark --游戏启动登陆事件
 -(void)launchEvent{
     ADJEvent *event = [ADJEvent eventWithEventToken:@"4pvqgy"];
