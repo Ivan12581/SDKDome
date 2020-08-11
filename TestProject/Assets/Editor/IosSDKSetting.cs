@@ -289,6 +289,16 @@ namespace celia.game.editor
             PlistElementArray LSApplicationQueriesSchemes = rootDict.CreateArray("LSApplicationQueriesSchemes");
             // facebook接入配置
             LSApplicationQueriesSchemes.AddString("fbapi");
+            LSApplicationQueriesSchemes.AddString("fbapi20130214");
+            LSApplicationQueriesSchemes.AddString("fbapi20130410");
+            LSApplicationQueriesSchemes.AddString("fbapi20130702");
+            LSApplicationQueriesSchemes.AddString("fbapi20131010");
+            LSApplicationQueriesSchemes.AddString("fbapi20131219");
+            LSApplicationQueriesSchemes.AddString("fbapi20140410");
+            LSApplicationQueriesSchemes.AddString("fbapi20140116");
+            LSApplicationQueriesSchemes.AddString("fbapi20150313");
+            LSApplicationQueriesSchemes.AddString("fbapi20150629");
+            LSApplicationQueriesSchemes.AddString("fbapi20160328");
             LSApplicationQueriesSchemes.AddString("fb-messenger-share-api");
             LSApplicationQueriesSchemes.AddString("fbauth2");
             LSApplicationQueriesSchemes.AddString("fbshareextension");
