@@ -23,15 +23,10 @@ static AppleHelper *AppleHelperInstance = nil;
     }
     return AppleHelperInstance;
 }
--(void)setDelegate:(id<cDelegate>)delegate{
-    self.CbDelegate = delegate;
-    IOSBridgeHelper = self.CbDelegate;
-}
 
--(void)InitSDK{
-//    NSString * bundleID = [NSBundle mainBundle].bundleIdentifier;
+-(void)InitSDK:(id<cDelegate>) delegate{
+    IOSBridgeHelper = delegate;
     accountName = @"TWuserIdentifier";
-//    forService = @"com.elex.girlsthrone.tw";
     forService = [NSBundle mainBundle].bundleIdentifier;
     userIdentifier = @"nil";
 
@@ -47,6 +42,23 @@ static AppleHelper *AppleHelperInstance = nil;
 //******************************************************
 //****************Apple Sign In With Apple
 //******************************************************
+#pragma mark -- 登录 授权 ASAuthorizationControllerDelegate
+-(void)Login{
+    if (![SSKeychain passwordForService:forService account:accountName]) {
+       NSLog(@ "--没有userIdentifier 说明之前没有登录过--需要请求授权--");
+        //没有userIdentifier 说明之前没有登录过
+        [self startRequest];
+    }
+    else{
+        //有userIdentifier 说明之前有登录过 先检查授权状态
+        NSLog(@ "--有userIdentifier 说明之前有登录过--需检查授权状态--");
+        userIdentifier = [SSKeychain passwordForService:forService account:accountName];
+        [self observeAuthticationState: userIdentifier];
+    }
+}
+-(void)Logout{
+    [SSKeychain deletePasswordForService:forService account:accountName];
+}
 #pragma mark -处理授权
 -(void)startRequest{
     NSLog(@"---开始请求授权---");
@@ -68,7 +80,7 @@ static AppleHelper *AppleHelperInstance = nil;
     }else{
         // 处理不支持系统版本
         NSLog(@"该系统版本不可用Apple登录");
-        [IOSBridgeHelper AppleLoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"-1", @"state",nil]];
+        [IOSBridgeHelper LoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"-1", @"state",nil]];
     }
 }
 
@@ -163,7 +175,7 @@ static AppleHelper *AppleHelperInstance = nil;
 
         [self saveUserInKeychain:userIdentifier];
         
-        [IOSBridgeHelper AppleLoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",userIdentifier,@"uid",identityTokenStr,@"token",nil]];
+        [IOSBridgeHelper LoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",userIdentifier,@"uid",identityTokenStr,@"token",nil]];
         
     }else if ([authorization.credential isKindOfClass:[ASPasswordCredential class]]){
             NSLog(@"----这个获取的是iCloud记录的账号密码---------->");
@@ -177,7 +189,7 @@ static AppleHelper *AppleHelperInstance = nil;
         NSString *password = passwordCredential.password;
         [self toGameLogin];
         
-        [IOSBridgeHelper AppleLoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",user,@"uid",password,@"password",nil]];
+        [IOSBridgeHelper LoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",user,@"uid",password,@"password",nil]];
         
     }else{
         NSLog(@"授权信息均不符");
@@ -210,7 +222,7 @@ static AppleHelper *AppleHelperInstance = nil;
             break;
     }
      NSLog(@"授权失败的回调Handle errorMsg：%@", errorMsg);
-    [IOSBridgeHelper AppleLoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",nil]];
+    [IOSBridgeHelper LoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",nil]];
 }
 
 #pragma mark - 获取userIdentifier
@@ -236,30 +248,10 @@ static AppleHelper *AppleHelperInstance = nil;
     [SSKeychain setPassword:userIdentifier forService:forService account:accountName];
 }
 
-
-
-#pragma mark -- 登录 授权 ASAuthorizationControllerDelegate
--(void)Login{
-    //从Keychain中读取userIdentifier
-    if (![SSKeychain passwordForService:forService account:accountName]) {
-       NSLog(@ "--没有userIdentifier 说明之前没有登录过--需要请求授权--");
-        //没有userIdentifier 说明之前没有登录过
-        [self startRequest];
-    }
-    else{
-        //有userIdentifier 说明之前有登录过 先检查授权状态
-        NSLog(@ "--有userIdentifier 说明之前有登录过--需检查授权状态--");
-        userIdentifier = [SSKeychain passwordForService:forService account:accountName];
-        [self observeAuthticationState: userIdentifier];
-    }
-}
--(void)Logout{
-    [SSKeychain deletePasswordForService:forService account:accountName];
-}
 #pragma mark -- 开始注册登录自己的游戏服务器
 -(void)toGameLogin{
      NSLog(@ "--开始注册登录自己的游戏服务器--");
-    [IOSBridgeHelper AppleLoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",userIdentifier,@"uid",nil]];
+    [IOSBridgeHelper LoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",userIdentifier,@"uid",nil]];
 }
 
 
@@ -318,7 +310,7 @@ static AppleHelper *AppleHelperInstance = nil;
             [[GKLocalPlayer localPlayer] generateIdentityVerificationSignatureWithCompletionHandler:^(NSURL * publicKeyUrl, NSData * signature, NSData * salt, uint64_t timestamp, NSError * error) {
                 if (error) {
                     NSLog(@"--ERROR: %@",error);
-                    [IOSBridgeHelper LoginGameCenterCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",nil]];
+                    [IOSBridgeHelper LoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",nil]];
                 }else{
                     NSString *_publicKeyUrl =[publicKeyUrl absoluteString];
                     NSString *_signature =[signature base64EncodedStringWithOptions:0];
@@ -331,7 +323,7 @@ static AppleHelper *AppleHelperInstance = nil;
                     NSLog(@"4--timestamp--%@",_timestamp);
                     NSLog(@"5--app_bundle_id--%@",[[NSBundle mainBundle] bundleIdentifier]);
 
-                    [IOSBridgeHelper LoginGameCenterCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",_publicKeyUrl,@"publicKeyUrl",_signature,@"signature",_salt,@"salt",_timestamp,@"timestamp",[GKLocalPlayer localPlayer].playerID,@"uid",nil]];
+                    [IOSBridgeHelper LoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",_publicKeyUrl,@"publicKeyUrl",_signature,@"signature",_salt,@"salt",_timestamp,@"timestamp",[GKLocalPlayer localPlayer].playerID,@"uid",nil]];
 
                 }
             }];
@@ -339,7 +331,7 @@ static AppleHelper *AppleHelperInstance = nil;
             
         }else{
             NSLog(@"失败  %@",error);
-            [IOSBridgeHelper LoginGameCenterCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",nil]];
+            [IOSBridgeHelper LoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",nil]];
         }
     }];
 }

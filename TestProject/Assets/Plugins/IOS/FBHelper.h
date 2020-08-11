@@ -11,10 +11,10 @@
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
 #import "cDelegate.h"
-@interface FBHelper : UIViewController <UIApplicationDelegate,FBSDKSharingDelegate>
-@property (nonatomic, weak) id<cDelegate> CbDelegate;
+@interface FBHelper : UIViewController <FBSDKSharingDelegate>
+//@property (nonatomic, weak) id<cDelegate> CbDelegate;
 +(id)sharedInstance;
--(void)InitSDK;
+-(void)InitSDK:(id<cDelegate>)Delegate;
 -(void)Login;
 -(void)Logout;
 -(void)share:(const char*) jsonData;

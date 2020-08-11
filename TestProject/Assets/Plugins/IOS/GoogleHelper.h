@@ -8,11 +8,10 @@
 #import <Foundation/Foundation.h>
 #import "cDelegate.h"
 
-@interface GoogleHelper:UIViewController<GIDSignInDelegate>
-@property (nonatomic, weak) id<cDelegate> CbDelegate;
-
--(void)InitSDK;
+@interface GoogleHelper:UIViewController<UIApplicationDelegate,GIDSignInDelegate>
+//@property (nonatomic, weak) id<cDelegate> CbDelegate;
++(id)sharedInstance;
+-(void)InitSDK:(id<cDelegate>)Delegate;
 -(void)Login;
 -(void)Logout;
-+(id)sharedInstance;
 @end

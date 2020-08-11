@@ -9,6 +9,7 @@
 #import "Utils.h"
 @implementation FBHelper{
     UIViewController* RVC;
+    id IOSBridgeHelper;
 }
 
 static FBHelper *_Instance = nil;
@@ -20,18 +21,17 @@ static FBHelper *_Instance = nil;
     }
     return _Instance;
 }
--(void)setDelegate:(id<cDelegate>)delegate{
-    self.CbDelegate = delegate;
-}
--(void)InitSDK{
-//      [FBSDKSettings setAppID:@"949004278872387"];
+
+-(void)InitSDK:(id<cDelegate>)delegate{
+    IOSBridgeHelper = delegate;
     [FBSDKSettings setAppID:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"FacebookAppID"]];
-    NSLog(@"---FBHelper---InitSDK---");
+
     RVC = [[[UIApplication sharedApplication] delegate] window].rootViewController;
     [FBSDKSettings setAutoLogAppEventsEnabled:YES];
     [FBSDKSettings setAutoInitEnabled: YES ];
 
     [FBSDKSettings setAdvertiserIDCollectionEnabled:@YES];
+    NSLog(@"---FBHelper---InitSDK---");
 }
 
 //******************************************************
@@ -57,11 +57,11 @@ static FBHelper *_Instance = nil;
     [[FBSDKLoginManager new] logInWithPermissions:@[@"public_profile",@"email"] fromViewController:[[[UIApplication sharedApplication] delegate] window].rootViewController handler:^(FBSDKLoginManagerLoginResult * _Nullable result, NSError * _Nullable error) {
         if (error) {
               NSLog(@"Unexpected login error: %@", error);
-                [self.CbDelegate LoginFaceBookCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"-1", @"state",nil]];
+                [IOSBridgeHelper LoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"-1", @"state",nil]];
         }else{
             if (result.isCancelled) {
                 NSLog(@"--login isCancelled---");
-                [self.CbDelegate LoginFaceBookCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",nil]];
+                [IOSBridgeHelper LoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",nil]];
             }else{
                 NSLog(@"---result.token---> %@", result.token);
                 [self SendAccessTokenToServer:result.token];
@@ -93,7 +93,7 @@ static FBHelper *_Instance = nil;
     NSString* Token = accessToken.tokenString;
     NSLog(@"---UserID--> %@", UserID);
     NSLog(@"---Token--> %@", Token);
-    [self.CbDelegate LoginFaceBookCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",UserID,@"uid",Token,@"token",nil]];
+    [IOSBridgeHelper LoginCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",UserID,@"uid",Token,@"token",nil]];
 }
 -(void)Logout{
     [[FBSDKLoginManager new] logOut];
@@ -133,7 +133,7 @@ static FBHelper *_Instance = nil;
 //****************FaceBook Share
 //******************************************************
 -(void)share:(const char*) jsonData{
-    
+    [self FBShareImage];
 }
 - (void)facebookShareWithMessage:(id)message {
     NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];

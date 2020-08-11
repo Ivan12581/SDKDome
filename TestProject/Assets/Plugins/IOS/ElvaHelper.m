@@ -7,7 +7,9 @@
 
 #import "ElvaHelper.h"
 
-@implementation ElvaHelper
+@implementation ElvaHelper{
+    id IOSBridgeHelper;
+}
 static ElvaHelper *ElvaHelperIns = nil;
 +(ElvaHelper*)sharedInstance{
     if (ElvaHelperIns == nil) {
@@ -15,7 +17,8 @@ static ElvaHelper *ElvaHelperIns = nil;
     }
     return ElvaHelperIns;
 }
--(void)InitSDK{
+-(void)InitSDK:(id)delegate{
+    IOSBridgeHelper = delegate;
     NSString *AIHelpAppID = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"AIHelpAppID"];
     NSString *AIHelpAppKey = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"AIHelpAppKey"];
     NSString *AIHelpDomain = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"AIHelpDomain"];
@@ -31,7 +34,7 @@ static ElvaHelper *ElvaHelperIns = nil;
 }
 #pragma mark --入口
 -(void)show:(const char*) jsonData{
-    
+
 }
 #pragma mark --智能客服主界面启动，调用 showElva 方法，启动机器人界面
 -(void)showElva{

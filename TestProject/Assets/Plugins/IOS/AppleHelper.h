@@ -12,12 +12,12 @@
 #import <GameKit/GameKit.h>
 #import "cDelegate.h"
 @interface AppleHelper:NSObject<ASAuthorizationControllerDelegate,ASAuthorizationControllerPresentationContextProviding,GKGameCenterControllerDelegate>
-@property (nonatomic, weak) id<cDelegate> CbDelegate;
--(void)InitSDK;
+//@property (nonatomic, weak) id<cDelegate> CbDelegate;
++(id)sharedInstance;
+-(void)InitSDK:(id<cDelegate>)Delegate;
 -(void)Login;
 -(void)Logout;
 -(void)GamecnterLogin;
 -(void)GameCenterLogout;
-+(id)sharedInstance;
 @end
 

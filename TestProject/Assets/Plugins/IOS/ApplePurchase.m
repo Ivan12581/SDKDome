@@ -16,6 +16,7 @@
     SKPaymentTransaction *order; //所有订单
     NSArray *trans; //当前订单
     NSString *extra;   //透传字段
+    id IOSBridgeHelper;
 }
 static ApplePurchase *ApplePurchaseIns = nil;
 +(ApplePurchase*)sharedInstance{
@@ -26,12 +27,11 @@ static ApplePurchase *ApplePurchaseIns = nil;
     }
     return ApplePurchaseIns;
 }
--(void)setDelegate:(id<cDelegate>)delegate{
-    self.CbDelegate = delegate;
-}
--(void)InitSDK{
+
+-(void)InitSDK:(id<cDelegate>)delegate{
     NSLog(@"---ApplePurchase  Init---");
-    [self.CbDelegate InitSDKCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",nil]];
+    IOSBridgeHelper = delegate;
+    [IOSBridgeHelper InitSDKCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",nil]];
 }
 //这里定义支付类型 0为初始化 打开支付监听 1去Apple为支付 2为删除订单
 typedef NS_ENUM(NSInteger, PayType)
@@ -90,17 +90,17 @@ typedef NS_ENUM(NSInteger, PayState)
 -(void)CommonCallback:(int)type AndPayState:(int)state{
     NSNumber *_type = [NSNumber numberWithInt:type];
     NSNumber *_state = [NSNumber numberWithInt:state];
-    [self.CbDelegate PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",_type,@"PayType",_state,@"PayState",nil]];
+    [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",_type,@"PayType",_state,@"PayState",nil]];
 }
 -(void)CallBackWithDict:(NSMutableDictionary *) dict AndType:(int)type AndState:(int)state{
     [dict setValue: [NSNumber numberWithInt:type] forKey: @"PayType"];
     [dict setValue: [NSNumber numberWithInt:state] forKey: @"PayState"];
-    [self.CbDelegate PayCallBack:dict];
+    [IOSBridgeHelper PayCallBack:dict];
 }
 -(void)CallBackWithOrder:(NSString *) order AndType:(int)type AndState:(int)state{
     NSNumber *_type = [NSNumber numberWithInt:type];
     NSNumber *_state = [NSNumber numberWithInt:state];
-    [self.CbDelegate PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",_type,@"PayType",_state,@"PayState",order,@"Order",nil]];
+    [IOSBridgeHelper PayCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",_type,@"PayType",_state,@"PayState",order,@"Order",nil]];
 }
 #pragma mark - In-App Purchase入口
 - (void)buyIAP:(NSMutableDictionary *) dict{

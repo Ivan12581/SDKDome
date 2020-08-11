@@ -13,7 +13,9 @@
 #import "SSKeychain.h"
 #import "cDelegate.h"
 @interface ApplePurchase:NSObject<SKProductsRequestDelegate,SKPaymentTransactionObserver>
-@property (nonatomic, weak) id<cDelegate> CbDelegate;
+//@property (nonatomic, weak) id<cDelegate> CbDelegate;
 +(id)sharedInstance;
+-(void)InitSDK:(id<cDelegate>)Delegate;
+-(void)Pay: (const char *) jsonString;
 @end
 #endif /* ApplePurchase_h */

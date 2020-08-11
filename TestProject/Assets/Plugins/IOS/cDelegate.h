@@ -14,12 +14,8 @@
 
 @optional   //@optional表示可以做但不用必须做
 - (void)InitSDKCallBack:(NSMutableDictionary *) dict;
-//- (void)InitSDKCallBack:(NSString *) dict;
 
-- (void)AppleLoginCallBack:(NSMutableDictionary *) dict;
-- (void)LoginGameCenterCallBack:(NSMutableDictionary *) dict;
-- (void)LoginGoogleCallBack:(NSMutableDictionary *) dict;
-- (void)LoginFaceBookCallBack:(NSMutableDictionary *) dict;
+- (void)LoginCallBack:(NSMutableDictionary *) dict;
 
 - (void)PayCallBack:(NSMutableDictionary *) dict;
 

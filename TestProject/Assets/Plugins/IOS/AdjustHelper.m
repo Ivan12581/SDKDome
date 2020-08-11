@@ -7,13 +7,18 @@
 
 #import "AdjustHelper.h"
 #import "Utils.h"
-@implementation AdjustHelper
+@implementation AdjustHelper{
+        id IOSBridgeHelper;
+}
 static AdjustHelper *AdjustHelperIns = nil;
 +(AdjustHelper*)sharedInstance{
     if (AdjustHelperIns == nil) {
         AdjustHelperIns = [AdjustHelper new];
     }
     return AdjustHelperIns;
+}
+-(void)InitSDK:(id<cDelegate>)Delegate{
+    IOSBridgeHelper = Delegate;
 }
 -(void)Event:(const char*) jsonData{
     

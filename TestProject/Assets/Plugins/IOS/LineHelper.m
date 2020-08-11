@@ -6,8 +6,9 @@
 //
 
 #import "LineHelper.h"
-
-@implementation LineHelper
+@implementation LineHelper{
+        id IOSBridgeHelper;
+}
 static LineHelper *LineHelperIns = nil;
 +(LineHelper*)sharedInstance{
     if (LineHelperIns == nil) {
@@ -16,7 +17,8 @@ static LineHelper *LineHelperIns = nil;
     return LineHelperIns;
 }
 
--(void)InitSDK{
+-(void)InitSDK:(id<cDelegate>) delegate{
+    IOSBridgeHelper = delegate;
 //    //https://github.com/SoberTong/LineDemoIos/blob/master/LineDemoIos/ViewController.m
 //    [LineSDKLogin sharedInstance].delegate = self;
 //    apiClient = [[LineSDKAPI alloc] initWithConfiguration:[LineSDKConfiguration defaultConfig]];

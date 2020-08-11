@@ -17,7 +17,9 @@
 //****************IOS中间文件
 //******************************************************
 
-@implementation IOSBridgeHelper
+@implementation IOSBridgeHelper{
+        NSInteger  CurLoginType;//登陆类型
+}
  - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
      [super application:application didFinishLaunchingWithOptions:launchOptions];
@@ -39,10 +41,8 @@
      [Adjust trackEvent:event];
      
 
-     
 //    FaceBook 启动调用必接
      [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
-     [FBSDKSettings setAppID:@"949004278872387"];
 
      [self InitSDK];
      return YES;
@@ -73,7 +73,6 @@ extern void UnitySendMessage(const char *, const char *, const char *);
     UnitySendMessage("SDKManager", "OnResult", jsonString);
 }
 
-
 typedef NS_ENUM(NSInteger, SDKLoginType)
 {
     tAccount,
@@ -88,29 +87,20 @@ typedef NS_ENUM(NSInteger, SDKLoginType)
 
 #pragma mark --init
 -(void)InitSDK{
-    [[AppleHelper sharedInstance] setDelegate:self];
-    [[AppleHelper sharedInstance] InitSDK];
-    
-    [[ApplePurchase sharedInstance] setDelegate:self];
-    [[ApplePurchase sharedInstance] InitSDK];
-    
-    [[FBHelper sharedInstance] setDelegate:self];
-    [[FBHelper sharedInstance] InitSDK];
-    
-    [[GoogleHelper sharedInstance] setDelegate:self];
-    [[GoogleHelper sharedInstance] InitSDK];
-    
-    [[ElvaHelper sharedInstance] InitSDK];
+    [[AppleHelper sharedInstance] InitSDK:self];
+    [[ApplePurchase sharedInstance] InitSDK:self];
+    [[FBHelper sharedInstance] InitSDK:self];
+    [[GoogleHelper sharedInstance] InitSDK:self];
+    [[LineHelper sharedInstance] InitSDK:self];
+    [[ElvaHelper sharedInstance] InitSDK:self];
+    [[AdjustHelper sharedInstance] InitSDK:self];
 }
 
--(void)InitSDKCallBack:(NSMutableDictionary *) dict{
-    NSLog(@"-ios----IOSBridgeHelper---InitSDKCallBack----");
-    [self SendMessageToUnity: eInit DictData:dict];
-}
 #pragma mark -- 登录 jsonString 为登录方式 就是一个字符串
 -(void)Login: (const char *) jsonString{
     NSLog(@"ios登录类型: %s", jsonString);
     NSInteger  type = [[NSString stringWithUTF8String:jsonString] integerValue];
+    CurLoginType = type;
     switch (type) {
         case tApple:
             [[AppleHelper sharedInstance] Login];
@@ -149,82 +139,39 @@ typedef NS_ENUM(NSInteger, SDKLoginType)
             break;
     }
 }
-//cDelegate
--(void)AppleLoginCallBack:(NSMutableDictionary *) dict{
-      NSLog(@"-ios----IOSBridgeHelper---LoginCallBack----");
-    [dict setValue: [NSNumber numberWithInt:tApple] forKey: @"type"];
-   [self SendMessageToUnity: eLogin DictData:dict];
-}
 
--(void)LoginGameCenterCallBack:(NSMutableDictionary *) dict{
-    NSLog(@"-ios----IOSBridgeHelper---LoginGameCenterCallBack----");
-    [dict setValue: [NSNumber numberWithInt:tGameCenter] forKey: @"type"];
-   [self SendMessageToUnity: eLogin DictData:dict];
-}
--(void)LoginGoogleCallBack:(NSMutableDictionary *) dict{
-    NSLog(@"-ios----IOSBridgeHelper---LoginGoogleCallBack----");
-    [dict setValue: [NSNumber numberWithInt:tGoogle] forKey: @"type"];
-   [self SendMessageToUnity: eLogin DictData:dict];
-}
--(void)LoginFaceBookCallBack:(NSMutableDictionary *) dict{
-    NSLog(@"-ios----IOSBridgeHelper---LoginFaceBookCallBack----");
-    [dict setValue: [NSNumber numberWithInt:tFaceBook] forKey: @"type"];
-   [self SendMessageToUnity: eLogin DictData:dict];
-}
-
-#pragma mark -- 注销登录
--(void)Switch{
-
-}
--(void)SwitchCallBack{
-    
-}
-#pragma mark -- 支付
--(void)Pay: (const char *) jsonString{
-    NSLog(@"-ios--Pay----");
-     [[ApplePurchase sharedInstance] Pay:jsonString];
-}
-
--(void)PayCallBack:(NSMutableDictionary *) dict{
-    NSLog(@"-ios----IOSBridgeHelper---PayCallBack----");
-    [self SendMessageToUnity: ePay DictData:dict];
-}
 #pragma mark -- 获取设备UUID
 -(void)GetDeviceId{
     NSString *UUID = [[Utils sharedInstance] GetUUID];;
      NSLog(@"-ios----didFinishLaunchingWithOptions---UUID----%@",UUID);
     [self SendMessageToUnity: eGetDeviceId DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",UUID, @"UUID",nil]];
 }
-
-#pragma mark -- 展示客服界面
--(void)CustomerService:(const char*) jsonData{
-    [[ElvaHelper sharedInstance] show:jsonData];
+//cDelegate
+-(void)InitSDKCallBack:(NSMutableDictionary *) dict{
+    NSLog(@"-ios----IOSBridgeHelper---InitSDKCallBack----");
+    [self SendMessageToUnity: eInit DictData:dict];
+}
+-(void)LoginCallBack:(NSMutableDictionary *) dict{
+       NSLog(@"-ios----IOSBridgeHelper---LoginCallBack----");
+     [dict setValue: [NSNumber numberWithInt:(int)CurLoginType] forKey: @"type"];
+    [self SendMessageToUnity: eLogin DictData:dict];
+}
+-(void)PayCallBack:(NSMutableDictionary *) dict{
+    NSLog(@"-ios----IOSBridgeHelper---PayCallBack----");
+    [self SendMessageToUnity: ePay DictData:dict];
 }
 -(void)CustomerServiceCallBack{
     
 }
-#pragma mark -- FaccBook分享
--(void)FaceBookShare:(const char*) jsonData{
-    [[FBHelper sharedInstance] share:jsonData];
-}
+
 -(void)FaceBookShareCallBack:(NSMutableDictionary *) dict{
     
 }
-#pragma mark -- Line分享
--(void)LineShare:(const char*) jsonData{
-    [[LineHelper sharedInstance] share:jsonData];
-}
+
 -(void)LineShareCallBack:(NSMutableDictionary *) dict{
     
 }
-#pragma mark -- FaccBook统计
--(void)FaceBookEvent:(const char*) jsonData{
-    [[FBHelper sharedInstance] Event:jsonData];
-}
-#pragma mark -- Adjust统计
--(void)AdjustEvent:(const char*) jsonData{
-    [[AdjustHelper sharedInstance] Event:jsonData];
-}
+
 typedef NS_ENUM(NSInteger, MsgID)
 {
     eInit = 100,
@@ -261,22 +208,28 @@ typedef NS_ENUM(NSInteger, MsgID)
                 [self Login:jsonstring];
                 break;
             case ePay:
-                [self Pay:jsonstring];
-                break;
-            case eShare:
+                [[ApplePurchase sharedInstance] Pay:jsonstring];
                 break;
             case eGetDeviceId:
                 [self GetDeviceId];
                 break;
+                case eShare:
+                    [[FBHelper sharedInstance] share:jsonstring];
+                    break;
             case eFaceBookShare:
+                [[FBHelper sharedInstance] share:jsonstring];
                 break;
             case eLineShare:
+                [[LineHelper sharedInstance] share:jsonstring];
                 break;
             case eCustomerService:
+                [[ElvaHelper sharedInstance] show:jsonstring];
                 break;
             case eFaceBookEvent:
+                [[FBHelper sharedInstance] Event:jsonstring];
                 break;
             case eAdjustEvent:
+                [[AdjustHelper sharedInstance] Event:jsonstring];
                 break;
             default:
             NSLog(@"-ios----IOSBridgeHelper---该接口ios未实现----%i",type);
