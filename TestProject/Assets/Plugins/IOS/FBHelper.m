@@ -222,14 +222,14 @@ static FBHelper *_Instance = nil;
     NSData *data = [jsonNSString dataUsingEncoding:NSUTF8StringEncoding];
     NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSLog(@" ---ios FBHelper--Event-: %@", dict);
-    int type = [[dict valueForKey:@"Type"] intValue];
-     NSString *level = [dict valueForKey:@"level"];
-     NSString *contentData = [dict valueForKey:@"contentData"];
-     NSString *contentId = [dict valueForKey:@"contentId"];
-     NSString *success = [dict valueForKey:@"success"];
+    int type = [[dict valueForKey:@"type"] intValue];
     if(type == 1){
+        NSString *level = [dict valueForKey:@"level"];
         [self AchieveLevelEvent:level];//-->玩家通过关卡“1-13”后，触发该事件
     }else if(type == 2){
+        NSString *contentData = [dict valueForKey:@"contentData"];
+        NSString *contentId = [dict valueForKey:@"contentId"];
+        NSString *success = [dict valueForKey:@"success"];
         [self CompleteTutorialEvent:contentData contentId:contentId success:success];  //-->玩家通过关卡“1-2”后，触发该事件
     }
 }

@@ -82,7 +82,7 @@ static ElvaHelper *ElvaHelperIns = nil;
     NSMutableDictionary *customData = [NSMutableDictionary dictionary];//定义自定义参数容器
     NSMutableDictionary *config = [NSMutableDictionary dictionary]; //定义config参数容器
     [config setObject:@"1" forKey:@"showContactButtonFlag"];
-    [config setObject:@"1" forKey:@"showConversationFlag"];
+    [config setObject:@"1" forKey:@"directConversation"];
     [config setObject:customData forKey:@"elva-custom-metadata"]; //将customData存入容器
     [ECServiceSdk showFAQs:config];
     //[ECServiceSdk showFAQSection:@"158455" Config:config];//展示相关部分FAQ SectionID需要后台配置

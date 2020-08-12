@@ -36,8 +36,6 @@
      [adjustConfig setSendInBackground:YES];
      [Adjust appDidLaunch:adjustConfig];
 
-
-
      
 //    FaceBook 启动调用必接
      [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
@@ -158,9 +156,6 @@ typedef NS_ENUM(NSInteger, SDKLoginType)
     NSLog(@"-ios----IOSBridgeHelper---PayCallBack----");
     [self SendMessageToUnity: ePay DictData:dict];
 }
--(void)CustomerServiceCallBack{
-    
-}
 
 -(void)FaceBookShareCallBack:(NSMutableDictionary *) dict{
     
@@ -211,9 +206,6 @@ typedef NS_ENUM(NSInteger, MsgID)
             case eGetDeviceId:
                 [self GetDeviceId];
                 break;
-                case eShare:
-                    [[FBHelper sharedInstance] share:jsonstring];
-                    break;
             case eFaceBookShare:
                 [[FBHelper sharedInstance] share:jsonstring];
                 break;

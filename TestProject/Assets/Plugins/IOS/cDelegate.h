@@ -19,16 +19,6 @@
 
 - (void)PayCallBack:(NSMutableDictionary *) dict;
 
-- (void)GetConfigInfoCallBack:(NSMutableDictionary *) dict;
-- (void)UploadInfoCallBack:(NSMutableDictionary *) dict;
-
-- (void)ShareCallBack:(NSMutableDictionary *) dict;
-
-- (void)SwitchCallBack:(NSMutableDictionary *) dict;
-- (void)ExitGameCallBack:(NSMutableDictionary *) dict;
-
-- (void)OpenServiceCallBack:(NSMutableDictionary *) dict;
-
 - (void)FaceBookShareCallBack:(NSMutableDictionary *) dict;
 - (void)LineShareCallBack:(NSMutableDictionary *) dict;
 
