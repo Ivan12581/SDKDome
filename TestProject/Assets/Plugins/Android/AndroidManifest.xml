@@ -28,31 +28,31 @@
         android:name="com.ljoy.chatbot.ChatMainActivity"
         android:configChanges="keyboardHidden|orientation|screenSize"
         android:screenOrientation="portrait"
-        android:theme="@style/showBgStyleFullscreen"
+        android:theme="@style/BaseUnityTheme"
         android:windowSoftInputMode="adjustResize|stateHidden" />
     <activity
         android:name="com.ljoy.chatbot.OPActivity"
         android:configChanges="keyboardHidden|orientation|screenSize"
         android:screenOrientation="portrait"
-        android:theme="@style/showBgStyleFullscreen"
+        android:theme="@style/BaseUnityTheme"
         android:windowSoftInputMode="adjustResize|stateHidden" />
     <activity
         android:name="com.ljoy.chatbot.FAQActivity"
         android:configChanges="keyboardHidden|orientation|screenSize"
         android:screenOrientation="portrait"
-        android:theme="@style/showBgStyleFullscreen"
+        android:theme="@style/BaseUnityTheme"
         android:windowSoftInputMode="adjustResize|stateHidden" />
     <activity
         android:name="com.ljoy.chatbot.WebViewActivity"
         android:configChanges="keyboardHidden|orientation|screenSize"
         android:screenOrientation="portrait"
-        android:theme="@style/showBgStyleFullscreen"
+        android:theme="@style/BaseUnityTheme"
         android:windowSoftInputMode="adjustResize|stateHidden" />
     <activity
         android:name="com.ljoy.chatbot.QAWebActivity"
         android:configChanges="keyboardHidden|orientation|screenSize"
         android:screenOrientation="portrait"
-        android:theme="@style/showBgStyleFullscreen"
+        android:theme="@style/BaseUnityTheme"
         android:windowSoftInputMode="adjustResize|stateHidden" />
     <!--AIHelp SDK需要的Activity -->
     <!--Adjust SDK-->
