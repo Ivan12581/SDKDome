@@ -3,6 +3,7 @@ package celia.sdk;
 // Unity3D
 
 import com.adjust.sdk.Adjust;
+import com.elex.girlsthrone.tw.gp.R;
 import com.unity3d.player.*;
 // Android
 import android.content.Intent;
