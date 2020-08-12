@@ -263,7 +263,7 @@ namespace celia.game
             jobj.Add("contentData", "CompletedTutorial");//2.教程学习 描述
             jobj.Add("contentId", "1-2"); //2.教程学习 到哪一步
             jobj.Add("success", "1");//2.教程学习 成功与否 
-            jobj.Add("Type", "1");
+            jobj.Add("type", "1");
             // 暂时这2个值统计一次 但接口已经实现
             //1.完成关卡（玩家通过关卡“1-13”后，触发该事件） 
             //2.教程学习（玩家通过关卡“1-2”后，触发该事件）
@@ -420,9 +420,7 @@ namespace celia.game
         LineShare = 303,
 
         ConsumeGoogleOrder = 401,
-        /// <summary>
-        /// AIHelper 客服
-        /// </summary>
+
         CustomerService = 501,
         FaceBookEvent = 601,
         AdjustEvent = 602,
