@@ -1,46 +1,51 @@
 package celia.sdk;
 
+import android.app.Activity;
+import android.app.Application;
+import android.os.Build;
+import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+
 import com.adjust.sdk.Adjust;
 import com.adjust.sdk.AdjustConfig;
 import com.adjust.sdk.AdjustEvent;
 import com.adjust.sdk.LogLevel;
+import com.adjust.sdk.OnDeviceIdsRead;
 import com.unity3d.player.UnityPlayer;
 
 public class AdjustHelper {
     CeliaActivity mainActivity;
-    UnityPlayer mUnityPlayer;
-    AdjustConfig config;
     public AdjustHelper(CeliaActivity activity)
     {
         mainActivity = activity;
         Init();
     }
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     private void Init(){
         String environment = AdjustConfig.ENVIRONMENT_SANDBOX;
 //        String environment = AdjustConfig.ENVIRONMENT_PRODUCTION;
-        config = new AdjustConfig(mainActivity, Constant.Adjust_AppToken, environment);
+        AdjustConfig config = new AdjustConfig(mainActivity, Constant.Adjust_AppToken, environment);
         config.setAppSecret(1, 555720783, 475659758, 1930748874, 572648029);
+        config.setLogLevel(LogLevel.VERBOSE);
+//        config.setLogLevel(LogLevel.SUPRESS);
         Adjust.onCreate(config);
-        setLogLevelState(false);
-        EventStatistics("4pvqgy");
-//        config.setDelayStart(5.5);//延迟启动
+
+        //点击游戏图标，启动游戏后，触发该事件
+        CommonEvent("nsmcez");
+
+//        Adjust.getGoogleAdId(mainActivity, new OnDeviceIdsRead() {
+//            @Override
+//            public void onGoogleAdIdRead(String googleAdId) {
+//                mainActivity.ShowLog("---AdjustHelper googleAdId--->" + googleAdId);
+//            }
+//        });
     }
-    public void setLogLevelState(boolean state){
-        //        config.setLogLevel(LogLevel.VERBOSE); // enable all logs
-//        config.setLogLevel(LogLevel.DEBUG); // disable verbose logs
-//        config.setLogLevel(LogLevel.INFO); // disable debug logs (default)
-//        config.setLogLevel(LogLevel.WARN); // disable info logs
-//        config.setLogLevel(LogLevel.ERROR); // disable warning logs
-//        config.setLogLevel(LogLevel.ASSERT); // disable error logs
-//        config.setLogLevel(LogLevel.SUPRESS); // disable all logs
-        if (state){
-            config.setLogLevel(LogLevel.SUPRESS); // disable all logs
-        }else {
-            config.setLogLevel(LogLevel.VERBOSE); // enable all logs
-        }
-    }
+
     //in-app onClick
-    public void EventStatistics(String EventName){
+    public void CommonEvent(String EventName){
         if (EventName == null||EventName.isEmpty()){
                 return;
         }
@@ -48,17 +53,12 @@ public class AdjustHelper {
         Adjust.trackEvent(adjustEvent);
     }
     //in-app purchase
-    public void purchaseEvent(double revenue ,String currency){
-        AdjustEvent adjustEvent = new AdjustEvent("abc123");
-        adjustEvent.setRevenue(0.01, "EUR");
-//        adjustEvent.setOrderId("{OrderId}");
-        Adjust.trackEvent(adjustEvent);
-    }
-    //in-app Event callback
-    public void CallBackEvent(){
-        AdjustEvent adjustEvent = new AdjustEvent("abc123");
-        adjustEvent.addCallbackParameter("key", "value");
-        adjustEvent.addCallbackParameter("foo", "bar");
+    public void purchaseEvent(String price ,String currency,String order){
+        //offical
+        double revenue = Double.parseDouble(price);
+        AdjustEvent adjustEvent = new AdjustEvent("k0eegp");
+        adjustEvent.setRevenue(revenue, currency);
+        adjustEvent.setOrderId(order);
         Adjust.trackEvent(adjustEvent);
     }
 }

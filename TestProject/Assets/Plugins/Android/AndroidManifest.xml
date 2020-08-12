@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.elex.girlsthrone.tw.gp" xmlns:tools="http://schemas.android.com/tools" android:installLocation="preferExternal">
   <supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" android:anyDensity="true" />
+  <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
   <application android:theme="@style/UnityThemeSelector" android:icon="@mipmap/app_icon" android:label="@string/app_name" android:isGame="true" android:usesCleartextTraffic="true">
     <activity android:label="@string/app_name" android:name="celia.sdk.CeliaActivity" android:screenOrientation="portrait" android:launchMode="singleTask" android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale|layoutDirection|density" android:hardwareAccelerated="false">
       <intent-filter>
@@ -10,73 +11,38 @@
       </intent-filter>
       <meta-data android:name="unityplayer.UnityActivity" android:value="true" />/&gt;
     </activity>
-    <meta-data android:name="unity.build-id" android:value="edcdf5c4-8cfa-4804-874f-c0412d5fb3dd" />
+    <meta-data android:name="unity.build-id" android:value="1cdb9542-baa1-44b6-8491-6e8698e4bc30" />
     <meta-data android:name="unity.splash-mode" android:value="0" />
     <meta-data android:name="unity.splash-enable" android:value="True" />
-
     <!--AIHelp SDK -需要的刘海屏适配 -->
     <!--google刘海适配-->
-    <meta-data
-        android:name="android.max_aspect"
-        android:value="2.1" />
+    <meta-data android:name="android.max_aspect" android:value="2.1" />
     <!--小米手机开启刘海适配-->
-    <meta-data
-        android:name="notch.config"
-        android:value="portrait|landscape" />
+    <meta-data android:name="notch.config" android:value="portrait|landscape" />
     <!--需要的Activity-->
-    <activity
-        android:name="com.ljoy.chatbot.ChatMainActivity"
-        android:configChanges="keyboardHidden|orientation|screenSize"
-        android:screenOrientation="portrait"
-        android:theme="@style/showBgStyleFullscreen"
-        android:windowSoftInputMode="adjustResize|stateHidden" />
-    <activity
-        android:name="com.ljoy.chatbot.OPActivity"
-        android:configChanges="keyboardHidden|orientation|screenSize"
-        android:screenOrientation="portrait"
-        android:theme="@style/showBgStyleFullscreen"
-        android:windowSoftInputMode="adjustResize|stateHidden" />
-    <activity
-        android:name="com.ljoy.chatbot.FAQActivity"
-        android:configChanges="keyboardHidden|orientation|screenSize"
-        android:screenOrientation="portrait"
-        android:theme="@style/showBgStyleFullscreen"
-        android:windowSoftInputMode="adjustResize|stateHidden" />
-    <activity
-        android:name="com.ljoy.chatbot.WebViewActivity"
-        android:configChanges="keyboardHidden|orientation|screenSize"
-        android:screenOrientation="portrait"
-        android:theme="@style/showBgStyleFullscreen"
-        android:windowSoftInputMode="adjustResize|stateHidden" />
-    <activity
-        android:name="com.ljoy.chatbot.QAWebActivity"
-        android:configChanges="keyboardHidden|orientation|screenSize"
-        android:screenOrientation="portrait"
-        android:theme="@style/showBgStyleFullscreen"
-        android:windowSoftInputMode="adjustResize|stateHidden" />
+    <activity android:name="com.ljoy.chatbot.ChatMainActivity" android:configChanges="keyboardHidden|orientation|screenSize" android:screenOrientation="portrait" android:theme="@style/BaseUnityTheme" android:windowSoftInputMode="adjustResize|stateHidden" />
+    <activity android:name="com.ljoy.chatbot.OPActivity" android:configChanges="keyboardHidden|orientation|screenSize" android:screenOrientation="portrait" android:theme="@style/BaseUnityTheme" android:windowSoftInputMode="adjustResize|stateHidden" />
+    <activity android:name="com.ljoy.chatbot.FAQActivity" android:configChanges="keyboardHidden|orientation|screenSize" android:screenOrientation="portrait" android:theme="@style/BaseUnityTheme" android:windowSoftInputMode="adjustResize|stateHidden" />
+    <activity android:name="com.ljoy.chatbot.WebViewActivity" android:configChanges="keyboardHidden|orientation|screenSize" android:screenOrientation="portrait" android:theme="@style/BaseUnityTheme" android:windowSoftInputMode="adjustResize|stateHidden" />
+    <activity android:name="com.ljoy.chatbot.QAWebActivity" android:configChanges="keyboardHidden|orientation|screenSize" android:screenOrientation="portrait" android:theme="@style/BaseUnityTheme" android:windowSoftInputMode="adjustResize|stateHidden" />
     <!--AIHelp SDK需要的Activity -->
     <!--Adjust SDK-->
-    <receiver
-        android:name="com.adjust.sdk.AdjustReferrerReceiver"
-        android:permission="android.permission.INSTALL_PACKAGES"
-        android:exported="true" >
+    <receiver android:name="com.adjust.sdk.AdjustReferrerReceiver" android:permission="android.permission.INSTALL_PACKAGES" android:exported="true">
       <intent-filter>
         <action android:name="com.android.vending.INSTALL_REFERRER" />
       </intent-filter>
     </receiver>
     <!--Adjust SDK End-->
-    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
-    <activity android:name="com.facebook.FacebookActivity" android:configChanges= "keyboard|keyboardHidden|screenLayout|screenSize|orientation" android:label="@string/app_name" />
+    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="949004278872387" />
+    <activity android:name="com.facebook.FacebookActivity" android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" android:label="@string/app_name" />
     <activity android:name="com.facebook.CustomTabActivity" android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.VIEW" />
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />
-        <data android:scheme="@string/fb_login_protocol_scheme" />
+        <data android:scheme="fb949004278872387" />
       </intent-filter>
     </activity>
-
-
   </application>
   <uses-feature android:glEsVersion="0x00020000" />
   <uses-permission android:name="android.permission.INTERNET" />
@@ -88,7 +54,5 @@
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />
   <!-- 上传表单图片的时候需要此权限 -->
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="18" />
-
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
 </manifest>

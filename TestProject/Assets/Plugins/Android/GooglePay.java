@@ -1,6 +1,8 @@
 package celia.sdk;
 
-import android.app.Activity;
+import android.content.Intent;
+
+import androidx.annotation.NonNull;
 
 import com.android.billingclient.api.AcknowledgePurchaseParams;
 import com.android.billingclient.api.AcknowledgePurchaseResponseListener;
@@ -15,6 +17,13 @@ import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,12 +33,59 @@ public class GooglePay {
     PurchasesUpdatedListener purchaseUpdateListener;
     BillingClient billingClient;
     CeliaActivity mainActivity;
-
+    private GoogleSignInClient mGoogleSignInClient;
+    private static final int RC_GET_TOKEN = 9002;
     public GooglePay(CeliaActivity activity){
 
         mainActivity = activity;
+        Init();
     }
+    void Init(){
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(Constant.google_server_client_id)
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(mainActivity, gso);
 
+    }
+    public void Login(){
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        mainActivity.startActivityForResult(signInIntent, RC_GET_TOKEN);
+    }
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (requestCode == RC_GET_TOKEN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                String token = account.getIdToken();
+                String id = account.getId();
+                mainActivity.SendMessageToUnity(CeliaActivity.MsgID.Login.getCode(), new HashMap<String, String>(){
+                    {
+                        put("state", "1");
+                        put("uid", account.getId());
+                        put("token",token);
+                    }
+                });
+
+            } catch (ApiException e) {
+                mainActivity.ShowLog("signInResult:failed code=" + e.getStatusCode());
+                mainActivity.SendMessageToUnity(CeliaActivity.MsgID.Login.getCode(), new HashMap<String, String>(){
+                    {
+                        put("state", "0");
+                        put("message", e.getStatusCode() + "");
+                    }
+                });
+            }
+        }
+    }
+    public void Logout(){
+        mGoogleSignInClient.signOut().addOnCompleteListener(mainActivity, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                mainActivity.ShowLog("Google Logout onComplete");
+            }
+        });
+    }
     void Connect()
     {
         purchaseUpdateListener = new PurchasesUpdatedListener() {
@@ -105,11 +161,14 @@ public class GooglePay {
                         // Process the result.
                         for (SkuDetails item: skuDetailsList) {
                             mainActivity.ShowLog("Sku detail:" + item.getTitle() + "-" + item.getPrice() + ":" + item.getOriginalJson());
+
                         }
                         mainActivity.ShowLog("sku result:" + billingResult.getResponseCode() + "-" + billingResult.getDebugMessage());
 
                         if (skuDetailsList.size()>0)
                         {
+                            Utils.getInstance().saveCacheData("price",skuDetailsList.get(0).getPrice());
+                            Utils.getInstance().saveCacheData("CurrencyCode",skuDetailsList.get(0).getPriceCurrencyCode());
                             DoPurchase(skuDetailsList.get(0),currentOrderNo);
                         }else {
                             return;
@@ -151,7 +210,7 @@ public class GooglePay {
         mainActivity.ShowLog("Purcahse stste:" + purchase.getPurchaseState());
         if (purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED)
         {
-            mainActivity.ShowLog("Purchased a product:" + purchase.getOriginalJson());
+            mainActivity.ShowLog( "Purchased a product:" + purchase.getOriginalJson());
             Acknowledge(purchase);
             SendOrder(purchase,1);
         }
@@ -221,6 +280,13 @@ public class GooglePay {
         }
         orderCache.put(purchase.getAccountIdentifiers().getObfuscatedAccountId(),purchase);
         mainActivity.ShowLog("purchase json : " + purchase.getOriginalJson());
+
+        String price = Utils.getInstance().getCacheData("price");
+        String CurrencyCode = Utils.getInstance().getCacheData("CurrencyCode");
+        //支付统计
+        mainActivity.adjustHelper.purchaseEvent(price,CurrencyCode,purchase.getOrderId());
+        mainActivity.faceBookHelper.purchaseEvent(price,CurrencyCode,purchase.getOrderId());
+
         mainActivity.SendMessageToUnity(CeliaActivity.MsgID.Pay.getCode(), new HashMap<String, String>(){
             {
                 put("state",isfinished + "");

@@ -1,48 +1,22 @@
 package celia.sdk;
 
 // Unity3D
+
 import com.adjust.sdk.Adjust;
-import com.adjust.sdk.AdjustConfig;
 import com.elex.girlsthrone.tw.gp.R;
-import com.ljoy.chatbot.sdk.ELvaChatServiceSdk;
 import com.unity3d.player.*;
 // Android
-import android.app.Application;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
+
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
-import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.ImageButton;
 import android.widget.Toast;
-import android.graphics.BitmapFactory;
 
-// Java
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
-import java.io.*;
-
-//google
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.Task;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class CeliaActivity extends UnityPlayerActivity
-{
+public class CeliaActivity extends UnityPlayerActivity {
     public enum MsgID {
         Invalid(0),
         Init(100),
@@ -53,6 +27,7 @@ public class CeliaActivity extends UnityPlayerActivity
         ExitGame(105),
         Logout(106),
 
+        GetDeviceId(200),
         ConfigInfo(201),
         GoogleTranslate(202),
         Bind(203),
@@ -60,33 +35,36 @@ public class CeliaActivity extends UnityPlayerActivity
         Naver(205),
 
         WeiboShare(301),
+        FaceBookShare(302),
+        LineShare(303),
 
-        ConsumeGoogleOrder(401);
+        ConsumeGoogleOrder(401),
 
+        CustomerService(501),
 
-        MsgID(int code)
-        {
+        FaceBookEvent(601),
+        AdjustEvent(602);
+
+        MsgID(int code) {
             this.code = code;
         }
+
         private int code;
+
         public int getCode() {
             return code;
         }
-        public  static  MsgID GetMsgID(int code)
-        {
-            for (MsgID item:MsgID.values())
-            {
-                if(item.getCode() == code)
-                {
-                    return  item;
+
+        public static MsgID GetMsgID(int code) {
+            for (MsgID item : MsgID.values()) {
+                if (item.getCode() == code) {
+                    return item;
                 }
             }
-            return  Invalid;
+            return Invalid;
         }
     }
-
-    public  void CallFromUnity(int methedID,String data)
-    {
+    public void CallFromUnity(int methedID, String data) throws JSONException {
         ShowLog("calling method:" + methedID);
         MsgID msgID = MsgID.GetMsgID(methedID);
         switch (msgID) {
@@ -96,8 +74,8 @@ public class CeliaActivity extends UnityPlayerActivity
             case Login:
                 Login(data);
                 break;
-            case Switch:
-                Switch();
+            case Logout:
+                Logout();
                 break;
             case Pay:
                 Pay(data);
@@ -105,26 +83,42 @@ public class CeliaActivity extends UnityPlayerActivity
             case ConsumeGoogleOrder:
                 googlePay.Consume(data);
                 break;
-            default :
+            case GetDeviceId:
+                GetDeviceId();
+                break;
+            case FaceBookShare:
+                faceBookHelper.Share(data);
+                break;
+            case LineShare:
+                lineHelper.Share(data);
+                break;
+            case CustomerService:
+                elvaHelper.Show(data);
+                break;
+            case FaceBookEvent:
+                faceBookHelper.Event(data);
+                break;
+            case AdjustEvent:
+                adjustHelper.CommonEvent(data);
+                break;
+            default:
                 return;
         }
     }
-
 
     private final String TAG = "Celia";
     //debug等级，0关闭，1打印，2打印+toast
     private int isDebug = 1;
     private Toast mToast;
 
-    private GoogleSignInClient mGoogleSignInClient;
-    private static final int RC_GET_TOKEN = 9002;
-
     GooglePay googlePay;
     AppleSignIn appleSignIn;
     FaceBookHelper faceBookHelper;
     AdjustHelper adjustHelper;
     ElvaHelper elvaHelper;
+    LineHelper lineHelper;
     int CurLoginType;
+
     public void ShowLog(String msg) {
         if (isDebug == 0) {
             return;
@@ -134,7 +128,8 @@ public class CeliaActivity extends UnityPlayerActivity
             return;
         }
         CeliaActivity.this.runOnUiThread(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 if (mToast == null) {
                     mToast = Toast.makeText(CeliaActivity.this, null, Toast.LENGTH_SHORT);
                     mToast.setText(msg);
@@ -146,22 +141,22 @@ public class CeliaActivity extends UnityPlayerActivity
         });
     }
 
-    public void SendMessageToUnity(int msgID, HashMap<String, String> dataMap)
-    {
+    public void SendMessageToUnity(int msgID, HashMap<String, String> dataMap) {
         dataMap.put("msgID", String.valueOf(msgID));
         JSONObject jsonObject = new JSONObject(dataMap);
-        UnityPlayer.UnitySendMessage ("SDKManager", "OnResult", jsonObject.toString());
+        UnityPlayer.UnitySendMessage("SDKManager", "OnResult", jsonObject.toString());
     }
 
-    public void Init()
-    {
-        InitFaceBook();
-        InitApple();
-        InitGoogle();
-        InitElva();
-        InitAdjust();
+    public void Init() {
+        Utils.getInstance().SetActivity(this);
+        faceBookHelper = new FaceBookHelper(this);
+        appleSignIn = new AppleSignIn(mUnityPlayer,this );
+        googlePay = new GooglePay(this);
+        elvaHelper = new ElvaHelper(this);
+        adjustHelper = new AdjustHelper(this);
+        lineHelper = new LineHelper(this);
+//        GetDeviceId();
         SendMessageToUnity(MsgID.Init.getCode(), new HashMap<String, String>(){ {put("state","1");} });
-        CurLoginType = 3;
         SendMessageToUnity(MsgID.ConfigInfo.getCode(), new HashMap<String, String>(){ {
             put("state", "1");
             put("appID", "0");
@@ -172,107 +167,44 @@ public class CeliaActivity extends UnityPlayerActivity
         } });
 
     }
-    public void InitAdjust(){
-        adjustHelper = new AdjustHelper(this);
-    }
-    public void InitFaceBook(){
-        faceBookHelper = new FaceBookHelper(this);
-    }
-    public void InitGoogle(){
-        String server_client_id = Constant.google_server_client_id;
-        ShowLog("google_server_client_id" + server_client_id);
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(server_client_id)
-                .requestEmail()
-                .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        googlePay = new GooglePay(this);
-    }
-    public void InitApple(){
-        appleSignIn = new AppleSignIn(mUnityPlayer,this );
-    }
-    public void InitElva(){
-        // 初始化AIHelpSDK
-        ELvaChatServiceSdk.init(this,Constant.Elva_AppKey,Constant.Elva_Domain,Constant.Elva_AppId);
-        elvaHelper = new ElvaHelper(this);
-    }
+//region 基础SDK接口
 
-//region login
+    public void Login(String type)
+    {
+        ShowLog("Login...:" + type);
+        adjustHelper.CommonEvent("gvmnef");
+        try {
+            int loginType = Integer.parseInt(type);
+            CurLoginType = loginType;
+            if (loginType == 3){//google
+                googlePay.Login();
+            }else if (loginType == 4){//apple
+                appleSignIn.OpenWeb();
+            }else if (loginType == 5){//facebook
+                faceBookHelper.Login();
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         ShowLog("code:" + requestCode);
         ShowLog("resultCode:" + resultCode);
         ShowLog("data:" + data);
-
         if (CurLoginType == 3){//google
-           if (requestCode == RC_GET_TOKEN) {
-               Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-                handelGetToken(task);
-            }
+            googlePay.onActivityResult(requestCode, resultCode, data);
         }else if (CurLoginType == 4){//apple
 
         }else if (CurLoginType == 5){//facebook
             faceBookHelper.callbackManager.onActivityResult(requestCode, resultCode, data);
         }
-
-    }
-
-    private void handelGetToken(Task<GoogleSignInAccount> completedTask) {
-    try {
-        GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-        String token = account.getIdToken();
-        String id = account.getId();
-        SendMessageToUnity(MsgID.Login.getCode(), new HashMap<String, String>(){
-            {
-                put("state", "1");
-                put("uid", account.getId());
-                put("token",token);
-            }
-        });
-
-    } catch (ApiException e) {
-        ShowLog("signInResult:failed code=" + e.getStatusCode());
-        SendMessageToUnity(MsgID.Login.getCode(), new HashMap<String, String>(){
-            {
-                put("state", "0");
-                put("message", e.getStatusCode() + "");
-            }
-        });
-    }
-    }
-//endregion
-
-//region 基础SDK接口
-
-    public void Login(String type)
-    {
-        ShowLog("Login...:" + type);
-        adjustHelper.EventStatistics("d5z9hd");
-        try {
-            int loginType = Integer.parseInt(type);
-            CurLoginType = loginType;
-            if (loginType == 3){//google
-                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                startActivityForResult(signInIntent, RC_GET_TOKEN);
-            }else if (loginType == 4){//apple
-                appleSignIn.OpenWeb();
-            }else if (loginType == 5){//facebook
-//                faceBookHelper.Login();
-                elvaHelper.showFAQs();
-            }
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
-    }
-    public void Switch()
-    {
-        ShowLog("Switch...");
     }
 
     public void Pay(String msg)
     {
-        ShowLog("Pay...");
+        ShowLog( "Pay...");
         try
         {
             JSONObject jsonObject = new JSONObject(msg);
@@ -285,14 +217,26 @@ public class CeliaActivity extends UnityPlayerActivity
     }
     public void Logout()
     {
-        ShowLog("Logout...");
+        if (CurLoginType == 3){//google
+            googlePay.Logout();
+        }else if (CurLoginType == 4){//apple
+            appleSignIn.OpenWeb();
+        }else if (CurLoginType == 5){//facebook
+            faceBookHelper.Logout();
+        }
+        ShowLog("Logout..."+CurLoginType);
+    }
 
+    public void GetDeviceId(){
+        String IMEIDeviceId = Utils.getInstance().getIMEIDeviceId();
+        SendMessageToUnity(MsgID.ConfigInfo.getCode(), new HashMap<String, String>(){ {
+            put("state", "1");
+            put("UUID", IMEIDeviceId);
+        } });
+//        Utils.getInstance().getKeyHash();
+//        Utils.getInstance().getCurrencyInfo();
     }
-    public void ExitGame()
-    {
-        ShowLog("ExitGame...");
-        
-    }
+
 
    // endregion
 
@@ -327,6 +271,7 @@ public class CeliaActivity extends UnityPlayerActivity
     {
         super.onPause();
         Adjust.onPause();
+//        AppEventsLogger.deactivateApp(this);
     }
     // Resume Unity
     @Override protected void onResume()

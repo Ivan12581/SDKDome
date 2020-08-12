@@ -258,10 +258,12 @@ namespace celia.game.editor
             // SDK相关参数设置
             rootDict.SetString("FacebookAppID", "949004278872387");
             rootDict.SetString("GoogleClientID", "554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn.apps.googleusercontent.com");
-            rootDict.SetString("FacebookAppDisplayName", "Girl for the Throne TW");
+            rootDict.SetString("FacebookAppDisplayName", "少女的王座");
             rootDict.SetString("AIHelpAppID", "elextech_platform_15ce9b10-f784-4ab5-8ee4-45efab40bd6a");
             rootDict.SetString("AIHelpAppKey", "ELEXTECH_app_50dd4661c57843778d850769a02f8a09");
             rootDict.SetString("AIHelpDomain", "elextech@aihelp.net");
+            rootDict.SetString("AdjustAppToken", "1k2jm7bpansw");
+            rootDict.SetString("AdjustAppSecret", "1,750848352-1884995334-181661496-1073918938");
             // Set encryption usage boolean
             string encryptKey = "ITSAppUsesNonExemptEncryption";
             rootDict.SetBoolean(encryptKey, false);
