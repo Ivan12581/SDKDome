@@ -11,19 +11,13 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 
-import androidx.annotation.MainThread;
-
-import com.elex.girlsthrone.tw.gp.R;
 import com.unity3d.player.UnityPlayer;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.text.MessageFormat;
 import java.util.HashMap;
 
@@ -47,7 +41,7 @@ public class AppleSignIn {
     {
         targetUrl = "<html><head><meta http-equiv=\"refresh\" content=\"0;url=" + MessageFormat.format("https://appleid.apple.com/auth/authorize?client_id={0}&redirect_uri={1}&response_type=code%20id_token&scope=name&response_mode=form_post",
                 Constant.apple_client_id,Constant.apple_redirect_uri) + "\"></head></html>";
-        mainActivity.ShowLog(targetUrl);
+        mainActivity.ShowLog("---targetUrl-->"+targetUrl);
     }
 
     void InitWeb()
@@ -121,7 +115,7 @@ public class AppleSignIn {
 
     void ReportResult(String json)
     {
-        mainActivity.ShowLog(json);
+        mainActivity.ShowLog("---ReportResult-->"+ json);
         try
         {
             JSONObject jsonObject = new JSONObject(json);
