@@ -47,6 +47,7 @@ public class Utils {
     //Build.VERSION_CODES.M 23
     //Build.VERSION_CODES.O 26
     //Build.VERSION_CODES.Q 29
+    @SuppressLint("HardwareIds")
     public String getIMEIDeviceId() {
         mainActivity.ShowLog("---getIMEIDeviceId--->");
         String deviceId;

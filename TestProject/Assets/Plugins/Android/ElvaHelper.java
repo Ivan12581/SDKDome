@@ -19,7 +19,6 @@ public class ElvaHelper {
     String PlayershowConversationFlag = "1";
     public ElvaHelper(CeliaActivity activity)
     {
-        setInitCallback();
         mainActivity = activity;
         Init();
     }

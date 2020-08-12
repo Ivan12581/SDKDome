@@ -100,6 +100,7 @@ public class FaceBookHelper {
                         });
                     }
                 });
+        initFBShare();
     }
 
     public void Login(){
@@ -131,14 +132,13 @@ public class FaceBookHelper {
         try{
             JSONObject jsonObject = new JSONObject(jsonStr);
             String type = jsonObject.getString("type");
-            String level = jsonObject.getString("level");
-            String contentData = jsonObject.getString("contentData");
-            String contentId = jsonObject.getString("contentId");
-            String success = jsonObject.getString("success");
-
             if (type.equals("1")){
+                String level = jsonObject.getString("level");
                 logAchieveLevelEvent(level);            //玩家通过关卡“1-2”后，触发该事件
             }else if (type.equals("2")){
+                String contentData = jsonObject.getString("contentData");
+                String contentId = jsonObject.getString("contentId");
+                String success = jsonObject.getString("success");
                 logCompleteTutorialEvent(contentData,contentId,success);            //玩家通过关卡“1-13”后，触发该事件
             }
         }catch (JSONException e){
@@ -177,7 +177,7 @@ public class FaceBookHelper {
     }
 //share
     public void Share(String jsonStr){
-
+        doShare(jsonStr);
     }
     private void initFBShare() {
         this._fbShareDialog = new ShareDialog(mainActivity);

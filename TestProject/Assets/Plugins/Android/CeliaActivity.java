@@ -155,7 +155,7 @@ public class CeliaActivity extends UnityPlayerActivity {
         elvaHelper = new ElvaHelper(this);
         adjustHelper = new AdjustHelper(this);
         lineHelper = new LineHelper(this);
-//        GetDeviceId();
+        GetDeviceId();
         SendMessageToUnity(MsgID.Init.getCode(), new HashMap<String, String>(){ {put("state","1");} });
         SendMessageToUnity(MsgID.ConfigInfo.getCode(), new HashMap<String, String>(){ {
             put("state", "1");
@@ -171,16 +171,24 @@ public class CeliaActivity extends UnityPlayerActivity {
 
     public void Login(String type)
     {
+//        Account,
+//                SDKToken,//其实就是星辉
+//                Super,
+//                Tourist,
+//                Google,
+//                Apple,
+//                FaceBook,
+//                GameCenter,
         ShowLog("Login...:" + type);
         adjustHelper.CommonEvent("gvmnef");
         try {
             int loginType = Integer.parseInt(type);
             CurLoginType = loginType;
-            if (loginType == 3){//google
+            if (loginType == 4){//google
                 googlePay.Login();
-            }else if (loginType == 4){//apple
+            }else if (loginType == 5){//apple
                 appleSignIn.OpenWeb();
-            }else if (loginType == 5){//facebook
+            }else if (loginType == 6){//facebook
                 faceBookHelper.Login();
             }
         } catch (NumberFormatException e) {

@@ -96,7 +96,7 @@ public class LineHelper {
     }
 
     public void Share(String jsonStr){
-
+        shareToLine();
     }
     public void shareToLine(){
 //        Log.d(tag,"share to Line");

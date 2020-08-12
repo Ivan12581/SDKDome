@@ -1,21 +1,9 @@
 package celia.sdk;
 
-import android.app.Activity;
-import android.app.Application;
-import android.os.Build;
-import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-
 import com.adjust.sdk.Adjust;
 import com.adjust.sdk.AdjustConfig;
 import com.adjust.sdk.AdjustEvent;
 import com.adjust.sdk.LogLevel;
-import com.adjust.sdk.OnDeviceIdsRead;
-import com.unity3d.player.UnityPlayer;
-
 public class AdjustHelper {
     CeliaActivity mainActivity;
     public AdjustHelper(CeliaActivity activity)
@@ -23,7 +11,7 @@ public class AdjustHelper {
         mainActivity = activity;
         Init();
     }
-    @RequiresApi(api = Build.VERSION_CODES.Q)
+
     private void Init(){
         String environment = AdjustConfig.ENVIRONMENT_SANDBOX;
 //        String environment = AdjustConfig.ENVIRONMENT_PRODUCTION;
