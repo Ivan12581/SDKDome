@@ -31,8 +31,8 @@
 //     NSString *environment = ADJEnvironmentProduction;
      ADJConfig *adjustConfig = [ADJConfig configWithAppToken:yourAppToken environment:environment];
      [adjustConfig setAppSecret:1 info1:750848352 info2:1884995334 info3:181661496 info4:1073918938];
-      [adjustConfig setLogLevel:ADJLogLevelVerbose];
- //     [adjustConfig setLogLevel:ADJLogLevelSuppress];
+//      [adjustConfig setLogLevel:ADJLogLevelVerbose];
+      [adjustConfig setLogLevel:ADJLogLevelSuppress];
      [adjustConfig setSendInBackground:YES];
      [Adjust appDidLaunch:adjustConfig];
 
@@ -46,11 +46,30 @@
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary*)options{
 //    return [[LineSDKLogin sharedInstance] handleOpenURL:url];
+         NSLog(@"-ios----IOSBridgeHelper---*********************---");
+    switch (CurLoginType) {
+        case tApple:
+                break;
+        case tGameCenter:
+                break;
+        case tFaceBook:
     return [[FBSDKApplicationDelegate sharedInstance] application:app openURL:url sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey] annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
+                break;
+        case tGoogle:
+    return [[GIDSignIn sharedInstance] handleURL:url];
+                break;
+    }
+    return true;
 }
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [super applicationDidBecomeActive:application];
     [FBSDKAppEvents activateApp];
+}
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+  return [[GIDSignIn sharedInstance] handleURL:url];
 }
 //- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
 //    [super application:application openURL:url options:options];
@@ -74,11 +93,11 @@ typedef NS_ENUM(NSInteger, SDKLoginType)
     tAccount,
     tSDKToken,//其实就是星辉
     tSuper,
+    Tourist,
     tGoogle,
     tApple,
     tFaceBook,
     tGameCenter,
-
 };
 
 #pragma mark --init
@@ -90,6 +109,7 @@ typedef NS_ENUM(NSInteger, SDKLoginType)
     [[LineHelper sharedInstance] InitSDK:self];
     [[ElvaHelper sharedInstance] InitSDK:self];
     [[AdjustHelper sharedInstance] InitSDK:self];
+    [self GetDeviceId];
 }
 
 #pragma mark -- 登录 jsonString 为登录方式 就是一个字符串
@@ -138,9 +158,13 @@ typedef NS_ENUM(NSInteger, SDKLoginType)
 
 #pragma mark -- 获取设备UUID
 -(void)GetDeviceId{
-    NSString *UUID = [[Utils sharedInstance] GetUUID];;
-     NSLog(@"-ios----didFinishLaunchingWithOptions---UUID----%@",UUID);
-    [self SendMessageToUnity: eGetDeviceId DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",UUID, @"UUID",nil]];
+    NSString *UUID = [[Utils sharedInstance] GetUUID];
+    BOOL IsHighLevel = [[Utils sharedInstance] IsHighLevel];
+    if (IsHighLevel) {
+        [self SendMessageToUnity: eGetDeviceId DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",UUID, @"UUID",@"1", @"IsHighLevel",nil]];
+    }else{
+        [self SendMessageToUnity: eGetDeviceId DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",UUID, @"UUID",@"0", @"IsHighLevel",nil]];
+    }
 }
 //cDelegate
 -(void)InitSDKCallBack:(NSMutableDictionary *) dict{

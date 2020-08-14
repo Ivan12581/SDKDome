@@ -36,7 +36,7 @@ static ElvaHelper *ElvaHelperIns = nil;
 //    [ECServiceSdk setSDKLanguage:@"zh_TW"];
 //    [ECServiceSdk setSDKLanguage:@"zh_en"];
 //    [ECServiceSdk setSDKLanguage:@"zh_CN"];
-
+    NSLog(@"--ElvaHelper---InitSDK---");
 }
 #pragma mark --入口
 -(void)show:(const char*) jsonString{

@@ -15,5 +15,6 @@
 -(void)saveValueWithKey:(NSString *)key value:(NSString *)value;
 -(void)deleteValueWithKey:(NSString *)key;
 -(NSString *)GetUUID;
+-(BOOL *)IsHighLevel;
 @end
 #endif /* Utils_h */

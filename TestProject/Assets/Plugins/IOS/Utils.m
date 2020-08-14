@@ -55,4 +55,12 @@ static Utils *UtilsIns = nil;
     NSString *app_Name = [infoDictionary objectForKey:@"CFBundleDisplayName"];
     return app_Name;
 }
+#pragma mark -判断系统是否高于iOS 13.0
+-(BOOL *)IsHighLevel{
+    if (@available(iOS 13.0, *)) {
+        return YES;
+    }else{
+        return NO;
+    }
+}
 @end

@@ -15,18 +15,18 @@ static GoogleHelper *GoogleHelperIns = nil;
 +(GoogleHelper*)sharedInstance{
     if (GoogleHelperIns == nil) {
         if (self == [GoogleHelper class]) {
-            GoogleHelperIns = [[self alloc] init];
+            GoogleHelperIns = [GoogleHelper new];
         }
     }
     return GoogleHelperIns;
 }
 -(void)InitSDK:(id<cDelegate>)delegate{
-    NSLog(@"---GoogleHelper  Init---");
     IOSBridgeHelper = delegate;
-   [GIDSignIn sharedInstance].clientID = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"GoogleClientID"];
+    [GIDSignIn sharedInstance].clientID = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"GoogleClientID"];
     [GIDSignIn sharedInstance].delegate = self;
     [GIDSignIn sharedInstance].shouldFetchBasicProfile = YES;
     [GIDSignIn sharedInstance].presentingViewController = [[[UIApplication sharedApplication] delegate] window].rootViewController;
+    NSLog(@"---GoogleHelper  InitSDK---");
 }
 - (void)Login {
      NSLog(@"---GoogleHelper  Login---");
@@ -72,18 +72,18 @@ static GoogleHelper *GoogleHelperIns = nil;
   // Perform any operations when the user disconnects from app here.
   // ...
 }
-//iOS 8 以上
-- (BOOL)application:(UIApplication *)app
-            openURL:(NSURL *)url
-            options:(NSDictionary<NSString *, id> *)options {
-  return [[GIDSignIn sharedInstance] handleURL:url];
-}
-//iOS 8 以下
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation {
-  return [[GIDSignIn sharedInstance] handleURL:url];
-}
+////iOS 8 以上
+//- (BOOL)application:(UIApplication *)app
+//            openURL:(NSURL *)url
+//            options:(NSDictionary<NSString *, id> *)options {
+//  return [[GIDSignIn sharedInstance] handleURL:url];
+//}
+////iOS 8 以下
+//- (BOOL)application:(UIApplication *)application
+//            openURL:(NSURL *)url
+//  sourceApplication:(NSString *)sourceApplication
+//         annotation:(id)annotation {
+//  return [[GIDSignIn sharedInstance] handleURL:url];
+//}
 
 @end

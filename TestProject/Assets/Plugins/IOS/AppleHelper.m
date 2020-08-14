@@ -30,14 +30,7 @@ static AppleHelper *AppleHelperInstance = nil;
     forService = [NSBundle mainBundle].bundleIdentifier;
     userIdentifier = @"nil";
 
-    NSLog(@"-ios---AppleHelper---InitSDK---bundleID-%@",forService);
-    if (@available(iOS 13.0, *)) {
-        [IOSBridgeHelper InitSDKCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",nil]];
-    }else{
-        //此处返回不能为0 因为0代表失败 之前逻辑为初始化失败会重新初始化
-        [IOSBridgeHelper InitSDKCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"state",nil]];
-    }
-
+    NSLog(@"--AppleHelper---InitSDK---");
 }
 //******************************************************
 //****************Apple Sign In With Apple

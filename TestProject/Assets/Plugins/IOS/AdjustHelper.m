@@ -21,6 +21,7 @@ static AdjustHelper *AdjustHelperIns = nil;
     IOSBridgeHelper = Delegate;
     //点击游戏图标，启动游戏后，触发该事件      //ad启动统计
     [self commonEvent:@"4pvqgy"];
+    NSLog(@"--AppleHelper---InitSDK---");
 }
 -(void)Event:(const char*) jsonString{
     NSString *evnetToken = [NSString stringWithUTF8String:jsonString];
