@@ -88,7 +88,7 @@ namespace celia.game
         /// <param name="jsonString">回调数据</param>
         public void OnResult(string jsonString)
         {
-            Debug.Log("Unity: ---SDK OnResult--->"+ jsonString);
+            Debug.Log("Unity: ---SDK OnResult--->" + jsonString);
 
             Dictionary<string, string> dataDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonString);
             SDKResultType type = (SDKResultType)int.Parse(dataDict["msgID"]);
@@ -119,7 +119,7 @@ namespace celia.game
         /// 登录
         /// </summary>
         /// <param name="callBack">回调，state+数据字典</param>
-        public void Login(SDKLoginType type,Action<int, Dictionary<string, string>> callBack = null)
+        public void Login(SDKLoginType type, Action<int, Dictionary<string, string>> callBack = null)
         {
             DoingSwitch = false;
             callBackDict[SDKResultType.Login] = callBack;
@@ -192,7 +192,7 @@ namespace celia.game
             jobj.Add("oldname", "");
             //拓展字段，传旧角色名
             jobj.Add("extra", "");
-            CallSDK(SDKResultType.UploadInfo,jobj.ToString());
+            CallSDK(SDKResultType.UploadInfo, jobj.ToString());
             //proxy?.UploadInfo(jobj.ToString());
         }
 
@@ -290,7 +290,8 @@ namespace celia.game
             //proxy?.ExitGame();
         }
 
-        void CallSDK(SDKResultType type, string jsonString = "") {
+        void CallSDK(SDKResultType type, string jsonString = "")
+        {
             SDKBridgeHelper.gi.CallSDK(type, jsonString);
         }
         // 通用回调处理
@@ -302,7 +303,8 @@ namespace celia.game
                     if (state == 0)//初始化失败则重新初始化
                     {
                         //InitSDK();
-                    }else if(state == 1)
+                    }
+                    else if (state == 1)
                     {
                         //UploadDeviceInfo(DeviceUpload.SDKInitSucc);
                     }
@@ -354,17 +356,20 @@ namespace celia.game
                 case SDKResultType.CustomerService:
                     if (state == 1)
                     {
-                        
+
                     }
                     break;
             }
         }
-        private void PayCallBack(int type) {
+        private void PayCallBack(int type)
+        {
             if (type == 0)
             {
-               //支付初始化 返回所有订单信息
-               //然后向服务器获得订单信息作对比 
-            } else if (type == 1) {
+                //支付初始化 返回所有订单信息
+                //然后向服务器获得订单信息作对比 
+            }
+            else if (type == 1)
+            {
                 //正常购买
             }
             else if (type == 2)
@@ -440,6 +445,7 @@ namespace celia.game
         Account,
         SDKToken,//其实就是星辉
         Super,
+        Tourist,
         Google,
         Apple,
         FaceBook,

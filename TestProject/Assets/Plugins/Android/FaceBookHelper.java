@@ -46,6 +46,15 @@ public class FaceBookHelper {
 
     public  void Init()
     {
+        FacebookSdk.setApplicationId("949004278872387");
+        FacebookSdk.sdkInitialize(mainActivity, new FacebookSdk.InitializeCallback(){
+
+            @Override
+            public void onInitialized() {
+                mainActivity.ShowLog( "---FacebookSdk-onInitialized--");
+            }
+        });
+
         FacebookSdk.setAutoLogAppEventsEnabled(true);
         FacebookSdk.setAutoInitEnabled(true);
         FacebookSdk.fullyInitialize();
