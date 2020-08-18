@@ -73,17 +73,25 @@ static LineHelper *LineHelperIns = nil;
 //     */
 }
 -(void)share:(const char*) jsonData{
-        UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    NSString * pictureUrl = @"https://image.baidu.com/search/detail?z=0&word=%E7%8F%8D%E7%8F%8DOo&hs=0&pn=2&spn=0&di=0&pi=533454875148338836&tn=baiduimagedetail&is=0%2C0&ie=utf-8&oe=utf-8&cs=3765407342%2C2815074957&os=1357259984%2C3887820448&simid=&adpicid=0&lpn=0&fm=&sme=&cg=&bdtype=-1&oriquery=&objurl=http%3A%2F%2Ft7.baidu.com%2Fit%2Fu%3D3616242789%2C1098670747%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D900%26h%3D1350&fromurl=&gsm=30000000003&catename=pcindexhot&islist=&querylist=";
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:pictureUrl]];
-        UIImage *image = [UIImage imageWithData:data];
-        [pasteboard setData:UIImageJPEGRepresentation(image, 0.9) forPasteboardType:@"public.jpeg"];
-        NSString *contentType =@"image";
-
-        NSString *contentKey = [pasteboard.name stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-        
-        NSString *urlString = [NSString stringWithFormat:@"line://msg/%@/%@",contentType, contentKey];
-        NSURL *url = [NSURL URLWithString:urlString];
+//        UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+//    NSString * pictureUrl = @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561310690603&di=6fb462fc7c72ab479061c8045639f87b&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F4034970a304e251fb1a2546da986c9177e3e53c9.jpg";
+//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:pictureUrl]];
+//        UIImage *image = [UIImage imageWithData:data];
+//        [pasteboard setData:UIImageJPEGRepresentation(image, 0.9) forPasteboardType:@"public.jpeg"];
+//        NSString *contentType =@"image";
+//
+//        NSString *contentKey = [pasteboard.name stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+//
+//        NSString *urlString = [NSString stringWithFormat:@"line://msg/%@/%@",contentType, contentKey];
+//        NSURL *url = [NSURL URLWithString:urlString];
+//    [[UIApplication sharedApplication]openURL:url];
+    
+    
+        NSString *contentType = @"text";
+    NSString *urlString = [NSString stringWithFormat:@"line://msg/%@/%@",contentType, @123456789];
+        NSString *characterString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    //    [urlString stringByAddingPercentEncodingWithAllowedCharacters:urlString];
+        NSURL *url = [NSURL URLWithString:characterString];
     [[UIApplication sharedApplication]openURL:url];
 }
 - (BOOL)shareMessage:(NSString *)message

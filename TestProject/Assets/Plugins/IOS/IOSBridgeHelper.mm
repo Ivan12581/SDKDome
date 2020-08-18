@@ -21,7 +21,9 @@
         NSInteger  CurLoginType;//登陆类型
 }
  - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
+NSLog(@"-ios----IOSBridgeHelper---*******************application**---");
+     NSLog(@"-ios----IOSBridgeHelper---*******************application**---");
+     NSLog(@"-ios----IOSBridgeHelper---*******************application**---");
      [super application:application didFinishLaunchingWithOptions:launchOptions];
      //Google 启动
 
@@ -40,6 +42,17 @@
 //    FaceBook 启动调用必接
      [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
 
+     
+     
+//     [[AppleHelper sharedInstance] InitSDK:self];
+//     [[ApplePurchase sharedInstance] InitSDK:self];
+//     [[FBHelper sharedInstance] InitSDK:self];
+//     [[GoogleHelper sharedInstance] InitSDK:self];
+//     [[LineHelper sharedInstance] InitSDK:self];
+//     [[ElvaHelper sharedInstance] InitSDK:self];
+//     [[AdjustHelper sharedInstance] InitSDK:self];
+//     [self GetDeviceId];
+     //!!!切不可在此初始化sdk
      [self InitSDK];
      return YES;
  }
@@ -159,7 +172,7 @@ typedef NS_ENUM(NSInteger, SDKLoginType)
 #pragma mark -- 获取设备UUID
 -(void)GetDeviceId{
     NSString *UUID = [[Utils sharedInstance] GetUUID];
-    BOOL IsHighLevel = [[Utils sharedInstance] IsHighLevel];
+    BOOL *IsHighLevel = [[Utils sharedInstance] IsHighLevel];
     if (IsHighLevel) {
         [self SendMessageToUnity: eGetDeviceId DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",UUID, @"UUID",@"1", @"IsHighLevel",nil]];
     }else{

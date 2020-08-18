@@ -8,7 +8,6 @@
 #import "FBHelper.h"
 #import "Utils.h"
 @implementation FBHelper{
-    UIViewController* RVC;
     id IOSBridgeHelper;
 }
 
@@ -24,8 +23,6 @@ static FBHelper *_Instance = nil;
 
 -(void)InitSDK:(id<cDelegate>)delegate{
     IOSBridgeHelper = delegate;
-    RVC = [[[UIApplication sharedApplication] delegate] window].rootViewController;
-    
     [FBSDKSettings setAppID:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"FacebookAppID"]];
     [FBSDKSettings setAutoLogAppEventsEnabled:YES];
     [FBSDKSettings setAutoInitEnabled: YES ];
@@ -170,7 +167,7 @@ static FBHelper *_Instance = nil;
 //    linkContent.contentDescription = [[NSString alloc] initWithFormat:@"%@",@"星空图片欣赏"];
 //    linkContent.imageURL = [NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561310690603&di=6fb462fc7c72ab479061c8045639f87b&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F4034970a304e251fb1a2546da986c9177e3e53c9.jpg"];
 //    //分享对话框
-    [FBSDKShareDialog showFromViewController:RVC withContent:linkContent delegate:self];
+    [FBSDKShareDialog showFromViewController:[[[UIApplication sharedApplication] delegate] window].rootViewController withContent:linkContent delegate:self];
 }
 -(void)FBShareImage{
     //分享内容
@@ -181,7 +178,7 @@ static FBHelper *_Instance = nil;
     FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
     content.photos = @[photo];
     //分享对话框
-    [FBSDKShareDialog showFromViewController:RVC withContent:content delegate:self];
+    [FBSDKShareDialog showFromViewController:[[[UIApplication sharedApplication] delegate] window].rootViewController withContent:content delegate:self];
 }
 //分享成功回调
 #pragma mark - FaceBook Share Delegate

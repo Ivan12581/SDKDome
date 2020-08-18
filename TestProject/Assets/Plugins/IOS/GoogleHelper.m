@@ -25,17 +25,19 @@ static GoogleHelper *GoogleHelperIns = nil;
     [GIDSignIn sharedInstance].clientID = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"GoogleClientID"];
     [GIDSignIn sharedInstance].delegate = self;
     [GIDSignIn sharedInstance].shouldFetchBasicProfile = YES;
-    [GIDSignIn sharedInstance].presentingViewController = [[[UIApplication sharedApplication] delegate] window].rootViewController;
+//    [GIDSignIn sharedInstance].presentingViewController = [[[UIApplication sharedApplication] delegate] window].rootViewController;
     NSLog(@"---GoogleHelper  InitSDK---");
 }
 - (void)Login {
      NSLog(@"---GoogleHelper  Login---");
+    [GIDSignIn sharedInstance].presentingViewController = [[[UIApplication sharedApplication] delegate] window].rootViewController;
     GIDSignIn *signIn = [GIDSignIn sharedInstance];
     if ([signIn hasPreviousSignIn]) {
         [signIn restorePreviousSignIn];
     }else{
         [[GIDSignIn sharedInstance] signIn];
     }
+//            [[GIDSignIn sharedInstance] signIn];
 }
 -(void)Logout{
     [[GIDSignIn sharedInstance] signOut];
