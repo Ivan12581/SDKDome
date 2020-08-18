@@ -201,11 +201,11 @@ public class CeliaActivity extends UnityPlayerActivity {
         ShowLog("code:" + requestCode);
         ShowLog("resultCode:" + resultCode);
         ShowLog("data:" + data);
-        if (CurLoginType == 3){//google
+        if (CurLoginType == 4){//google
             googlePay.onActivityResult(requestCode, resultCode, data);
-        }else if (CurLoginType == 4){//apple
+        }else if (CurLoginType == 5){//apple
 
-        }else if (CurLoginType == 5){//facebook
+        }else if (CurLoginType == 6){//facebook
             faceBookHelper.callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
@@ -225,11 +225,11 @@ public class CeliaActivity extends UnityPlayerActivity {
     }
     public void Logout()
     {
-        if (CurLoginType == 3){//google
+        if (CurLoginType == 4){//google
             googlePay.Logout();
-        }else if (CurLoginType == 4){//apple
+        }else if (CurLoginType == 5){//apple
             appleSignIn.OpenWeb();
-        }else if (CurLoginType == 5){//facebook
+        }else if (CurLoginType == 6){//facebook
             faceBookHelper.Logout();
         }
         ShowLog("Logout..."+CurLoginType);

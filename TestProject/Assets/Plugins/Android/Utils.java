@@ -127,4 +127,15 @@ public class Utils {
         //存储数据时选用对应类型的方法
         return preferences.getString(key,"");
     }
+    //去除小数点后多余的0 或者小数点
+    public String rvZeroAndDot(String s){
+        if (s.isEmpty()) {
+            return null;
+        }
+        if(s.indexOf(".") > 0){
+            s = s.replaceAll("0+?$", "");//去掉多余的0
+            s = s.replaceAll("[.]$", "");//如最后一位是.则去掉
+        }
+        return s;
+    }
 }

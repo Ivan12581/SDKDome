@@ -167,8 +167,10 @@ public class GooglePay {
 
                         if (skuDetailsList.size()>0)
                         {
-                            Utils.getInstance().saveCacheData("price",skuDetailsList.get(0).getPrice());
+                            String priceStr = skuDetailsList.get(0).getPrice();
+                            Utils.getInstance().saveCacheData("price",Utils.getInstance().rvZeroAndDot(priceStr));
                             Utils.getInstance().saveCacheData("CurrencyCode",skuDetailsList.get(0).getPriceCurrencyCode());
+                            mainActivity.ShowLog("---saveCacheData---price-->" + priceStr + "---CurrencyCode--->" + skuDetailsList.get(0).getPriceCurrencyCode());
                             DoPurchase(skuDetailsList.get(0),currentOrderNo);
                         }else {
                             return;
@@ -283,6 +285,7 @@ public class GooglePay {
 
         String price = Utils.getInstance().getCacheData("price");
         String CurrencyCode = Utils.getInstance().getCacheData("CurrencyCode");
+        mainActivity.ShowLog("---getCacheData---price-->" + price + "---CurrencyCode--->" + CurrencyCode);
         //支付统计
         mainActivity.adjustHelper.purchaseEvent(price,CurrencyCode,purchase.getOrderId());
         mainActivity.faceBookHelper.purchaseEvent(price,CurrencyCode,purchase.getOrderId());
