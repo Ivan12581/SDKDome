@@ -21,9 +21,6 @@
         NSInteger  CurLoginType;//登陆类型
 }
  - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-NSLog(@"-ios----IOSBridgeHelper---*******************application**---");
-     NSLog(@"-ios----IOSBridgeHelper---*******************application**---");
-     NSLog(@"-ios----IOSBridgeHelper---*******************application**---");
      [super application:application didFinishLaunchingWithOptions:launchOptions];
      //Google 启动
 
@@ -33,26 +30,15 @@ NSLog(@"-ios----IOSBridgeHelper---*******************application**---");
 //     NSString *environment = ADJEnvironmentProduction;
      ADJConfig *adjustConfig = [ADJConfig configWithAppToken:yourAppToken environment:environment];
      [adjustConfig setAppSecret:1 info1:750848352 info2:1884995334 info3:181661496 info4:1073918938];
-//      [adjustConfig setLogLevel:ADJLogLevelVerbose];
-      [adjustConfig setLogLevel:ADJLogLevelSuppress];
+      [adjustConfig setLogLevel:ADJLogLevelVerbose];
+//      [adjustConfig setLogLevel:ADJLogLevelSuppress];
      [adjustConfig setSendInBackground:YES];
      [Adjust appDidLaunch:adjustConfig];
 
      
 //    FaceBook 启动调用必接
      [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
-
      
-     
-//     [[AppleHelper sharedInstance] InitSDK:self];
-//     [[ApplePurchase sharedInstance] InitSDK:self];
-//     [[FBHelper sharedInstance] InitSDK:self];
-//     [[GoogleHelper sharedInstance] InitSDK:self];
-//     [[LineHelper sharedInstance] InitSDK:self];
-//     [[ElvaHelper sharedInstance] InitSDK:self];
-//     [[AdjustHelper sharedInstance] InitSDK:self];
-//     [self GetDeviceId];
-     //!!!切不可在此初始化sdk
      [self InitSDK];
      return YES;
  }

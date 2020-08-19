@@ -128,8 +128,17 @@ static FBHelper *_Instance = nil;
 //******************************************************
 //****************FaceBook Share
 //******************************************************
--(void)share:(const char*) jsonData{
-    [self FBShareImage];
+-(void)share:(const char*) jsonString{
+    NSString *jsonNSString = [NSString stringWithUTF8String:jsonString];
+    NSData *data = [jsonNSString dataUsingEncoding:NSUTF8StringEncoding];
+    NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@" ---ios share---: %@", dict);
+    NSString *imgStr =[dict valueForKey:@"img"];
+//    NSString *text =[dict valueForKey:@"text"];
+    NSData *imageData = [imgStr dataUsingEncoding: NSUTF8StringEncoding];
+    UIImage *aimage = [UIImage imageWithData: imageData];
+    
+    [self FBShareImage:aimage];
 }
 - (void)facebookShareWithMessage:(id)message {
     NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
@@ -169,9 +178,9 @@ static FBHelper *_Instance = nil;
 //    //分享对话框
     [FBSDKShareDialog showFromViewController:[[[UIApplication sharedApplication] delegate] window].rootViewController withContent:linkContent delegate:self];
 }
--(void)FBShareImage{
+-(void)FBShareImage:(UIImage *)image{
     //分享内容
-    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561310690603&di=6fb462fc7c72ab479061c8045639f87b&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F4034970a304e251fb1a2546da986c9177e3e53c9.jpg"]]];
+//    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561310690603&di=6fb462fc7c72ab479061c8045639f87b&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F4034970a304e251fb1a2546da986c9177e3e53c9.jpg"]]];
     FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
     photo.image = image;
     photo.userGenerated = YES;
