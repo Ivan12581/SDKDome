@@ -223,6 +223,9 @@ typedef NS_ENUM(NSInteger, MsgID)
             case eLogin:
                 [self Login:jsonstring];
                 break;
+			case eLogout:
+                [self Logout:jsonstring];
+                break;
             case ePay:
                 [[ApplePurchase sharedInstance] Pay:jsonstring];
                 break;
