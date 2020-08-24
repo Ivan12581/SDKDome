@@ -50,9 +50,9 @@
   <uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="false" />
   <uses-feature android:name="android.hardware.touchscreen.multitouch.distinct" android:required="false" />
   <!-- 上传表单图片的时候需要此权限 -->
-  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
   <!-- 上传表单图片的时候需要此权限 -->
-  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="18" />
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
 </manifest>

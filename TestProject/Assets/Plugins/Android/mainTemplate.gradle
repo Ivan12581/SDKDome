@@ -12,7 +12,7 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.0'
-}
+**BUILD_SCRIPT_DEPS**}
 }
 
 allprojects {
@@ -26,10 +26,10 @@ allprojects {
 }
 
 apply plugin: 'com.android.application'
-
+**APPLY_PLUGINS**
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.google.android.gms:play-services-auth:18.0.0'
     implementation 'com.android.billingclient:billing:3.0.0'
     implementation 'com.facebook.android:facebook-core:[5,6)'
@@ -39,18 +39,12 @@ dependencies {
     implementation 'com.android.installreferrer:installreferrer:2.1'
     implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
     implementation 'com.linecorp.linesdk:linesdk:5.4.0'
-//    implementation 'com.android.support:multidex:1.0.3'
 
-    //noinspection GradleCompatible
-    //implementation 'com.android.support:appcompat-v7:27.1.0'
-
-    //noinspection GradleCompatible
-   // implementation 'com.android.support:design:27.1.0'
-}
+**DEPS**}
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion '29.0.3'
+    compileSdkVersion **APIVERSION**
+    buildToolsVersion '**BUILDTOOLS**'
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -58,15 +52,15 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 23
-        targetSdkVersion 29
-        applicationId 'com.elex.girlsthrone.tw.gp'
+        minSdkVersion **MINSDKVERSION**
+        targetSdkVersion **TARGETSDKVERSION**
+        applicationId '**APPLICATIONID**'
         ndk {
-            abiFilters 'armeabi-v7a', 'arm64-v8a'
+            abiFilters **ABIFILTERS**
         }
-        versionCode 2
-        versionName '0.2'
-//        multiDexEnabled true
+        versionCode **VERSIONCODE**
+        versionName '**VERSIONNAME**'
+        multiDexEnabled true
     }
 
     lintOptions {
@@ -74,40 +68,22 @@ android {
     }
 
     aaptOptions {
-        noCompress = ['.unity3d', '.ress', '.resource', '.obb']
-    }
-
-
-    signingConfigs {
-        release {
-            storeFile file('D:/SDKDomeProject/TestProject/BuildSettings/AndSignature/zmxt.keystore')
-            storePassword 'zmxt123'
-            keyAlias 'key-zmxt'
-            keyPassword 'zmxt123'
-        }
-    }
+        noCompress = ['.unity3d', '.ress', '.resource', '.obb'**STREAMING_ASSETS**]
+    }**SIGN**
     buildTypes {
         debug {
-            minifyEnabled false
-            useProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'
+            minifyEnabled **MINIFY_DEBUG**
+            useProguard **PROGUARD_DEBUG**
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'**USER_PROGUARD**
             jniDebuggable true
         }
         release {
-            minifyEnabled false
-            useProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'
-            signingConfig signingConfigs.release
+            minifyEnabled **MINIFY_RELEASE**
+            useProguard **PROGUARD_RELEASE**
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'**USER_PROGUARD****SIGNCONFIG**
         }
-    }
-
-
-
-    packagingOptions {
-        doNotStrip '*/armeabi-v7a/*.so'
-        doNotStrip '*/arm64-v8a/*.so'
-    }
-
+    }**PACKAGING_OPTIONS****SPLITS**
+**BUILT_APK_LOCATION**
     bundle {
         language {
             enableSplit = false
@@ -119,4 +95,4 @@ android {
             enableSplit = true
         }
     }
-}
+}**SPLITS_VERSION_CODE****REPOSITORIES****SOURCE_BUILD_SETUP**
