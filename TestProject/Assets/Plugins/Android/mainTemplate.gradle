@@ -34,6 +34,7 @@ dependencies {
     implementation 'com.android.billingclient:billing:3.0.0'
     implementation 'com.facebook.android:facebook-core:[5,6)'
     implementation 'com.facebook.android:facebook-login:[5,6)'
+	implementation 'com.facebook.android:facebook-share:[5,6)'
     implementation 'net.aihelp:elva:1.7.4.2'
     implementation 'com.adjust.sdk:adjust-android:4.23.0'
     implementation 'com.android.installreferrer:installreferrer:2.1'
