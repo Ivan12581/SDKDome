@@ -20,79 +20,38 @@ static LineHelper *LineHelperIns = nil;
 -(void)InitSDK:(id<cDelegate>) delegate{
     IOSBridgeHelper = delegate;
 //    //https://github.com/SoberTong/LineDemoIos/blob/master/LineDemoIos/ViewController.m
-//    [LineSDKLogin sharedInstance].delegate = self;
-//    apiClient = [[LineSDKAPI alloc] initWithConfiguration:[LineSDKConfiguration defaultConfig]];
-    NSLog(@"--ElvaHelper---InitSDK---");
+    NSLog(@"--LineHelper---InitSDK---");
 }
 
--(void)Login{
 
-//    [[LineSDKLogin sharedInstance] startLogin]
-}
-//- (void)didLogin:(LineSDKLogin *)login
-//      credential:(LineSDKCredential *)credential
-//         profile:(LineSDKProfile *)profile
-//           error:(NSError *)error {
-//    if (error) {
-//        NSLog(@"Login error. info: %@", error.description);
-//    }else {
-//        NSString *accessToken = credential.accessToken.accessToken;
-//        NSLog(@"Login success. accessToken: %@", accessToken);
-//
-//        NSString * userID = profile.userID;
-//        NSString * displayName = profile.displayName;
-//        NSString * statusMessage = profile.statusMessage;
-//        NSURL * pictureURL = profile.pictureURL;
-//
-//        NSString * pictureUrlString;
-//
-//        // If the user does not have a profile picture set, pictureURL will be nil
-//        if (pictureURL) {
-//            pictureUrlString = profile.pictureURL.absoluteString;
-//        }
-//        NSLog(@"Login success. userID: %@; displayName: %@; statusMessage: %@; pictureUrlStringios: %@", userID, displayName, statusMessage, pictureUrlString);
-//    }
-//}
-- (void)logout{
-//    [apiClient logoutWithCompletion:^(BOOL success, NSError * _Nullable error) {
-//        if (success) {
-//            NSLog(@"Logout success.");
-//        }else {
-//            NSLog(@"Logout error. info: %@", error.description);
-//        }
-//    }];
-//    /*
-//    [apiClient logoutWithCallbackQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
-//        completion:^(BOOL success, NSError * _Nullable error) {
-//            if (success) {
-//                NSLog(@"Logout success.");
-//            }else {
-//                NSLog(@"Logout error. info: %@", error.description);
-//            }
-//        }];
-//     */
-}
--(void)share:(const char*) jsonData{
-//        UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-//    NSString * pictureUrl = @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561310690603&di=6fb462fc7c72ab479061c8045639f87b&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F4034970a304e251fb1a2546da986c9177e3e53c9.jpg";
-//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:pictureUrl]];
-//        UIImage *image = [UIImage imageWithData:data];
-//        [pasteboard setData:UIImageJPEGRepresentation(image, 0.9) forPasteboardType:@"public.jpeg"];
-//        NSString *contentType =@"image";
-//
-//        NSString *contentKey = [pasteboard.name stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-//
-//        NSString *urlString = [NSString stringWithFormat:@"line://msg/%@/%@",contentType, contentKey];
-//        NSURL *url = [NSURL URLWithString:urlString];
-//    [[UIApplication sharedApplication]openURL:url];
+-(void)share:(const char*) jsonString{
+    NSString *jsonNSString = [NSString stringWithUTF8String:jsonString];
+    NSData *data = [jsonNSString dataUsingEncoding:NSUTF8StringEncoding];
+    NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@" ---ios LIneshare---: %@", dict);
+    NSString *imgPath =[dict valueForKey:@"img"];
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+
+//    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:pictureUrl]];
+     UIImage *image = [UIImage imageWithContentsOfFile:imgPath];
+    [pasteboard setData:UIImageJPEGRepresentation(image, 1) forPasteboardType:@"public.jpeg"];
+    NSString *contentType =@"image";
+
+    NSString *contentKey = [pasteboard.name stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+
+    NSString *urlString = [NSString stringWithFormat:@"line://msg/%@/%@",contentType, contentKey];
+    NSURL *url = [NSURL URLWithString:urlString];
     
-    
-        NSString *contentType = @"text";
-    NSString *urlString = [NSString stringWithFormat:@"line://msg/%@/%@",contentType, @123456789];
-        NSString *characterString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    //    [urlString stringByAddingPercentEncodingWithAllowedCharacters:urlString];
-        NSURL *url = [NSURL URLWithString:characterString];
-    [[UIApplication sharedApplication]openURL:url];
+    if ([[UIApplication sharedApplication]canOpenURL:url]) {
+        [[UIApplication sharedApplication]openURL:url];
+        [IOSBridgeHelper LineShareCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",nil]];
+    }else{
+//            如果使用者沒有安裝，連結到App Store
+        NSURL *itunesURL = [NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id443904275"];
+        [[UIApplication sharedApplication] openURL:itunesURL];
+        [IOSBridgeHelper LineShareCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",nil]];
+        
+    }
 }
 - (BOOL)shareMessage:(NSString *)message
 {

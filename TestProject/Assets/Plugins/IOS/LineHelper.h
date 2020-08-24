@@ -7,11 +7,9 @@
 
 #import <Foundation/Foundation.h>
 #import "cDelegate.h"
-//#import <LineSDK/LineSDK.h>
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LineHelper : NSObject
-//@property (nonatomic, strong) LineSDKAPI *apiClient;
 +(id)sharedInstance;
 -(void)InitSDK:(id<cDelegate>)Delegate;
 -(void)share:(const char*) jsonString;

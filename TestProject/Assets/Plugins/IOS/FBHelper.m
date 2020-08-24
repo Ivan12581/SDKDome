@@ -135,10 +135,11 @@ static FBHelper *_Instance = nil;
     NSLog(@" ---ios share---: %@", dict);
     NSString *imgStr =[dict valueForKey:@"img"];
 //    NSString *text =[dict valueForKey:@"text"];
-    NSData *imageData = [imgStr dataUsingEncoding: NSUTF8StringEncoding];
-    UIImage *aimage = [UIImage imageWithData: imageData];
+//    NSData *imageData = [imgStr dataUsingEncoding: NSUTF8StringEncoding];
+    UIImage *image = [UIImage imageWithContentsOfFile:imgStr];
     
-    [self FBShareImage:aimage];
+    [self FBShareImage:image];
+//    [self FBShareUrl:text];
 }
 - (void)facebookShareWithMessage:(id)message {
     NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
@@ -167,11 +168,11 @@ static FBHelper *_Instance = nil;
     
     
 }
--(void)FBShareUrl{
+-(void)FBShareUrl:(NSString *)text{
     //构建内容
     FBSDKShareLinkContent *linkContent = [[FBSDKShareLinkContent alloc] init];
     linkContent.contentURL = [NSURL URLWithString:@"https://image.baidu.com"];
-    linkContent.quote = @"1234567899874653214";
+    linkContent.quote = text;
 //    linkContent.contentTitle = @"百度";
 //    linkContent.contentDescription = [[NSString alloc] initWithFormat:@"%@",@"星空图片欣赏"];
 //    linkContent.imageURL = [NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561310690603&di=6fb462fc7c72ab479061c8045639f87b&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F4034970a304e251fb1a2546da986c9177e3e53c9.jpg"];
@@ -198,8 +199,10 @@ static FBHelper *_Instance = nil;
         // 如果使用webview分享的，但postId是空的，
         // 这种情况是用户点击了『完成』按钮，并没有真的分享
         NSLog(@"share Cancel");
+        [IOSBridgeHelper FaceBookShareCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",nil]];
     } else {
         NSLog(@"share Success");
+        [IOSBridgeHelper FaceBookShareCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",nil]];
     }
     
 }
@@ -212,13 +215,16 @@ static FBHelper *_Instance = nil;
         // 重设dialog的mode，再次弹出对话框
         dialog.mode = FBSDKShareDialogModeBrowser;
         [dialog show];
+        [IOSBridgeHelper FaceBookShareCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",nil]];
     } else {
         NSLog(@"share Failure");
+        [IOSBridgeHelper FaceBookShareCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",nil]];
     }
 }
 //分享取消回调
 -(void)sharerDidCancel:(id<FBSDKSharing>)sharer {
     NSLog(@"sahre Cancel");
+    [IOSBridgeHelper FaceBookShareCallBack:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"state",nil]];
 }
 //******************************************************
 //****************FaceBook Event
