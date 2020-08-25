@@ -7,9 +7,12 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
 import com.linecorp.linesdk.LineAccessToken;
 import com.linecorp.linesdk.LineApiResponse;
 import com.linecorp.linesdk.LoginDelegate;
@@ -20,8 +23,12 @@ import com.linecorp.linesdk.auth.LineAuthenticationParams;
 import com.linecorp.linesdk.auth.LineLoginApi;
 import com.linecorp.linesdk.auth.LineLoginResult;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.net.URLEncoder;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class LineHelper {
     private CeliaActivity mainActivity;
@@ -96,28 +103,52 @@ public class LineHelper {
     }
 
     public void Share(String jsonStr){
-        shareToLine();
+        try {
+            JSONObject json = new JSONObject(jsonStr);
+//            int shareType = json.getInt("shareType");
+            String text = json.getString("text");
+            String imgPath = json.getString("img");
+            Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
+
+            ComponentName componentName = new ComponentName("jp.naver.line.android","jp.naver.line.android.activity.selectchat.SelectChatActivityLaunchActivity");
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(mainActivity.getContentResolver(), bitmap, null,null));
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+            shareIntent.setType("image/jpeg"); //图片分享
+//        shareIntent.setType("text/plain"); // 纯文本
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, text);//分享的标题
+            shareIntent.putExtra(Intent.EXTRA_TEXT, text);//分享内容
+            shareIntent.setComponent(componentName);//跳到指定APP的Activity
+            shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mainActivity.startActivity(Intent.createChooser(shareIntent,text));
+            //Line没有分享回调 默认回调成功
+            mainActivity.SendMessageToUnity(CeliaActivity.MsgID.LineShare.getCode(), new HashMap<String, String>(){
+                {
+                    put("state", "1");
+                }
+            });
+        } catch (JSONException e)
+        {
+            mainActivity.SendMessageToUnity(CeliaActivity.MsgID.LineShare.getCode(), new HashMap<String, String>(){
+                {
+                    put("state", "0");
+                }
+            });
+        }
+
     }
-    public void shareToLine(){
-//        Log.d(tag,"share to Line");
-        StringBuilder urlStr = new StringBuilder("line://msg/");
-        urlStr.append("text/");
-        urlStr.append(URLEncoder.encode("title"+"/n"));
-        String linePackageName="jp.naver.line.android";
-        String lineClassName="jp.naver.line.android.activity.selectchat.SelectChatActivityLaunchActivity";
-        ComponentName componentName = new ComponentName(linePackageName,lineClassName);
+    public void shareToLine(Bitmap bitmap,String content){
+        ComponentName componentName = new ComponentName("jp.naver.line.android","jp.naver.line.android.activity.selectchat.SelectChatActivityLaunchActivity");
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
-
-
-        Uri uri = Uri.parse(urlStr.toString());
-//        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-        // shareIntent.setType("image/jpeg"); //图片分享
-        shareIntent.setType("text/plain"); // 纯文本
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "分享的标题456");//分享的标题
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "分享内容123");//分享内容
+        Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(mainActivity.getContentResolver(), bitmap, null,null));
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+         shareIntent.setType("image/jpeg"); //图片分享
+//        shareIntent.setType("text/plain"); // 纯文本
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "");//分享的标题
+        shareIntent.putExtra(Intent.EXTRA_TEXT, content);//分享内容
         shareIntent.setComponent(componentName);//跳到指定APP的Activity
         shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mainActivity.startActivity(Intent.createChooser(shareIntent,"activityTitle"));
+        mainActivity.startActivity(Intent.createChooser(shareIntent,"content"));
     }
     public void Logout(){
         lineApiClient.logout();

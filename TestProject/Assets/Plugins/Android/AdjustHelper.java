@@ -17,8 +17,8 @@ public class AdjustHelper {
 //        String environment = AdjustConfig.ENVIRONMENT_PRODUCTION;
         AdjustConfig config = new AdjustConfig(mainActivity, Constant.Adjust_AppToken, environment);
         config.setAppSecret(1, 555720783, 475659758, 1930748874, 572648029);
-        config.setLogLevel(LogLevel.VERBOSE);
-//        config.setLogLevel(LogLevel.SUPRESS);
+//        config.setLogLevel(LogLevel.VERBOSE);
+        config.setLogLevel(LogLevel.SUPRESS);
         Adjust.onCreate(config);
 
         //点击游戏图标，启动游戏后，触发该事件
@@ -42,6 +42,9 @@ public class AdjustHelper {
     }
     //in-app purchase
     public void purchaseEvent(String price ,String currency,String order){
+        if (!Utils.getInstance().isNoEmpty(price)||!Utils.getInstance().isNoEmpty(currency)) {
+            return;
+        }
         //offical
         double revenue = Double.parseDouble(price);
         AdjustEvent adjustEvent = new AdjustEvent("k0eegp");

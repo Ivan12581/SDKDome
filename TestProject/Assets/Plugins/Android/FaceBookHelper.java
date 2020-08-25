@@ -36,7 +36,7 @@ public class FaceBookHelper {
 
     CeliaActivity mainActivity;
     public CallbackManager callbackManager;
-    ShareDialog _fbShareDialog;
+    ShareDialog fbShareDialog;
     AppEventsLogger logger;
     public FaceBookHelper(CeliaActivity activity)
     {
@@ -109,7 +109,40 @@ public class FaceBookHelper {
                         });
                     }
                 });
-        initFBShare();
+
+        fbShareDialog = new ShareDialog(mainActivity);
+        fbShareDialog.registerCallback(this.callbackManager, new FacebookCallback<Sharer.Result>() {
+            @Override
+            public void onSuccess(Sharer.Result result) {
+                mainActivity.ShowLog("---facebook 分享成功-->" );
+                mainActivity.SendMessageToUnity(CeliaActivity.MsgID.FaceBookShare.getCode(), new HashMap<String, String>(){
+                    {
+                        put("state", "1");
+                    }
+                });
+            }
+
+            @Override
+            public void onCancel() {
+                mainActivity.ShowLog("---facebook 分享取消-->");
+                mainActivity.SendMessageToUnity(CeliaActivity.MsgID.FaceBookShare.getCode(), new HashMap<String, String>(){
+                    {
+                        put("state", "0");
+                    }
+                });
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                mainActivity.ShowLog("---facebook 分享失败-->"+error);
+                mainActivity.SendMessageToUnity(CeliaActivity.MsgID.FaceBookShare.getCode(), new HashMap<String, String>(){
+                    {
+                        put("state", "0");
+                    }
+                });
+            }
+        });
+
     }
 
     public void Login(){
@@ -175,6 +208,9 @@ public class FaceBookHelper {
         logger.logEvent(AppEventsConstants.EVENT_NAME_COMPLETED_TUTORIAL, params);
     }
     public void purchaseEvent(String purchaseAmout,String currencyType,String orderID){
+        if (!Utils.getInstance().isNoEmpty(purchaseAmout)||!Utils.getInstance().isNoEmpty(currencyType)) {
+            return;
+        }
         Bundle params = new Bundle();
         params.putString(AppEventsConstants.EVENT_PARAM_CURRENCY, currencyType);
         params.putString(AppEventsConstants.EVENT_PARAM_CONTENT_TYPE, "product");
@@ -182,76 +218,31 @@ public class FaceBookHelper {
         //params.putString(AppEventsConstants.EVENT_PARAM_CONTENT, "[{\"id\": \"1234\", \"quantity\": 2}, {\"id\": \"5678\", \"quantity\": 1}]");
 //        Locale.TRADITIONAL_CHINESE
 
+//        logger.logPurchase(new BigDecimal(purchaseAmout), Currency.getInstance(Locale.getDefault()),params);//玩家每次成功完成付费购买，触发该事件
         logger.logPurchase(new BigDecimal(purchaseAmout), Currency.getInstance(Locale.getDefault()),params);//玩家每次成功完成付费购买，触发该事件
     }
 //share
     public void Share(String jsonStr){
-        doShare(jsonStr);
-    }
-    private void initFBShare() {
-        this._fbShareDialog = new ShareDialog(mainActivity);
-        this._fbShareDialog.registerCallback(this.callbackManager, new FacebookCallback<Sharer.Result>() {
-            @Override
-            public void onSuccess(Sharer.Result result) {
-
-                String code = String.format("cc.game.emit('ON_SHARE_RESULT',{'result':'%d'});",1);
-                mainActivity.ShowLog("---facebook 分享成功-->" + code);
-            }
-
-            @Override
-            public void onCancel() {
-
-                String code = String.format("cc.game.emit('ON_SHARE_RESULT',{'result':'%d'});",2);
-                mainActivity.ShowLog("---facebook 分享取消-->"+code);
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                mainActivity.ShowLog("---facebook 分享失败-->"+error);
-                String code = String.format("cc.game.emit('ON_SHARE_RESULT',{'result':'%d'});",3);
-            }
-        });
-    }
-
-    public void doShare(String jsonStr) {
         try {
             JSONObject json = new JSONObject(jsonStr);
-            int shareType = json.getInt("shareType");
-            String url = json.getString("shareUrl");
-            String imgPath = json.getString("imgPath");
+//            int shareType = json.getInt("shareType");
+            String text = json.getString("text");
+            String imgPath = json.getString("img");
+            Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
 
-            if (shareType == 0) {
-                if (ShareDialog.canShow(ShareLinkContent.class)) {
-                    ShareLinkContent content = new ShareLinkContent.Builder()
-                            .setContentUrl(Uri.parse(url))
-                            .build();
-                    this._fbShareDialog.show(this.mainActivity, content);
-                }
-            } else if (shareType == 2) {
-                if (ShareDialog.canShow(SharePhotoContent.class)) {
-                    File file = new File(imgPath);
-                    if (!file.exists()) {
-                        mainActivity.ShowLog("---facebook Share IMG file no exists-->");
-
-                        return;
-                    }
-                    Bitmap img = BitmapFactory.decodeFile(imgPath);
-                    SharePhoto photo = new SharePhoto.Builder()
-                            .setBitmap(img)
-//                            .setCaption("123")
-                            .build();
-                    SharePhotoContent content = new SharePhotoContent.Builder()
+            SharePhoto photo = new SharePhoto.Builder()
+                    .setBitmap(bitmap)
+                    .setCaption(text)
+                    .build();
+            SharePhotoContent content = new SharePhotoContent.Builder()
 //                            .setContentUrl(Uri.parse(url))
-                            .addPhoto(photo)
-                            .build();
-                    this._fbShareDialog.show(this.mainActivity, content);
-                }
-            }
-
-        }
-        catch (JSONException e)
+                    .addPhoto(photo)
+                    .build();
+            fbShareDialog.show(this.mainActivity, content);
+        } catch (JSONException e)
         {
 
         }
     }
+
 }

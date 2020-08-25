@@ -105,7 +105,6 @@ public class CeliaActivity extends UnityPlayerActivity {
                 return;
         }
     }
-
     private final String TAG = "Celia";
     //debug等级，0关闭，1打印，2打印+toast
     private int isDebug = 1;
@@ -117,7 +116,7 @@ public class CeliaActivity extends UnityPlayerActivity {
     AdjustHelper adjustHelper;
     ElvaHelper elvaHelper;
     LineHelper lineHelper;
-    int CurLoginType;
+    int CurLoginType = -1;
 
     public void ShowLog(String msg) {
         if (isDebug == 0) {
@@ -171,14 +170,6 @@ public class CeliaActivity extends UnityPlayerActivity {
 
     public void Login(String type)
     {
-//        Account,
-//                SDKToken,//其实就是星辉
-//                Super,
-//                Tourist,
-//                Google,
-//                Apple,
-//                FaceBook,
-//                GameCenter,
         ShowLog("Login...:" + type);
         adjustHelper.CommonEvent("gvmnef");
         try {
@@ -201,11 +192,11 @@ public class CeliaActivity extends UnityPlayerActivity {
         ShowLog("code:" + requestCode);
         ShowLog("resultCode:" + resultCode);
         ShowLog("data:" + data);
-        if (CurLoginType == 3){//google
+        if (CurLoginType == 4){//google
             googlePay.onActivityResult(requestCode, resultCode, data);
-        }else if (CurLoginType == 4){//apple
+        }else if (CurLoginType == 5){//apple
 
-        }else if (CurLoginType == 5){//facebook
+        }else if (CurLoginType == 6 ||CurLoginType == -1){//facebook login||share
             faceBookHelper.callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
@@ -225,11 +216,11 @@ public class CeliaActivity extends UnityPlayerActivity {
     }
     public void Logout()
     {
-        if (CurLoginType == 3){//google
+        if (CurLoginType == 4){//google
             googlePay.Logout();
-        }else if (CurLoginType == 4){//apple
+        }else if (CurLoginType == 5){//apple
             appleSignIn.OpenWeb();
-        }else if (CurLoginType == 5){//facebook
+        }else if (CurLoginType == 6){//facebook
             faceBookHelper.Logout();
         }
         ShowLog("Logout..."+CurLoginType);
@@ -242,13 +233,13 @@ public class CeliaActivity extends UnityPlayerActivity {
             put("UUID", IMEIDeviceId);
         } });
 //        Utils.getInstance().getKeyHash();
-//        Utils.getInstance().getCurrencyInfo();
+        Utils.getInstance().getCurrencyInfo();
     }
 
 
-   // endregion
+    // endregion
 
-//region Activity生命周期
+    //region Activity生命周期
     @Override protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
