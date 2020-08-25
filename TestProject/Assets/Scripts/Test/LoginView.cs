@@ -1,4 +1,6 @@
-﻿using System.Net.NetworkInformation;
+﻿using System;
+using System.IO;
+using System.Net.NetworkInformation;
 
 using celia.game;
 
@@ -116,9 +118,12 @@ public class LoginView : MonoBehaviour
     public void FBShare()
     {
         Debug.Log("---Unity---FBShare---");
-        SDKManager.gi.FBShare((s, dataDict) =>
+        GetScreenShot((imgPath) =>
         {
-            Debug.Log("---Unity---FBShare--callback-");
+            SDKManager.gi.FBShare(imgPath, (s, dataDict) =>
+            {
+                Debug.Log("---Unity---LineShare--callback-");
+            });
         });
     }
     /// <summary>
@@ -127,10 +132,14 @@ public class LoginView : MonoBehaviour
     public void LineShare()
     {
         Debug.Log("---Unity---LineShare---");
-        SDKManager.gi.LineShare((s, dataDict) =>
+        GetScreenShot((imgPath) =>
         {
-            Debug.Log("---Unity---LineShare--callback-");
+            SDKManager.gi.LineShare(imgPath,(s, dataDict) =>
+            {
+                Debug.Log("---Unity---LineShare--callback-");
+            });
         });
+
     }
     /// <summary>
     /// Apple GameCenter登陆
@@ -257,5 +266,30 @@ public class LoginView : MonoBehaviour
         });
         Debug.Log("---LoginView Start--");
 
+    }
+
+    async void GetScreenShot(Action<string> callback)
+    {
+        await new WaitForEndOfFrame();
+        Texture2D t = new Texture2D(Screen.currentResolution.width, Screen.currentResolution.height, TextureFormat.RGB24, false);
+#if UNITY_EDITOR
+        t.ReadPixels(new Rect(Vector2.zero, new Vector2(Screen.currentResolution.height, Screen.currentResolution.width)), 0, 0);
+#else
+            t.ReadPixels(new Rect(Vector2.zero, new Vector2(Screen.currentResolution.width, Screen.currentResolution.height)), 0, 0);
+#endif
+        t.Apply();
+
+        string shareName = "share.png";
+        string sharePath = Path.Combine(Application.temporaryCachePath, shareName);
+        if (File.Exists(sharePath))
+        {
+            File.Delete(sharePath);
+            Debug.Log(sharePath + " deleted first!");
+        }
+        byte[] img = t.EncodeToPNG();
+
+        await new WaitForEndOfFrame();
+        File.WriteAllBytes(sharePath, img);
+        callback?.Invoke(sharePath);
     }
 }

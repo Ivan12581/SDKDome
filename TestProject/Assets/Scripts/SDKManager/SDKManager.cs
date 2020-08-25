@@ -237,21 +237,25 @@ namespace celia.game
         /// FaceBook分享
         /// </summary>
         /// <param name="callBack">分享回调</param>
-        public void FBShare(Action<int, Dictionary<string, string>> callBack = null)
+        public void FBShare(string imgPath, Action<int, Dictionary<string, string>> callBack = null)
         {
             callBackDict[SDKResultType.FaceBookShare] = callBack;
-            JObject jobj = new JObject();
-            CallSDK(SDKResultType.FaceBookShare, jobj.ToString());
+            JObject jObj = new JObject();
+            jObj.Add("img", imgPath);
+            jObj.Add("text", "");
+            CallSDK(SDKResultType.FaceBookShare, jObj.ToString());
         }
         /// <summary>
         /// Line分享
         /// </summary>
         /// <param name="callBack"></param>
-        public void LineShare(Action<int, Dictionary<string, string>> callBack = null)
+        public void LineShare(string imgPath, Action<int, Dictionary<string, string>> callBack = null)
         {
             callBackDict[SDKResultType.LineShare] = callBack;
-            JObject jobj = new JObject();
-            CallSDK(SDKResultType.LineShare, jobj.ToString());
+            JObject jObj = new JObject();
+            jObj.Add("img", imgPath);
+            jObj.Add("text", "");
+            CallSDK(SDKResultType.LineShare, jObj.ToString());
         }
         /// <summary>
         /// FaceBook统计事件

@@ -168,16 +168,6 @@ namespace celia.game.editor
             PlistElementArray LSApplicationQueriesSchemes = rootDict.CreateArray("LSApplicationQueriesSchemes");
             // facebook接入配置
             LSApplicationQueriesSchemes.AddString("fbapi");
-            LSApplicationQueriesSchemes.AddString("fbapi20130214");
-            LSApplicationQueriesSchemes.AddString("fbapi20130410");
-            LSApplicationQueriesSchemes.AddString("fbapi20130702");
-            LSApplicationQueriesSchemes.AddString("fbapi20131010");
-            LSApplicationQueriesSchemes.AddString("fbapi20131219");
-            LSApplicationQueriesSchemes.AddString("fbapi20140410");
-            LSApplicationQueriesSchemes.AddString("fbapi20140116");
-            LSApplicationQueriesSchemes.AddString("fbapi20150313");
-            LSApplicationQueriesSchemes.AddString("fbapi20150629");
-            LSApplicationQueriesSchemes.AddString("fbapi20160328");
             LSApplicationQueriesSchemes.AddString("fb-messenger-share-api");
             LSApplicationQueriesSchemes.AddString("fbauth2");
             LSApplicationQueriesSchemes.AddString("fbshareextension");
@@ -186,23 +176,6 @@ namespace celia.game.editor
             LSApplicationQueriesSchemes.AddString("line3rdp.$(APP_IDENTIFIER)");
             LSApplicationQueriesSchemes.AddString("line");
             #endregion
-
-
-            // Capabilitise添加
-            //var entitlementsFileName = "tw.entitlements";
-            //var entitlementsFilePath = Path.Combine("Assets/Plugins/iOS/SDK/", entitlementsFileName);
-            //File.Copy(entitlementsFilePath, Path.Combine(path, entitlementsFileName));
-            //proj.AddFileToBuild(target, proj.AddFile(entitlementsFileName, entitlementsFileName, PBXSourceTree.Source));
-
-
-            //var array = rootDict.CreateArray("UIRequiredDeviceCapabilities");
-            //array.AddString("armv7");
-            //array.AddString("gamekit");
-            proj.AddCapability(target, PBXCapabilityType.GameCenter);
-            proj.AddCapability(target, PBXCapabilityType.InAppPurchase);
-            //添加推送和其他的有点不一样，需要添加一个文件。这个文件只能考进去。
-            //或者事先准备好了Base.entitlements 文件，文件类容 就是手动添加进去的内容，手动添加完成后生成的那个文件
-            //proj.AddCapability(target, PBXCapabilityType.PushNotifications, entitlementsFileName);
 
             ProjectCapabilityManager projectCapabilityManager = new ProjectCapabilityManager(projPath, "tw.entitlements", PBXProject.GetUnityTargetName());
             projectCapabilityManager.AddGameCenter();
