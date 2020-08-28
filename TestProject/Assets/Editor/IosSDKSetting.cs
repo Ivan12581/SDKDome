@@ -185,11 +185,15 @@ namespace celia.game.editor
             Debug.Log("--**--4.IOSXcodeSettings--**--");
         }
         [MenuItem("出包设置/IOS/4.IOSXcodeSettings")]
-        public static void IOSXcodeSettings()
+        public static void IOSXcodeSettings(string _path = "")
         {
-
+            string CurPath = path;
+            if (!string.IsNullOrEmpty(_path))
+            {
+                CurPath = _path;
+            }
             //添加XCode引用的Framework
-            string projPath = PBXProject.GetPBXProjectPath(path);
+            string projPath = PBXProject.GetPBXProjectPath(CurPath);
             PBXProject proj = new PBXProject();
 
             proj.ReadFromString(File.ReadAllText(projPath));
