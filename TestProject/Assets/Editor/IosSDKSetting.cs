@@ -15,8 +15,8 @@ namespace celia.game.editor
     public class IosSDKSetting : Editor
     {
         //#if UNITY_EDITOR_OSX
-        public const string path = "/Users/mini/Documents/SDKXCodeProj";
-        public const string Otherpath = "/Users/mini/Documents/NewSdkXCodeProj";
+        public static string path = "/Users/mini/Documents/SDKXCodeProj";
+        public static string Otherpath = "/Users/mini/Documents/NewSdkXCodeProj";
         [MenuItem("出包设置/IOS/1.IOSPlayerSettings")]
         public static void IOSPlayerSettings()
         {
@@ -185,13 +185,13 @@ namespace celia.game.editor
             Debug.Log("--**--4.IOSXcodeSettings--**--");
         }
         [MenuItem("出包设置/IOS/4.IOSXcodeSettings")]
-        public static void IOSXcodeSettings(string _path = "")
+        public static void IOSXcodeSettings()
         {
             string CurPath = path;
-            if (!string.IsNullOrEmpty(_path))
-            {
-                CurPath = _path;
-            }
+            //if (!string.IsNullOrEmpty(_path))
+            //{
+            //    CurPath = _path;
+            //}
             //添加XCode引用的Framework
             string projPath = PBXProject.GetPBXProjectPath(CurPath);
             PBXProject proj = new PBXProject();

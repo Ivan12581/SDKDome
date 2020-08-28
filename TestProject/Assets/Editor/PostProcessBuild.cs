@@ -17,9 +17,10 @@ namespace celia.game.editor
             Debug.Log("---target--->" + target + "---pathToBuildProject--->" + pathToBuildProject);
             if (target == BuildTarget.iOS)
             {
-                string projPath = pathToBuildProject + "/Unity-iPhone.xcodeproj/project.pbxproj";
-                PBXProject _pbxProj = new PBXProject();//创建xcode project类
-                IosSDKSetting.IOSXcodeSettings(pathToBuildProject);
+                //string projPath = pathToBuildProject + "/Unity-iPhone.xcodeproj/project.pbxproj";
+                //PBXProject _pbxProj = new PBXProject();//创建xcode project类
+                IosSDKSetting.path = pathToBuildProject;
+                //IosSDKSetting.IOSXcodeSettings(pathToBuildProject);
             }
             if (target == BuildTarget.Android)
             {
