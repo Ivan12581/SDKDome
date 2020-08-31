@@ -301,8 +301,8 @@ namespace celia.game.editor
             //var array = rootDict.CreateArray("UIRequiredDeviceCapabilities");
             //array.AddString("armv7");
             //array.AddString("gamekit");
-            proj.AddCapability(target, PBXCapabilityType.GameCenter);
-            proj.AddCapability(target, PBXCapabilityType.InAppPurchase);
+            //proj.AddCapability(target, PBXCapabilityType.GameCenter);
+            //proj.AddCapability(target, PBXCapabilityType.InAppPurchase);
             //添加推送和其他的有点不一样，需要添加一个文件。这个文件只能考进去。
             //或者事先准备好了Base.entitlements 文件，文件类容 就是手动添加进去的内容，手动添加完成后生成的那个文件
             //proj.AddCapability(target, PBXCapabilityType.PushNotifications, entitlementsFileName);

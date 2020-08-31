@@ -65,7 +65,8 @@ public class CeliaActivity extends UnityPlayerActivity {
         }
     }
     public void CallFromUnity(int methedID, String data) throws JSONException {
-        ShowLog("calling method:" + methedID);
+        ShowLog("CallFromUnity methedID:" + methedID);
+        ShowLog("CallFromUnity data:" + data);
         MsgID msgID = MsgID.GetMsgID(methedID);
         switch (msgID) {
             case Init:
