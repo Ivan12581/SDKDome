@@ -201,7 +201,6 @@ namespace celia.game.editor
             // BuildSetting修改
             proj.SetBuildProperty(target, "ENABLE_BITCODE", "NO");//这个好像是bugly需要的
             proj.AddBuildProperty(target, "OTHER_LDFLAGS", "-ObjC");//这个google等其他sdk非常需要的
-            //proj.AddBuildProperty(target, "OTHER_LDFLAGS", "-all_load");
             #region 添加XCode引用的Framework
             // SDK依赖 --AIHelp
             proj.AddFrameworkToProject(target, "libsqlite3.tbd", false);
