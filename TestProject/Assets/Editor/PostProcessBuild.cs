@@ -12,12 +12,12 @@ namespace celia.game.editor
     public class PostProcessBuild
     {
         [PostProcessBuild(100)]
-        public static void OnPostProcessBuild(BuildTarget _target, string pathToBuildProject)
+        public static void OnPostProcessBuild(BuildTarget _target, string path)
         {
-            Debug.Log("---_target--->" + _target + "---pathToBuildProject--->" + pathToBuildProject);
+            Debug.Log("---_target--->" + _target + "---pathToBuildProject--->" + path);
             if (_target == BuildTarget.iOS)
             {
-                string projPath = PBXProject.GetPBXProjectPath(pathToBuildProject);
+                string projPath = PBXProject.GetPBXProjectPath(path);
                 PBXProject proj = new PBXProject();
 
                 proj.ReadFromString(File.ReadAllText(projPath));
@@ -39,9 +39,14 @@ namespace celia.game.editor
                 proj.AddFrameworkToProject(target, "storekit.framework", false);
                 proj.AddFrameworkToProject(target, "AuthenticationServices.framework", false);
                 proj.AddFrameworkToProject(target, "gamekit.framework", false);
+                // Capabilitise添加
+                var entitlementsFileName = "tw.entitlements";
+                var entitlementsFilePath = Path.Combine("Assets/Plugins/iOS/SDK/", entitlementsFileName);
+                File.Copy(entitlementsFilePath, Path.Combine(path, entitlementsFileName));
+                proj.AddFileToBuild(target, proj.AddFile(entitlementsFileName, entitlementsFileName, PBXSourceTree.Source));
                 #endregion
 
-                string plistPath = Path.Combine(pathToBuildProject, "Info.plist");
+                string plistPath = Path.Combine(path, "Info.plist");
                 PlistDocument plist = new PlistDocument();
                 plist.ReadFromFile(plistPath);
                 PlistElementDict rootDict = plist.root;
