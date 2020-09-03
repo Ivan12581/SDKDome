@@ -7,11 +7,11 @@
 	<key>destination</key>
 	<string>export</string>
 	<key>method</key>
-	<string>app-store</string>
+	<string>enterprise</string>
 	<key>provisioningProfiles</key>
 	<dict>
-		<key>com.rastargame.sndwz</key>
-		<string>sndwz_dis_20190606</string>
+		<key>com.elex.girlsthrone.tw</key>
+		<string>Girl for the Throne TW_adhoc</string>
 	</dict>
 	<key>signingCertificate</key>
 	<string>iPhone Distribution</string>
@@ -19,15 +19,13 @@
 	<string>manual</string>
 	<key>stripSwiftSymbols</key>
 	<true/>
-	<key>uploadBitcode</key>
-	<false/>
-	<key>uploadSymbols</key>
-	<false/>
+	<key>thinning</key>
+	<string>&lt;none&gt;</string>
 	<key>teamID</key>
-	<string>Z67D6RDGWU</string>
+	<string>5HK243M76T</string>
     <key>pakageName</key>
-    <string>com.rastargame.sndwz</string>
+    <string>com.elex.girlsthrone.tw</string>
     <key>provisioningProfileID</key>
-    <string>6af0d946-dfbb-4d01-b2ba-dff96bbaebc3</string>
+    <string>cc302810-fe11-4b7d-86e5-df0bf7bd2aac</string>
 </dict>
 </plist>

@@ -3,10 +3,5 @@
   "KeyFileName": "zmxt.keystore",
   "KeystorePass": "zmxt123",
   "KeyAliasName": "key-zmxt",
-  "KeyAliasPass": "zmxt123",
-  "KeyHashes1":"bGwV5kINM5QmqJ8WcFpQR6cys40=",
-	"KeyHashes2":"B2O7Okrnnyl9itp4yRNnhmAtO4g=",
-	"KeyHashes3":"UHP6u3XHO2dzua/UZRCqmCQbRRA=",
-	
-  "Signnature":"3edad16a05e5a9b3281f70b445c81bbf"
+  "KeyAliasPass": "zmxt123"
 }

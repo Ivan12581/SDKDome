@@ -11,7 +11,7 @@
 	<key>provisioningProfiles</key>
 	<dict>
 		<key>com.rastargame.celia</key>
-		<string>celia_inhouse_20190523</string>
+		<string>celia_inhouse_20200527</string>
 	</dict>
 	<key>signingCertificate</key>
 	<string>iPhone Distribution</string>
@@ -26,6 +26,6 @@
     <key>pakageName</key>
     <string>com.rastargame.celia</string>
     <key>provisioningProfileID</key>
-    <string>ded8b6d9-13f7-4c18-b569-d81030371875</string>
+    <string>1c15f71a-faf1-440b-8efa-64f4c8ba6053</string>
 </dict>
 </plist>

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Target: 9
   CommonActions:
+  - {fileID: 114795177244484070}
   - {fileID: 114348839456820732}
   - {fileID: 114038267142931296}
   - {fileID: 114098835978246664}
@@ -133,4 +134,16 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35c8abb4a004d43bd8b47f8d3a28b328, type: 3}
   m_Name: SetProjectSetting
+  m_EditorClassIdentifier: 
+--- !u!114 &114795177244484070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5934e88b34b4b554b89d6161ef4ecc1a, type: 3}
+  m_Name: SetJsonData
   m_EditorClassIdentifier: 

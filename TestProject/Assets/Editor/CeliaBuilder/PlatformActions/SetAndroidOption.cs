@@ -26,13 +26,13 @@ namespace celia.game.editor
         {
             if (option.SDKType == SDKType.Oversea)
             {
-                PlayerSettings.Android.targetSdkVersion = AndroidSdkVersions.AndroidApiLevel28;
+              //  PlayerSettings.Android.targetSdkVersion = AndroidSdkVersions.AndroidApiLevel28;
             }
         }
 
         public override void PostExcute(CeliaBuildOption option)
         {
-            PlayerSettings.Android.targetSdkVersion = AndroidSdkVersions.AndroidApiLevel27;
+          //  PlayerSettings.Android.targetSdkVersion = AndroidSdkVersions.AndroidApiLevel27;
             // PlayerSettings.Android.useAPKExpansionFiles = false;
             Debug.Log("SetAndroidOption PostExcuted!");
         }

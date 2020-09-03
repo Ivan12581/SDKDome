@@ -29,7 +29,7 @@ namespace celia.game.editor
                     ReviewServer();
                     break;
                 case "seven":
-                    SevenTestServer();
+                    GameTestServer();
                     break;
                 case "dev":
                     DevelopServer();
@@ -55,39 +55,52 @@ namespace celia.game.editor
             Debug.Log("SetServerSetting PostExcuted!");
         }
 
-        // 开发服
+        // 内网测试服
         private void DevelopServer()
         {
+            GameSetting.gi.serverType = ZoneType.PrivateTest;
             GameSetting.gi.ip = "192.168.102.175";
-            GameSetting.gi.port = 52000;
+            GameSetting.gi.port = 52001;
+            GameSetting.gi.CDN_ADDRESS = "https://xlycs.res.rastargame.com";
+            GameSetting.gi.NET_ASSETS = "NetAssets_Develop";
             Debug.Log("服务器IP设置为" + GameSetting.gi.ip);
         }
-        // 正式服
+        // 外网测试服
         private void ReleaseServer()
         {
+            GameSetting.gi.serverType = ZoneType.PublicTest;
             GameSetting.gi.ip = "182.254.192.79";
-            GameSetting.gi.port = 52000;
+            GameSetting.gi.port = 52001;
+            GameSetting.gi.CDN_ADDRESS = "https://xlycs.res.rastargame.com";
+            GameSetting.gi.NET_ASSETS = "NetAssets_PublicNetwork";
             Debug.Log("服务器IP设置为" + GameSetting.gi.ip);
         }
-        // 正式服 175
+
+        // 175
         private void Release175Server()
         {
             GameSetting.gi.ip = "192.168.102.175";
-            GameSetting.gi.port = 52000;
+            GameSetting.gi.port = 52001;
+            GameSetting.gi.CDN_ADDRESS = "https://xlycs.res.rastargame.com";
+            GameSetting.gi.NET_ASSETS = "NetAssets_Develop";
             Debug.Log("服务器IP设置为" + GameSetting.gi.ip);
         }
         // 审核服
         private void ReviewServer()
         {
             GameSetting.gi.ip = "106.52.28.97";
-            GameSetting.gi.port = 52000;
+            GameSetting.gi.port = 52001;
+            GameSetting.gi.CDN_ADDRESS = "https://xlycs.res.rastargame.com";
+            GameSetting.gi.NET_ASSETS = "NetAssets_Shenhe";
             Debug.Log("服务器IP设置为" + GameSetting.gi.ip);
         }
-        // 7日测试服
-        private void SevenTestServer()
+        // 10日测试服
+        private void GameTestServer()
         {
-            GameSetting.gi.ip = "162.14.20.4";
-            GameSetting.gi.port = 52001;
+            GameSetting.gi.ip = "sndwz-login.rastargame.com";
+            GameSetting.gi.port = 80;
+            GameSetting.gi.CDN_ADDRESS = "https://xlycs.res.rastargame.com";
+            GameSetting.gi.NET_ASSETS = "NetAssets_10Days";
             Debug.Log("服务器IP设置为" + GameSetting.gi.ip);
         }
     }

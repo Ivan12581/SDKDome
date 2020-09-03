@@ -14,7 +14,8 @@ namespace celia.game.editor
             string productName = CeliaBuilder.GetInputParam("ProductName:", option.Args);
             PlayerSettings.productName = string.IsNullOrEmpty(productName) ? "少女的王座" : productName;
             // 公司名
-            PlayerSettings.companyName = "Rastar Games Inc.";
+            string companyName = CeliaBuilder.GetInputParam("CompanyName:", option.Args);
+            PlayerSettings.companyName = string.IsNullOrEmpty(companyName) ? "Rastar Games Inc." : companyName;
 
             // 关闭Unity自带的Splash
             PlayerSettings.SplashScreen.show = true;

@@ -140,6 +140,7 @@ namespace celia.game.editor
             {
                 return;
             }
+            int gameId = sdkParams.Value<int>("GameId");
             string appKey = sdkParams.Value<string>("AppKey");
             string payKey = sdkParams.Value<string>("PayKey");
             string appID = sdkParams.Value<string>("AppId");
@@ -149,6 +150,7 @@ namespace celia.game.editor
             // 保存到包内配置
             SDKParams pakageSDKParams = AssetDatabase.LoadAssetAtPath<SDKParams>("Assets/Resources/SDKParams.asset");
             pakageSDKParams.SDKType = sdkType;
+            pakageSDKParams.GameId = gameId;
             pakageSDKParams.AppKey = appKey;
             pakageSDKParams.PayKey = payKey;
             EditorUtility.SetDirty(pakageSDKParams);
@@ -174,9 +176,11 @@ namespace celia.game.editor
                 case SDKType.Oversea:
                     filePath = $"{pluginAndroidPath}/assets/rsdk/rastar_na_config.ini";
                     debugParamName = "Debug_Switch";
-                    //  debugValue = option.ReleaseLevel == ReleaseLevel.Alpha ? "true" : "false";
-                    debugValue = "true";
+                    debugValue = option.ReleaseLevel == ReleaseLevel.Alpha ? "true" : "false";
                     break;
+                case SDKType.CeliaOversea:
+                    AssetDatabase.Refresh();
+                    return;
             }
             File.AppendAllText(filePath, $"\r\n\r\napp_id={appID}\r\n\r\ncch_id={cchID}\r\n\r\nmd_id={mdID}\r\n\r\napp_key={appKey}\r\n\r\n{debugParamName}={debugValue}");
 

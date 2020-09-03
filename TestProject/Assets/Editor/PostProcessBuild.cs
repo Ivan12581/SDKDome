@@ -12,19 +12,19 @@ namespace celia.game.editor
     public class PostProcessBuild
     {
         [PostProcessBuild(100)]
-        public static void OnPostProcessBuild(BuildTarget _target, string path)
+        public static void OnPostProcessBuild(BuildTarget _target, string pathToBuildProject)
         {
-            Debug.Log("---_target--->" + _target + "---pathToBuildProject--->" + path);
+            Debug.Log("---_target--->" + _target + "---pathToBuildProject--->" + pathToBuildProject);
             if (_target == BuildTarget.iOS)
             {
-                string projPath = PBXProject.GetPBXProjectPath(path);
+                string projPath = PBXProject.GetPBXProjectPath(pathToBuildProject);
                 PBXProject proj = new PBXProject();
 
                 proj.ReadFromString(File.ReadAllText(projPath));
                 string target = proj.TargetGuidByName("Unity-iPhone");
                 // BuildSetting修改
-                proj.SetBuildProperty(target, "ENABLE_BITCODE", "NO");
-                proj.AddBuildProperty(target, "OTHER_LDFLAGS", "-ObjC");
+                proj.SetBuildProperty(target, "ENABLE_BITCODE", "NO");//这个好像是bugly需要的
+                proj.AddBuildProperty(target, "OTHER_LDFLAGS", "-ObjC");//这个google等其他sdk非常需要的
                 #region 添加XCode引用的Framework
                 // SDK依赖 --AIHelp
                 proj.AddFrameworkToProject(target, "libsqlite3.tbd", false);
@@ -39,14 +39,9 @@ namespace celia.game.editor
                 proj.AddFrameworkToProject(target, "storekit.framework", false);
                 proj.AddFrameworkToProject(target, "AuthenticationServices.framework", false);
                 proj.AddFrameworkToProject(target, "gamekit.framework", false);
-                // Capabilitise添加
-                var entitlementsFileName = "tw.entitlements";
-                var entitlementsFilePath = Path.Combine("Assets/Plugins/iOS/SDK/", entitlementsFileName);
-                File.Copy(entitlementsFilePath, Path.Combine(path, entitlementsFileName));
-                proj.AddFileToBuild(target, proj.AddFile(entitlementsFileName, entitlementsFileName, PBXSourceTree.Source));
                 #endregion
 
-                string plistPath = Path.Combine(path, "Info.plist");
+                string plistPath = Path.Combine(pathToBuildProject, "Info.plist");
                 PlistDocument plist = new PlistDocument();
                 plist.ReadFromFile(plistPath);
                 PlistElementDict rootDict = plist.root;

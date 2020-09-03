@@ -13,27 +13,28 @@ namespace celia.game.editor
         {
             group = BuildPipeline.GetBuildTargetGroup(option.ProcessCfg.Target);
             recordDefines = PlayerSettings.GetScriptingDefineSymbolsForGroup(group);
+
+            string newDefines = recordDefines;
+            newDefines = "HOTFIX_ENABLE;AOT";
+
+            if (option.ReleaseLevel == ReleaseLevel.Beta)
+            {
+                newDefines += ";CELIA_RELEASE";
+            }
+
             if (option.SDKType == SDKType.CeliaOversea)
             {
-                string newDefines = recordDefines;
-                newDefines = "HOTFIX_ENABLE;CELIA_RELEASE;AOT;ELEX";
-                PlayerSettings.SetScriptingDefineSymbolsForGroup(group, newDefines);
-            }
-            else
-            {
-                if (option.ReleaseLevel == ReleaseLevel.Beta)
+                if (option.ProcessCfg.Target == BuildTarget.Android)
                 {
-                    string newDefines = recordDefines;
-                    newDefines = "HOTFIX_ENABLE;CELIA_RELEASE;AOT";
-                    PlayerSettings.SetScriptingDefineSymbolsForGroup(group, newDefines);
+                    newDefines += ";GooglePurchase";
                 }
-                else if (option.ReleaseLevel == ReleaseLevel.Alpha)
+                if (option.ProcessCfg.Target == BuildTarget.iOS)
                 {
-                    string newDefines = recordDefines;
-                    newDefines = "AOT";
-                    PlayerSettings.SetScriptingDefineSymbolsForGroup(group, newDefines);
+                    newDefines += ";IosPurchase";
                 }
             }
+
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(group, newDefines);
         }
 
         public override void PostExcute(CeliaBuildOption option)

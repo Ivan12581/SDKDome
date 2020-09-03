@@ -16,7 +16,7 @@ namespace celia.game.editor
             }
             else
             {
-                option.PlayerOption.options = BuildOptions.StrictMode;
+                option.PlayerOption.options = BuildOptions.None;
             }
             Debug.Log("SetIOSOption PreExcuted!");
         }

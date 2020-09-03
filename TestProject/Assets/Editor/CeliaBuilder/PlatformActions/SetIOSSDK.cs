@@ -23,6 +23,7 @@ namespace celia.game.editor
             pluginIOSPath = Application.dataPath + "/Plugins/iOS";
             pluginSavePath = Application.dataPath + "/Plugins/PlatformSDK/";
 
+
 #if UNITY_EDITOR_OSX
             PlistElementDict signCfg = GetSDKSign(option);
             JObject sdkParams = GetSDKParams(option);
@@ -58,6 +59,9 @@ namespace celia.game.editor
                     break;
                 case SDKType.Oversea:
                     SetOverseaSDK(GetSDKParams(option));
+                    break;
+                case SDKType.CeliaOversea:
+                    SetCeliaOverseaSDK();
                     break;
             }
 
@@ -98,7 +102,10 @@ namespace celia.game.editor
         /// </summary>
         private void SetSDKFolderBack()
         {
-            DeleteFolder(pluginIOSPath);
+            if (option.SDKType != SDKType.CeliaOversea)
+            {
+                DeleteFolder(pluginIOSPath);
+            }
             
             SDKParams sdkParams = AssetDatabase.LoadAssetAtPath<SDKParams>("Assets/Resources/SDKParams.asset");
             sdkParams.SDKType = SDKType.None;
@@ -217,6 +224,8 @@ namespace celia.game.editor
                     plist.root.SetString("RS_Schemes", $"rastar{cchID}{appID}");
                     plist.WriteToFile($"{pluginIOSPath}/SDK/RSOverseaSDK.plist");
                     break;
+                case SDKType.CeliaOversea:
+                    return;
             }
 
             AssetDatabase.Refresh();
@@ -227,6 +236,12 @@ namespace celia.game.editor
         /// </summary>
         private void SetSDKFolder(SDKType sdkType)
         {
+            if (sdkType == SDKType.CeliaOversea)
+            {
+                return;
+            }else{
+                DeleteFolder(pluginIOSPath);
+            }
             // 其他SDK设置为不导入
             SetAndroidPluginImport(pluginSavePath, false);
             // 复制要打包的SDK文件
@@ -654,33 +669,102 @@ namespace celia.game.editor
 
             File.WriteAllText(projPath, proj.WriteToString());
         }
+         void SetCeliaOverseaSDK(){
+            string path = GetXcodeProjectPath(option.PlayerOption.locationPathName);
+            string projPath = PBXProject.GetPBXProjectPath(path);
+            PBXProject proj = new PBXProject();
+            proj.ReadFromString(File.ReadAllText(projPath));
+            string target = proj.TargetGuidByName("Unity-iPhone");
+            // BuildSetting修改
+            proj.SetBuildProperty(target, "ENABLE_BITCODE", "NO");//这个好像是bugly需要的
+            proj.AddBuildProperty(target, "OTHER_LDFLAGS", "-ObjC");//这个google等其他sdk非常需要的
+            //proj.AddBuildProperty(target, "OTHER_LDFLAGS", "-all_load");
+        #region 添加XCode引用的Framework
+            // SDK依赖 --AIHelp
+            proj.AddFrameworkToProject(target, "libsqlite3.tbd", false);
+            proj.AddFrameworkToProject(target, "libresolv.tbd", false);
+            proj.AddFrameworkToProject(target, "WebKit.framework", false);
+            // SDK依赖 --Google
+            proj.AddFrameworkToProject(target, "LocalAuthentication.framework", false);
+            proj.AddFrameworkToProject(target, "SafariServices.framework", false);
+            proj.AddFrameworkToProject(target, "AuthenticationServices.framework", false);
+            proj.AddFrameworkToProject(target, "SystemConfiguration.framework", false);
+            // SDK依赖 --Apple
+            proj.AddFrameworkToProject(target, "storekit.framework", false);
+            proj.AddFrameworkToProject(target, "AuthenticationServices.framework", false);
+            proj.AddFrameworkToProject(target, "gamekit.framework", false);
+        #endregion
 
-        // void AddLanguage(string path, params string[] languages)
-        // {
-        //     //string[] langs = new string[] { "zh","zh-Hant", "vi-VN", "th", "ri", "ko", "es-ES", "id-ID" };
-        //     string plistPath = Path.Combine(path, "Info.plist");
-        //     PlistDocument plist = new PlistDocument();
-        //     plist.ReadFromFile(plistPath);
+            string plistPath = Path.Combine(path, "Info.plist");
+            PlistDocument plist = new PlistDocument();
+            plist.ReadFromFile(plistPath);
+            PlistElementDict rootDict = plist.root;
+        #region 修改Xcode工程Info.plist
+            /* iOS9所有的app对外http协议默认要求改成https */
+            // Add value of NSAppTransportSecurity in Xcode plist
+            PlistElementDict dictTmp = rootDict.CreateDict("NSAppTransportSecurity");
+            dictTmp.SetBoolean("NSAllowsArbitraryLoads", true);
+            //AIHelp-权限配置
+            rootDict.SetString("NSCameraUsageDescription", "是否允许访问相机?");
+            rootDict.SetString("NSMicrophoneUsageDescription", "是否允许使用麦克风?");
+            rootDict.SetString("NSPhotoLibraryAddUsageDescription", "是否允许添加照片?");
+            rootDict.SetString("NSMicrophoneUsageDescription", "是否允许访问相册?");
 
-        //     var localizationKey = "CFBundleLocalizations";
+            rootDict.SetString("CFBundleDevelopmentRegion", "zh_TW");
+            rootDict.SetString("CFBundleVersion", "1");
+            // SDK相关参数设置
+            rootDict.SetString("FacebookAppID", "949004278872387");
+            rootDict.SetString("GoogleClientID", "554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn.apps.googleusercontent.com");
+            rootDict.SetString("FacebookAppDisplayName", "少女的王座");
+            rootDict.SetString("AIHelpAppID", "elextech_platform_15ce9b10-f784-4ab5-8ee4-45efab40bd6a");
+            rootDict.SetString("AIHelpAppKey", "ELEXTECH_app_50dd4661c57843778d850769a02f8a09");
+            rootDict.SetString("AIHelpDomain", "elextech@aihelp.net");
+            rootDict.SetString("AdjustAppToken", "1k2jm7bpansw");
+            rootDict.SetString("AdjustAppSecret", "1,750848352-1884995334-181661496-1073918938");
+            // Set encryption usage boolean
+            string encryptKey = "ITSAppUsesNonExemptEncryption";
+            rootDict.SetBoolean(encryptKey, false);
+            // remove exit on suspend if it exists.ios13新增
+            string exitsOnSuspendKey = "UIApplicationExitsOnSuspend";
+            if (rootDict.values.ContainsKey(exitsOnSuspendKey))
+            {
+                rootDict.values.Remove(exitsOnSuspendKey);
+            }
+            // URL types配置
+            PlistElementArray URLTypes = rootDict.CreateArray("CFBundleURLTypes");
+            //Facebook
+            PlistElementDict typeRoleFB = URLTypes.AddDict();
+            typeRoleFB.SetString("CFBundleTypeRole", "Editor");
+            PlistElementArray urlSchemeFB = typeRoleFB.CreateArray("CFBundleURLSchemes");
+            urlSchemeFB.AddString("fb949004278872387");
+            //Google
+            PlistElementDict typeRole = URLTypes.AddDict();
+            typeRole.SetString("CFBundleTypeRole", "Editor");
+            typeRole.SetString("CFBundleURLName", "com.googleusercontent.apps.554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn");
+            PlistElementArray urlScheme = typeRole.CreateArray("CFBundleURLSchemes");
+            urlScheme.AddString("com.googleusercontent.apps.554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn");
 
-        //     var localizations = plist.root.values
-        //     .Where(kv => kv.Key == localizationKey)
-        //     .Select(kv => kv.Value)
-        //     .Cast<PlistElementArray>()
-        //     .FirstOrDefault();
+            // LSApplicationQueriesSchemes配置
+            PlistElementArray LSApplicationQueriesSchemes = rootDict.CreateArray("LSApplicationQueriesSchemes");
+            // facebook接入配置
+            LSApplicationQueriesSchemes.AddString("fbapi");
+            LSApplicationQueriesSchemes.AddString("fb-messenger-share-api");
+            LSApplicationQueriesSchemes.AddString("fbauth2");
+            LSApplicationQueriesSchemes.AddString("fbshareextension");
+            // Line接入配置
+            LSApplicationQueriesSchemes.AddString("lineauth");
+            LSApplicationQueriesSchemes.AddString("line3rdp.$(APP_IDENTIFIER)");
+            LSApplicationQueriesSchemes.AddString("line");
+        #endregion
 
-        //     if (localizations == null)
-        //         localizations = plist.root.CreateArray(localizationKey);
+            // Capabilitise添加
+            ProjectCapabilityManager projectCapabilityManager = new ProjectCapabilityManager(projPath, "tw.entitlements", PBXProject.GetUnityTargetName());
+            projectCapabilityManager.AddGameCenter();
+            projectCapabilityManager.AddInAppPurchase();
+            plist.WriteToFile(plistPath);
+            proj.WriteToFile(projPath);
+        }
 
-        //     foreach (var language in languages)
-        //     {
-        //         if (localizations.values.Select(el => el.AsString()).Contains(language) == false)
-        //             localizations.AddString(language);
-        //     }
-
-        //     plist.WriteToFile(plistPath);
-        // }
         #endregion
 #endif
     }
