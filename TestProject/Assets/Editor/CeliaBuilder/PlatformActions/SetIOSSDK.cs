@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 #if UNITY_EDITOR_OSX
 using UnityEditor.iOS.Xcode;
 #endif
@@ -758,9 +758,11 @@ namespace celia.game.editor
         #endregion
 
             // Capabilitise添加
-            ProjectCapabilityManager projectCapabilityManager = new ProjectCapabilityManager(projPath, "tw.entitlements", PBXProject.GetUnityTargetName());
-            projectCapabilityManager.AddGameCenter();
-            projectCapabilityManager.AddInAppPurchase();
+            proj.AddCapability(target, PBXCapabilityType.GameCenter);
+            proj.AddCapability(target, PBXCapabilityType.InAppPurchase);
+            //ProjectCapabilityManager projectCapabilityManager = new ProjectCapabilityManager(projPath, "tw.entitlements", PBXProject.GetUnityTargetName());
+            //projectCapabilityManager.AddGameCenter();
+            //projectCapabilityManager.AddInAppPurchase();
             plist.WriteToFile(plistPath);
             proj.WriteToFile(projPath);
         }

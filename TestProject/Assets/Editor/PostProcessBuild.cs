@@ -102,9 +102,12 @@ namespace celia.game.editor
                 LSApplicationQueriesSchemes.AddString("line3rdp.$(APP_IDENTIFIER)");
                 LSApplicationQueriesSchemes.AddString("line");
                 #endregion
-                ProjectCapabilityManager projectCapabilityManager = new ProjectCapabilityManager(projPath, "tw.entitlements", PBXProject.GetUnityTargetName());
-                projectCapabilityManager.AddGameCenter();
-                projectCapabilityManager.AddInAppPurchase();
+                // Capabilitise添加
+                proj.AddCapability(target, PBXCapabilityType.GameCenter);
+                proj.AddCapability(target, PBXCapabilityType.InAppPurchase);
+                //ProjectCapabilityManager projectCapabilityManager = new ProjectCapabilityManager(projPath, "tw.entitlements", PBXProject.GetUnityTargetName());
+                //projectCapabilityManager.AddGameCenter();
+                //projectCapabilityManager.AddInAppPurchase();
                 plist.WriteToFile(plistPath);
                 proj.WriteToFile(projPath);
                 Debug.Log("--**--4.IOSXcodeSettings--**--");
