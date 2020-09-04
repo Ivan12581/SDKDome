@@ -214,6 +214,7 @@ typedef NS_ENUM(NSInteger, MsgID)
     eCustomerService = 501,
     eFaceBookEvent = 601,
     eAdjustEvent = 602,
+    ePurchase3rdEvent = 603,
 };
 #pragma mark -- Unity To IOS
 -(void)Call:(int) type andJsonStr:(const char*) jsonstring{
@@ -248,6 +249,10 @@ typedef NS_ENUM(NSInteger, MsgID)
                 break;
             case eAdjustEvent:
                 [[AdjustHelper sharedInstance] Event:jsonstring];
+                break;
+            case ePurchase3rdEvent:
+                [[AdjustHelper sharedInstance] ThirdPurchaseEvent:jsonstring];
+                [[FBHelper sharedInstance] ThirdPurchaseEvent:jsonstring];
                 break;
             default:
             NSLog(@"-ios----IOSBridgeHelper---该接口ios未实现----%i",type);

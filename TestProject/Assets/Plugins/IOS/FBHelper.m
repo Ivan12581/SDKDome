@@ -269,7 +269,7 @@ static FBHelper *_Instance = nil;
      parameters:params];
 }
 #pragma mark --上报支付数据
--(void)purchaseEvent:(NSString *)appleOrderID AndProductID:(NSString *)productID{
+-(void)OfficialPurchaseEvent:(NSString *)appleOrderID AndProductID:(NSString *)productID{
     if(![[Utils sharedInstance] getValueWithKey:@"price"]){
         return;
     }
@@ -280,6 +280,27 @@ static FBHelper *_Instance = nil;
     @{
         FBSDKAppEventParameterNameContentType : productID,
         FBSDKAppEventParameterNameOrderID : appleOrderID,
+        FBSDKAppEventParameterNameCurrency : currency
+    };
+    [FBSDKAppEvents logPurchase:priceDouble
+    currency:currency
+    parameters: params];
+}
+#pragma mark --Mycard上报支付数据
+-(void)ThirdPurchaseEvent:(const char*) jsonString{
+    NSString *jsonNSString = [NSString stringWithUTF8String:jsonString];
+    NSData *data = [jsonNSString dataUsingEncoding:NSUTF8StringEncoding];
+    NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@" ---ios FBHelper--MycardPurchaseEvent-: %@", dict);
+    NSString *priceStr = [dict valueForKey:@"price"];
+    NSString *currency = [dict valueForKey:@"currency"];
+    NSString *productID = [dict valueForKey:@"productID"];
+    NSString *orderID = [dict valueForKey:@"orderID"];
+    double priceDouble = [priceStr doubleValue];
+    NSDictionary *params =
+    @{
+        FBSDKAppEventParameterNameContentType : productID,
+        FBSDKAppEventParameterNameOrderID : orderID,
         FBSDKAppEventParameterNameCurrency : currency
     };
     [FBSDKAppEvents logPurchase:priceDouble

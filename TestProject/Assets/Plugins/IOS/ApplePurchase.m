@@ -140,13 +140,7 @@ typedef NS_ENUM(NSInteger, PayState)
             NSLog(@"  本地描述: %@", product.localizedDescription);
             if([product.productIdentifier isEqualToString:goodID]){
                 requestProduct = product;
-                
-                // Create formatter
-                NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-                [formatter setNumberStyle:NSNumberFormatterDecimalStyle]; // adjust this
-                NSString *formattedOutput = [formatter stringFromNumber:product.price];
-                
-                [[Utils sharedInstance] saveValueWithKey:@"price" value:formattedOutput];
+                [[Utils sharedInstance] saveValueWithKey:@"price" value:[product.price stringValue]];
                 [[Utils sharedInstance] saveValueWithKey:@"CurrencyCode" value:[product.priceLocale objectForKey:NSLocaleCurrencyCode]];
                     break;
             }
@@ -228,8 +222,8 @@ typedef NS_ENUM(NSInteger, PayState)
 }
 //支付统计
 -(void)eventpurchase:(SKPaymentTransaction *)transaction{
-    [[AdjustHelper sharedInstance] purchaseEvent:transaction.transactionIdentifier];
-    [[FBHelper sharedInstance] purchaseEvent:transaction.transactionIdentifier AndProductID:transaction.payment.productIdentifier];
+    [[AdjustHelper sharedInstance] OfficialPurchaseEvent:transaction.transactionIdentifier];
+    [[FBHelper sharedInstance] OfficialPurchaseEvent:transaction.transactionIdentifier AndProductID:transaction.payment.productIdentifier];
 }
 //预处理并统计Apple订单
 -(void)HandleAppleOrder:(SKPaymentTransaction *)transaction{

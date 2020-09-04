@@ -20,5 +20,6 @@
 -(void)share:(const char*) jsonString;
 -(void)Event:(const char*) jsonString;
 -(void)CustomEvent:(NSString *)eventName;
--(void)purchaseEvent:(NSString *)appleOrderID AndProductID:(NSString *)productID;
+-(void)OfficialPurchaseEvent:(NSString *)appleOrderID AndProductID:(NSString *)productID;
+-(void)ThirdPurchaseEvent:(const char*) jsonString;
 @end
