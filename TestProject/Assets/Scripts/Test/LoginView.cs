@@ -142,6 +142,21 @@ public class LoginView : MonoBehaviour
 
     }
     /// <summary>
+    /// 微信分享
+    /// </summary>
+    public void WXShare()
+    {
+        Debug.Log("---Unity---WXShare---");
+        GetScreenShot((imgPath) =>
+        {
+            SDKManager.gi.LineShare(imgPath, (s, dataDict) =>
+            {
+                Debug.Log("---Unity---WXShare--callback-");
+            });
+        });
+
+    }
+    /// <summary>
     /// Apple GameCenter登陆
     /// </summary>
     public void GCLogin()

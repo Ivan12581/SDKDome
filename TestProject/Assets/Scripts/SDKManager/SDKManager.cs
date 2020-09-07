@@ -258,6 +258,18 @@ namespace celia.game
             CallSDK(SDKResultType.LineShare, jObj.ToString());
         }
         /// <summary>
+        /// 微信分享
+        /// </summary>
+        /// <param name="callBack"></param>
+        public void WXShare(string imgPath, Action<int, Dictionary<string, string>> callBack = null)
+        {
+            callBackDict[SDKResultType.WXShare] = callBack;
+            JObject jObj = new JObject();
+            jObj.Add("img", imgPath);
+            jObj.Add("text", "");
+            CallSDK(SDKResultType.WXShare, jObj.ToString());
+        }
+        /// <summary>
         /// FaceBook统计事件
         /// </summary>
         public void FBEvent()
@@ -427,6 +439,7 @@ namespace celia.game
         WeiboShare = 301,
         FaceBookShare = 302,
         LineShare = 303,
+        WXShare = 304,
 
         ConsumeGoogleOrder = 401,
 

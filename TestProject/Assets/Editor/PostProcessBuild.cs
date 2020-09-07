@@ -25,6 +25,7 @@ namespace celia.game.editor
                 // BuildSetting修改
                 proj.SetBuildProperty(target, "ENABLE_BITCODE", "NO");//这个好像是bugly需要的
                 proj.AddBuildProperty(target, "OTHER_LDFLAGS", "-ObjC");//这个google等其他sdk非常需要的
+                proj.AddBuildProperty(target, "OTHER_LDFLAGS", "--ObjC -all_load");//这个weixin需要的
                 #region 添加XCode引用的Framework
                 // SDK依赖 --AIHelp
                 proj.AddFrameworkToProject(target, "libsqlite3.tbd", false);
@@ -39,6 +40,10 @@ namespace celia.game.editor
                 proj.AddFrameworkToProject(target, "storekit.framework", false);
                 proj.AddFrameworkToProject(target, "AuthenticationServices.framework", false);
                 proj.AddFrameworkToProject(target, "gamekit.framework", false);
+                // SDK依赖 --weixin
+                proj.AddFrameworkToProject(target, "Security.framework", false);
+                proj.AddFrameworkToProject(target, "CoreGraphics.framework", false);
+                //proj.AddFrameworkToProject(target, "WebKit.framework", false);
                 #endregion
 
                 string plistPath = Path.Combine(pathToBuildProject, "Info.plist");
@@ -55,9 +60,12 @@ namespace celia.game.editor
                 rootDict.SetString("NSMicrophoneUsageDescription", "是否允许使用麦克风?");
                 rootDict.SetString("NSPhotoLibraryAddUsageDescription", "是否允许添加照片?");
                 rootDict.SetString("NSMicrophoneUsageDescription", "是否允许访问相册?");
+                rootDict.SetString("NSLocationUsageDescription", "App需要您的同意,才能访问位置");
+                rootDict.SetString("NSLocationWhenInUseUsageDescription", "App需要您的同意,才能在使用期间访问位置");
+                rootDict.SetString("NSLocationAlwaysUsageDescription", "App需要您的同意,才能始终访问位置");
 
                 rootDict.SetString("CFBundleDevelopmentRegion", "zh_TW");
-                rootDict.SetString("CFBundleVersion", "1");
+
                 // SDK相关参数设置
                 rootDict.SetString("FacebookAppID", "949004278872387");
                 rootDict.SetString("GoogleClientID", "554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn.apps.googleusercontent.com");
@@ -89,6 +97,12 @@ namespace celia.game.editor
                 typeRole.SetString("CFBundleURLName", "com.googleusercontent.apps.554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn");
                 PlistElementArray urlScheme = typeRole.CreateArray("CFBundleURLSchemes");
                 urlScheme.AddString("com.googleusercontent.apps.554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn");
+                //WeiXin
+                PlistElementDict typeRoleWX = URLTypes.AddDict();
+                typeRole.SetString("CFBundleTypeRole", "Editor");
+                typeRole.SetString("CFBundleURLName", "weixin");
+                PlistElementArray urlSchemeWX = typeRole.CreateArray("CFBundleURLSchemes");
+                urlScheme.AddString("wx4868b35061f87885");
 
                 // LSApplicationQueriesSchemes配置
                 PlistElementArray LSApplicationQueriesSchemes = rootDict.CreateArray("LSApplicationQueriesSchemes");
@@ -101,6 +115,9 @@ namespace celia.game.editor
                 LSApplicationQueriesSchemes.AddString("lineauth");
                 LSApplicationQueriesSchemes.AddString("line3rdp.$(APP_IDENTIFIER)");
                 LSApplicationQueriesSchemes.AddString("line");
+                // WeiXin接入配置
+                LSApplicationQueriesSchemes.AddString("weixin");
+                LSApplicationQueriesSchemes.AddString("weixinULAPI");
                 #endregion
                 // Capabilitise添加
                 proj.AddCapability(target, PBXCapabilityType.GameCenter);
