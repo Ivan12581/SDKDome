@@ -15,7 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)InitSDK:(id<cDelegate>)Delegate;
 -(void)Event:(const char*) jsonString;
 -(void)commonEvent:(NSString *)evnetToken;
--(void)purchaseEvent:(NSString *)appleOrderID;
+-(void)OfficialPurchaseEvent:(NSString *)appleOrderID;
+-(void)ThirdPurchaseEvent:(const char*) jsonString;
 @end
 
 NS_ASSUME_NONNULL_END

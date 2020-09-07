@@ -21,10 +21,17 @@ static AdjustHelper *AdjustHelperIns = nil;
     IOSBridgeHelper = Delegate;
     //点击游戏图标，启动游戏后，触发该事件      //ad启动统计
     [self commonEvent:@"4pvqgy"];
-    NSLog(@"--AppleHelper---InitSDK---");
+    NSString *idfa = [Adjust idfa];
+    NSLog(@" ---ios AdjustHelper--InitSDK-idfa--: %@", idfa);
+
 }
 -(void)Event:(const char*) jsonString{
-    NSString *evnetToken = [NSString stringWithUTF8String:jsonString];
+    NSString *jsonNSString = [NSString stringWithUTF8String:jsonString];
+    NSData *data = [jsonNSString dataUsingEncoding:NSUTF8StringEncoding];
+    NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@" ---ios AdjustHelper--Event-: %@", dict);
+    NSString *evnetToken = [dict valueForKey:@"evnetToken"];
+
     [self commonEvent:evnetToken];
 }
 #pragma mark --上报普通事件
@@ -32,19 +39,35 @@ static AdjustHelper *AdjustHelperIns = nil;
     ADJEvent *event = [ADJEvent eventWithEventToken:evnetToken];
     [Adjust trackEvent:event];
 }
-#pragma mark --上报支付数据
--(void)purchaseEvent:(NSString *)appleOrderID{
+#pragma mark --官方支付统计
+-(void)OfficialPurchaseEvent:(NSString *)appleOrderID{
     if(![[Utils sharedInstance] getValueWithKey:@"price"]){
         return;
     }
-    NSString *priceStr = [[Utils sharedInstance] getValueWithKey:@"price"];
-    double priceDouble = [priceStr doubleValue];
+    NSString *price = [[Utils sharedInstance] getValueWithKey:@"price"];
     NSString *currency = [[Utils sharedInstance] getValueWithKey:@"CurrencyCode"];
-    ADJEvent *event = [ADJEvent eventWithEventToken:@"q5u2a6"];
-    [event setRevenue:priceDouble currency:currency];
-    [event setTransactionId:appleOrderID];
+    [self PurchaseEvent:@"q5u2a6" andPrice:price andCurrency:currency andOrderID:appleOrderID];
+    [self PurchaseEvent:@"r7ugmi" andPrice:price andCurrency:currency andOrderID:[appleOrderID stringByAppendingString:@"-total"]];
+}
+#pragma mark --第三方MyCard支付统计
+-(void)ThirdPurchaseEvent:(const char*) jsonString{
+    NSString *jsonNSString = [NSString stringWithUTF8String:jsonString];
+    NSData *data = [jsonNSString dataUsingEncoding:NSUTF8StringEncoding];
+    NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@" ---ios AdjustHelper--ThirdPurchaseEvent-: %@", dict);
+    NSString *price = [dict valueForKey:@"price"];
+    NSString *currency = [dict valueForKey:@"currency"];
+//    NSString *productID = [dict valueForKey:@"productID"];
+    NSString *orderID = [dict valueForKey:@"orderID"];
+    [self PurchaseEvent:@"j33kyv" andPrice:price andCurrency:currency andOrderID:orderID];
+    [self PurchaseEvent:@"r7ugmi" andPrice:price andCurrency:currency andOrderID:[orderID stringByAppendingString:@"-total"]];
+}
+-(void)PurchaseEvent:(NSString *)eventToken andPrice:(NSString *)price andCurrency:(NSString *)currency andOrderID:(NSString *)orderID{
+    
+    ADJEvent *event = [ADJEvent eventWithEventToken:eventToken];
+    [event setRevenue:[price doubleValue] currency:currency];
+    [event setTransactionId:orderID];
     [Adjust trackEvent:event];
-//    [[AdjustHelper sharedInstance] purchaseEvent:@"q5u2a6" andRevenue:&test andCurrency:currency];
 }
 #pragma mark --游戏启动登陆事件
 -(void)launchEvent{
