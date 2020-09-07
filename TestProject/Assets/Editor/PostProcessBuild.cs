@@ -27,23 +27,23 @@ namespace celia.game.editor
                 proj.AddBuildProperty(target, "OTHER_LDFLAGS", "-ObjC");//这个google等其他sdk非常需要的
                 proj.AddBuildProperty(target, "OTHER_LDFLAGS", "--ObjC -all_load");//这个weixin需要的
                 #region 添加XCode引用的Framework
-                // SDK依赖 --AIHelp
-                proj.AddFrameworkToProject(target, "libsqlite3.tbd", false);
-                proj.AddFrameworkToProject(target, "libresolv.tbd", false);
-                proj.AddFrameworkToProject(target, "WebKit.framework", false);
-                // SDK依赖 --Google
-                proj.AddFrameworkToProject(target, "LocalAuthentication.framework", false);
-                proj.AddFrameworkToProject(target, "SafariServices.framework", false);
-                proj.AddFrameworkToProject(target, "AuthenticationServices.framework", false);
-                proj.AddFrameworkToProject(target, "SystemConfiguration.framework", false);
-                // SDK依赖 --Apple
-                proj.AddFrameworkToProject(target, "storekit.framework", false);
-                proj.AddFrameworkToProject(target, "AuthenticationServices.framework", false);
-                proj.AddFrameworkToProject(target, "gamekit.framework", false);
+                //// SDK依赖 --AIHelp
+                //proj.AddFrameworkToProject(target, "libsqlite3.tbd", false);
+                //proj.AddFrameworkToProject(target, "libresolv.tbd", false);
+                //proj.AddFrameworkToProject(target, "WebKit.framework", false);
+                //// SDK依赖 --Google
+                //proj.AddFrameworkToProject(target, "LocalAuthentication.framework", false);
+                //proj.AddFrameworkToProject(target, "SafariServices.framework", false);
+                //proj.AddFrameworkToProject(target, "AuthenticationServices.framework", false);
+                //proj.AddFrameworkToProject(target, "SystemConfiguration.framework", false);
+                //// SDK依赖 --Apple
+                //proj.AddFrameworkToProject(target, "storekit.framework", false);
+                //proj.AddFrameworkToProject(target, "AuthenticationServices.framework", false);
+                //proj.AddFrameworkToProject(target, "gamekit.framework", false);
                 // SDK依赖 --weixin
                 proj.AddFrameworkToProject(target, "Security.framework", false);
                 proj.AddFrameworkToProject(target, "CoreGraphics.framework", false);
-                //proj.AddFrameworkToProject(target, "WebKit.framework", false);
+                proj.AddFrameworkToProject(target, "WebKit.framework", false);
                 #endregion
 
                 string plistPath = Path.Combine(pathToBuildProject, "Info.plist");
@@ -86,48 +86,48 @@ namespace celia.game.editor
                 }
                 // URL types配置
                 PlistElementArray URLTypes = rootDict.CreateArray("CFBundleURLTypes");
-                //Facebook
-                PlistElementDict typeRoleFB = URLTypes.AddDict();
-                typeRoleFB.SetString("CFBundleTypeRole", "Editor");
-                PlistElementArray urlSchemeFB = typeRoleFB.CreateArray("CFBundleURLSchemes");
-                urlSchemeFB.AddString("fb949004278872387");
-                //Google
-                PlistElementDict typeRole = URLTypes.AddDict();
-                typeRole.SetString("CFBundleTypeRole", "Editor");
-                typeRole.SetString("CFBundleURLName", "com.googleusercontent.apps.554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn");
-                PlistElementArray urlScheme = typeRole.CreateArray("CFBundleURLSchemes");
-                urlScheme.AddString("com.googleusercontent.apps.554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn");
+                ////Facebook
+                //PlistElementDict typeRoleFB = URLTypes.AddDict();
+                //typeRoleFB.SetString("CFBundleTypeRole", "Editor");
+                //PlistElementArray urlSchemeFB = typeRoleFB.CreateArray("CFBundleURLSchemes");
+                //urlSchemeFB.AddString("fb949004278872387");
+                ////Google
+                //PlistElementDict typeRole = URLTypes.AddDict();
+                //typeRole.SetString("CFBundleTypeRole", "Editor");
+                //typeRole.SetString("CFBundleURLName", "com.googleusercontent.apps.554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn");
+                //PlistElementArray urlScheme = typeRole.CreateArray("CFBundleURLSchemes");
+                //urlScheme.AddString("com.googleusercontent.apps.554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn");
                 //WeiXin
                 PlistElementDict typeRoleWX = URLTypes.AddDict();
-                typeRole.SetString("CFBundleTypeRole", "Editor");
-                typeRole.SetString("CFBundleURLName", "weixin");
-                PlistElementArray urlSchemeWX = typeRole.CreateArray("CFBundleURLSchemes");
-                urlScheme.AddString("wx4868b35061f87885");
+                typeRoleWX.SetString("CFBundleTypeRole", "Editor");
+                typeRoleWX.SetString("CFBundleURLName", "weixin");
+                PlistElementArray urlSchemeWX = typeRoleWX.CreateArray("CFBundleURLSchemes");
+                urlSchemeWX.AddString("wx4868b35061f87885");
 
                 // LSApplicationQueriesSchemes配置
                 PlistElementArray LSApplicationQueriesSchemes = rootDict.CreateArray("LSApplicationQueriesSchemes");
-                // facebook接入配置
-                LSApplicationQueriesSchemes.AddString("fbapi");
-                LSApplicationQueriesSchemes.AddString("fb-messenger-share-api");
-                LSApplicationQueriesSchemes.AddString("fbauth2");
-                LSApplicationQueriesSchemes.AddString("fbshareextension");
-                // Line接入配置
-                LSApplicationQueriesSchemes.AddString("lineauth");
-                LSApplicationQueriesSchemes.AddString("line3rdp.$(APP_IDENTIFIER)");
-                LSApplicationQueriesSchemes.AddString("line");
+                //// facebook接入配置
+                //LSApplicationQueriesSchemes.AddString("fbapi");
+                //LSApplicationQueriesSchemes.AddString("fb-messenger-share-api");
+                //LSApplicationQueriesSchemes.AddString("fbauth2");
+                //LSApplicationQueriesSchemes.AddString("fbshareextension");
+                //// Line接入配置
+                //LSApplicationQueriesSchemes.AddString("lineauth");
+                //LSApplicationQueriesSchemes.AddString("line3rdp.$(APP_IDENTIFIER)");
+                //LSApplicationQueriesSchemes.AddString("line");
                 // WeiXin接入配置
                 LSApplicationQueriesSchemes.AddString("weixin");
                 LSApplicationQueriesSchemes.AddString("weixinULAPI");
                 #endregion
                 // Capabilitise添加
-                proj.AddCapability(target, PBXCapabilityType.GameCenter);
-                proj.AddCapability(target, PBXCapabilityType.InAppPurchase);
+                //proj.AddCapability(target, PBXCapabilityType.GameCenter);
+                //proj.AddCapability(target, PBXCapabilityType.InAppPurchase);
                 //ProjectCapabilityManager projectCapabilityManager = new ProjectCapabilityManager(projPath, "tw.entitlements", PBXProject.GetUnityTargetName());
                 //projectCapabilityManager.AddGameCenter();
                 //projectCapabilityManager.AddInAppPurchase();
                 plist.WriteToFile(plistPath);
                 proj.WriteToFile(projPath);
-                Debug.Log("--**--4.IOSXcodeSettings--**--");
+                Debug.Log("--**--OnPostProcessBuild over--**--");
             }
             if (_target == BuildTarget.Android)
             {
