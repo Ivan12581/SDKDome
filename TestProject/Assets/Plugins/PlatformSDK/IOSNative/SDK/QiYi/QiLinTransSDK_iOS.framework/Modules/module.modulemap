@@ -1,0 +1,6 @@
+framework module QiLinTransSDK_iOS {
+  umbrella header "QiLinTransSDK_iOS.h"
+
+  export *
+  module * { export * }
+}
