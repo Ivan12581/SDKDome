@@ -33,7 +33,7 @@ static ElvaHelper *ElvaHelperIns = nil;
     playerParseId = @"";
 //    [ECServiceSdk setName:@"少女的王座"];
 //    [ECServiceSdk setServerId:@"ServerId-123456987456"];
-//    [ECServiceSdk setSDKLanguage:@"zh_TW"];
+    [ECServiceSdk setSDKLanguage:@"zh_TW"];
 //    [ECServiceSdk setSDKLanguage:@"zh_en"];
 //    [ECServiceSdk setSDKLanguage:@"zh_CN"];
     NSLog(@"--ElvaHelper---InitSDK---");
