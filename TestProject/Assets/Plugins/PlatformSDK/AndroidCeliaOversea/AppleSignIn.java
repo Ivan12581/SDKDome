@@ -147,7 +147,7 @@ public class AppleSignIn {
         @Override
         public void onPageFinished(WebView view, String url) {
             System.out.println("Current url:" + url);
-            if (url.equals("http://ttog-monitor.elexapp.com:54081/"))
+            if (url.equals(Constant.apple_redirect_uri+"/"))
             {
                 System.out.println("Injected");
                 view.loadUrl("javascript:window.java_obj.getSource(document.getElementsByTagName('body')[0].innerText);");

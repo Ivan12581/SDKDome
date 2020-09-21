@@ -10,9 +10,6 @@
       </intent-filter>
       <meta-data android:name="celia.sdk.CeliaActivity" android:value="true" />
     </activity>
-    <meta-data android:name="unity.build-id" android:value="1cdb9542-baa1-44b6-8491-6e8698e4bc30" />
-    <meta-data android:name="unity.splash-mode" android:value="0" />
-    <meta-data android:name="unity.splash-enable" android:value="True" />
     <!--AIHelp SDK -需要的刘海屏适配 -->
     <!--google刘海适配-->
     <meta-data android:name="android.max_aspect" android:value="2.1" />

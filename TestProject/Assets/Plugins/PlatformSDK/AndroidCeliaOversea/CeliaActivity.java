@@ -43,7 +43,8 @@ public class CeliaActivity extends UnityPlayerActivity {
         CustomerService(501),
 
         FaceBookEvent(601),
-        AdjustEvent(602);
+        AdjustEvent(602),
+        Purchase3rdEvent(603);
 
         MsgID(int code) {
             this.code = code;
@@ -102,6 +103,10 @@ public class CeliaActivity extends UnityPlayerActivity {
             case AdjustEvent:
                 adjustHelper.CommonEvent(data);
                 break;
+            case Purchase3rdEvent:
+                adjustHelper.ThirdPurchaseEvent(data);
+                faceBookHelper.ThirdPurchaseEvent(data);
+                break;
             default:
                 return;
         }
@@ -155,15 +160,15 @@ public class CeliaActivity extends UnityPlayerActivity {
         elvaHelper = new ElvaHelper(this);
         adjustHelper = new AdjustHelper(this);
         lineHelper = new LineHelper(this);
-        GetDeviceId();
+        String deviceID = GetDeviceId();
         SendMessageToUnity(MsgID.Init.getCode(), new HashMap<String, String>(){ {put("state","1");} });
         SendMessageToUnity(MsgID.ConfigInfo.getCode(), new HashMap<String, String>(){ {
             put("state", "1");
-            put("appID", "0");
-            put("cchID", "0");
+            put("appID", "151754");
+            put("cchID", "101");
             put("mdID", "0");
             put("sdkVersion","0");
-            put("deviceID", "0");
+            put("deviceID", deviceID);
         } });
 
     }
@@ -186,6 +191,7 @@ public class CeliaActivity extends UnityPlayerActivity {
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
+
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -227,14 +233,20 @@ public class CeliaActivity extends UnityPlayerActivity {
         ShowLog("Logout..."+CurLoginType);
     }
 
-    public void GetDeviceId(){
-        String IMEIDeviceId = Utils.getInstance().getIMEIDeviceId();
-        SendMessageToUnity(MsgID.ConfigInfo.getCode(), new HashMap<String, String>(){ {
+    public String GetDeviceId(){
+        String IMEIDeviceId = adjustHelper.googleAdId;
+        if (!Utils.getInstance().isNoEmpty(IMEIDeviceId)){
+            IMEIDeviceId = Utils.getInstance().getIMEIDeviceId();
+        }
+        String finalIMEIDeviceId = IMEIDeviceId;
+        SendMessageToUnity(MsgID.GetDeviceId.getCode(), new HashMap<String, String>(){ {
             put("state", "1");
-            put("UUID", IMEIDeviceId);
+            put("UUID", finalIMEIDeviceId);
+            put("IsHighLevel", "");
         } });
 //        Utils.getInstance().getKeyHash();
-        Utils.getInstance().getCurrencyInfo();
+        //Utils.getInstance().getCurrencyInfo();
+        return finalIMEIDeviceId;
     }
 
 

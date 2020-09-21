@@ -30,6 +30,8 @@ public class ElvaHelper {
 //        ELvaChatServiceSdk.setSDKLanguage("zh_CN");
         setInitCallback();
         ELvaChatServiceSdk.init(mainActivity,Constant.Elva_AppKey,Constant.Elva_Domain,Constant.Elva_AppId);
+		String languageAlias = "zh_TW";
+        ELvaChatServiceSdk.setSDKLanguage(languageAlias);
 
     }
     // 在调用初始化init方法之前，设置初始化回调函数

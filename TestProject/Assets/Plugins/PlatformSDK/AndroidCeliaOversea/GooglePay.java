@@ -124,6 +124,8 @@ public class GooglePay {
     {
         Purchase.PurchasesResult result = billingClient.queryPurchases(BillingClient.SkuType.INAPP);
         mainActivity.ShowLog("History code:" + result.getResponseCode());
+		if(result.getPurchasesList()== null)
+			return true;
         for (Purchase item : result.getPurchasesList()) {
             mainActivity.ShowLog("History purchase List:" + item.getOriginalJson());
             SendOrder(item,0);
@@ -287,8 +289,8 @@ public class GooglePay {
         String CurrencyCode = Utils.getInstance().getCacheData("CurrencyCode");
         mainActivity.ShowLog("---getCacheData---price-->" + price + "---CurrencyCode--->" + CurrencyCode);
         //支付统计
-        mainActivity.adjustHelper.purchaseEvent(price,CurrencyCode,purchase.getOrderId());
-        mainActivity.faceBookHelper.purchaseEvent(price,CurrencyCode,purchase.getOrderId());
+        mainActivity.adjustHelper.OfficialPurchaseEvent(price,CurrencyCode,purchase.getOrderId());
+        mainActivity.faceBookHelper.OfficialPurchaseEvent(price,CurrencyCode,purchase.getOrderId());
 
         mainActivity.SendMessageToUnity(CeliaActivity.MsgID.Pay.getCode(), new HashMap<String, String>(){
             {

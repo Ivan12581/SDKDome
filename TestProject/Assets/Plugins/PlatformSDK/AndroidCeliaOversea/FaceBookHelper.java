@@ -10,6 +10,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.LoggingBehavior;
 import com.facebook.LoginStatusCallback;
 import com.facebook.appevents.AppEventsConstants;
 import com.facebook.appevents.AppEventsLogger;
@@ -20,7 +21,6 @@ import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.model.SharePhoto;
 import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.ShareDialog;
-import com.unity3d.player.UnityPlayer;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,14 +54,14 @@ public class FaceBookHelper {
                 mainActivity.ShowLog( "---FacebookSdk-onInitialized--");
             }
         });
-
         FacebookSdk.setAutoLogAppEventsEnabled(true);
         FacebookSdk.setAutoInitEnabled(true);
         FacebookSdk.fullyInitialize();
         FacebookSdk.setAdvertiserIDCollectionEnabled(true);
 
         logger = AppEventsLogger.newLogger(mainActivity);
-
+        FacebookSdk.setIsDebugEnabled(true);
+        FacebookSdk.addLoggingBehavior(LoggingBehavior.APP_EVENTS);
         //玩家点击应用图标，打开游戏，触发该事件
         logger.logEvent(AppEventsConstants.EVENT_NAME_ACTIVATED_APP);
 
@@ -207,7 +207,7 @@ public class FaceBookHelper {
         params.putInt(AppEventsConstants.EVENT_PARAM_SUCCESS, Integer.parseInt(success));
         logger.logEvent(AppEventsConstants.EVENT_NAME_COMPLETED_TUTORIAL, params);
     }
-    public void purchaseEvent(String purchaseAmout,String currencyType,String orderID){
+    public void OfficialPurchaseEvent(String purchaseAmout,String currencyType,String orderID){
         if (!Utils.getInstance().isNoEmpty(purchaseAmout)||!Utils.getInstance().isNoEmpty(currencyType)) {
             return;
         }
@@ -220,6 +220,25 @@ public class FaceBookHelper {
 
 //        logger.logPurchase(new BigDecimal(purchaseAmout), Currency.getInstance(Locale.getDefault()),params);//玩家每次成功完成付费购买，触发该事件
         logger.logPurchase(new BigDecimal(purchaseAmout), Currency.getInstance(Locale.getDefault()),params);//玩家每次成功完成付费购买，触发该事件
+    }
+    //第三方MyCard支付统计
+    public void ThirdPurchaseEvent(String jsonStr){
+        try{
+            JSONObject jsonObject = new JSONObject(jsonStr);
+            String price = jsonObject.getString("price");
+            String currency = jsonObject.getString("currency");
+            String productID = jsonObject.getString("productID");
+            String orderID = jsonObject.getString("orderID");
+            Bundle params = new Bundle();
+            params.putString(AppEventsConstants.EVENT_PARAM_CURRENCY, currency);
+            params.putString(AppEventsConstants.EVENT_PARAM_CONTENT_TYPE, "product");
+            params.putString(AppEventsConstants.EVENT_PARAM_CONTENT_ID, orderID);
+
+            logger.logPurchase(new BigDecimal(price), Currency.getInstance(Locale.getDefault()),params);//玩家每次成功完成付费购买，触发该事件
+            } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
     }
 //share
     public void Share(String jsonStr){
