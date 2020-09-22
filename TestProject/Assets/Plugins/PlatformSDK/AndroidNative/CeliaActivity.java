@@ -28,68 +28,101 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Properties;
-import java.io.*;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-// import com.sina.weibo.sdk.WbSdk;
-// import com.sina.weibo.sdk.auth.AuthInfo;
-// import com.sina.weibo.sdk.api.ImageObject;
-// import com.sina.weibo.sdk.api.TextObject;
-// import com.sina.weibo.sdk.api.WebpageObject;
-// import com.sina.weibo.sdk.api.WeiboMultiMessage;
-// import com.sina.weibo.sdk.share.WbShareCallback;
-// import com.sina.weibo.sdk.share.WbShareHandler;
-// import com.sina.weibo.sdk.utils.Utility;
-
-/*
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
-import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
-import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
-*/
 public class CeliaActivity extends UnityPlayerActivity
 {
-    private enum MsgID {
-        Init,
-        Login,
-        Switch,
-        Pay,
-        UploadInfo,
-        ExitGame,
-        Logout,
+    public enum MsgID {
+        Invalid(0),
+        Init(100),
+        Login(101),
+        Switch(102),
+        Pay(103),
+        UploadInfo(104),
+        ExitGame(105),
+        Logout(106),
 
-        ConfigInfo,
-        GoogleTranslate,
-        Bind,
-        Share,
-        Naver,
+        GetDeviceId(200),
+        ConfigInfo(201),
+        GoogleTranslate(202),
+        Bind(203),
+        Share(204),
+        Naver(205),
+
+        WeiboShare(301),
+        FaceBookShare(302),
+        LineShare(303),
+
+        ConsumeGoogleOrder(401),
+
+        CustomerService(501),
+
+        FaceBookEvent(601),
+        AdjustEvent(602),
+        Purchase3rdEvent(603);
+
+        MsgID(int code) {
+            this.code = code;
+        }
+
+        private int code;
+
+        public int getCode() {
+            return code;
+        }
+
+        public static MsgID GetMsgID(int code) {
+            for (MsgID item : MsgID.values()) {
+                if (item.getCode() == code) {
+                    return item;
+                }
+            }
+            return Invalid;
+        }
     }
-
+    public void CallFromUnity(int methedID, String data) throws JSONException {
+        ShowLog("CallFromUnity methedID:" + methedID+"   CallFromUnity data:"+data);
+        MsgID msgID = MsgID.GetMsgID(methedID);
+        switch (msgID) {
+            case Init:
+                Init();
+                break;
+            case Login:
+                Login();
+                break;
+            case Logout:
+                break;
+            case Pay:
+                Pay(data);
+                break;
+            case Switch:
+                Switch();
+                break;
+            case GetDeviceId:
+                break;
+            case ExitGame:
+                ExitGame();
+                break;
+            case ConfigInfo:
+                GetConfigInfo();
+                break;
+            case UploadInfo:
+                UploadInfo(data);
+                break;
+            default:
+                return;
+        }
+    }
+    public void ShowLog(String msg) {
+        System.out.println(msg);
+    }
     private final String TAG = "Celia";
     private String iniFileName = "sjoys_app.ini";
     private String appkey = "";
-    private String wechatApp_ID = "wxf2d4d6ad6a49f086";
     private int isDebug = 1;
     private Toast mToast;
-
-    public static final String KEY_SHARE_TYPE = "key_share_type";
-    public static final int SHARE_CLIENT = 1;
-    public static final int SHARE_ALL_IN_ONE = 2;
-  // private IWXAPI api;
-  // private WbShareHandler shareHandler;
-  private int mShareType = SHARE_CLIENT;
-  public  static final String APP_KEY = "3524867471";
-    public  static final String REDIRECT_URL  = "http://www.sina.com";
-    public  static final String SCOPE =
-            "email,direct_messages_read,direct_messages_write,"
-                    + "friendships_groups_read,friendships_groups_write,statuses_to_me_read,"
-                    + "follow_app_official_microblog," + "invitation_write";
-
     private void showToast(String msg) {
         
         if(isDebug == 0){
@@ -123,33 +156,6 @@ public class CeliaActivity extends UnityPlayerActivity
             //【注意】：对于一些加载耗时比较久的游戏，调用SDK初始化接口后立即进行游戏资源加载相关操作，
             //无需等SDK初始化完成后再加载资源。如出现SDK未初始化完成游戏调用SDK登录情况，SDK内部已做好流程控制，游戏无需担心。
             showToast("SDK初始化成功！");
-
-            // cp生成屏幕截屏（该接口必须在SDK 初始化成功之后调用）
-            SJoyMSDK.getInstance().setScreenCaptureDrawable(new ScreenCaptureDrawable() {
-                @Override
-                public Bitmap captureImage() {
-                    // 以下截屏逻辑仅作为demo例子参考，实际由cp实现
-                    View view = getWindow().getDecorView();
-                    view.setDrawingCacheEnabled(true);
-                    view.buildDrawingCache();
-                    Rect rect = new Rect();
-                    view.getWindowVisibleDisplayFrame(rect);
-                    int statusBarHeight = rect.top;
-                    WindowManager windowManager = getWindowManager();
-                    DisplayMetrics outMetrics = new DisplayMetrics();
-                    windowManager.getDefaultDisplay().getMetrics(outMetrics);
-                    int width = outMetrics.widthPixels;
-                    int height = outMetrics.heightPixels;
-                    Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache(), 0, statusBarHeight, width,
-                            height - statusBarHeight);
-                    view.destroyDrawingCache();
-                    view.setDrawingCacheEnabled(false);
-
-                    Log.d(TAG, "截屏成功");
-                    return bitmap;
-                }
-            });
-
             SendMessageToUnity(MsgID.Init.ordinal(), new HashMap<String, String>(){ {put("state","1");} });
         }
 
@@ -167,7 +173,6 @@ public class CeliaActivity extends UnityPlayerActivity
             //1. 获取到token后，游戏用该token通过服务端验证接口获取真实的uid，具体参考服务端接入文档；
             //1. 客户端返回的uid只能作为一个备用值，真实的uid需通过服务端获取，这里提供为了防止网络问题，导致验证超时，从而无法获取uid的问题；
             showToast("SDK登录成功：" + "\nuid：" + bundle.getString("uid") + "\ntoken：" + bundle.getString("token"));
-
             HashMap<String, String> dataMap = new HashMap<String, String>(){
                 {
                     put("state", "1");
@@ -180,10 +185,11 @@ public class CeliaActivity extends UnityPlayerActivity
 
         @Override
         public void onLoginFail(String message) {
-            //SDK登录失败，message中为失败原因具体信息
-            //建议游戏收到此回调后，无需提示原因信息给玩家，重新调用SDK登录接口。
+            //登录失败有两种情况：
+            //1.玩家取消登录：message等于MsdkConstant.CALLBACK_LOGIN_CANCEL
+            //2.玩家登录失败：message会提示对应的原因
+            //注意：CP不需要提示失败的具体原因，自行处理失败逻辑，如重新登录等
             showToast("SDK登录失败：" + message);
-
             SendMessageToUnity(MsgID.Login.ordinal(), new HashMap<String, String>(){ {put("state", "0"); put("message", message);} });
         }
 
@@ -194,7 +200,6 @@ public class CeliaActivity extends UnityPlayerActivity
             //1. 获取到token后，游戏用该token通过服务端验证接口获取真实的uid，具体参考服务端接入文档；
             //1. 客户端返回的uid只能作为一个备用值，真实的uid需通过服务端获取，这里提供为了防止网络问题，导致验证超时，从而无法获取uid的问题；
             showToast("SDK切换帐号成功：" + "\nuid：" + bundle.getString("uid") + "\ntoken：" + bundle.getString("token"));
-
             HashMap<String, String> dataMap = new HashMap<String, String>(){
                 {
                     put("state", "1");
@@ -207,10 +212,11 @@ public class CeliaActivity extends UnityPlayerActivity
 
         @Override
         public void onUserSwitchFail(String message) {
-            //SDK切换帐号失败，message中为失败原因具体信息
-            //建议游戏收到此回调后，无需提示原因信息给玩家，重新调用SDK切换帐号接口。
+            //切换帐号失败有两种情况：
+            //1.玩家取消切换：message等于MsdkConstant.CALLBACK_SWITCH_CANCEL
+            //2.玩家切换失败：message会提示对应的原因
+            //注意：CP不需要提示失败的具体原因，自行处理失败逻辑，如重新登录等
             showToast("SDK切换帐号失败：" + message);
-
             SendMessageToUnity(MsgID.Switch.ordinal(), new HashMap<String, String>(){ {put("state", "0"); put("message", message);} });
         }
 
@@ -234,9 +240,7 @@ public class CeliaActivity extends UnityPlayerActivity
         public void onExitGameSuccess() {
             //退出游戏成功，游戏在此进行退出游戏，销毁游戏资源相关操作。
             showToast("SDK退出成功！");
-
             SendMessageToUnity(MsgID.ExitGame.ordinal(), new HashMap<String, String>(){ {put("state", "1");} });
-
             CeliaActivity.this.finish();
             System.exit(1);
         }
@@ -245,7 +249,6 @@ public class CeliaActivity extends UnityPlayerActivity
         public void onExitGameFail() {
             //游戏无需处理，继续游戏。
             showToast("SDK退出取消！");
-
             SendMessageToUnity(MsgID.ExitGame.ordinal(), new HashMap<String, String>(){ {put("state", "0");} });
         }
 
@@ -255,7 +258,6 @@ public class CeliaActivity extends UnityPlayerActivity
             //【注意】游戏收到吃回调后，先回调游戏登录界面，再调用SDK切换帐号方法
             showToast("SDK注销成功！");
             SJoyMSDK.getInstance().userSwitch(CeliaActivity.this);
-
             SendMessageToUnity(MsgID.Logout.ordinal(), new HashMap<String, String>(){ {put("state", "1");} });
         }
 
@@ -263,7 +265,6 @@ public class CeliaActivity extends UnityPlayerActivity
         public void onLogoutFail(String message) {
             //SDK注销失败，游戏无需处理
             showToast("SDK注销失败！");
-
             SendMessageToUnity(MsgID.Logout.ordinal(), new HashMap<String, String>(){ {put("state", "0"); put("message", message);} });
         }
     };
@@ -281,15 +282,6 @@ public class CeliaActivity extends UnityPlayerActivity
         isDebug = Integer.parseInt(ini.getProperty("debug", "0"));
 
         SJoyMSDK.getInstance().doInit(CeliaActivity.this, appkey, mSJoyMsdkCallback);
-
-        //  wechatApp_ID = ini.getProperty("wechatApp_ID");
-        // api = WXAPIFactory.createWXAPI(this, wechatApp_ID, true);
-        //api.registerApp(wechatApp_ID);
-        // showToast("Init app_key : " + appkey + "wxapp:" + wechatApp_ID);
-        // WbSdk.install(this,new AuthInfo(this, APP_KEY, REDIRECT_URL,SCOPE));
-        // mShareType = getIntent().getIntExtra(KEY_SHARE_TYPE, SHARE_CLIENT);
-        // shareHandler = new WbShareHandler(this);
-        // shareHandler.registerApp();
     }
 //region 基础SDK接口
 
@@ -405,49 +397,6 @@ public class CeliaActivity extends UnityPlayerActivity
     }
    // endregion
 
-    @Override
-    public void onWbShareSuccess() {
-        showToast("分享成功...");
-        SendMessageToUnity(MsgID.Share.ordinal(), new HashMap<String, String>(){ {put("state","1");} });
-    }
-
-    @Override
-    public void onWbShareFail() {
-        showToast("分享失败...");
-        SendMessageToUnity(MsgID.Share.ordinal(), new HashMap<String, String>(){ {put("state","0");} });
-    }
-
-    @Override
-    public void onWbShareCancel() {
-        showToast("分享取消...");
-        SendMessageToUnity(MsgID.Share.ordinal(), new HashMap<String, String>(){ {put("state","0");} });
-    }
-
-    public void ShareWeibo(String input,byte[] img)
-    {
-        System.out.println("share called");
-        WeiboMultiMessage weiboMessage = new WeiboMultiMessage();
-        weiboMessage.textObject = getTextObj(input);
-        weiboMessage.imageObject = getImageObj(img);
-        shareHandler.shareMessage(weiboMessage,mShareType == SHARE_CLIENT);
-    }
-
-    private TextObject getTextObj(String input) {
-        TextObject textObject = new TextObject();
-        textObject.text = input;
-        textObject.title = "TestTitle";
-        //textObject.actionUrl = "http://www.baidu.com";
-        return textObject;
-    }
-
-    private ImageObject getImageObj(byte[] img) {
-        ImageObject imageObject = new ImageObject();
-        Bitmap bitmap=BitmapFactory.decodeByteArray(img,0,img.length);
-        imageObject.setImageObject(bitmap);
-        return imageObject;
-    }
-
-
     public void GetConfigInfo()
     {
         showToast("appID -> " + SJoyMSDK.getInstance().getAppConfig(CeliaActivity.this).getApp_id() +
@@ -466,72 +415,6 @@ public class CeliaActivity extends UnityPlayerActivity
             }
         });
     }
-
-    public void YYBUploadInfo(String jsonData)
-    {
-        // 应用宝上传信息
-    }
-
-// region Google翻译相关
-    // 翻译语言到目标语言
-    private void TranslateTextByGoogle(String jsonData) //
-    {
-        try{
-            JSONObject jsonObject = new JSONObject(jsonData);
-            String inputText = jsonObject.getString("inputText");
-            String targetLanguage = jsonObject.getString("targetLanguage");
-            SJoyMSDK.getInstance().googleTranslate(inputText, "", targetLanguage, new GoogleTranslateListener() {
-                @Override public void onResult(GoogleTranslateResult googleTranslateResult) {
-                    showToast(googleTranslateResult.getCode() + "\n" + googleTranslateResult.getMsg() + "\n" + googleTranslateResult.getData());
-//                    SendMessageToUnity(MsgID.GoogleTranslate.ordinal(), new HashMap<String, String>(){
-//                        {
-//                            put("state", "1");
-//                            put("language", result.data);
-//                        }
-//                    });
-                }
-            });
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
-    }
-    // 检测输入的文本语言类型，返回缩写
-    public void DetectTextByGoogle(String jsonData){
-        try{
-            JSONObject jsonObject = new JSONObject(jsonData);
-            String inputText = jsonObject.getString("inputText");
-            SJoyMSDK.getInstance().googleDetectLanguage(inputText, new GoogleTranslateListener() {
-                @Override public void onResult(GoogleTranslateResult googleTranslateResult) {
-                    showToast(googleTranslateResult.getCode() + "\n" + googleTranslateResult.getMsg() + "\n" + googleTranslateResult.getData());
-//                    SendMessageToUnity(MsgID.GoogleTranslate.ordinal(), new HashMap<String, String>(){
-//                        {
-//                            put("state", "1");
-//                            put("language", result.data);
-//                        }
-//                    });
-                }
-            });
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
-    }
-    // 查看支持语音
-    public void SupportTextLanguage(){
-        SJoyMSDK.getInstance().googleCheckSupportLanguage("", "", new GoogleTranslateListener() {
-            @Override
-            public void onResult(GoogleTranslateResult googleTranslateResult) {
-                showToast(googleTranslateResult.getCode() + "\n" + googleTranslateResult.getMsg() + "\n" + googleTranslateResult.getData());
-//                SendMessageToUnity(MsgID.GoogleTranslate.ordinal(), new HashMap<String, String>(){
-//                    {
-//                        put("state", "1");
-//                        put("language", result.data);
-//                    }
-//                });
-            }
-        });
-    }
-// endregion
-
 
 //region Activity生命周期
     @Override protected void onCreate(Bundle savedInstanceState)
@@ -578,7 +461,6 @@ public class CeliaActivity extends UnityPlayerActivity
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         SJoyMSDK.getInstance().onActivityResult(requestCode, resultCode, data);
-        shareHandler.doResultIntent(data,this);
     }
     @Override protected void onNewIntent(Intent intent)
     {
