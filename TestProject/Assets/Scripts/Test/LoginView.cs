@@ -256,8 +256,6 @@ public class LoginView : MonoBehaviour
         });
     }
 
-    //554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn.apps.googleusercontent.com
-    //com.googleusercontent.apps.554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn
     // Start is called before the first frame update
     private void Start()
     {
