@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5193d710c3057044599dcd5bb01ee281
+guid: e48fb171d793f42bbb25d8e9d8a654cf
 PluginImporter:
   externalObjects: {}
   serializedVersion: 2
@@ -9,7 +9,6 @@ PluginImporter:
   isPreloaded: 0
   isOverridable: 0
   isExplicitlyReferenced: 0
-  validateReferences: 1
   platformData:
   - first:
       '': Any
@@ -94,11 +93,6 @@ PluginImporter:
         AddToEmbeddedBinaries: false
         CompileFlags: 
         FrameworkDependencies: 
-  - first:
-      tvOS: tvOS
-    second:
-      enabled: 1
-      settings: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
