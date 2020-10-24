@@ -14,10 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Target: 13
   CommonActions:
+  - {fileID: 114380382705913488}
   - {fileID: 114715617346363374}
   - {fileID: 114958657490617146}
+  - {fileID: 114724595085996202}
   - {fileID: 114558881520405826}
   - {fileID: 114599868829918756}
+  - {fileID: 114553090005210540}
   - {fileID: 114362192473370516, guid: fb7aa0c504bd1604f83e98515dd5bd2c, type: 2}
   PlatformActions:
   - {fileID: 114335584409553164}
@@ -58,6 +61,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5934e88b34b4b554b89d6161ef4ecc1a, type: 3}
   m_Name: SetJsonData
   m_EditorClassIdentifier: 
+--- !u!114 &114553090005210540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 519caf273234a6944b42594e21796e44, type: 3}
+  m_Name: SetStoryData
+  m_EditorClassIdentifier: 
 --- !u!114 &114558881520405826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,6 +108,18 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2bf4f82a760020f48b97e54cbc2e90e3, type: 3}
   m_Name: SetDefineSymbols
+  m_EditorClassIdentifier: 
+--- !u!114 &114724595085996202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0346ba7f3cfa2114f95e15a61e1e335a, type: 3}
+  m_Name: SetStoryResPath
   m_EditorClassIdentifier: 
 --- !u!114 &114744982512740170
 MonoBehaviour:

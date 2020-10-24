@@ -97,8 +97,12 @@ namespace celia.game.editor
 
             SDKParams sdkParams = AssetDatabase.LoadAssetAtPath<SDKParams>("Assets/Resources/SDKParams.asset");
             sdkParams.SDKType = SDKType.None;
+            sdkParams.GameId = 193;
             sdkParams.AppKey = "";
             sdkParams.PayKey = "";
+            sdkParams.AppId = 101356;
+            sdkParams.CchId = 213;
+            sdkParams.MdId = 200000;
             EditorUtility.SetDirty(sdkParams);
 
             PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, "com.xlycs.rastar");
@@ -143,18 +147,23 @@ namespace celia.game.editor
             int gameId = sdkParams.Value<int>("GameId");
             string appKey = sdkParams.Value<string>("AppKey");
             string payKey = sdkParams.Value<string>("PayKey");
-            string appID = sdkParams.Value<string>("AppId");
-            string cchID = sdkParams.Value<string>("CchId");
-            string mdID = sdkParams.Value<string>("MdId");
-
+            int appID = sdkParams.Value<int>("AppId");
+            int cchID = sdkParams.Value<int>("CchId");
+            int mdID = sdkParams.Value<int>("MdId");
+            string AppleAppleID = sdkParams.Value<string>("AppleAppleID");
             // 保存到包内配置
             SDKParams pakageSDKParams = AssetDatabase.LoadAssetAtPath<SDKParams>("Assets/Resources/SDKParams.asset");
             pakageSDKParams.SDKType = sdkType;
             pakageSDKParams.GameId = gameId;
             pakageSDKParams.AppKey = appKey;
             pakageSDKParams.PayKey = payKey;
+            pakageSDKParams.AppId = appID;
+            pakageSDKParams.CchId = cchID;
+            pakageSDKParams.MdId = mdID;
+            pakageSDKParams.AppleAppId = AppleAppleID;
             EditorUtility.SetDirty(pakageSDKParams);
-
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
             // SDK信息写入Android配置文件
             string filePath = "";
             string debugParamName = "";
@@ -184,6 +193,7 @@ namespace celia.game.editor
             }
             File.AppendAllText(filePath, $"\r\n\r\napp_id={appID}\r\n\r\ncch_id={cchID}\r\n\r\nmd_id={mdID}\r\n\r\napp_key={appKey}\r\n\r\n{debugParamName}={debugValue}");
 
+            AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
         }
 

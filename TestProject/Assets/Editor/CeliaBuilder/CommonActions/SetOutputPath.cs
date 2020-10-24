@@ -15,7 +15,7 @@ namespace celia.game.editor
 
             EditorUserBuildSettings.exportAsGoogleAndroidProject = option.OutputProject;
             // iOS不能成包
-            if (option.OutputProject || option.ProcessCfg.Target == BuildTarget.iOS)
+            if (option.OutputProject || option.ProcessCfg.Target == UnityEditor.BuildTarget.iOS)
             {
 
                 if (!string.IsNullOrEmpty(outputPath))
@@ -24,19 +24,19 @@ namespace celia.game.editor
                 }
                 else
                 {
-                    option.PlayerOption.locationPathName = $"Outputs/{option.ProcessCfg.Target}/{DateTime.Now.ToString("MMdd_HHmm")}_Project";
+                    option.PlayerOption.locationPathName = $"Outputs/{option.ProcessCfg.Target}/{GetPakageName(option)}_Project";
                 }
             }
             else
             {
-                string suffix = option.ProcessCfg.Target == BuildTarget.Android ? ".apk" : "";
+                string suffix = option.ProcessCfg.Target == UnityEditor.BuildTarget.Android ? ".apk" : "";
                 if (!string.IsNullOrEmpty(outputPath))
                 {
                     option.PlayerOption.locationPathName = $"{outputPath}{suffix}";
                 }
                 else
                 {
-                    option.PlayerOption.locationPathName = $"Outputs/{option.ProcessCfg.Target}/{DateTime.Now.ToString("MMdd_HHmm")}{suffix}";
+                    option.PlayerOption.locationPathName = $"Outputs/{option.ProcessCfg.Target}/{GetPakageName(option)}{suffix}";
                 }
             }
 
@@ -54,7 +54,7 @@ namespace celia.game.editor
             string paramsFileName = CeliaBuilder.GetInputParam("SDKParams:", option.Args);
             paramsFileName = string.IsNullOrEmpty(paramsFileName) ? "None" : paramsFileName;
             string IP = GameSetting.gi.ip.Replace(".", "-");
-            return $"{DateTime.Now.ToString("MM_dd_HH_mm")}_{option.ReleaseLevel}_Sign{signFileName}_SDK{option.SDKType}_{paramsFileName}_{GameSetting.gi.VERSION}_{IP}";
+            return $"{DateTime.Now.ToString("MMdd_HHmm")}_{option.ReleaseLevel}_Sign{signFileName}_SDK{option.SDKType}_{paramsFileName}_{GameSetting.gi.VERSION}_{IP}";
         }
 
         public static void DeleteFolder(string deletePath)

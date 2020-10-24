@@ -18,22 +18,13 @@ namespace celia.game.editor
                 option.PlayerOption.options = option.PlayerOption.options | BuildOptions.AcceptExternalModificationsToPlayer;
             }
 
-            SetAndroidConfigForDiffSDK(option);
-            Debug.Log("SetAndroidOption PreExcuted!");
-        }
 
-        void SetAndroidConfigForDiffSDK(CeliaBuildOption option)
-        {
-            if (option.SDKType == SDKType.Oversea)
-            {
-              //  PlayerSettings.Android.targetSdkVersion = AndroidSdkVersions.AndroidApiLevel28;
-            }
+            PlayerSettings.Android.forceSDCardPermission = true;
+            Debug.Log("SetAndroidOption PreExcuted!");
         }
 
         public override void PostExcute(CeliaBuildOption option)
         {
-          //  PlayerSettings.Android.targetSdkVersion = AndroidSdkVersions.AndroidApiLevel27;
-            // PlayerSettings.Android.useAPKExpansionFiles = false;
             Debug.Log("SetAndroidOption PostExcuted!");
         }
     }

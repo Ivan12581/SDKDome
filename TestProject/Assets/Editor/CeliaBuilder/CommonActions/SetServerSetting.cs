@@ -35,6 +35,7 @@ namespace celia.game.editor
                     DevelopServer();
                     break;
                 default:// 未指定服务器时，使用当前项目服务器
+                    DefaultSetting();
                     break;
             }
 
@@ -54,6 +55,16 @@ namespace celia.game.editor
             AssetDatabase.Refresh();
             Debug.Log("SetServerSetting PostExcuted!");
         }
+
+        private void DefaultSetting()
+        {
+            GameSetting.gi.serverType = ZoneType.Official;
+
+            EditorUtility.SetDirty(GameSetting.gi);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+        }
+
 
         // 内网测试服
         private void DevelopServer()

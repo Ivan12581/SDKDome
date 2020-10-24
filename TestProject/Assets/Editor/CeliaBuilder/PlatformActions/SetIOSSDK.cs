@@ -1,12 +1,14 @@
-using UnityEngine;
+﻿using UnityEngine;
 #if UNITY_EDITOR_OSX
 using UnityEditor.iOS.Xcode;
+using UnityEditor.iOS.Xcode.Extensions;
 #endif
 using System.IO;
 using System.Linq;
 using UnityEditor;
 using System;
 using Newtonsoft.Json.Linq;
+
 
 namespace celia.game.editor
 {
@@ -22,7 +24,6 @@ namespace celia.game.editor
             this.option = option;
             pluginIOSPath = Application.dataPath + "/Plugins/iOS";
             pluginSavePath = Application.dataPath + "/Plugins/PlatformSDK/";
-
 
 #if UNITY_EDITOR_OSX
             PlistElementDict signCfg = GetSDKSign(option);
@@ -102,10 +103,7 @@ namespace celia.game.editor
         /// </summary>
         private void SetSDKFolderBack()
         {
-            if (option.SDKType != SDKType.CeliaOversea)
-            {
-                DeleteFolder(pluginIOSPath);
-            }
+            DeleteFolder(pluginIOSPath);
             
             SDKParams sdkParams = AssetDatabase.LoadAssetAtPath<SDKParams>("Assets/Resources/SDKParams.asset");
             sdkParams.SDKType = SDKType.None;
@@ -175,59 +173,25 @@ namespace celia.game.editor
             {
                 return;
             }
+            int gameId = sdkParams.Value<int>("GameId");
             string appKey = sdkParams.Value<string>("AppKey");
             string payKey = sdkParams.Value<string>("PayKey");
-            string appID = sdkParams.Value<string>("AppId");
-            string cchID = sdkParams.Value<string>("CchId");
-            string mdID = sdkParams.Value<string>("MdId");
-
+            int appID = sdkParams.Value<int>("AppId");
+            int cchID = sdkParams.Value<int>("CchId");
+            int mdID = sdkParams.Value<int>("MdId");
+            string AppleAppleID = sdkParams.Value<string>("AppleAppleID");
             // 保存到包内配置
             SDKParams pakageSDKParams = AssetDatabase.LoadAssetAtPath<SDKParams>("Assets/Resources/SDKParams.asset");
             pakageSDKParams.SDKType = sdkType;
+            pakageSDKParams.GameId = gameId;
             pakageSDKParams.AppKey = appKey;
             pakageSDKParams.PayKey = payKey;
+            pakageSDKParams.AppId = appID;
+            pakageSDKParams.CchId = cchID;
+            pakageSDKParams.MdId = mdID;
+            pakageSDKParams.AppleAppId = AppleAppleID;
             EditorUtility.SetDirty(pakageSDKParams);
             AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-            
-            // SDK信息写入iOS SDK配置文件
-            PlistDocument plist = new PlistDocument();
-            switch (sdkType)
-            {
-                case SDKType.None:
-                    return;
-                case SDKType.Native:
-                    plist.ReadFromFile($"{pluginIOSPath}/SDK/Rastar.plist");
-                    plist.root.SetString("TTisDeBug", option.ReleaseLevel == ReleaseLevel.Alpha ? "1" : "0");
-                    plist.root.SetString("App Key", appKey);
-                    plist.root.SetString("App ID", appID);
-                    plist.root.SetString("Cch ID", cchID);
-                    plist.root.SetString("Md ID", mdID);
-                    plist.WriteToFile($"{pluginIOSPath}/SDK/Rastar.plist");
-                    break;
-                case SDKType.NativeChukai:
-                    plist.ReadFromFile($"{pluginIOSPath}/SDK/Rastar.plist");
-                    plist.root.SetString("DeBug", option.ReleaseLevel == ReleaseLevel.Alpha ? "1" : "0");
-                    plist.root.SetString("App Key", appKey);
-                    plist.root.SetString("App ID", appID);
-                    plist.root.SetString("Cch ID", cchID);
-                    plist.root.SetString("Md ID", mdID);
-                    plist.WriteToFile($"{pluginIOSPath}/SDK/Rastar.plist");
-                    break;
-                case SDKType.Oversea:
-                    plist.ReadFromFile($"{pluginIOSPath}/SDK/RSOverseaSDK.plist");
-                    plist.root.SetBoolean("AppsFlyer_isDeBug", option.ReleaseLevel == ReleaseLevel.Alpha);
-                    plist.root.SetString("RS_AppKey", appKey);
-                    plist.root.SetString("RS_AppID", appID);
-                    plist.root.SetString("RS_cch_ID", cchID);
-                    plist.root.SetString("RS_md_ID", mdID);
-                    plist.root.SetString("RS_Schemes", $"rastar{cchID}{appID}");
-                    plist.WriteToFile($"{pluginIOSPath}/SDK/RSOverseaSDK.plist");
-                    break;
-                case SDKType.CeliaOversea:
-                    return;
-            }
-
             AssetDatabase.Refresh();
         }
 
@@ -236,12 +200,6 @@ namespace celia.game.editor
         /// </summary>
         private void SetSDKFolder(SDKType sdkType)
         {
-            if (sdkType == SDKType.CeliaOversea)
-            {
-                return;
-            }else{
-                DeleteFolder(pluginIOSPath);
-            }
             // 其他SDK设置为不导入
             SetAndroidPluginImport(pluginSavePath, false);
             // 复制要打包的SDK文件
@@ -370,7 +328,19 @@ namespace celia.game.editor
             rootDict.SetString("NSMicrophoneUsageDescription", "是否允许使用麦克风?");
             rootDict.SetString("NSPhotoLibraryAddUsageDescription", "是否允许添加照片?");
             rootDict.SetString("NSMicrophoneUsageDescription", "是否允许访问相册?");
+            rootDict.SetString("NSLocationUsageDescription", "App需要您的同意,才能访问位置");
+            rootDict.SetString("NSLocationWhenInUseUsageDescription", "App需要您的同意,才能在使用期间访问位置");
+            rootDict.SetString("NSLocationAlwaysUsageDescription", "App需要您的同意,才能始终访问位置");
 
+            // Set encryption usage boolean
+            string encryptKey = "ITSAppUsesNonExemptEncryption";
+            rootDict.SetBoolean(encryptKey, false);
+            // remove exit on suspend if it exists.ios13新增
+            string exitsOnSuspendKey = "UIApplicationExitsOnSuspend";
+            if (rootDict.values.ContainsKey(exitsOnSuspendKey))
+            {
+                rootDict.values.Remove(exitsOnSuspendKey);
+            }
             plist.WriteToFile(plistPath);
         #endregion
 
@@ -390,12 +360,15 @@ namespace celia.game.editor
             // Bugly依赖
             proj.AddFrameworkToProject(target, "libz.tbd", false);
             proj.AddFrameworkToProject(target, "libc++.tbd", false);
-
-            // 文件追加
-            var fileName = "Rastar.plist";
-            var filePath = Path.Combine("Assets/Plugins/iOS/SDK/", fileName);
-            File.Copy(filePath, Path.Combine(path, fileName));
-            proj.AddFileToBuild(target, proj.AddFile(fileName, fileName, PBXSourceTree.Source));
+            //星辉SDK依赖
+            proj.AddFrameworkToProject(target, "libsqlite3.tbd", false);
+            proj.AddFrameworkToProject(target, "libsqlite3.0.tbd", false);
+            proj.AddFrameworkToProject(target, "libicucore.tbd", false);
+            proj.AddFrameworkToProject(target, "SafariServices.framework", false);
+            proj.AddFrameworkToProject(target, "WebKit.framework", false);
+            proj.AddFrameworkToProject(target, "MobileCoreServices.framework", false);
+            proj.AddFrameworkToProject(target, "ImageIO.framework", false);
+            proj.AddFrameworkToProject(target, "Photos.framework", false);
         #endregion
 
             // BuildSetting修改
@@ -415,6 +388,32 @@ namespace celia.game.editor
             rootDict.SetString("NSPhotoLibraryAddUsageDescription", "是否允许添加照片?");
             rootDict.SetString("NSMicrophoneUsageDescription", "是否允许访问相册?");
 
+            //星辉SDK默认为暗黑模式 但是开启之后隐私协议会看不到 所以要关闭暗黑模式
+            rootDict.SetString("UIUserInterfaceStyle", "Light");
+            // SDK相关参数设置
+            rootDict.SetString("RaStarUMKey", "5bc6b08af1f55681f30000da");
+            rootDict.SetString("RaStarWeChatKey", "wxf2d4d6ad6a49f086");
+            rootDict.SetString("RaStarWeChatSecret", "230b8ae7c5a98ff22222854a928c74c2");
+            rootDict.SetString("RaStarQQID", "");
+            rootDict.SetString("RaStarQQSecret", "");
+            rootDict.SetString("RaStarWeiboAppKey", "3524867471");
+            rootDict.SetString("RaStarWeiboSecret", "d62cb24becfbcc8ce657ba41632736f5");
+            PlistElementArray RaStarShareTypeArray = rootDict.CreateArray("RaStarShareTypeArray");
+            RaStarShareTypeArray.AddString("微信");
+            RaStarShareTypeArray.AddString("朋友圈");
+            RaStarShareTypeArray.AddString("微博");
+            //RaStarShareTypeArray.AddString("QQ");
+            //RaStarShareTypeArray.AddString("QQ空间");
+
+            // Set encryption usage boolean
+            string encryptKey = "ITSAppUsesNonExemptEncryption";
+            rootDict.SetBoolean(encryptKey, false);
+            // remove exit on suspend if it exists.ios13新增
+            string exitsOnSuspendKey = "UIApplicationExitsOnSuspend";
+            if (rootDict.values.ContainsKey(exitsOnSuspendKey))
+            {
+                rootDict.values.Remove(exitsOnSuspendKey);
+            }
             // URL types配置
             PlistElementArray URLTypes = plist.root.CreateArray("CFBundleURLTypes");
             //weixin
@@ -422,24 +421,39 @@ namespace celia.game.editor
             wxUrl.SetString("CFBundleTypeRole", "Editor");
             wxUrl.SetString("CFBundleURLName", "weixin");
             PlistElementArray wxUrlScheme = wxUrl.CreateArray("CFBundleURLSchemes");
-            wxUrlScheme.AddString("wxb0ffcabf2d045dd7");
+            wxUrlScheme.AddString("wxf2d4d6ad6a49f086");
+            //weibo
+            PlistElementDict weibiUrl = URLTypes.AddDict();
+            weibiUrl.SetString("CFBundleTypeRole", "Editor");
+            weibiUrl.SetString("CFBundleURLName", "weibo");
+            PlistElementArray weibiUrlScheme = weibiUrl.CreateArray("CFBundleURLSchemes");
+            weibiUrlScheme.AddString("wb3524867471");
             //tencent
-            PlistElementDict tcUrl = URLTypes.AddDict();
-            tcUrl.SetString("CFBundleTypeRole", "Editor");
-            tcUrl.SetString("CFBundleURLName", "tencent");
-            PlistElementArray tcUrlScheme = tcUrl.CreateArray("CFBundleURLSchemes");
-            tcUrlScheme.AddString("tencent101539443");
+            //PlistElementDict tcUrl = URLTypes.AddDict();
+            //tcUrl.SetString("CFBundleTypeRole", "Editor");
+            //tcUrl.SetString("CFBundleURLName", "tencent");
+            //PlistElementArray tcUrlScheme = tcUrl.CreateArray("CFBundleURLSchemes");
+            //tcUrlScheme.AddString("tencent101539443");
             //QQ
-            PlistElementDict qqUrl = URLTypes.AddDict();
-            qqUrl.SetString("CFBundleTypeRole", "Editor");
-            qqUrl.SetString("CFBundleURLName", "QQ");
-            PlistElementArray qqUrlScheme = qqUrl.CreateArray("CFBundleURLSchemes");
-            qqUrlScheme.AddString("QQ60d5e73");
+            //PlistElementDict qqUrl = URLTypes.AddDict();
+            //qqUrl.SetString("CFBundleTypeRole", "Editor");
+            //qqUrl.SetString("CFBundleURLName", "QQ");
+            //PlistElementArray qqUrlScheme = qqUrl.CreateArray("CFBundleURLSchemes");
+            //qqUrlScheme.AddString("QQ60d5e73");
+        #endregion
 
-            // LSApplicationQueriesSchemes配置
+        #region LSApplicationQueriesSchemes配置
             PlistElementArray LSApplicationQueriesSchemes = plist.root.CreateArray("LSApplicationQueriesSchemes");
             LSApplicationQueriesSchemes.AddString("wechat");
             LSApplicationQueriesSchemes.AddString("weixin");
+            LSApplicationQueriesSchemes.AddString("weixinULAPI");
+            LSApplicationQueriesSchemes.AddString("sinaweibohd");
+            LSApplicationQueriesSchemes.AddString("sinaweibo");
+            LSApplicationQueriesSchemes.AddString("sinaweibosso");
+            LSApplicationQueriesSchemes.AddString("weibosdk");
+            LSApplicationQueriesSchemes.AddString("weibosdk2.5");
+            LSApplicationQueriesSchemes.AddString("mqqopensdklaunchminiapp");
+            LSApplicationQueriesSchemes.AddString("mqqopensdkminiapp");
             LSApplicationQueriesSchemes.AddString("mqqapi");
             LSApplicationQueriesSchemes.AddString("mqq");
             LSApplicationQueriesSchemes.AddString("mqqOpensdkSSoLogin");
@@ -462,11 +476,9 @@ namespace celia.game.editor
             LSApplicationQueriesSchemes.AddString("mqzonewx");
             LSApplicationQueriesSchemes.AddString("mqzoneopensdkapiV2");
             LSApplicationQueriesSchemes.AddString("mqzoneopensdkapi19");
-            LSApplicationQueriesSchemes.AddString("mqzoneopensdkapiV2");
+            LSApplicationQueriesSchemes.AddString("mqzoneopensdkapi");
             LSApplicationQueriesSchemes.AddString("mqqbrowser");
             LSApplicationQueriesSchemes.AddString("mttbrowser");
-            LSApplicationQueriesSchemes.AddString("TencentWeibo");
-            LSApplicationQueriesSchemes.AddString("tencentweiboSdkv2");
             LSApplicationQueriesSchemes.AddString("tim");
             LSApplicationQueriesSchemes.AddString("timapi");
             LSApplicationQueriesSchemes.AddString("timopensdkfriend");
@@ -481,10 +493,22 @@ namespace celia.game.editor
             LSApplicationQueriesSchemes.AddString("timeopensdkdataline");
             LSApplicationQueriesSchemes.AddString("wtlogintimV1");
             LSApplicationQueriesSchemes.AddString("timpapiV1");
-
             plist.WriteToFile(plistPath);
         #endregion
 
+            //文件追加
+            var entitlementsFileName = "sndwz.entitlements";
+            var entitlementsFilePath = Path.Combine("Assets/Plugins/iOS/SDK/", entitlementsFileName);
+            File.Copy(entitlementsFilePath, Path.Combine(path, entitlementsFileName));
+            proj.AddFileToBuild(target, proj.AddFile(entitlementsFileName, entitlementsFileName, PBXSourceTree.Source));
+            proj.AddCapability(target, PBXCapabilityType.InAppPurchase);
+            proj.AddCapability(target, PBXCapabilityType.AccessWiFiInformation, entitlementsFileName);
+            proj.AddCapability(target, PBXCapabilityType.AssociatedDomains, entitlementsFileName);
+            //ProjectCapabilityManager projectCapabilityManager = new ProjectCapabilityManager(projPath, "sndwz.entitlements", PBXProject.GetUnityTargetName());
+            //projectCapabilityManager.AddAccessWiFiInformation();
+            //projectCapabilityManager.AddInAppPurchase();
+            //projectCapabilityManager.AddAssociatedDomains(new string[] { "applinks:3rd-sy.rastargame.com" });
+            proj.WriteToFile(projPath);
             File.WriteAllText(projPath, proj.WriteToString());
         }
 
@@ -669,16 +693,18 @@ namespace celia.game.editor
 
             File.WriteAllText(projPath, proj.WriteToString());
         }
-         void SetCeliaOverseaSDK(){
+
+        void SetCeliaOverseaSDK(){
             string path = GetXcodeProjectPath(option.PlayerOption.locationPathName);
             string projPath = PBXProject.GetPBXProjectPath(path);
             PBXProject proj = new PBXProject();
             proj.ReadFromString(File.ReadAllText(projPath));
             string target = proj.TargetGuidByName("Unity-iPhone");
             // BuildSetting修改
-            proj.SetBuildProperty(target, "ENABLE_BITCODE", "NO");//这个好像是bugly需要的
-            proj.AddBuildProperty(target, "OTHER_LDFLAGS", "-ObjC");//这个google等其他sdk非常需要的
-            //proj.AddBuildProperty(target, "OTHER_LDFLAGS", "-all_load");
+            proj.SetBuildProperty(target, "ENABLE_BITCODE", "NO");
+            proj.AddBuildProperty(target, "OTHER_LDFLAGS", "-ObjC");
+            proj.SetBuildProperty(target, "EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE", "YES");//FB需要
+            proj.SetBuildProperty(target, "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES", "YES");//FB需要
         #region 添加XCode引用的Framework
             // SDK依赖 --AIHelp
             proj.AddFrameworkToProject(target, "libsqlite3.tbd", false);
@@ -693,14 +719,27 @@ namespace celia.game.editor
             proj.AddFrameworkToProject(target, "storekit.framework", false);
             proj.AddFrameworkToProject(target, "AuthenticationServices.framework", false);
             proj.AddFrameworkToProject(target, "gamekit.framework", false);
+
+
+            //EmbedFrameworks --Add to Embedded Binaries
+            string defaultLocationInProj = "Plugins/iOS/SDK";
+            string[] frameworkNames = { "FaceBookSDK/FBSDKCoreKit.framework", "FaceBookSDK/FBSDKLoginKit.framework", "FaceBookSDK/FBSDKShareKit.framework", "AdjustSDK/AdjustSdk.framework" };
+            foreach (var str in frameworkNames)
+            {
+                string framework = Path.Combine(defaultLocationInProj, str);
+                string fileGuid = proj.AddFile(framework, "Frameworks/" + framework, PBXSourceTree.Sdk);
+                PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
+            }
+            proj.SetBuildProperty(target, "LD_RUNPATH_SEARCH_PATHS", "$(inherited) @executable_path/Frameworks");
         #endregion
+
 
             string plistPath = Path.Combine(path, "Info.plist");
             PlistDocument plist = new PlistDocument();
             plist.ReadFromFile(plistPath);
             PlistElementDict rootDict = plist.root;
         #region 修改Xcode工程Info.plist
-            /* iOS9所有的app对外http协议默认要求改成https */
+            /* 从iOS9开始所有的app对外http协议默认要求改成https 若需要添加http协议支持需要额外添加*/
             // Add value of NSAppTransportSecurity in Xcode plist
             PlistElementDict dictTmp = rootDict.CreateDict("NSAppTransportSecurity");
             dictTmp.SetBoolean("NSAllowsArbitraryLoads", true);
@@ -709,9 +748,13 @@ namespace celia.game.editor
             rootDict.SetString("NSMicrophoneUsageDescription", "是否允许使用麦克风?");
             rootDict.SetString("NSPhotoLibraryAddUsageDescription", "是否允许添加照片?");
             rootDict.SetString("NSMicrophoneUsageDescription", "是否允许访问相册?");
+            rootDict.SetString("NSLocationUsageDescription", "App需要您的同意,才能访问位置");
+            rootDict.SetString("NSLocationWhenInUseUsageDescription", "App需要您的同意,才能在使用期间访问位置");
+            rootDict.SetString("NSLocationAlwaysUsageDescription", "App需要您的同意,才能始终访问位置");
+
 
             rootDict.SetString("CFBundleDevelopmentRegion", "zh_TW");
-            rootDict.SetString("CFBundleVersion", "1");
+            //rootDict.SetString("CFBundleVersion", "1");
             // SDK相关参数设置
             rootDict.SetString("FacebookAppID", "949004278872387");
             rootDict.SetString("GoogleClientID", "554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn.apps.googleusercontent.com");
@@ -721,6 +764,8 @@ namespace celia.game.editor
             rootDict.SetString("AIHelpDomain", "elextech@aihelp.net");
             rootDict.SetString("AdjustAppToken", "1k2jm7bpansw");
             rootDict.SetString("AdjustAppSecret", "1,750848352-1884995334-181661496-1073918938");
+            //文件共享
+            rootDict.SetBoolean("UIFileSharingEnabled",true);
             // Set encryption usage boolean
             string encryptKey = "ITSAppUsesNonExemptEncryption";
             rootDict.SetBoolean(encryptKey, false);
@@ -744,6 +789,7 @@ namespace celia.game.editor
             PlistElementArray urlScheme = typeRole.CreateArray("CFBundleURLSchemes");
             urlScheme.AddString("com.googleusercontent.apps.554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn");
 
+
             // LSApplicationQueriesSchemes配置
             PlistElementArray LSApplicationQueriesSchemes = rootDict.CreateArray("LSApplicationQueriesSchemes");
             // facebook接入配置
@@ -758,15 +804,12 @@ namespace celia.game.editor
         #endregion
 
             // Capabilitise添加
-            proj.AddCapability(target, PBXCapabilityType.GameCenter);
-            proj.AddCapability(target, PBXCapabilityType.InAppPurchase);
-            //ProjectCapabilityManager projectCapabilityManager = new ProjectCapabilityManager(projPath, "tw.entitlements", PBXProject.GetUnityTargetName());
-            //projectCapabilityManager.AddGameCenter();
-            //projectCapabilityManager.AddInAppPurchase();
+            ProjectCapabilityManager projectCapabilityManager = new ProjectCapabilityManager(projPath, "tw.entitlements", PBXProject.GetUnityTargetName());
+            projectCapabilityManager.AddGameCenter();
+            projectCapabilityManager.AddInAppPurchase();
             plist.WriteToFile(plistPath);
             proj.WriteToFile(projPath);
         }
-
         #endregion
 #endif
     }

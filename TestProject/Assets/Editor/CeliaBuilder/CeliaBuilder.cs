@@ -3,72 +3,47 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
-using UnityEngine.Rendering;
 
 namespace celia.game.editor
 {
     public class CeliaBuilder
     {
         #region 打包菜单
-        [MenuItem("Tools/Build/Android/Alpha版APK+无SDK  [所有打包项，服务器随项目当前设置]")]
-        public static void BuildAndroidPreview()
-        {
-            StartBuild(new string[] { "Platform:Android", "Level:Alpha", "Sign:Rastar" });
-        }
-        [MenuItem("Tools/Build/Android/Beta版APK+无SDK")]
+        //[MenuItem("Tools/Build/Android/Alpha版APK+无SDK  [所有打包项，服务器随项目当前设置]")]
+        //public static void BuildAndroidPreview()
+        //{
+        //    StartBuild(new string[] { "Platform:Android", "Level:Alpha", "Sign:Rastar" });
+        //}
+        [MenuItem("Tools/Build/Android/NoneSDK")]
         public static void BuildAndroidBeta()
         {
-            StartBuild(new string[] { "Platform:Android", "Level:Beta", "Sign:Rastar" });
+            StartBuild(new string[] { "Platform:Android", "Level:Beta", "Sign:Rastar" , "SDK:None" });
         }
-        [MenuItem("Tools/Build/Android/渠道体验+星辉SDK")]
-        public static void BuildAndroidTiYan()
+        [MenuItem("Tools/Build/IOS/NoneSDK")]
+        public static void BuildIOSNoneSDK_Beta()
+        {
+            StartBuild(new string[] { "Platform:IOS", "Level:Beta", "Sign:CeliaAdhoc", "SDK:None"});
+        }
+        [MenuItem("Tools/Build/Android/RastarSDK-->>101714")]
+        public static void BuildAndroidNativeBeta101714()
         {
             StartBuild(new string[] { "Platform:Android", "Level:Beta", "Sign:Rastar", "SDK:Native", "SDKParams:And_Rastar" });
         }
-        [MenuItem("Tools/Build/Android/Alpha版APK+星辉SDK")]
-        public static void BuildAndroidNative()
+        [MenuItem("Tools/Build/IOS/RastarSDK-->>101714")]
+        public static void BuildIOSNativeBeta101714()
         {
-            StartBuild(new string[] { "Platform:Android", "Level:Alpha", "Sign:Rastar", "SDK:Native", "SDKParams:And_Rastar" });
+            StartBuild(new string[] { "Platform:IOS", "Level:Beta", "Sign:RastarAhoc", "SDK:Native", "SDKParams:IOS_Rastar" });
         }
 
-        [MenuItem("Tools/Build/Android/Beta版APK+星辉SDK+参数Appid:101189")]
-        public static void BuildAndroidNativeBeta101189()
-        {
-            StartBuild(new string[] { "Platform:Android", "Level:Beta", "Sign:Rastar", "SDK:Native", "SDKParams:And_Rastar" });
-        }
-        [MenuItem("Tools/Build/Android/Beta版APK+星辉SDK+参数Appid:101356")]
-        public static void BuildAndroidNativeBeta101356()
-        {
-            StartBuild(new string[] { "Platform:Android", "Level:Beta", "Sign:Rastar", "SDK:Native", "SDKParams:And_Rastar2" });
-        }
-
-        [MenuItem("Tools/Build/Android/Alpha版APK+矗凯SDK")]
-        public static void BuildAndroidChukai()
-        {
-            StartBuild(new string[] { "Platform:Android", "Level:Alpha", "Sign:Rastar", "SDK:NativeChukai", "SDKParams:And_Chukai1" });
-        }
-        [MenuItem("Tools/Build/Android/Alpha版APK+海外SDK")]
-        public static void BuildAndroidOversea()
-        {
-            StartBuild(new string[] { "Platform:Android", "Level:Alpha", "Sign:Guanghuan", "SDK:Oversea", "SDKParams:And_Guanghuan1" });
-        }
-
-        [MenuItem("Tools/Build/Android/Beta版APK+Celia海外SDK")]
+        [MenuItem("Tools/Build/Android/CeliaSDK")]
         public static void BuildAndroidCeliaOversea_Beta()
         {
-            StartBuild(new string[] { "Platform:Android", "Level:Beta", "Sign:Guanghuan", "SDK:Oversea", "SDKParams:And_Guanghuan1" });
+            StartBuild(new string[] { "Platform:Android", "Level:Beta", "Sign:zmxt", "SDK:CeliaOversea", "SDKParams:And_Celia" , "CompanyName:EMG TECHNOLOGY LIMITED" });
         }
-
-        [MenuItem("Tools/Build/IOS/Beta版IPA+Celia海外SDK")]
+        [MenuItem("Tools/Build/IOS/CeliaSDK")]
         public static void BuildIOSCeliaOversea_Beta()
         {
             StartBuild(new string[] { "Platform:IOS", "Level:Beta", "Sign:CeliaAdhoc", "SDK:CeliaOversea", "SDKParams:IOS_Celia", "CompanyName:EMG TECHNOLOGY LIMITED" });
-        }
-
-        [MenuItem("Tools/Build/IOS/Alpha版Xcode工程")]
-        public static void BuildiOSDevelopment()
-        {
-            StartBuild(new string[] { "Platform:IOS", "Level:Alpha", "Sign:RastarInHouse" });
         }
         #endregion
 
@@ -80,13 +55,13 @@ namespace celia.game.editor
             {
                 DoPreExcute(ActionLevel.Common);
 
-                //DoPreExcute(ActionLevel.Platform);
+                DoPreExcute(ActionLevel.Platform);
 
                 BuildPlayer();
 
-                //DoPostExcute(ActionLevel.Platform);
+                DoPostExcute(ActionLevel.Platform);
 
-                //DoPostExcute(ActionLevel.Common);
+                DoPostExcute(ActionLevel.Common);
             }
         }
         
