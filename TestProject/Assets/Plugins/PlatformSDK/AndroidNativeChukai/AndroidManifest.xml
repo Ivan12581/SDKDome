@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:installLocation="preferExternal">
+  <supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" android:anyDensity="true" />
+  <application android:theme="@style/UnityThemeSelector" android:icon="@mipmap/app_icon" android:label="@string/app_name" android:isGame="true" android:banner="@drawable/app_banner" android:usesCleartextTraffic="true">
+    <activity android:label="@string/app_name" android:screenOrientation="portrait" android:launchMode="singleTask" android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale|layoutDirection|density" android:hardwareAccelerated="false" android:name="celia.sdk.CeliaActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+        <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+      </intent-filter>
+      <meta-data android:name="celia.sdk.CeliaActivity" android:value="true" />
+    </activity>
+
+    <!-- ThirdSDK 组件 start -->
+    <!-- 银联支付 -->
+    <activity
+        android:name="com.unionpay.uppay.PayActivity"
+        android:configChanges="orientation|keyboardHidden|keyboard"
+        android:screenOrientation="portrait" />
+
+    <activity
+        android:name="com.unionpay.UPPayWapActivity"
+        android:configChanges="orientation|keyboardHidden|fontScale"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="adjustResize" />
+
+    <!-- SDK支付Activity -->
+    <activity
+        android:name="com.third.thirdsdk.framework.mvp.view.pay.ThirdSDKPayActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize|screenLayout"
+        android:screenOrientation="behind"
+        android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+    <!-- ThirdSDK end -->
+  </application>
+
+    <!-- ThirdSDK 权限 start -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- 银联 -->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="org.simalliance.openmobileapi.SMARTCARD" />
+    <uses-permission android:name="android.permission.NFC" />
+
+    <uses-feature android:name="android.hardware.nfc.hce" />
+    <!-- ThirdSDK 权限 end -->
+
+    <!--头条 权限 start-->
+    <!-- 联⽹ -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 检测当前⽹络是2G、3G、4G还是WiFi -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 获取MAC地址，和设备标识⼀起作为⽤户标识 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 获取设备标识，标识⽤户 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--头条 权限 end-->
+</manifest>

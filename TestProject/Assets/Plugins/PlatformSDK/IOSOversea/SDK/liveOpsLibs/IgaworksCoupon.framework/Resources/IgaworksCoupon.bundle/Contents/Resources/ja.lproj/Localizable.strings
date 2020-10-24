@@ -1,0 +1,19 @@
+/*
+ Localizable.strings
+ AdPOPcornSDKRevision
+ 
+ Created by wonje,song on 13. 2. 5..
+ Copyright (c) 2013년 wonje,song. All rights reserved.
+ */
+
+"enterYourCouponCodeAlertTitle" = "クーポンコードを入力して下さい。";
+
+"enterYourCouponCodeAlertMessage" = "以下のクーポンコードを入力した後、確認ボタンをタップして下さい。";
+
+"cancel" = "キャンセル";
+
+"select" = "選択";
+
+"couponCode" = "クーポン番号";
+
+"confirm" = "確認";

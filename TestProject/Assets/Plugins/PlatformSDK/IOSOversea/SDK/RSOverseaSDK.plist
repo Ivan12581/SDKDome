@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AppsFlyer_isDeBug</key>
+	<false/>
+	<key>Use Receipt Validation Sandbox</key>
+	<true/>
+	<key>Currency</key>
+	<string>HKD</string>
+	<key>AppsFlyer_Dev_Key</key>
+	<string>NyT8fMyM5n5wf5W4TgQeEk</string>
+	<key>AppsFlyer_App_ID</key>
+	<string>1338707163</string>
+	<key>KeyLevels</key>
+	<array>
+		<string>10</string>
+		<string>20</string>
+		<string>40</string>
+	</array>
+	<key>RS_AppID</key>
+	<string>100000</string>
+	<key>RS_AppKey</key>
+	<string>DMEzJrkPFGARh7o</string>
+	<key>RS_cch_ID</key>
+	<string>102</string>
+	<key>RS_md_ID</key>
+	<string>200000</string>
+	<key>RS_Schemes</key>
+	<string>rastar102100000</string>
+	<key>isLightType</key>
+	<string>1</string>
+	<key>isHKType</key>
+	<string>1</string>
+	<key>liveOps_AppKey</key>
+	<string>345897866</string>
+	<key>liveOps_HashKey</key>
+	<string>37968572fc574807</string>
+	<key>isautomaticLogin</key>
+	<string>0</string>
+	<key>isShowDelegate</key>
+	<string>0</string>
+</dict>
+</plist>

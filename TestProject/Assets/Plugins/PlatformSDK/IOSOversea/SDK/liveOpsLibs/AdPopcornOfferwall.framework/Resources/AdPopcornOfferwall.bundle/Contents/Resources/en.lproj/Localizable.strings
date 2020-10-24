@@ -1,0 +1,110 @@
+/*
+ Localizable.strings
+ AdPOPcornSDKRevision
+ 
+ Created by wonje,song on 13. 2. 5..
+ Copyright (c) 2013년 wonje,song. All rights reserved.
+ */
+
+"offerWallTopBarTitle" = "Event";
+"alertViewTitle" = "adPOPcorn";
+"alertViewGeneralErrorMessage" = "Ad request is not smooth. \nAsk again in a few minutes.";
+"alertViewAlreadyParticipatedCampaignErrorMessage" = "Already Participated this Campaign.";
+"confirm" = "Confirm";
+"close" = "Close";
+"alerViewAlreadyInstalledAppMessage" = "Already installed App. Then can not participate. Ask for confirmation.";
+"alerViewNotYetInstalledMessage" = "App is not installed yet. Do you want to go to the setup screen?";
+"alerViewNotOpenToInstallAppURLMessage" = "App Store can not be moved. Please contact Customer Service.";
+"checkParticipate" = "Confirm participation";
+"participating" = "Participating in..";
+"rewardComplete" = "This item has been successfully payment request. Payments are subject to network items may take up to 5 minutes.";
+"participate" = "Participate";
+"viewDetail" = "See details";
+"wrongURLAddress" = "Invalid URL address. Please contact Customer Service.";
+"checkInstall" = "Verifying the Installation";
+"participateListTableHeaderText" = "It may take up to 2 hours for the reward to be delivered depending on your network situation.";
+"inquiry" = "Inquiry";
+"receiveAReplyEmail" = "Your email";
+"pleaseEnterYourEmail"= "Please Enter Your Email.";
+"alertNoEmailMessage" = "Please enter your email address to receive replies.";
+"alertNoAskMessage" = "Please enter your contact details.";
+"alertCSAddedMessage" = "Contact information has been received.";
+"alertSendMailFailMessage" = "Mail delivery failed.";
+"wrongEmailFormatMessage" = "Email format is not correct. Please check and re-enter.";
+"csTypeEmailSubject" = "[Contact AdPopcorn]%@";
+"csTypeEmailMessageBody" = "Receive a reply email address : %@\nInquiry : %@";
+"pleaseSelectTheEventYouWantToContactTitle" = "Select the campaign.";
+"customerService" = "Customer Service";
+"send" = "Send";
+"yes" = "yes";
+"no" = "no";
+"pleaseCheckInTheMailSettings" = "Please check in the mail settings.";
+"notice" = "Notice";
+"install" = "install";
+"alerViewCompletedParticipateEventMessage" = "Participation in the event is completed.";
+"quitTheVideoNowMessage" = "If you quit the video now, you will not recieve the reward. Are you sure you want to quit?";
+"quitTheVideoNowMessage2" = "If you don't click the link, we will not receive a reward after watching the ads. Do you want to close?";
+"videoWatchAgainMessage" = "You have not finished watching your video. Would you like to start again?";
+"anUnknownErrorMessage" = "An unknown error. Please contact the Customer Care Center.";
+"theCampaignEndedMessage" = "The campaign ended.";
+"freeDownload" = "Free Download";
+"learnMore" = "Learn More";
+"idfaTrackingAlertMessage" = " ‘If you activate 'Limit Ad Tracking', you are not allowed to participate the campaign.\n Please de-activate Limit Ad Tracking to participate. Settings->Privacy-> Advertising -> Limit Ad Tracking";
+
+"etcCS" = "Etc";
+"moreCSCheckQuestion" = "...more";
+"move" = "move";
+"overseaOfferNoti" = "You are about to participate in a non-IGAWorks powered ad. If you had downloaded the app before you will not recieve the reward. After completing the participation, it may take up to 2 hours to receive the reward depending on your network situation.Do you want to proceed?";
+"privacyPolicy" = "Privacy Policy";
+
+"rewardHistory" = "Reward History";
+"comingsoon" = "Upcoming";
+"dailyCapExceed" = "Closed";
+			
+"csFaqTitleMessage" = "Please Wait! Would you read below before you submit the question?";
+"faqMessage1" = "1. Did you already participate the same campaign in other apps?\n";
+"faqMessage2" = "2. Did you complete all the process for the campaign?\n";
+"faqMessage3" = "3. Did you already install or open the app before?\n";
+"faqMessage4" = "4. Did you already receive the reward?";
+			
+"csOptionTitle" = "Did you complete all the process for the campaign?\nIf yes, please fill in the information.";
+"name" = "Name";
+"required" = "(Required)";
+"phoneNumber" = "Phone Number";
+			
+"cs_notice1" = "Please fill in the required information.";
+"cs_notice2" = "* You will receive answer to the email you give within 2-3 working days.";
+"cs_notice3" = "Please note that it will take 2-3 working days to answer your requestion.";
+"cs_notice4" = "You enter the wrong phone number.";
+			
+"landingBadge" = "Landing";
+"clickBadge" = "Click";
+"cpaBadge" = "Achievement";
+"registerBadge" = "Registration";
+"actionBadge" = "Action";
+"cpiBadge" = "Install";
+"cpeBadge" = "Install & Open";
+"loginBadge" = "Log-in";
+"agreementBadge" = "T&C Agree";
+"videoBadge" = "Play";
+"reexecuteBadge" = "Re-open";
+"dailyBadge" = "Daily";
+"defaultBadge" = "Engagement";
+			
+"date" = "Date";
+"campaignName" = "Campaign";
+"reward" = "Reward";
+"rewardHistoryInfo" = "You can see only recent 1 month history for Reward.";
+"etcQuestion1" = "I haven't received any reward even status is \"Completed\".";
+"etcQuestion2" = "\"You already particiated.\" message keeps pop-up. ";
+"etcAnswer1" = "Please contact Customer Service of selected app.";
+"etcAnswer2" = "Please kindly check again your Campaign History for this campaign participations.\nIf there isn't this campaign in the history, you cannot receive the reward. Please participate other campaigns.";
+"directInput" = "Manual input";
+"externalCSMessage" = "Any inquiry related to selected campaign, please contact direct to the advertiser via email or web page.";
+"goToAdPopcornHomePage" = "Move to adPOPcorn page.\nWould you move to the page?";
+
+"noAdMessage" = "There are no available campaigns.";
+"abusingMessage" = "We’ve detected the changing history of IDFA on your device. You are restricted to participate adPOPcorn offerwall from now on.";
+"goToFAQ" = "Click the button below for more detail";
+
+"afterMessage" = "later";

@@ -1,0 +1,85 @@
+#--------------- Oversea RaStar sdk proguard config start ---------------
+# rastar-sdk-core（必接）代码混淆配置
+# supportLib
+-keep class android.support.** { *; }
+# okhttp
+-keep class okhttp3.** { *; }
+# okio
+-keep class okio.** { *; }
+# gson
+-keep class com.google.gson.** { *; }
+# glide
+-keep class com.bumptech.glide.** { *; }
+# google services
+-keep class com.google.gms.** { *; }
+# rastar sdk
+-keep class com.rastargame.** { *; }
+
+# rastar-sdk-appsflyer(选接)代码混淆配置
+# appsflyer
+-keep class com.appsflyer.** { *; }
+-keep class com.android.installreferrer.** { *; }
+
+# rastar-sdk-google(选接)代码混淆配置
+# google services
+#-keep class com.google.gms.** { *; }
+# app-in billing
+#-keep class com.android.vending.billing.** { *; }
+
+# rastar-sdk-facebook(选接)代码混淆配置
+# facebook
+-keep class com.facebook.** { *; }
+-keep class bolts.** { *; }
+
+# rastar-sdk-liveops(选接)代码混淆配置
+# liveOps
+-keep class com.android.installreferrer.** { *; }
+-keep class com.igaworks.** { *; }
+# google services
+-keep class com.google.gms.** { *; }
+
+#rastar-sdk-naver(选接)代码混淆配置
+-keep class com.rastargame.sdk.oversea.na.bbs.** { *; }
+-keep class com.rastargame.sdk.oversea.na.framework.utils.ResourcesUtils { public *; }
+
+-keep class com.nhn.android.naverlogin.** { *; }
+-keep class com.naver.api.** { *; }
+-keep class com.android.volley.** { *; }
+-keep class com.squareup.otto.** { *; }
+-keep class com.bumptech.glide.** { *; }
+
+#rastar-sdk-samsung(选接)代码混淆配置
+-keep class com.samsung.android.iap.** { *; }
+-keep class com.samsung.android.sdk.iap.lib.** { *; }
+
+#rastar-sdk-xiaomi(选接)代码混淆配置
+-keep class com.xsolla.android.sdk.** { *; }
+-keep class cn.com.wali.basetool.** { *; }
+-keep class com.mi.milink.sdk.** { *; }
+-keep class com.wali.gamecenter.report.** { *; }
+-keep class com.xiaomi.** { *; }
+-keep class miui.net.** { *; }
+-keep class org.xiaomi.gamecenter.** { *; }
+-keep class com.square.** { *; }
+-keep class com.android.volley.** { *; }
+-keep class com.google.protobuf.** { *; }
+-keep class org.greenrobot.eventbus.** { *; }
+
+# rastar-sdk-onestore代码混淆配置
+# 忽略掉ONE Store支付SDK
+-keep class com.onestore.** { *; }
+
+# rxandroid
+-keep class rx.android.** { *; }
+# rxjava
+-keep class rx.** { *; }
+# om.squareup.retrofit2:retrofit/com.squareup.retrofit2:adapter-rxjava/com.squareup.retrofit2:converter-gson
+-keep class retrofit2.** { *; }
+# com.squareup.okhttp3:logging-interceptor
+-keep class okhttp3.logging.** { *; }
+# info.guardianproject.netcipher:netcipher
+-keep class info.guardianproject.** { *; }
+# org.jetbrains:annotations-java5
+-keep class org.intellij.** { *; }
+-keep class org.jetbrains.** { *; }
+#--------------- Oversea RaStar sdk proguard config end ---------------

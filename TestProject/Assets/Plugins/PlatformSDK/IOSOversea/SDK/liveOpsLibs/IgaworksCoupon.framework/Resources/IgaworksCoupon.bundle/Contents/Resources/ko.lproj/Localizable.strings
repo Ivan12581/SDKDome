@@ -1,0 +1,20 @@
+/*
+ Localizable.strings
+ AdPOPcornSDKRevision
+ 
+ Created by wonje,song on 13. 2. 5..
+ Copyright (c) 2013년 wonje,song. All rights reserved.
+ */
+
+
+"enterYourCouponCodeAlertTitle" = "쿠폰 번호를 입력해주세요.";
+
+"enterYourCouponCodeAlertMessage" = "아래에 쿠폰 번호를 입력하신 후 확인 버튼을 눌러주세요.";
+
+"cancel" = "취소";
+
+"select" = "선택";
+
+"couponCode" = "쿠폰 번호";
+
+"confirm" = "확인";

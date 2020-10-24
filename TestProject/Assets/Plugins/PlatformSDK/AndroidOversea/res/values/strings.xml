@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">少女的王座</string>
+
+    <!-- facebook -->
+    <!-- 注意：替换成游戏对应的facebook app id  -->
+    <string name="rastar_facebook_app_id">1496435593826813</string>
+    <!-- 注意：fb后面接Facebook的app id -->
+    <string name="rastar_fb_login_protocol_scheme">fb1496435593826813</string>
+
+    <!-- google -->
+    <!-- 注意：替换成游戏对应的google games app id，不集成Google模块或者使用<Google+方式> 登录不需要配置  -->
+    <string name="rastar_google_app_id">239064649944</string>
+    <!-- 注意：替换成游戏对应的google web application client id，不集成Google模块或者使用<Google games>方式登录不需要配置，如果配置了此项，Google Games登录配置将失效  -->
+    <string name="rastar_google_server_client_id">239064649944-aont23fth7hoqh8pgd8tikv3f5t918rt.apps.googleusercontent.com</string>
+
+    <!-- AppsFlyer dev key -->
+    <string name="rastar_appsflyer_dev_key">NyT8fMyM5n5wf5W4TgQeEk</string>
+
+    <!-- LiveOps Push -->
+    <!-- <string name="rastar_igaworks_app_key" >177656518</string> -->
+    <!-- <string name="rastar_igaworks_hash_key" >63412ee27fc54fb3</string> -->
+
+    <!-- ONE Store渠道模块，不集成ONE Store渠道模块不需要配置 -->
+    <!-- 注意：公钥采用SDK后台加密后的公钥，请勿直接配置ONE Store后台提供的公钥 -->
+    <!--<string name="rastar_onestore_public_key">57bdVbdAUBj79IuxpsuwyJdM58XFpsedAGJ_9Xfbnzf27nctVXIGLcRNiChwNgkDoV1mhy2Y32qwiCfpQwfFSAhKW84SaaJVMLn-fhjMieRX42_t5ccwLfdyjh62DpOPqFTrx4AQDFQUMYqm98QiwiHiiBUm8V72YZDrKmmWq1KMZe37LpEb3VwOB5EpTYBSTwfCugIHgRuNGKlb0bruyopx8ISYNYsGT5SkBfQslrN4veTzKxQ7JzBNVQmbBpAxeMyRBpcuirjm7QMRaQzWJbRCjP4ju_o45t7XNNtzWJ9DgOuj9vBBm3MmnQnBm4En20CHawl-TFZ961W9v9AhSBUfk-Wg2ISrO5d2y8Wxi4jaaGbIpVvK6w</string>-->
+
+    <!-- Naver cafe -->
+    <!-- <string name="rastar_naver_client_id" >Vov2CmKCe0LYQIumH_Dd</string> -->
+    <!-- <string name="rastar_naver_client_secret_key" >F_yYqEe8IU</string> -->
+    <!-- <string name="rastar_naver_cafe_id">29496130</string> -->
+
+    <!-- xiaomi -->
+    <!-- <string name="rastar_xiaomi_app_id" >2882303761517866713</string> -->
+    <!-- <string name="rastar_xiaomi_app_key" >5651786623713</string> -->
+</resources>

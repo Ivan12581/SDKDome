@@ -1,0 +1,21 @@
+/*
+ Localizable.strings
+ AdPOPcornSDKRevision
+ 
+ Created by wonje,song on 13. 2. 5..
+ Copyright (c) 2013년 wonje,song. All rights reserved.
+ */
+
+/* Chinese zh-hans */
+
+"enterYourCouponCodeAlertTitle" = "请输入优惠券代码。";
+
+"enterYourCouponCodeAlertMessage" = "请输入优惠券代码后，点击确认按钮。";
+
+"cancel" = "取消";
+
+"select" = "选择";
+
+"couponCode" = "优惠券代码";
+
+"confirm" = "确认";

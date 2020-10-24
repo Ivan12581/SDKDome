@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "msg": "",
+    "data": {
+        "allow_host": "gzchukai.cn",
+        "app_state": 1,
+        "web_page": {
+            "user_agreement": "https://3rd-sy.gzchukai.cn/agreement/agreement.html",
+            "private": "https://3rd-sy.gzchukai.cn/agreement/private.html",
+            "help": "https://3rd-sy.gzchukai.cn/agreement/help.html",
+            "service": "https://3rd-sy.gzchukai.cn/service/service.html",
+            "find_pwd": ""
+        },
+        "api": {
+            "log": {
+                "device": "https://3rd-collect.gzchukai.cn/v1/Device/cl",
+                "role": "https://3rd-collect.gzchukai.cn/v1/Game/roleActionCl",
+                "run_log": "https://3rd-collect.gzchukai.cn/v1/SdkRunLog/cl",
+                "run_ex": "https://3rd-collect.gzchukai.cn/v1/SdkRunLog/exceptions",
+                "node_log": "https://3rd-collect.gzchukai.cn/v1/Dot/cl"
+            },
+            "user": {
+                "login": "https://3rd-sy.gzchukai.cn/v1/login",
+                "token": "https://3rd-sy.gzchukai.cn/v1/token",
+                "account_reg": "https://3rd-sy.gzchukai.cn/v1/reg/account-reg",
+                "mobile_reg": "https://3rd-sy.gzchukai.cn/v1/reg/mobile-reg",
+                "get_user": "https://3rd-sy.gzchukai.cn/v1/reg/visitor-reg",
+                "get_uname": "https://3rd-sy.gzchukai.cn/v1/reg/get-account",
+                "mobile_vcode": "https://3rd-sy.gzchukai.cn/v1/vcode/mobile-vcode",
+                "check_active": "https://3rd-sy.gzchukai.cn/v1/active/active-check",
+                "confirm_info": "https://3rd-sy.gzchukai.cn/v1/id/confirm-id",
+                "bind_id": "https://3rd-sy.gzchukai.cn/v1/id/bind-id",
+                "bind_mobile": "https://3rd-sy.gzchukai.cn/v1/bind/mobile-bind",
+                "change_mobile": "https://3rd-sy.gzchukai.cn/v1/bind/mobile-change",
+                "get_bind_info": "https://3rd-sy.gzchukai.cn/v1/bind/info",
+                "find_pwd": "https://3rd-sy.gzchukai.cn/v1/pwd/pwd-find",
+                "vis_to_mob": "https://3rd-sy.gzchukai.cn/v1/per/mobile-per",
+                "vis_to_acc": "https://3rd-sy.gzchukai.cn/v1/per/visitor-per",
+                "vis_to_common": "https://3rd-sy.gzchukai.cn/v1/per/common-per",
+                "up_pwd": "https://3rd-sy.gzchukai.cn/v1/pwd/pwd-change",
+                "ch_pwd": "https://3rd-sy.gzchukai.cn/v1/pwd/pwd-check",
+                "ch_vcode": "https://3rd-sy.gzchukai.cn/v1/vcode/vcode-check",
+                "identify_report": "https://3rd-sy.gzchukai.cn/v1/id/report-id",
+                "query_bind": "https://3rd-sy.gzchukai.cn/v1/bind/query-bind"
+            },
+            "manager": {
+                "create_order": "https://3rd-gamemanager.gzchukai.cn/v1/app-order",
+                "cch_create_order": "https://3rd-gamemanager.gzchukai.cn/v1/channel-order",
+                "product_list": "https://3rd-sy.gzchukai.cn/v1/platform/product-list"
+            }
+        }
+    }
+}
