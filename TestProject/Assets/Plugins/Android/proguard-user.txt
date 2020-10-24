@@ -1,0 +1,52 @@
+#--------------- RaStar sdk proguard config start ---------------
+
+# rastar_logger_2.1.1.jar
+-keep class com.rastargame.sdk.libs.logger.**{*;}
+# rastar core
+-keep class com.starjoys.**{*;}
+-keep class android.support.annotation.**{*;}
+-keep class android.support.v4.**{*;}
+
+# SecurityEnvSDK
+-keep class com.wireless.security.**{*;}
+# umeng+
+-keep class com.umeng.**{*;}
+-keepclassmembers class * {
+   public <init> (org.json.JSONObject);
+}
+-keep class com.uc.crashsdk.**{*;}
+-keep class com.tencent.**{*;}
+-keep class com.sina.sso.**{*;}
+-keep class com.sina.weibo.**{*;}
+-keep class com.ut.device.**{*;}
+-keep class com.ta.utdid2.**{*;}
+
+# share module
+-keep interface com.starjoys.module.share.callback.RSShareResultCallback{*;}
+-keep class com.starjoys.module.share.RastarShareCore{*;}
+-keep class com.starjoys.module.share.bean.RastarShareParams{*;}
+-keep class com.starjoys.module.share.RSShareTracker{*;}
+
+-dontnote com.starjoys.module.share.RastarShareManager
+
+
+# support包不混淆
+-keep class android.arch.**{*;}
+-keep class android.support.**{*;}
+-keep class androidx.core.**{*;}
+
+# plugin
+-keep class com.starjoys.plugin.update.**{*;}
+-keep class com.starjoys.plugin.permission.**{*;}
+
+# oaid
+-keep class com.bun.** {*;}
+-keep class com.asus.msa.** {*;}
+-keep class com.heytap.openid.** {*;}
+-keep class com.huawei.android.hms.pps.** {*;}
+-keep class com.meizu.flyme.openidsdk.** {*;}
+-keep class com.samsung.android.deviceidservice.** {*;}
+-keep class com.zui.** {*;}
+
+
+#--------------- RaStar sdk proguard config end ---------------
