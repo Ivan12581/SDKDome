@@ -7,7 +7,7 @@
 	<key>destination</key>
 	<string>export</string>
 	<key>method</key>
-	<string>enterprise</string>
+	<string>app-store</string>
 	<key>provisioningProfiles</key>
 	<dict>
 		<key>com.rastargame.sndwz</key>
@@ -19,13 +19,15 @@
 	<string>manual</string>
 	<key>stripSwiftSymbols</key>
 	<true/>
-	<key>thinning</key>
-	<string>&lt;none&gt;</string>
+	<key>uploadBitcode</key>
+	<false/>
+	<key>uploadSymbols</key>
+	<false/>
 	<key>teamID</key>
 	<string>Z67D6RDGWU</string>
     <key>pakageName</key>
     <string>com.rastargame.sndwz</string>
     <key>provisioningProfileID</key>
-    <string>ded8b6d9-13f7-4c18-b569-d81030371875</string>
+    <string>17f169ad-117a-49d0-bce6-ea0bfbbdc47b</string>
 </dict>
 </plist>
