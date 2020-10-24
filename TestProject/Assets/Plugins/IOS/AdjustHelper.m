@@ -46,8 +46,8 @@ static AdjustHelper *AdjustHelperIns = nil;
     }
     NSString *price = [[Utils sharedInstance] getValueWithKey:@"price"];
     NSString *currency = [[Utils sharedInstance] getValueWithKey:@"CurrencyCode"];
-    [self PurchaseEvent:@"q5u2a6" andPrice:price andCurrency:currency andOrderID:appleOrderID];
-    [self PurchaseEvent:@"r7ugmi" andPrice:price andCurrency:currency andOrderID:[appleOrderID stringByAppendingString:@"-total"]];
+    [self PurchaseEvent:@"r7ugmi" andPrice:price andCurrency:currency andOrderID:appleOrderID];
+    //[self PurchaseEvent:@"r7ugmi" andPrice:price andCurrency:currency andOrderID:[appleOrderID stringByAppendingString:@"-total"]];
 }
 #pragma mark --第三方MyCard支付统计
 -(void)ThirdPurchaseEvent:(const char*) jsonString{
@@ -60,7 +60,7 @@ static AdjustHelper *AdjustHelperIns = nil;
 //    NSString *productID = [dict valueForKey:@"productID"];
     NSString *orderID = [dict valueForKey:@"orderID"];
     [self PurchaseEvent:@"j33kyv" andPrice:price andCurrency:currency andOrderID:orderID];
-    [self PurchaseEvent:@"r7ugmi" andPrice:price andCurrency:currency andOrderID:[orderID stringByAppendingString:@"-total"]];
+    //[self PurchaseEvent:@"r7ugmi" andPrice:price andCurrency:currency andOrderID:[orderID stringByAppendingString:@"-total"]];
 }
 -(void)PurchaseEvent:(NSString *)eventToken andPrice:(NSString *)price andCurrency:(NSString *)currency andOrderID:(NSString *)orderID{
     

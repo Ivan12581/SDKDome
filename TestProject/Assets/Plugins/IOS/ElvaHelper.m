@@ -8,6 +8,7 @@
 #import "ElvaHelper.h"
 
 @implementation ElvaHelper{
+    NSString *AIHelpAppID;
     NSString *playerName;
     NSString *playerUid;
     NSString *serverId;
@@ -25,7 +26,7 @@ static ElvaHelper *ElvaHelperIns = nil;
 -(void)InitSDK:(id)delegate{
     IOSBridgeHelper = delegate;
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    NSString *AIHelpAppID = [infoDictionary objectForKey:@"AIHelpAppID"];
+    AIHelpAppID = [infoDictionary objectForKey:@"AIHelpAppID"];
     NSString *AIHelpAppKey = [infoDictionary objectForKey:@"AIHelpAppKey"];
     NSString *AIHelpDomain = [infoDictionary objectForKey:@"AIHelpDomain"];
     [ECServiceSdk setSDKInterfaceOrientationMask:UIInterfaceOrientationMaskPortrait];
@@ -33,7 +34,7 @@ static ElvaHelper *ElvaHelperIns = nil;
     playerParseId = @"";
 //    [ECServiceSdk setName:@"少女的王座"];
 //    [ECServiceSdk setServerId:@"ServerId-123456987456"];
-//    [ECServiceSdk setSDKLanguage:@"zh_TW"];
+    [ECServiceSdk setSDKLanguage:@"zh_TW"];
 //    [ECServiceSdk setSDKLanguage:@"zh_en"];
 //    [ECServiceSdk setSDKLanguage:@"zh_CN"];
     NSLog(@"--ElvaHelper---InitSDK---");
@@ -49,6 +50,7 @@ static ElvaHelper *ElvaHelperIns = nil;
     serverId = [dict valueForKey:@"ServerID"];
 
     showConversationFlag = [dict valueForKey:@"PlayershowConversationFlag"];
+    
     int type = [[dict valueForKey:@"Type"] intValue];
 
     [ECServiceSdk setUserName:playerName];
@@ -64,7 +66,11 @@ static ElvaHelper *ElvaHelperIns = nil;
     }
     else if (type == 4){
         [self showConversation];
-    }else{
+    }
+    else if (type == 5){
+        [self showSuggestWindow:[dict valueForKey:@"formID"]];
+    }
+    else{
         [self showElva];
     }
 
@@ -99,5 +105,20 @@ static ElvaHelper *ElvaHelperIns = nil;
 #pragma mark --直接进行人工客服聊天，调用 showConversation 方法(必须确保设置用户名称信息 setUserName 已经调用)
 -(void)showConversation{
     [ECServiceSdk showConversation:playerUid ServerId:serverId];
+}
+#pragma mark --外部打开反馈表单
+-(void)showSuggestWindow:(NSString *)formID{
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://aihelp.net/questionnaire/#/?formId=%@&appId=%@&uid=%@&userName=%@",formID,AIHelpAppID,playerUid,playerName]];
+    if ([[UIApplication sharedApplication] canOpenURL:url]) {
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 10.0) {
+                //设备系统为IOS 10.0或者以上的
+                [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
+            }else{
+                //设备系统为IOS 10.0以下的
+                [[UIApplication sharedApplication] openURL:url];
+            }
+    }
+
+
 }
 @end
