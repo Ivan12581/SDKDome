@@ -138,7 +138,34 @@ namespace celia.game
             CallSDK(SDKResultType.Switch);
             //proxy?.Switch();
         }
+        /// <summary>
+        /// Rastar支付
+        /// </summary>
+        /// <param name="callBack">回调，state+数据字典</param>
+        public void Pay(int goodsID, string orderID, Action<int, Dictionary<string, string>> callBack = null)
+        {
+            callBackDict[SDKResultType.Pay] = callBack;
 
+            //RechargeModel model = RechargeDB.gi.GetDataById(goodsID);
+
+            JObject jObj = new JObject();
+            jObj.Add("Extra", "");
+            //jObj.Add("PayMoney", model.Price);
+            //jObj.Add("OrderID", orderID);
+            jObj.Add("OrderName", System.DateTime.Now.ToString());
+
+            jObj.Add("MoneySymbol", "CNY");
+            //jObj.Add("GoodsName", model.Name);
+            //jObj.Add("GoodsDesc", model.Desc);
+
+            AccountData accountData = AccountDataService.gi.getAccountData();
+            jObj.Add("RoleID", AuthProcessor.gi.ID.ToString());
+            jObj.Add("RoleName", accountData.name);
+            //jObj.Add("RoleLevel", CharacterService.gi.GetLevelById(1).ToString());
+            jObj.Add("ServerID", "1");
+            jObj.Add("ServerName", "1");
+            CallSDK(SDKResultType.Pay, jObj.ToString());
+        }
         /// <summary>
         /// 支付
         /// </summary>
