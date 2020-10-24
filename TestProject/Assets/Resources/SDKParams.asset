@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: SDKParams
   m_EditorClassIdentifier: 
   SDKType: 0
+  GameId: 0
   AppKey: 
   PayKey: 

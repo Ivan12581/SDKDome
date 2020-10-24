@@ -25,7 +25,10 @@ namespace celia.game.editor
                 // BuildSetting修改
                 proj.SetBuildProperty(target, "ENABLE_BITCODE", "NO");//这个好像是bugly需要的
                 proj.AddBuildProperty(target, "OTHER_LDFLAGS", "-ObjC");//这个google等其他sdk非常需要的
-                proj.AddBuildProperty(target, "OTHER_LDFLAGS", "--ObjC -all_load");//这个weixin需要的
+
+                proj.SetBuildProperty(target, "EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE", "YES");
+                proj.SetBuildProperty(target, "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES", "YES");
+                
                 #region 添加XCode引用的Framework
                 // SDK依赖 --AIHelp
                 proj.AddFrameworkToProject(target, "libsqlite3.tbd", false);
@@ -75,6 +78,8 @@ namespace celia.game.editor
                 rootDict.SetString("AIHelpDomain", "elextech@aihelp.net");
                 rootDict.SetString("AdjustAppToken", "1k2jm7bpansw");
                 rootDict.SetString("AdjustAppSecret", "1,750848352-1884995334-181661496-1073918938");
+                //文件共享
+                rootDict.SetBoolean("UIFileSharingEnabled",true);
                 // Set encryption usage boolean
                 string encryptKey = "ITSAppUsesNonExemptEncryption";
                 rootDict.SetBoolean(encryptKey, false);
@@ -118,6 +123,11 @@ namespace celia.game.editor
                 // WeiXin接入配置
                 LSApplicationQueriesSchemes.AddString("weixin");
                 LSApplicationQueriesSchemes.AddString("weixinULAPI");
+                // 文件追加
+                var fileName = "GoogleService-Info.plist";
+                var filePath = Path.Combine("Assets/Plugins/iOS/SDK/FCM/", fileName);
+                File.Copy(filePath, Path.Combine(pathToBuildProject, "GoogleService-Info.plist"), true);
+                proj.AddFileToBuild(target, proj.AddFile(fileName, fileName, PBXSourceTree.Source));
                 #endregion
                 // Capabilitise添加
                 proj.AddCapability(target, PBXCapabilityType.GameCenter);

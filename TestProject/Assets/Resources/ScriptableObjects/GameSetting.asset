@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a0f4c4be069e5c4f9fe9ad24be9e7aa, type: 3}
   m_Name: GameSetting
   m_EditorClassIdentifier: 
+  VERSION: Develop
   CDN_ADDRESS: https://xlycs.res.rastargame.com
   NET_ASSETS: NetAssets_PublicNetwork
   ip: 192.168.102.165
   port: 52001
-  pf: 1
+  serverType: 1

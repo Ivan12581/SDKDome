@@ -12,6 +12,7 @@
 #import "SSKeychain.h"
 #import <GameKit/GameKit.h>
 #import "cDelegate.h"
-@interface IOSBridgeHelper:UnityAppController<UIApplicationDelegate,cDelegate>
+#import "Firebase.h"
+@interface IOSBridgeHelper:UnityAppController<UIApplicationDelegate,cDelegate,UNUserNotificationCenterDelegate,FIRMessagingDelegate>
 
 @end
