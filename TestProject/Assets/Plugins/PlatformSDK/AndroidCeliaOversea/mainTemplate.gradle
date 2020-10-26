@@ -11,8 +11,8 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.0'
-        classpath 'com.google.gms:google-services:4.3.4'
+        classpath 'com.android.tools.build:gradle:3.4.0'
+        classpath 'com.google.gms:google-services:4.3.3'
 **BUILD_SCRIPT_DEPS**}
 }
 
@@ -98,4 +98,12 @@ android {
         }
     }
 }**SPLITS_VERSION_CODE****REPOSITORIES****SOURCE_BUILD_SETUP**
+task copyJsonFile {
+    copy {
+        from('src/main/assets')
+        into('src/nullnull')
+        include("google-services.json")
+    }
+}
+preBuild.dependsOn copyJsonFile
 apply plugin: 'com.google.gms.google-services'

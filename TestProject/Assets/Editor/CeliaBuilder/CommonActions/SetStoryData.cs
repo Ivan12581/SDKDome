@@ -10,15 +10,15 @@ namespace celia.game.editor
         {
             try
             {
-                if (GameStoryInspector.CheckeGameStoryContainError())
-                {
-                    GameStoryInspector.UpdateGameStory();
-                }
+                //if (GameStoryInspector.CheckeGameStoryContainError())
+                //{
+                //    GameStoryInspector.UpdateGameStory();
+                //}
 
-                if (GameStoryInspector.CheckeGameStoryContainError())
-                {
-                    Debug.Log("GameStory剧情文件已经损坏");
-                }
+                //if (GameStoryInspector.CheckeGameStoryContainError())
+                //{
+                //    Debug.Log("GameStory剧情文件已经损坏");
+                //}
             }
             catch (System.Exception)
             {

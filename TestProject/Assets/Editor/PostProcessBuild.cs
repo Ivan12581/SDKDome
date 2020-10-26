@@ -11,9 +11,16 @@ namespace celia.game.editor
 {
     public class PostProcessBuild
     {
+
         [PostProcessBuild(100)]
         public static void OnPostProcessBuild(BuildTarget _target, string pathToBuildProject)
         {
+            SDKParams SDKParams = Resources.Load<SDKParams>("SDKParams");
+            if (SDKParams.SDKType == SDKType.CeliaOversea)
+            {
+
+            }
+            Debug.LogError("------SDKParams.SDKType----"+ SDKParams.SDKType);
             Debug.Log("---_target--->" + _target + "---pathToBuildProject--->" + pathToBuildProject);
             if (_target == BuildTarget.iOS)
             {
@@ -141,7 +148,17 @@ namespace celia.game.editor
             }
             if (_target == BuildTarget.Android)
             {
-
+                //string gradlePropertiesFile = pathToBuildProject + "/gradle.properties";
+                //if (File.Exists(gradlePropertiesFile))
+                //{
+                //    File.Delete(gradlePropertiesFile);
+                //}
+                //StreamWriter writer = File.CreateText(gradlePropertiesFile);
+                //writer.WriteLine("org.gradle.jvmargs=-Xmx8192M");
+                //writer.WriteLine("android.useAndroidX=true");
+                //writer.WriteLine("android.enableJetifier=true");
+                //writer.Flush();
+                //writer.Close();
             }
         }
     }

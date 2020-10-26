@@ -26,7 +26,9 @@ namespace celia.game.editor
             // ==构建平台==
             option.PlayerOption.target = option.ProcessCfg.Target;
             option.PlayerOption.targetGroup = BuildPipeline.GetBuildTargetGroup(option.PlayerOption.target);
-            // ==========
+            // ====SDK版本===
+            PlayerSettings.Android.minSdkVersion = AndroidSdkVersions.AndroidApiLevel23;
+            PlayerSettings.Android.targetSdkVersion = AndroidSdkVersions.AndroidApiLevelAuto;
 
             // 强制使用OPENGL ES3
             PlayerSettings.SetGraphicsAPIs(option.PlayerOption.target,new GraphicsDeviceType[] 

@@ -9,12 +9,12 @@ namespace celia.game.editor
     {
         public override void PreExcute(CeliaBuildOption option)
         {
-            EditorScript.EncryptData();
+            //EditorScript.EncryptData();
         }
 
         public override void PostExcute(CeliaBuildOption option)
         {
-            EditorScript.DecryptData();
+            //EditorScript.DecryptData();
         }
     }
 }

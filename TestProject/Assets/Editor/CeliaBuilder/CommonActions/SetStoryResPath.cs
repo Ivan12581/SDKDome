@@ -12,29 +12,29 @@ namespace celia.game.editor
 
         public override void PreExcute(CeliaBuildOption option)
         {
-            var storyResPathSettings = Resources.Load<StoryResPathSettings>("ScriptableObjects/GameStory/StoryResPathSettings");
-            recordIsStoryInEditor = storyResPathSettings.isEiditor;
-            recordIsWechatDebug = storyResPathSettings.wechatDebug;
+            //var storyResPathSettings = Resources.Load<StoryResPathSettings>("ScriptableObjects/GameStory/StoryResPathSettings");
+            //recordIsStoryInEditor = storyResPathSettings.isEiditor;
+            //recordIsWechatDebug = storyResPathSettings.wechatDebug;
 
-            storyResPathSettings.isEiditor = false;
-            storyResPathSettings.wechatDebug = false;
+            //storyResPathSettings.isEiditor = false;
+            //storyResPathSettings.wechatDebug = false;
 
-            EditorUtility.SetDirty(storyResPathSettings);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-            Debug.Log("SetStoryResPath PreExcuted!");
+            //EditorUtility.SetDirty(storyResPathSettings);
+            //AssetDatabase.SaveAssets();
+            //AssetDatabase.Refresh();
+            //Debug.Log("SetStoryResPath PreExcuted!");
         }
 
         public override void PostExcute(CeliaBuildOption option)
         {
-            var storyResPathSettings = Resources.Load<StoryResPathSettings>("ScriptableObjects/GameStory/StoryResPathSettings");
-            storyResPathSettings.isEiditor = recordIsStoryInEditor;
-            storyResPathSettings.wechatDebug = recordIsWechatDebug;
+            //var storyResPathSettings = Resources.Load<StoryResPathSettings>("ScriptableObjects/GameStory/StoryResPathSettings");
+            //storyResPathSettings.isEiditor = recordIsStoryInEditor;
+            //storyResPathSettings.wechatDebug = recordIsWechatDebug;
 
-            EditorUtility.SetDirty(storyResPathSettings);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-            Debug.Log("SetStoryResPath PostExcuted!");
+            //EditorUtility.SetDirty(storyResPathSettings);
+            //AssetDatabase.SaveAssets();
+            //AssetDatabase.Refresh();
+            //Debug.Log("SetStoryResPath PostExcuted!");
         }
     }
 }

@@ -7,6 +7,7 @@ public class notificationTest : MonoBehaviour
 {
     public void RegisterNotification()
     {
+#if UNITY_IOS
         UnityEngine.iOS.NotificationServices.RegisterForNotifications(UnityEngine.iOS.NotificationType.Alert | UnityEngine.iOS.NotificationType.Badge | UnityEngine.iOS.NotificationType.Sound);
         UnityEngine.iOS.NotificationServices.CancelAllLocalNotifications();
         UnityEngine.iOS.NotificationServices.ClearLocalNotifications();
@@ -16,6 +17,7 @@ public class notificationTest : MonoBehaviour
         localNotification.applicationIconBadgeNumber = 1;
         localNotification.hasAction = true;
         UnityEngine.iOS.NotificationServices.ScheduleLocalNotification(localNotification);
+#endif
     }
 
 }
