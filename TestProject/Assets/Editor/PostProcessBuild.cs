@@ -15,6 +15,7 @@ namespace celia.game.editor
         [PostProcessBuild(100)]
         public static void OnPostProcessBuild(BuildTarget _target, string pathToBuildProject)
         {
+            return;
             SDKParams SDKParams = Resources.Load<SDKParams>("SDKParams");
             if (SDKParams.SDKType == SDKType.CeliaOversea)
             {
@@ -139,9 +140,6 @@ namespace celia.game.editor
                 // Capabilitise添加
                 proj.AddCapability(target, PBXCapabilityType.GameCenter);
                 proj.AddCapability(target, PBXCapabilityType.InAppPurchase);
-                //ProjectCapabilityManager projectCapabilityManager = new ProjectCapabilityManager(projPath, "tw.entitlements", PBXProject.GetUnityTargetName());
-                //projectCapabilityManager.AddGameCenter();
-                //projectCapabilityManager.AddInAppPurchase();
                 plist.WriteToFile(plistPath);
                 proj.WriteToFile(projPath);
                 Debug.Log("--**--4.IOSXcodeSettings--**--");

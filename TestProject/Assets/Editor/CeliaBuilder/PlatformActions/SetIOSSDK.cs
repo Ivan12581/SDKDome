@@ -801,7 +801,12 @@ namespace celia.game.editor
             LSApplicationQueriesSchemes.AddString("lineauth");
             LSApplicationQueriesSchemes.AddString("line3rdp.$(APP_IDENTIFIER)");
             LSApplicationQueriesSchemes.AddString("line");
-        #endregion
+            // 文件追加
+            var fileName = "GoogleService-Info.plist";
+            var filePath = Path.Combine("Assets/Plugins/iOS/SDK/FCM/", fileName);
+            File.Copy(filePath, Path.Combine(option.PlayerOption.locationPathName, "GoogleService-Info.plist"), true);
+            proj.AddFileToBuild(target, proj.AddFile(fileName, fileName, PBXSourceTree.Source));
+            #endregion
 
             // Capabilitise添加
             ProjectCapabilityManager projectCapabilityManager = new ProjectCapabilityManager(projPath, "tw.entitlements", PBXProject.GetUnityTargetName());
