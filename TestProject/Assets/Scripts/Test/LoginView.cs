@@ -4,6 +4,8 @@ using System.Net.NetworkInformation;
 
 using celia.game;
 
+using TMPro;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +16,7 @@ public class LoginView : MonoBehaviour
     public InputField passWord;
     public InputField serverIP;
     public InputField serverPort;
-
+    public TMP_Dropdown dropDown;
     /// <summary>
     /// 账号登陆
     /// </summary>
@@ -256,8 +258,6 @@ public class LoginView : MonoBehaviour
         });
     }
 
-    //554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn.apps.googleusercontent.com
-    //com.googleusercontent.apps.554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn
     // Start is called before the first frame update
     private void Start()
     {
@@ -280,9 +280,27 @@ public class LoginView : MonoBehaviour
             });
         });
         Debug.Log("---LoginView Start--");
+        dropDown.ClearOptions();
+        for (int i = 0; i < 5; i++)
+        {
+            TMP_Dropdown.OptionData data = new TMP_Dropdown.OptionData();
+            data.text = "192.168.102.175"+i;
+            //data.image = "指定一个图片做背景不指定则使用默认"；
+            dropDown.options.Add(data);
+        }
 
     }
-
+    /// <summary>
+    /// 当点击后值改变是触发 (切换下拉选项)
+    /// </summary>
+    /// <param name="v">是点击的选项在OptionData下的索引值</param>
+    public void OnValueChange(int v)
+    {
+        //切换选项 时处理其他的逻辑...
+        Debug.Log("点击下拉控件的索引是..." + v);
+        serverIP.text = dropDown.options[v].text;
+        serverPort.text = dropDown.options[v].text;
+    }
     async void GetScreenShot(Action<string> callback)
     {
         await new WaitForEndOfFrame();
