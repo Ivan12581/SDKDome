@@ -18,11 +18,18 @@ namespace celia.game.editor
             {
                 option.PlayerOption.options = BuildOptions.None;
             }
+            PlayerSettings.iOS.hideHomeButton = true;
+            PlayerSettings.iOS.deferSystemGesturesMode = UnityEngine.iOS.SystemGestureDeferMode.BottomEdge;
+            PlayerSettings.iOS.allowHTTPDownload = true;
+            PlayerSettings.iOS.targetDevice = iOSTargetDevice.iPhoneAndiPad;
+            PlayerSettings.iOS.sdkVersion = iOSSdkVersion.DeviceSDK;
+            PlayerSettings.iOS.appleEnableAutomaticSigning = false;
+            PlayerSettings.iOS.iOSManualProvisioningProfileType = ProvisioningProfileType.Automatic;
             Debug.Log("SetIOSOption PreExcuted!");
         }
         public override void PostExcute(CeliaBuildOption option)
         {
-            Debug.Log("SetIOSOption PostExcuted!");
+            //Debug.Log("SetIOSOption PostExcuted!");
         }
     }
 }
