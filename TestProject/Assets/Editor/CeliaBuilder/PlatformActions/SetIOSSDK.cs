@@ -812,6 +812,7 @@ namespace celia.game.editor
             ProjectCapabilityManager projectCapabilityManager = new ProjectCapabilityManager(projPath, "tw.entitlements", PBXProject.GetUnityTargetName());
             projectCapabilityManager.AddGameCenter();
             projectCapabilityManager.AddInAppPurchase();
+            projectCapabilityManager.AddPushNotifications(true);
             plist.WriteToFile(plistPath);
             proj.WriteToFile(projPath);
         }

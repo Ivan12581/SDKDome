@@ -93,7 +93,7 @@ PluginImporter:
       settings:
         AddToEmbeddedBinaries: false
         CompileFlags: 
-        FrameworkDependencies: Security;
+        FrameworkDependencies: 
   userData: 
   assetBundleName: 
   assetBundleVariant: 

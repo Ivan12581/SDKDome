@@ -40,9 +40,52 @@
      [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
      
      [self InitSDK];
+     
+     [self FcmInit];
+     //注册接收远程通知
+     if ([UNUserNotificationCenter class] != nil) {
+       // iOS 10 or later
+       // For iOS 10 display notification (sent via APNS)
+       [UNUserNotificationCenter currentNotificationCenter].delegate = self;
+       UNAuthorizationOptions authOptions = UNAuthorizationOptionAlert |
+           UNAuthorizationOptionSound | UNAuthorizationOptionBadge;
+       [[UNUserNotificationCenter currentNotificationCenter]
+           requestAuthorizationWithOptions:authOptions
+           completionHandler:^(BOOL granted, NSError * _Nullable error) {
+             // ...
+           NSLog(@"-ios----UNUserNotificationCenter---granted----%i",granted);
+           if (error!=nil) {
+               NSLog(@"-ios----UNUserNotificationCenter---error----%@",error);
+           }
+           }];
+     } else {
+       // iOS 10 notifications aren't available; fall back to iOS 8-9 notifications.
+       UIUserNotificationType allNotificationTypes =
+       (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
+       UIUserNotificationSettings *settings =
+       [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
+       [application registerUserNotificationSettings:settings];
+     }
+     [application registerForRemoteNotifications];
      return YES;
  }
+-(void)FcmInit{
+    [FIRApp configure];
+    [FIRMessaging messaging].delegate = self;
+    [[FIRInstanceID instanceID] instanceIDWithHandler:^(FIRInstanceIDResult * _Nullable result,
+                                                        NSError * _Nullable error) {
+      if (error != nil) {
+        NSLog(@"Error fetching remote instance ID: %@", error);
+      } else {
+        NSLog(@"Remote instance ID token: %@", result.token);
+        NSString* message =
+          [NSString stringWithFormat:@"Remote InstanceID token: %@", result.token];
+          NSLog(@"-ios----FcmInit---instanceID---%@",message);
 
+      }
+    }];
+
+}
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary*)options{
 //    return [[LineSDKLogin sharedInstance] handleOpenURL:url];
          NSLog(@"-ios----IOSBridgeHelper---*********************---");
@@ -108,7 +151,7 @@ typedef NS_ENUM(NSInteger, SDKLoginType)
     [[LineHelper sharedInstance] InitSDK:self];
     [[ElvaHelper sharedInstance] InitSDK:self];
     [[AdjustHelper sharedInstance] InitSDK:self];
-    [self GetDeviceId];
+    [self GetConfigInfo];
 }
 
 #pragma mark -- 登录 jsonString 为登录方式 就是一个字符串
