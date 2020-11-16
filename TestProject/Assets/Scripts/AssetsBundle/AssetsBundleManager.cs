@@ -5,14 +5,32 @@ public class AssetsBundleManager : Singleton<AssetsBundleManager>
 {
     public UnityWebRequest GetWebRequest(LoadResourceType loadType, string url)
     {
-        UnityWebRequest webRequest = loadType switch
+        UnityWebRequest webRequest;
+        switch (loadType)
         {
-            LoadResourceType.TXT => UnityWebRequest.Get(url),
-            LoadResourceType.TEXTURE2D => UnityWebRequestTexture.GetTexture(url),
-            LoadResourceType.MP3 => UnityWebRequestMultimedia.GetAudioClip(url, AudioType.MPEG),
-            LoadResourceType.OGG => UnityWebRequestMultimedia.GetAudioClip(url, AudioType.OGGVORBIS),
-            LoadResourceType.AssetBundle => UnityWebRequestAssetBundle.GetAssetBundle(url),
-            _ => UnityWebRequest.Get(url),
+            case LoadResourceType.TXT:
+                webRequest = UnityWebRequest.Get(url);
+                break;
+
+            case LoadResourceType.TEXTURE2D:
+                webRequest = UnityWebRequestTexture.GetTexture(url);
+                break;
+
+            case LoadResourceType.MP3:
+                webRequest = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.MPEG);
+                break;
+
+            case LoadResourceType.OGG:
+                webRequest = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.OGGVORBIS);
+                break;
+
+            case LoadResourceType.AssetBundle:
+                webRequest = UnityWebRequestAssetBundle.GetAssetBundle(url);
+                break;
+
+            default:
+                webRequest = UnityWebRequest.Get(url);
+                break;
         };
         return webRequest;
     }
