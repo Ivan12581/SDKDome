@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using System.IO;
 
 using UnityEditor;
@@ -48,5 +48,14 @@ public class Util :Singleton<Util>
             CopyFolder(folder.FullName, subfolderTargetPath);
         }
         AssetDatabase.Refresh();
+    }
+    /// <summary>
+    /// 获取时间戳
+    /// </summary>
+    /// <returns></returns>
+    public string GetTimeStamp()
+    {
+        TimeSpan ts = DateTime.Now - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+        return Convert.ToInt64(ts.TotalSeconds).ToString();
     }
 }

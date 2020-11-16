@@ -16,9 +16,16 @@ namespace celia.game.editor
 
         [MenuItem("Tool/test1")]
         public static void test1() {
-            DirectoryInfo pathInfo = new DirectoryInfo(Application.dataPath);
-            string newPath = pathInfo.Parent.FullName;
-            Log.Info_blue(newPath);
+            //DirectoryInfo pathInfo = new DirectoryInfo(Application.dataPath);
+            //string newPath = pathInfo.Parent.FullName;
+            //Log.Info_blue(newPath);
+            //Util.Instance.GetTimeStamp();
+            Log.Info_blue(Util.Instance.GetTimeStamp());
+            Log.Info_blue(Util.Instance.GetTimeStamp());
+            Log.Info_blue(Util.Instance.GetTimeStamp());
+            Log.Info_blue(Util.Instance.GetTimeStamp());
+            Log.Info_blue(Util.Instance.GetTimeStamp());
+            Log.Info_blue(Util.Instance.GetTimeStamp());
         }
         [MenuItem("Tool/test")]
         public static void test() {

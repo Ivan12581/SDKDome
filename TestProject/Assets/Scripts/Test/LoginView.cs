@@ -14,9 +14,9 @@ public class LoginView : MonoBehaviour
     public InputField accountName;
     public GameObject GoTest;
     public InputField passWord;
-    public InputField serverIP;
-    public InputField serverPort;
-    public TMP_Dropdown dropDown;
+    //public InputField serverIP;
+    //public InputField serverPort;
+    //public TMP_Dropdown dropDown;
     /// <summary>
     /// 账号登陆
     /// </summary>
@@ -29,7 +29,10 @@ public class LoginView : MonoBehaviour
         string name = SystemInfo.deviceUniqueIdentifier;
         NetworkManager.gi.ConnectAuth_Login(name, "");
     }
-
+    public void AuthIPSetting()
+    {
+        
+    }
     /// <summary>
     /// Apple账号登陆
     /// </summary>
@@ -61,6 +64,7 @@ public class LoginView : MonoBehaviour
     {
         Debug.Log("---Unity---SDKPay---");
         //SDKPay.gi.Pay("test1");
+
     }
 
     /// <summary>
@@ -221,31 +225,16 @@ public class LoginView : MonoBehaviour
     public void InitSDK()
     {
         Debug.Log("---Unity---InitSDK---");
-        SDKManager.gi.InitSDK((s, dataDict) =>
-        {
-            Debug.Log("---Unity---InitSDKCallBack---");
-            SDKPay.gi.ApplePayInit();
-        });
+        //SDKManager.gi.InitSDK((s, dataDict) =>
+        //{
+        //    Debug.Log("---Unity---InitSDKCallBack---");
+        //    SDKPay.gi.ApplePayInit();
+        //});
+        Application.OpenURL("www.baidu.com");
+
     }
 
-    /// <summary>
-    /// 设置auth服务器的IP、Port
-    /// </summary>
-    public void SetServerIP()
-    {
-        Debug.Log("---serverIP.text---" + serverIP.text);
-        Debug.Log("---serverPort.text---" + serverPort.text);
-        if (!string.IsNullOrEmpty(serverIP.text))
-        {
-            GameSetting.gi.ip = serverIP.text;
-        }
-        if (!string.IsNullOrEmpty(serverPort.text))
-        {
-            GameSetting.gi.port = uint.Parse(serverPort.text);
-        }
-        Debug.Log("---开始测试--Application.OpenURL--接口-");
-        Application.OpenURL("https://www.baidu.com/");
-    }
+
 
     /// <summary>
     /// 账号切换
@@ -280,27 +269,10 @@ public class LoginView : MonoBehaviour
             });
         });
         Debug.Log("---LoginView Start--");
-        dropDown.ClearOptions();
-        for (int i = 0; i < 5; i++)
-        {
-            TMP_Dropdown.OptionData data = new TMP_Dropdown.OptionData();
-            data.text = "192.168.102.175"+i;
-            //data.image = "指定一个图片做背景不指定则使用默认"；
-            dropDown.options.Add(data);
-        }
+
 
     }
-    /// <summary>
-    /// 当点击后值改变是触发 (切换下拉选项)
-    /// </summary>
-    /// <param name="v">是点击的选项在OptionData下的索引值</param>
-    public void OnValueChange(int v)
-    {
-        //切换选项 时处理其他的逻辑...
-        Debug.Log("点击下拉控件的索引是..." + v);
-        serverIP.text = dropDown.options[v].text;
-        serverPort.text = dropDown.options[v].text;
-    }
+
     async void GetScreenShot(Action<string> callback)
     {
         await new WaitForEndOfFrame();

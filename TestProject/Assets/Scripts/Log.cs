@@ -20,4 +20,8 @@ public class Log
     {
         Debug.Log(string.Format("<color=blue>{0}</color>", str));
     }
+    public static void Info_red(string str)
+    {
+        Debug.Log(string.Format("<color=red>{0}</color>", str));
+    }
 }

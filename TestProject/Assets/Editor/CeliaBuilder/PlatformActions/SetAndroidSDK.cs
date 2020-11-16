@@ -94,7 +94,11 @@ namespace celia.game.editor
         private void SetSDKFolderBack()
         {
             //DeleteFolder(pluginAndroidPath);
-            Directory.Delete(pluginAndroidPath,true);
+            if (Directory.Exists(pluginAndroidPath))
+            {
+                Directory.Delete(pluginAndroidPath, true);
+            }
+
 
             SDKParams sdkParams = AssetDatabase.LoadAssetAtPath<SDKParams>("Assets/Resources/SDKParams.asset");
             sdkParams.SDKType = SDKType.None;
