@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -42,7 +43,9 @@ public class CeliaActivity extends UnityPlayerActivity {
 
         FaceBookEvent(601),
         AdjustEvent(602),
-        Purchase3rdEvent(603);
+        Purchase3rdEvent(603),
+        ClearNotification(701),
+        RegisterNotification(702);
 
         MsgID(int code) {
             this.code = code;
@@ -83,7 +86,7 @@ public class CeliaActivity extends UnityPlayerActivity {
             case ConsumeGoogleOrder:
                 googlePay.Consume(data);
                 break;
-            case GetDeviceId:
+            case ConfigInfo:
                 GetDeviceId();
                 break;
              case Share:
@@ -102,6 +105,12 @@ public class CeliaActivity extends UnityPlayerActivity {
                 adjustHelper.ThirdPurchaseEvent(data);
                 faceBookHelper.ThirdPurchaseEvent(data);
                 break;
+            case ClearNotification:
+                vitalitySender.ClearNotification();
+                break;
+            case RegisterNotification:
+                vitalitySender.RegisterNotification(data);
+                break;
             default:
                 return;
         }
@@ -117,13 +126,14 @@ public class CeliaActivity extends UnityPlayerActivity {
     AdjustHelper adjustHelper;
     ElvaHelper elvaHelper;
     LineHelper lineHelper;
+    VitalitySender vitalitySender;
     int CurLoginType = -1;
 
     public void ShowLog(String msg) {
         if (isDebug == 0) {
             return;
         }
-        System.out.println(msg);
+        Log.d(TAG, msg);
         if (isDebug == 1) {
             return;
         }
@@ -155,12 +165,8 @@ public class CeliaActivity extends UnityPlayerActivity {
         elvaHelper = new ElvaHelper(this);
         adjustHelper = new AdjustHelper(this);
         lineHelper = new LineHelper(this);
-        String deviceID = GetDeviceId();
+        vitalitySender = new VitalitySender(this);
         SendMessageToUnity(MsgID.Init.getCode(), new HashMap<String, String>(){ {put("state","1");} });
-        SendMessageToUnity(MsgID.ConfigInfo.getCode(), new HashMap<String, String>(){ {
-            put("state", "1");
-            put("deviceID", deviceID);
-        } });
 
     }
 //region 基础SDK接口
@@ -203,16 +209,9 @@ public class CeliaActivity extends UnityPlayerActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        ShowLog("code:" + requestCode);
-        ShowLog("resultCode:" + resultCode);
-        ShowLog("data:" + data);
-        if (CurLoginType == 4){//google
-            googlePay.onActivityResult(requestCode, resultCode, data);
-        }else if (CurLoginType == 5){//apple
-
-        }else if (CurLoginType == 6 ||CurLoginType == -1){//facebook login||share
-            faceBookHelper.callbackManager.onActivityResult(requestCode, resultCode, data);
-        }
+        ShowLog("code:" + requestCode+"  resultCode:"+resultCode+"  data:"+data);
+        googlePay.onActivityResult(requestCode, resultCode, data);
+        faceBookHelper.callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     public void Pay(String msg)
@@ -233,7 +232,7 @@ public class CeliaActivity extends UnityPlayerActivity {
         if (CurLoginType == 4){//google
             googlePay.Logout();
         }else if (CurLoginType == 5){//apple
-            appleSignIn.OpenWeb();
+
         }else if (CurLoginType == 6){//facebook
             faceBookHelper.Logout();
         }
@@ -246,10 +245,9 @@ public class CeliaActivity extends UnityPlayerActivity {
             IMEIDeviceId = Utils.getInstance().getIMEIDeviceId();
         }
         String finalIMEIDeviceId = IMEIDeviceId;
-        SendMessageToUnity(MsgID.GetDeviceId.getCode(), new HashMap<String, String>(){ {
+        SendMessageToUnity(MsgID.ConfigInfo.getCode(), new HashMap<String, String>(){ {
             put("state", "1");
-            put("UUID", finalIMEIDeviceId);
-            put("IsHighLevel", "");
+            put("deviceID", finalIMEIDeviceId);
         } });
 //        Utils.getInstance().getKeyHash();
         //Utils.getInstance().getCurrencyInfo();

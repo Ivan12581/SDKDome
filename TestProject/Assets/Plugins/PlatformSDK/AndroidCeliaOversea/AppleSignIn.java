@@ -58,7 +58,6 @@ public class AppleSignIn {
                     if (webView != null)
                     {
                         mUnityPlayer.removeView(webView);
-                        //TODO: 登陆失败处理
                     }
                 }
             }
@@ -87,13 +86,13 @@ public class AppleSignIn {
         ImageButton btn = new ImageButton(mainActivity);
         btn.setImageBitmap(bitmap);
         btn.getBackground().setAlpha(0);
-        btn.setPadding(10,10,0,0);
-        btn.setScaleX(2);
-        btn.setScaleY(2);
+        btn.setPadding(50,30,0,0);
+//        btn.setScaleX(1);
+//        btn.setScaleY(1);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CloseWeb();
+                CloseWeb(true);
             }
         });
         webView.addView(btn);
@@ -106,11 +105,17 @@ public class AppleSignIn {
         handler.sendMessage(msg);
     }
 
-    public  void CloseWeb()
+    public  void CloseWeb(boolean fail)
     {
         Message msg = Message.obtain();
         msg.arg1 = 0;
         handler.sendMessage(msg);
+        if (fail){
+            mainActivity.SendMessageToUnity(CeliaActivity.MsgID.Login.getCode(), new HashMap<String, String>(){
+                {
+                    put("state","0");
+                } });
+        }
     }
 
     void ReportResult(String json)
@@ -120,11 +125,7 @@ public class AppleSignIn {
         {
             JSONObject jsonObject = new JSONObject(json);
             if (jsonObject.has("error_code")){
-                mainActivity.SendMessageToUnity(CeliaActivity.MsgID.Login.getCode(), new HashMap<String, String>(){
-                    {
-                        put("state","0");
-                    } });
-                CloseWeb();
+                CloseWeb(true);
             }else {
                 mainActivity.SendMessageToUnity(CeliaActivity.MsgID.Login.getCode(), new HashMap<String, String>(){
                     {
@@ -133,7 +134,7 @@ public class AppleSignIn {
                         put("uid",jsonObject.getString("user_identifier"));
                         put("token",jsonObject.getString("id_token"));
                     } });
-                CloseWeb();
+                CloseWeb(false);
             }
 
         }catch (JSONException e){
@@ -146,10 +147,8 @@ public class AppleSignIn {
     {
         @Override
         public void onPageFinished(WebView view, String url) {
-            System.out.println("Current url:" + url);
             if (url.equals(Constant.apple_redirect_uri+"/"))
             {
-                System.out.println("Injected");
                 view.loadUrl("javascript:window.java_obj.getSource(document.getElementsByTagName('body')[0].innerText);");
             }
             super.onPageFinished(view, url);

@@ -42,6 +42,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
     implementation 'com.linecorp.linesdk:linesdk:5.4.0'
 	implementation 'com.google.firebase:firebase-messaging:20.3.0'
+    implementation project(path: ':unity-android-resources')
 **DEPS**}
 
 android {

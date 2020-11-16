@@ -58,6 +58,7 @@ public class AdjustHelper {
             public void onGoogleAdIdRead(String _googleAdId) {
                 googleAdId = _googleAdId;
                 mainActivity.ShowLog("---AdjustHelper googleAdId--->" + googleAdId);
+                mainActivity.GetDeviceId();
             }
         });
     }

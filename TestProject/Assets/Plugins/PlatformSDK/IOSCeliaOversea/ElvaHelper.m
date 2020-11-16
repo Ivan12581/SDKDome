@@ -108,7 +108,11 @@ static ElvaHelper *ElvaHelperIns = nil;
 }
 #pragma mark --外部打开反馈表单
 -(void)showSuggestWindow:(NSString *)formID{
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://aihelp.net/questionnaire/#/?formId=%@&appId=%@&uid=%@&userName=%@",formID,AIHelpAppID,playerUid,playerName]];
+    NSString *name = [playerName stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    NSString *urlStr = [NSString stringWithFormat:@"https://aihelp.net/questionnaire/#/?formId=%@&appId=%@&uid=%@&userName=%@",formID,AIHelpAppID,playerUid,name];
+
+    NSURL *url = [NSURL URLWithString: urlStr];
+    NSLog(@"-ios----showSuggestWindow---url----%@",url);
     if ([[UIApplication sharedApplication] canOpenURL:url]) {
         if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 10.0) {
                 //设备系统为IOS 10.0或者以上的

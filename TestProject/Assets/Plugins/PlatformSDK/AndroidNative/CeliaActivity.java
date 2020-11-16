@@ -67,7 +67,9 @@ public class CeliaActivity extends UnityPlayerActivity
 
         FaceBookEvent(601),
         AdjustEvent(602),
-        Purchase3rdEvent(603);
+        Purchase3rdEvent(603),        
+        ClearNotification(701),
+        RegisterNotification(702);
 
         MsgID(int code) {
             this.code = code;
@@ -117,6 +119,15 @@ public class CeliaActivity extends UnityPlayerActivity
             case UploadInfo:
                 UploadInfo(data);
                 break;
+            case CustomerService:
+                CustomerService();
+                break;
+            case ClearNotification:
+                vitalitySender.ClearNotification();
+                break;
+            case RegisterNotification:
+                vitalitySender.RegisterNotification(data);
+                break;
             default:
                 return;
         }
@@ -129,6 +140,9 @@ public class CeliaActivity extends UnityPlayerActivity
     private String appkey = "";
     private int isDebug = 1;
     private Toast mToast;
+
+    VitalitySender vitalitySender;
+
     private void showToast(String msg) {
         
         if(isDebug == 0){
@@ -287,6 +301,8 @@ public class CeliaActivity extends UnityPlayerActivity
         appkey = ini.getProperty("app_key");
         isDebug = Integer.parseInt(ini.getProperty("debug", "0"));
 
+        vitalitySender = new VitalitySender(this);
+
         SJoyMSDK.getInstance().doInit(CeliaActivity.this, appkey, mSJoyMsdkCallback);
     }
 //region 基础SDK接口
@@ -430,7 +446,12 @@ public class CeliaActivity extends UnityPlayerActivity
         }
 
     }
-
+    public void CustomerService()
+    {
+        showToast("CustomerService...");
+		//打开独立的客服中心，可以嵌入在游戏设置界面中
+		SJoyMSDK.getInstance().openSdkCustomerService(CeliaActivity.this);
+    }
     public void Share(String jsonStr){
         try {
             JSONObject json = new JSONObject(jsonStr);

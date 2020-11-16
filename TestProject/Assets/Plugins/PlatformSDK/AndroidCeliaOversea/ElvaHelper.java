@@ -96,10 +96,11 @@ public class ElvaHelper {
     }
     //5.外部打开反馈表单
     public void showSuggestWindow(String formId){
-        String s = MessageFormat.format("https://aihelp.net/questionnaire/#/?formId={0}&appId={1}&uid={2}&userName={3}",formId,
+        String str = MessageFormat.format("https://aihelp.net/questionnaire/#/?formId={0}&appId={1}&uid={2}&userName={3}",formId,
                 Constant.Elva_AppId,playerUid,playerName);
-        Uri uri=Uri.parse("https://aihelp.net/questionnaire/#/?formId=59a639c15027487ba447551b1f8d16cb&appId=elextech_platform_c72b5e80-ec84-45d7-9fe6-212c0800c423&uid=123&userName=456");
-        Intent intent=new Intent(Intent.ACTION_VIEW,uri);
+        // Uri uri=Uri.parse("https://aihelp.net/questionnaire/#/?formId=59a639c15027487ba447551b1f8d16cb&appId=elextech_platform_c72b5e80-ec84-45d7-9fe6-212c0800c423&uid=123&userName=456");
+        Uri uri = Uri.parse(str);
+        Intent intent = new Intent(Intent.ACTION_VIEW,uri);
         mainActivity.startActivity(intent);
     }
 }

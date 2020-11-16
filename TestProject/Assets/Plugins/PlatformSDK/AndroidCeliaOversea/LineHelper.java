@@ -48,7 +48,7 @@ public class LineHelper {
         lineApiClient = apiBuilder.build();
 
         Intent loginIntent = null;
-        if(checkApkExist(mainActivity,"jp.naver.line.android")){//App-to-App
+        if(Utils.getInstance().checkApkExist(mainActivity,"jp.naver.line.android")){//App-to-App
 //            Log.d(tag,"Login-App-to-App");
             loginIntent= LineLoginApi.getLoginIntent(mainActivity,lineChannelID,new LineAuthenticationParams.Builder()
                     .scopes(Arrays.asList(Scope.PROFILE))
@@ -63,20 +63,6 @@ public class LineHelper {
                     .build());
         }
         mainActivity.startActivityForResult(loginIntent,REQUEST_CODE);
-    }
-    //检查是否安装了app
-    public boolean checkApkExist(Context context, String packageName){
-        if(packageName==null){
-            return false;
-        }
-        try{
-            ApplicationInfo applicationInfo=context.getPackageManager()
-                    .getApplicationInfo(packageName, PackageManager.GET_UNINSTALLED_PACKAGES);
-            return true;
-        }catch (Exception e){
-            e.printStackTrace();
-            return false;
-        }
     }
     public void LoginCallBack(Intent data){
         LineLoginResult result = LineLoginApi.getLoginResultFromIntent(data);
@@ -102,73 +88,33 @@ public class LineHelper {
         }
     }
 
-    public void Share(String jsonStr){
-        try {
-            JSONObject json = new JSONObject(jsonStr);
-//            int shareType = json.getInt("shareType");
-            String text = json.getString("text");
-            String imgPath = json.getString("img");
-            Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-
-            ComponentName componentName = new ComponentName("jp.naver.line.android","jp.naver.line.android.activity.selectchat.SelectChatActivityLaunchActivity");
-            Intent shareIntent = new Intent(Intent.ACTION_SEND);
-            Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(mainActivity.getContentResolver(), bitmap, null,null));
-            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-            shareIntent.setType("image/jpeg"); //图片分享
-//        shareIntent.setType("text/plain"); // 纯文本
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT, text);//分享的标题
-            shareIntent.putExtra(Intent.EXTRA_TEXT, text);//分享内容
-            shareIntent.setComponent(componentName);//跳到指定APP的Activity
-            shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            mainActivity.startActivity(Intent.createChooser(shareIntent,text));
-            //Line没有分享回调 默认回调成功
-            mainActivity.SendMessageToUnity(CeliaActivity.MsgID.Share.getCode(), new HashMap<String, String>(){
-                {
-                    put("state", "1");
-                }
-            });
-        } catch (JSONException e)
-        {
+    public void Share(String text,String imgPath){
+        if (!Utils.getInstance().checkApkExist(mainActivity,"jp.naver.line.android")) {
             mainActivity.SendMessageToUnity(CeliaActivity.MsgID.Share.getCode(), new HashMap<String, String>(){
                 {
                     put("state", "0");
                 }
             });
+            return;
         }
-
-    }
-	public void Share(String text,String imgPath){
-		Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-		ComponentName componentName = new ComponentName("jp.naver.line.android","jp.naver.line.android.activity.selectchat.SelectChatActivityLaunchActivity");
-		Intent shareIntent = new Intent(Intent.ACTION_SEND);
-		Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(mainActivity.getContentResolver(), bitmap, null,null));
-		shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-		shareIntent.setType("image/jpeg"); //图片分享
-//        shareIntent.setType("text/plain"); // 纯文本
-		shareIntent.putExtra(Intent.EXTRA_SUBJECT, text);//分享的标题
-		shareIntent.putExtra(Intent.EXTRA_TEXT, text);//分享内容
-		shareIntent.setComponent(componentName);//跳到指定APP的Activity
-		shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		mainActivity.startActivity(Intent.createChooser(shareIntent,text));
-		//Line没有分享回调 默认回调成功
-		mainActivity.SendMessageToUnity(CeliaActivity.MsgID.Share.getCode(), new HashMap<String, String>(){
-			{
-				put("state", "1");
-			}
-		});
-    }
-    public void shareToLine(Bitmap bitmap,String content){
+        Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
         ComponentName componentName = new ComponentName("jp.naver.line.android","jp.naver.line.android.activity.selectchat.SelectChatActivityLaunchActivity");
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(mainActivity.getContentResolver(), bitmap, null,null));
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-         shareIntent.setType("image/jpeg"); //图片分享
+        shareIntent.setType("image/jpeg"); //图片分享
 //        shareIntent.setType("text/plain"); // 纯文本
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "");//分享的标题
-        shareIntent.putExtra(Intent.EXTRA_TEXT, content);//分享内容
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, text);//分享的标题
+        shareIntent.putExtra(Intent.EXTRA_TEXT, text);//分享内容
         shareIntent.setComponent(componentName);//跳到指定APP的Activity
         shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mainActivity.startActivity(Intent.createChooser(shareIntent,"content"));
+        mainActivity.startActivity(Intent.createChooser(shareIntent,text));
+        //Line没有分享回调 默认回调成功
+        mainActivity.SendMessageToUnity(CeliaActivity.MsgID.Share.getCode(), new HashMap<String, String>(){
+            {
+                put("state", "1");
+            }
+        });
     }
     public void Logout(){
         lineApiClient.logout();

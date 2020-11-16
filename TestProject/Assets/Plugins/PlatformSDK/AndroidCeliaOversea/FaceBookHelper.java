@@ -38,6 +38,8 @@ public class FaceBookHelper {
     public CallbackManager callbackManager;
     ShareDialog fbShareDialog;
     AppEventsLogger logger;
+    boolean shareState = false;
+    SharePhotoContent sharePhotoContent;
     public FaceBookHelper(CeliaActivity activity)
     {
         mainActivity = activity;
@@ -75,9 +77,12 @@ public class FaceBookHelper {
                         String userId = accessToken.getUserId();
                         String token = accessToken.getToken();
                         // TODO：拿到userId和token，传给游戏服务器校验
-                        mainActivity.ShowLog( "--onSuccess--");
-                        mainActivity.ShowLog("---FaceBookHelper userId--->" + userId);
-                        mainActivity.ShowLog("---FaceBookHelper token--->" + token);
+                        mainActivity.ShowLog( "-FaceBook-Login Success--userId:" + userId +"  token:" + token);
+                        if (shareState){
+                            shareState = false;
+                            fbShareDialog.show(mainActivity, sharePhotoContent);
+                            return;
+                        }
                         mainActivity.SendMessageToUnity(CeliaActivity.MsgID.Login.getCode(), new HashMap<String, String>(){
                             {
                                 put("state", "1");
@@ -89,8 +94,11 @@ public class FaceBookHelper {
 
                     @Override
                     public void onCancel() {
-                        // App code
-                        mainActivity.ShowLog("--onCancel--");
+                        mainActivity.ShowLog("--FaceBook Login  onCancel--");
+                        if (shareState){
+                            shareState = false;
+                            return;
+                        }
                         mainActivity.SendMessageToUnity(CeliaActivity.MsgID.Login.getCode(), new HashMap<String, String>(){
                             {
                                 put("state", "0");
@@ -100,8 +108,11 @@ public class FaceBookHelper {
 
                     @Override
                     public void onError(FacebookException exception) {
-                        // App code
-                        mainActivity.ShowLog( "--onError--");
+                        mainActivity.ShowLog( "--FaceBook Login onError--");
+                        if (shareState){
+                            shareState = false;
+                            return;
+                        }
                         mainActivity.SendMessageToUnity(CeliaActivity.MsgID.Login.getCode(), new HashMap<String, String>(){
                             {
                                 put("state", "0");
@@ -240,40 +251,30 @@ public class FaceBookHelper {
         }
 
     }
-//share
-    public void Share(String jsonStr){
-        try {
-            JSONObject json = new JSONObject(jsonStr);
-//            int shareType = json.getInt("shareType");
-            String text = json.getString("text");
-            String imgPath = json.getString("img");
-            Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-
-            SharePhoto photo = new SharePhoto.Builder()
+    public void Share(String text,String imgPath){
+        Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
+        SharePhoto photo = new SharePhoto.Builder()
                     .setBitmap(bitmap)
-                    .setCaption(text)
                     .build();
-            SharePhotoContent content = new SharePhotoContent.Builder()
-//                            .setContentUrl(Uri.parse(url))
+        SharePhotoContent content = new SharePhotoContent.Builder()
                     .addPhoto(photo)
                     .build();
-            fbShareDialog.show(this.mainActivity, content);
-        } catch (JSONException e)
-        {
-
+        sharePhotoContent = content;
+        if (!Utils.getInstance().checkApkExist(mainActivity,"com.facebook.katana")){
+            mainActivity.ShowLog( "---facebook app--");
+            shareState = true;
+            LoginManager.getInstance().logInWithReadPermissions(mainActivity, Arrays.asList("public_profile"));
+            return;
         }
-    }
-    public void Share(String text,String imgPath){
-		Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-		SharePhoto photo = new SharePhoto.Builder()
-				.setBitmap(bitmap)
-				.setCaption(text)
-				.build();
-		SharePhotoContent content = new SharePhotoContent.Builder()
-//                            .setContentUrl(Uri.parse(url))
-				.addPhoto(photo)
-				.build();
-		fbShareDialog.show(this.mainActivity, content);
+        if (!ShareDialog.canShow(SharePhotoContent.class)){
+            //国内特殊原因
+            mainActivity.ShowLog( "---facebook app--国内特殊原因--自启动啥的--");
+            shareState = true;
+            LoginManager.getInstance().logInWithReadPermissions(mainActivity, Arrays.asList("public_profile"));
+            return;
+        }
+
+        fbShareDialog.show(this.mainActivity, content);
 
     }
 }

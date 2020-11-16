@@ -232,7 +232,7 @@ code-信息
 #pragma mark -- 展示客服界面
 -(void)OpenService{
     [[RaStarCommon sharedInstance] showService];
-    [[RaStarCommon sharedInstance] addServiceDelegate:self];
+    //[[RaStarCommon sharedInstance] addServiceDelegate:self];
 }
 -(void)serviceClose{
     NSLog(@"->Celia 关闭客服界面成功:\n");
@@ -273,6 +273,9 @@ code-信息
                 break;
             case eUploadInfo:
                 [self UploadInfo:jsonstring];
+                break;
+			case eCustomerService:
+                [self OpenService];
                 break;
             default:
             NSLog(@"-ios----IOSBridgeHelper---该接口ios未实现----%i",type);
