@@ -28,6 +28,7 @@ import com.starjoys.msdk.platform.ysdk.ScreenCaptureDrawable;
 import com.starjoys.module.googletranslate.GoogleTranslateListener;
 import com.starjoys.module.googletranslate.GoogleTranslateResult;
 import com.starjoys.framework.callback.RSResultCallback;
+import com.starjoys.msdk.model.bean.AppBean;
 import com.xlycs.rastar.R;
 // Java
 import java.io.IOException;
@@ -434,11 +435,11 @@ public class CeliaActivity extends UnityPlayerActivity
                     put("appID", appBean.getApp_id());
                     put("cchID", appBean.getCch_id());
                     put("mdID", appBean.getMd_id());
-                    put("sdkVersion",appBean.getSdkVersion());
+                    put("sdkVersion",appBean.getSdk_version());
                     put("deviceID", SJoyMSDK.getInstance().getSdkDev(CeliaActivity.this));
                     put("sdkMac", SJoyMSDK.getInstance().getSdkMac(CeliaActivity.this));
                     put("sdkIMEI", SJoyMSDK.getInstance().getSdkIMEI(CeliaActivity.this));
-                    put("uid", SJoyMSDK.getInstance().getSdkUserUid(CeliaActivity.this));
+                    put("uid", SJoyMSDK.getInstance().getSdkUserUid());
                 }
             });
         }else {

@@ -93,7 +93,7 @@ PluginImporter:
       settings:
         AddToEmbeddedBinaries: false
         CompileFlags: 
-        FrameworkDependencies: 
+        FrameworkDependencies: GameKit;StoreKit;
   userData: 
   assetBundleName: 
   assetBundleVariant: 

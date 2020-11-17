@@ -56,12 +56,12 @@ public class VitalitySender
                 case 1:
                     Constant.Notification_Title_CollectMorning = title;
                     Constant.Notification_Text_CollectMorning = text;
-                    am.setRepeating(AlarmManager.RTC,(timeStamp * 1000),(60 * 60 * 24 * 1000),sender);
+                    am.setRepeating(AlarmManager.RTC,(timeStamp * 1000),AlarmManager.INTERVAL_DAY,sender);
                     break;
                 case 2:
                     Constant.Notification_Title_CollectAfternoon = title;
                     Constant.Notification_Text_CollectAfternoon = text;
-                    am.setRepeating(AlarmManager.RTC,(timeStamp * 1000),(60 * 60 * 24 * 1000),sender);
+                    am.setRepeating(AlarmManager.RTC,(timeStamp * 1000),AlarmManager.INTERVAL_DAY,sender);
                     break;
             }
 

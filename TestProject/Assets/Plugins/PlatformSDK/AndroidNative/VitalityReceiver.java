@@ -7,11 +7,12 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 
-import com.elex.girlsthrone.tw.gp.R;
+import com.xlycs.rastar.R;
 
 public class VitalityReceiver extends BroadcastReceiver {
     private static int NOTIFICATION_FLAG = 101801;
@@ -73,26 +74,31 @@ public class VitalityReceiver extends BroadcastReceiver {
                 new Intent(context, CeliaActivity.class), 0);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel mChannel = new NotificationChannel(id, name, NotificationManager.IMPORTANCE_LOW);
+            NotificationChannel mChannel = new NotificationChannel(id, name, NotificationManager.IMPORTANCE_HIGH);
             manager.createNotificationChannel(mChannel);
             Notification.Builder notiBuilder = new Notification.Builder(context)
                     .setChannelId(id)
                     .setContentTitle(GetTitle(type))
                     .setContentText(GetText(type))
-                    .setSmallIcon(R.mipmap.app_icon)
+                    .setSmallIcon(com.xlycs.rastar.resources.R.drawable.notificationicon)
+                    .setLargeIcon(BitmapFactory
+                            .decodeResource(context.getResources(),R.mipmap.app_icon))
                     .setContentIntent(pendingIntent)
                     .setAutoCancel(true);
             notification = notiBuilder.build();
         } else {
             Notification.Builder notiBuilder = new Notification.Builder(context)
+                    .setDefaults(Notification.DEFAULT_SOUND)
                     .setContentTitle(GetTitle(type))
                     .setContentText(GetText(type))
-                    .setSmallIcon(R.mipmap.app_icon)
+                    .setSmallIcon(com.xlycs.rastar.resources.R.drawable.notificationicon)
+                    .setLargeIcon(BitmapFactory
+                            .decodeResource(context.getResources(),R.mipmap.app_icon))
                     .setContentIntent(pendingIntent)
                     .setAutoCancel(true);
             notification = notiBuilder.build();
         }
-        manager.notify(NOTIFICATION_FLAG, notification);
+        manager.notify(NOTIFICATION_FLAG + type, notification);
     }
 
 

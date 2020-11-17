@@ -35,7 +35,7 @@ namespace celia.game
         public void CallSDK(SDKResultType type, string jsonString = "")
         {
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
-
+            return;
 #elif UNITY_ANDROID
             //Android需要一个统一的接口
             currentActivity.Call("CallFromUnity",(int)type, jsonString);
