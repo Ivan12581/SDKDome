@@ -144,6 +144,8 @@ typedef NS_ENUM(NSInteger, SDKLoginType)
 
 #pragma mark --init
 -(void)InitSDK{
+    NSDictionary *info= [[NSBundle mainBundle] infoDictionary];
+    NSLog(@"->Celia 初始化:%@",[NSString stringWithFormat:@"CFBundleShortVersionString--->%@&CFBundleVersion--->%@&",info[@"CFBundleShortVersionString"],info[@"CFBundleVersion"]]);
     [[AppleHelper sharedInstance] InitSDK:self];
     [[ApplePurchase sharedInstance] InitSDK:self];
     [[FBHelper sharedInstance] InitSDK:self];

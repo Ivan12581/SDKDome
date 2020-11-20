@@ -294,7 +294,7 @@ public class LoginView : MonoBehaviour
                 Debug.LogWarning(Newtonsoft.Json.JsonConvert.SerializeObject(msg));
             });
         });
-        Debug.Log("---LoginView Start--");
+        Debug.Log("-Unity--LoginView Start--Application.version:" + Application.version+ " Application.productName:" + Application.productName);
 
 
     }

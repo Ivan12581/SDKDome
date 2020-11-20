@@ -82,7 +82,9 @@ typedef NS_ENUM(NSInteger, MsgID)
 // SDK回调
 #pragma mark -- 初始化
 -(void)InitSDK{
-     NSLog(@"->Celia 初始化\n");
+    NSDictionary *info= [[NSBundle mainBundle] infoDictionary];
+    
+    NSLog(@"->Celia 初始化:%@",[NSString stringWithFormat:@"CFBundleShortVersionString--->%@&CFBundleVersion--->%@&",info[@"CFBundleShortVersionString"],info[@"CFBundleVersion"]]);
     [RaStarCommon sharedInstance].useSDKAlertView = YES;
     [RaStarCommon sharedInstance].mainBackGroundColor = [UIColor clearColor];
     
