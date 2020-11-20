@@ -14,6 +14,7 @@ public class LoginView : MonoBehaviour
     public InputField accountName;
     public GameObject GoTest;
     public InputField passWord;
+    public InputField rastarShareType;
     //public InputField serverIP;
     //public InputField serverPort;
     //public TMP_Dropdown dropDown;
@@ -239,11 +240,36 @@ public class LoginView : MonoBehaviour
     /// <summary>
     /// 账号切换
     /// </summary>
-    public void Switch()
+    public void RastarSwitch()
     {
-        Debug.Log("---Unity---Switch---");
+        Debug.Log("---Unity---RastarSwitch---");
         SDKManager.gi.Switch((s, dataDict) =>
         {
+        });
+    }
+    /// <summary>
+    /// 账号切换
+    /// </summary>
+    public void RastarLogin()
+    {
+        Debug.Log("---Unity---RastarLogin---");
+        SDKManager.gi.RastarLogin((s, dataDict) =>
+        {
+        });
+    }
+    /// <summary>
+    /// 账号切换
+    /// </summary>
+    public void RastarShare()
+    {
+        Debug.Log("---Unity---RastarShare--rastarShareType.text--->" + rastarShareType.text);
+        int type = int.Parse(rastarShareType.text);
+        GetScreenShot((imgPath) =>
+        {
+            SDKManager.gi.RastarShare(imgPath, type,(s, dataDict) =>
+            {
+                Debug.Log("---Unity---WXShare--callback-");
+            });
         });
     }
 

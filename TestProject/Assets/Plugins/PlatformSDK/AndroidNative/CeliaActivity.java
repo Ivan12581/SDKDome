@@ -1,11 +1,6 @@
 package celia.sdk;
 
 // Unity3D
-import com.starjoys.module.share.RastarShareCore;
-import com.starjoys.module.share.bean.RastarShareParams;
-import com.starjoys.module.share.bean.ShareContentType;
-import com.starjoys.module.share.callback.RSShareResultCallback;
-import com.starjoys.open.demo.MainActivity;
 import com.unity3d.player.*;
 // Android
 import android.content.Intent;
@@ -25,10 +20,16 @@ import com.starjoys.msdk.SJoyMSDK;
 import com.starjoys.msdk.SJoyMsdkCallback;
 import com.starjoys.msdk.model.constant.MsdkConstant;
 import com.starjoys.msdk.platform.ysdk.ScreenCaptureDrawable;
+import com.starjoys.msdk.model.bean.AppBean;
 import com.starjoys.module.googletranslate.GoogleTranslateListener;
 import com.starjoys.module.googletranslate.GoogleTranslateResult;
+import com.starjoys.module.share.RastarShareCore;
+import com.starjoys.module.share.bean.RastarShareParams;
+import com.starjoys.module.share.bean.ShareContentType;
+import com.starjoys.module.share.bean.SharePlatformType;
+import com.starjoys.module.share.callback.RSShareResultCallback;
 import com.starjoys.framework.callback.RSResultCallback;
-import com.starjoys.msdk.model.bean.AppBean;
+import com.starjoys.open.demo.MainActivity;
 import com.xlycs.rastar.R;
 // Java
 import java.io.IOException;
@@ -57,10 +58,6 @@ public class CeliaActivity extends UnityPlayerActivity
         Bind(203),
         Share(204),
         Naver(205),
-
-        WeiboShare(301),
-        FaceBookShare(302),
-        LineShare(303),
 
         ConsumeGoogleOrder(401),
 
@@ -117,6 +114,9 @@ public class CeliaActivity extends UnityPlayerActivity
             case ConfigInfo:
                 GetConfigInfo();
                 break;
+         	case Share:
+                Share(data);
+                break;
             case UploadInfo:
                 UploadInfo(data);
                 break;
@@ -134,24 +134,16 @@ public class CeliaActivity extends UnityPlayerActivity
         }
     }
     public void ShowLog(String msg) {
-        System.out.println(msg);
-    }
-    private final String TAG = "Celia";
-    private String iniFileName = "sjoys_app.ini";
-    private String appkey = "";
-    private int isDebug = 1;
-    private Toast mToast;
-
-    VitalitySender vitalitySender;
-
-    private void showToast(String msg) {
-        
-        if(isDebug == 0){
+        if (isDebug == 0) {
             return;
         }
-        
+        Log.d(TAG, msg);
+        if (isDebug == 1) {
+            return;
+        }
         CeliaActivity.this.runOnUiThread(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 if (mToast == null) {
                     mToast = Toast.makeText(CeliaActivity.this, null, Toast.LENGTH_SHORT);
                     mToast.setText(msg);
@@ -162,6 +154,14 @@ public class CeliaActivity extends UnityPlayerActivity
             }
         });
     }
+    private final String TAG = "RastarSDK";
+    private String iniFileName = "sjoys_app.ini";
+    private String appkey = "";
+    //debug等级，0关闭，1打印，2打印+toast
+    private int isDebug = 1;
+    private Toast mToast;
+
+    VitalitySender vitalitySender;
 
     public void SendMessageToUnity(int msgID, HashMap<String, String> dataMap)
     {
@@ -176,14 +176,14 @@ public class CeliaActivity extends UnityPlayerActivity
             //SDK初始化成功，收到此回调后，游戏可往下继续进行相关操作。
             //【注意】：对于一些加载耗时比较久的游戏，调用SDK初始化接口后立即进行游戏资源加载相关操作，
             //无需等SDK初始化完成后再加载资源。如出现SDK未初始化完成游戏调用SDK登录情况，SDK内部已做好流程控制，游戏无需担心。
-            showToast("SDK初始化成功！");
+            ShowLog("SDK初始化成功！");
             SendMessageToUnity(MsgID.Init.getCode(), new HashMap<String, String>(){ {put("state","1");} });
         }
 
         @Override
         public void onInitFail(String message) {
             //SDK初始化失败，游戏可重新调用SDK初始化接口。
-            showToast("SDK初始化失败，重新调用SDK初始化接口！");
+            ShowLog("SDK初始化失败，重新调用SDK初始化接口！");
             SendMessageToUnity(MsgID.Init.getCode(),new HashMap<String, String>(){ {put("state", "0"); put("message", message);} });
         }
 
@@ -193,7 +193,7 @@ public class CeliaActivity extends UnityPlayerActivity
             //【注意】：
             //1. 获取到token后，游戏用该token通过服务端验证接口获取真实的uid，具体参考服务端接入文档；
             //1. 客户端返回的uid只能作为一个备用值，真实的uid需通过服务端获取，这里提供为了防止网络问题，导致验证超时，从而无法获取uid的问题；
-            showToast("SDK登录成功：" + "\nuid：" + bundle.getString("uid") + "\ntoken：" + bundle.getString("token"));
+            ShowLog("SDK登录成功：" + "\nuid：" + bundle.getString("uid") + "\ntoken：" + bundle.getString("token"));
             HashMap<String, String> dataMap = new HashMap<String, String>(){
                 {
                     put("state", "1");
@@ -210,7 +210,7 @@ public class CeliaActivity extends UnityPlayerActivity
             //1.玩家取消登录：message等于MsdkConstant.CALLBACK_LOGIN_CANCEL
             //2.玩家登录失败：message会提示对应的原因
             //注意：CP不需要提示失败的具体原因，自行处理失败逻辑，如重新登录等
-            showToast("SDK登录失败：" + message);
+            ShowLog("SDK登录失败：" + message);
             SendMessageToUnity(MsgID.Login.getCode(), new HashMap<String, String>(){ {put("state", "0"); put("message", message);} });
         }
 
@@ -220,7 +220,7 @@ public class CeliaActivity extends UnityPlayerActivity
             //【注意】：
             //1. 获取到token后，游戏用该token通过服务端验证接口获取真实的uid，具体参考服务端接入文档；
             //1. 客户端返回的uid只能作为一个备用值，真实的uid需通过服务端获取，这里提供为了防止网络问题，导致验证超时，从而无法获取uid的问题；
-            showToast("SDK切换帐号成功：" + "\nuid：" + bundle.getString("uid") + "\ntoken：" + bundle.getString("token"));
+            ShowLog("SDK切换帐号成功：" + "\nuid：" + bundle.getString("uid") + "\ntoken：" + bundle.getString("token"));
             HashMap<String, String> dataMap = new HashMap<String, String>(){
                 {
                     put("state", "1");
@@ -237,14 +237,14 @@ public class CeliaActivity extends UnityPlayerActivity
             //1.玩家取消切换：message等于MsdkConstant.CALLBACK_SWITCH_CANCEL
             //2.玩家切换失败：message会提示对应的原因
             //注意：CP不需要提示失败的具体原因，自行处理失败逻辑，如重新登录等
-            showToast("SDK切换帐号失败：" + message);
+            ShowLog("SDK切换帐号失败：" + message);
             SendMessageToUnity(MsgID.Switch.getCode(), new HashMap<String, String>(){ {put("state", "0"); put("message", message);} });
         }
 
         @Override
         public void onPaySuccess(Bundle bundle) {
             //SDK支付成功，游戏发货以服务端回调为准
-            showToast("SDK支付成功，请在游戏内发货！");
+            ShowLog("SDK支付成功，请在游戏内发货！");
 
             SendMessageToUnity(MsgID.Pay.getCode(), new HashMap<String, String>(){ {put("state", "1");} });
         }
@@ -252,7 +252,7 @@ public class CeliaActivity extends UnityPlayerActivity
         @Override
         public void onPayFail(String message) {
             //SDK支付失败，游戏按需进行处理
-            showToast("SDK支付失败！");
+            ShowLog("SDK支付失败！");
 
             SendMessageToUnity(MsgID.Pay.getCode(), new HashMap<String, String>(){ {put("state", "0"); put("message", message);} });
         }
@@ -260,7 +260,7 @@ public class CeliaActivity extends UnityPlayerActivity
         @Override
         public void onExitGameSuccess() {
             //退出游戏成功，游戏在此进行退出游戏，销毁游戏资源相关操作。
-            showToast("SDK退出成功！");
+            ShowLog("SDK退出成功！");
             SendMessageToUnity(MsgID.ExitGame.getCode(), new HashMap<String, String>(){ {put("state", "1");} });
             CeliaActivity.this.finish();
             System.exit(1);
@@ -269,7 +269,7 @@ public class CeliaActivity extends UnityPlayerActivity
         @Override
         public void onExitGameFail() {
             //游戏无需处理，继续游戏。
-            showToast("SDK退出取消！");
+            ShowLog("SDK退出取消！");
             SendMessageToUnity(MsgID.ExitGame.getCode(), new HashMap<String, String>(){ {put("state", "0");} });
         }
 
@@ -277,7 +277,7 @@ public class CeliaActivity extends UnityPlayerActivity
         public void onLogoutSuccess() {
             //SDK注销成功，触发：SDK->悬浮球->更多->设置->切换帐号
             //【注意】游戏收到吃回调后，先回调游戏登录界面，再调用SDK切换帐号方法
-            showToast("SDK注销成功！");
+            ShowLog("SDK注销成功！");
             SJoyMSDK.getInstance().userSwitch(CeliaActivity.this);
             SendMessageToUnity(MsgID.Logout.getCode(), new HashMap<String, String>(){ {put("state", "1");} });
         }
@@ -285,7 +285,7 @@ public class CeliaActivity extends UnityPlayerActivity
         @Override
         public void onLogoutFail(String message) {
             //SDK注销失败，游戏无需处理
-            showToast("SDK注销失败！");
+            ShowLog("SDK注销失败！");
             SendMessageToUnity(MsgID.Logout.getCode(), new HashMap<String, String>(){ {put("state", "0"); put("message", message);} });
         }
     };
@@ -300,7 +300,7 @@ public class CeliaActivity extends UnityPlayerActivity
             ini = null;
         }
         appkey = ini.getProperty("app_key");
-        isDebug = Integer.parseInt(ini.getProperty("debug", "0"));
+        // isDebug = Integer.parseInt(ini.getProperty("debug", "0"));
 
         vitalitySender = new VitalitySender(this);
 
@@ -310,17 +310,17 @@ public class CeliaActivity extends UnityPlayerActivity
 
     public void Login()
     {
-        showToast("Login...");
+        ShowLog("Login...");
         SJoyMSDK.getInstance().userLogin(CeliaActivity.this);
     }
     public void Switch()
     {
-        showToast("Switch...");
+        ShowLog("Switch...");
         SJoyMSDK.getInstance().userSwitch(CeliaActivity.this);
     }
     public void Pay(String jsonString)
     {
-        showToast("Pay...");
+        ShowLog("Pay...");
         try{
             JSONObject jsonObject = new JSONObject(jsonString);
             HashMap<String, String> payInfo = new HashMap<String, String>();
@@ -351,7 +351,7 @@ public class CeliaActivity extends UnityPlayerActivity
     }
     public void ExitGame()
     {
-        showToast("ExitGame...");
+        ShowLog("ExitGame...");
         CeliaActivity.this.runOnUiThread(new Runnable() {
             @Override public void run() {
                 SJoyMSDK.getInstance().doExitGame(CeliaActivity.this);
@@ -361,7 +361,7 @@ public class CeliaActivity extends UnityPlayerActivity
 
     public void UploadInfo(String jsonData)
     {
-        showToast("UploadInfo...");
+        ShowLog("UploadInfo...");
         try
         {
             JSONObject jsonObject = new JSONObject(jsonData);
@@ -422,7 +422,7 @@ public class CeliaActivity extends UnityPlayerActivity
 
     public void GetConfigInfo()
     {
-        showToast("appID -> " + SJoyMSDK.getInstance().getAppConfig(CeliaActivity.this).getApp_id() +
+        ShowLog("appID -> " + SJoyMSDK.getInstance().getAppConfig(CeliaActivity.this).getApp_id() +
                 "\ncchID -> " + SJoyMSDK.getInstance().getAppConfig(CeliaActivity.this).getCch_id() +
                 "\n mdID -> " + SJoyMSDK.getInstance().getAppConfig(CeliaActivity.this).getMd_id() +
                 "\nsdkVersion -> " + SJoyMSDK.getInstance().getAppConfig(CeliaActivity.this).getSdk_version());
@@ -449,7 +449,7 @@ public class CeliaActivity extends UnityPlayerActivity
     }
     public void CustomerService()
     {
-        showToast("CustomerService...");
+        ShowLog("CustomerService...");
 		//打开独立的客服中心，可以嵌入在游戏设置界面中
 		SJoyMSDK.getInstance().openSdkCustomerService(CeliaActivity.this);
     }
@@ -458,10 +458,17 @@ public class CeliaActivity extends UnityPlayerActivity
             JSONObject json = new JSONObject(jsonStr);
             String text = json.getString("text");
             String imgPath = json.getString("img");
+            int type = json.getInt("type");
+            int[] typeArr = new int[]{3,4,0,1,2}; //Unity转为Android
+            //SINA QQ QQZONE WECHAT  WECHAT_FRIEND --->RastarSDK Android
+            //WeChat TimeLine Weibo QQ  QZone      --->RastarSDK IOS --->Unity
+            SharePlatformType sharePlatformType = SharePlatformType.values()[typeArr[type]];
             Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
 
             RastarShareParams rsp = new RastarShareParams()
                     .setContentType(ShareContentType.IMAGE) //类型（必须）
+                    //平台设置
+                    .setmPlatformType(sharePlatformType)
                     .setTitle(text)//分享的标题（必要）
                     .setDescription(text)//分享的描述（必要）
                     .setImageBit(bitmap);//分享的图片（bitmap） ps: 图片最好不要过大
@@ -469,7 +476,7 @@ public class CeliaActivity extends UnityPlayerActivity
             /**
              * 分享本地图片
              */
-            RastarShareCore.getInstance().oneKeyShare(this, rsp, new RSShareResultCallback() {
+            RastarShareCore.getInstance().shareAction(this, rsp, new RSShareResultCallback() {
                 @Override
                 public void onSuccess() {
                     System.out.println("分享成功");

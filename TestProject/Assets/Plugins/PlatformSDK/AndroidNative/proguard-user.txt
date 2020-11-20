@@ -25,6 +25,8 @@
 -keep interface com.starjoys.module.share.callback.RSShareResultCallback{*;}
 -keep class com.starjoys.module.share.RastarShareCore{*;}
 -keep class com.starjoys.module.share.bean.RastarShareParams{*;}
+-keep class com.starjoys.module.share.bean.ShareContentType{*;}
+-keep class com.starjoys.module.share.bean.SharePlatformType{*;}
 -keep class com.starjoys.module.share.RSShareTracker{*;}
 
 -dontnote com.starjoys.module.share.RastarShareManager

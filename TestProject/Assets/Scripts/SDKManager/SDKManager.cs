@@ -126,7 +126,16 @@ namespace celia.game
             CallSDK(SDKResultType.Login, ((int)type).ToString());
             //proxy?.Login(type);
         }
-
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="callBack">回调，state+数据字典</param>
+        public void RastarLogin(Action<int, Dictionary<string, string>> callBack = null)
+        {
+            callBackDict[SDKResultType.Login] = callBack;
+            CallSDK(SDKResultType.Login);
+            //proxy?.Login(type);
+        }
         /// <summary>
         /// 切换帐号
         /// </summary>
@@ -266,11 +275,12 @@ namespace celia.game
         /// <param name="callBack">分享回调</param>
         public void FBShare(string imgPath, Action<int, Dictionary<string, string>> callBack = null)
         {
-            callBackDict[SDKResultType.FaceBookShare] = callBack;
+            callBackDict[SDKResultType.Share] = callBack;
             JObject jObj = new JObject();
             jObj.Add("img", imgPath);
             jObj.Add("text", "");
-            CallSDK(SDKResultType.FaceBookShare, jObj.ToString());
+            jObj.Add("type", (int)ShareType.FaceBook);
+            CallSDK(SDKResultType.Share, jObj.ToString());
         }
         /// <summary>
         /// Line分享
@@ -278,23 +288,26 @@ namespace celia.game
         /// <param name="callBack"></param>
         public void LineShare(string imgPath, Action<int, Dictionary<string, string>> callBack = null)
         {
-            callBackDict[SDKResultType.LineShare] = callBack;
+            callBackDict[SDKResultType.Share] = callBack;
             JObject jObj = new JObject();
             jObj.Add("img", imgPath);
             jObj.Add("text", "");
-            CallSDK(SDKResultType.LineShare, jObj.ToString());
+            jObj.Add("type", (int)ShareType.Line);
+            CallSDK(SDKResultType.Share, jObj.ToString());
         }
+
         /// <summary>
-        /// 微信分享
+        /// 星辉sdk分享
         /// </summary>
         /// <param name="callBack"></param>
-        public void WXShare(string imgPath, Action<int, Dictionary<string, string>> callBack = null)
+        public void RastarShare(string imgPath,int type, Action<int, Dictionary<string, string>> callBack = null)
         {
-            callBackDict[SDKResultType.WXShare] = callBack;
+            callBackDict[SDKResultType.Share] = callBack;
             JObject jObj = new JObject();
             jObj.Add("img", imgPath);
-            jObj.Add("text", "");
-            CallSDK(SDKResultType.WXShare, jObj.ToString());
+            jObj.Add("text", "星辉sdk分享");
+            jObj.Add("type", type);
+            CallSDK(SDKResultType.Share, jObj.ToString());
         }
         /// <summary>
         /// FaceBook统计事件
@@ -453,9 +466,6 @@ namespace celia.game
         UploadInfo = 104,
         ExitGame = 105,
         Logout = 106,
-        /// <summary>
-        /// 获取设备唯一标识
-        /// </summary>
         GetDeviceId = 200,
         ConfigInfo = 201,
         GoogleTranslate = 202,
@@ -463,16 +473,14 @@ namespace celia.game
         Share = 204,
         Naver = 205,
 
-        WeiboShare = 301,
-        FaceBookShare = 302,
-        LineShare = 303,
-        WXShare = 304,
-
         ConsumeGoogleOrder = 401,
 
         CustomerService = 501,
         FaceBookEvent = 601,
         AdjustEvent = 602,
+        Purchase3rdEvent = 603,
+        ClearNotification = 701,
+        RegisterNotification = 702,
     }
 
     // SDK类型
@@ -494,5 +502,15 @@ namespace celia.game
         Apple,
         FaceBook,
         GameCenter,
+    }
+    public enum ShareType
+    {
+        WeChat,
+        TimeLine,
+        Weibo,
+        QQ,
+        QZone,
+        FaceBook,
+        Line,
     }
 }

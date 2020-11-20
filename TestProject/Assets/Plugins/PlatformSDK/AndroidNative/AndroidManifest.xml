@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:installLocation="preferExternal">
   <supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" android:anyDensity="true" />
-  <application android:theme="@style/UnityThemeSelector" android:icon="@mipmap/app_icon" android:label="@string/app_name" android:isGame="true" android:usesCleartextTraffic="true">
+  <application android:name="com.starjoys.module.SjoysApplication" android:theme="@style/UnityThemeSelector" android:icon="@mipmap/app_icon" android:label="@string/app_name" android:isGame="true" android:usesCleartextTraffic="true">
      <receiver
         android:name="celia.sdk.VitalityReceiver"
         android:enabled="true"
@@ -40,6 +40,23 @@
            android:name="android.support.FILE_PROVIDER_PATHS"
            android:resource="@xml/rsdk_file_paths" />
    </provider>
+   <!--友盟QQ登录分享-->
+	<activity
+		android:name="com.tencent.tauth.AuthActivity"
+		android:launchMode="singleTask"
+		android:noHistory="true">
+		<intent-filter>
+			<action android:name="android.intent.action.VIEW" />
+			<category android:name="android.intent.category.DEFAULT" />
+			<category android:name="android.intent.category.BROWSABLE" />
+			<!--scheme的值为：tencent+QQappid -->
+			<data android:scheme="tencent101908009" />
+		</intent-filter>
+	</activity>
+	<activity
+		android:name="com.tencent.connect.common.AssistActivity"
+		android:configChanges="orientation|keyboardHidden|screenSize"
+		android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 	<!--友盟微信登录分享-->
 	<activity
 		android:name="com.xlycs.rastar.wxapi.WXEntryActivity"

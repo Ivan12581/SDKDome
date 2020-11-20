@@ -152,12 +152,11 @@ namespace celia.game.editor
             BuildSummary summary = report.summary;
             if (summary.result == BuildResult.Succeeded)
             {
-                Debug.Log("Building successed, the total size is" + summary.totalSize + " bytes");
-                Debug.Log("Building time is" + summary.totalTime);
+                Log.Info_green("Building successed, the total size is" + summary.totalSize + " bytes");
             }
             else
             {
-                Debug.Log($"Building {summary.result}!");
+                Log.Info_yellow($"Building {summary.result}!");
             }
         }
     }
