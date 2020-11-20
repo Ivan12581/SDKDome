@@ -479,13 +479,13 @@ public class CeliaActivity extends UnityPlayerActivity
             RastarShareCore.getInstance().shareAction(this, rsp, new RSShareResultCallback() {
                 @Override
                 public void onSuccess() {
-                    System.out.println("分享成功");
+                    ShowLog("分享成功");
                     SendMessageToUnity(MsgID.Share.getCode(), new HashMap<String, String>(){ {put("state", "1");} });
                 }
 
                 @Override
                 public void onFail(String message) {
-                    System.out.println("分享失败");
+                    ShowLog("分享失败");
                     SendMessageToUnity(MsgID.Share.getCode(), new HashMap<String, String>(){ {put("state", "0");} });
                 }
             });

@@ -1,4 +1,4 @@
-package celia.sdk.wxapi;
+package com.xlycs.rastar.wxapi;
 
 import com.umeng.socialize.weixin.view.WXCallbackActivity;
 
