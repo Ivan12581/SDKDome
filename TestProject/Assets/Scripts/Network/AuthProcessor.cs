@@ -7,6 +7,7 @@ using System.Numerics;
 using System.Globalization;
 using System.Security.Cryptography;
 using UnityEngine;
+using Newtonsoft.Json;
 
 namespace celia.game
 {
@@ -18,7 +19,7 @@ namespace celia.game
         // All arithmetic is done modulo N.
         public static BigInteger g = 7;        // A generator modulo N
         public const int k = 3;     // Multiplier parameter (k = H(N, g) in SRP-6a, k = 3 for legacy SRP-6)
-        
+
         public static BigInteger s;        // User's salt
         public static BigInteger A, B;        // Public ephemeral values
         public static BigInteger K, M1;
@@ -47,7 +48,8 @@ namespace celia.game
 
         string logic_ip;    // 游戏服ip
         uint logic_port;    // 游戏服端口
-        
+        string http_address;   //http网址
+
         // 网络事件回调
         public event EventHandler<AuthEventArgs> state_callback;
 
@@ -58,17 +60,20 @@ namespace celia.game
 
         public void Init()
         {
-            NetworkManager.gi.RegisterMsgHandler(AuthMsgID.AuthMsgA2CRegisterRep, 
+            NetworkManager.gi.RegisterMsgHandler(AuthMsgID.AuthMsgA2CRegisterRep,
             new EventHandler<TcpClientEventArgs>(OnAuthMsgA2CRegisterRep));
 
-            NetworkManager.gi.RegisterMsgHandler(AuthMsgID.AuthMsgA2CLogonAsk, 
+            NetworkManager.gi.RegisterMsgHandler(AuthMsgID.AuthMsgA2CLogonAsk,
             new EventHandler<TcpClientEventArgs>(OnAuthMsgA2CLogonAsk));
 
-            NetworkManager.gi.RegisterMsgHandler(AuthMsgID.AuthMsgA2CLogonRep, 
+            NetworkManager.gi.RegisterMsgHandler(AuthMsgID.AuthMsgA2CLogonRep,
             new EventHandler<TcpClientEventArgs>(OnAuthMsgA2CLogonRep));
 
-            NetworkManager.gi.RegisterMsgHandler(AuthMsgID.AuthMsgA2CLogonRegion, 
+            NetworkManager.gi.RegisterMsgHandler(AuthMsgID.AuthMsgA2CLogonRegion,
             new EventHandler<TcpClientEventArgs>(OnAuthMsgA2CLogonRegion));
+
+            NetworkManager.gi.RegisterMsgHandler(AuthMsgID.AuthMsgA2CBindRep,
+            new EventHandler<TcpClientEventArgs>(OnAuthMsgA2CBindRep));
         }
 
         public string Account
@@ -81,9 +86,15 @@ namespace celia.game
             get { return account_id; }
         }
 
+        public string Http_Address
+        {
+            get { return http_address; }
+        }
+
         public byte[] SessionKey
         {
-            get {
+            get
+            {
                 if (loginType == LoginType.Account)
                 {
                     return BigInteger2ByteArray(SRP6.K);
@@ -136,6 +147,7 @@ namespace celia.game
                 pkt.V = (64 < _V.Length) ? _V.Substring(1, 64) : _V;
             }
 
+            //Debug.LogError("AuthMsgID.AuthMsgC2ARegisterReq : " + JsonConvert.SerializeObject(pkt));
             NetworkManager.gi.SendPkt(AuthMsgID.AuthMsgC2ARegisterReq, pkt);
 
             // 状态变化
@@ -145,11 +157,11 @@ namespace celia.game
         private void OnAuthMsgA2CRegisterRep(object sender, TcpClientEventArgs e)
         {
             a2c_register_rep msg = a2c_register_rep.Parser.ParseFrom(e.msg);
-
+            //Debug.LogError(JsonConvert.SerializeObject(msg));
             if (msg.Result != AccountOpResult.AorOk)
             {
                 //System.Console.WriteLine("{0}, register error. reason:{1}", I, msg.Result);
-                PopupMessageManager.gi.ShowInfo("注册/登录失败");
+                PopupMessageManager.gi.ShowInfo($"注册失败 {(int)msg.Result}");
             }
             else
             {
@@ -174,66 +186,6 @@ namespace celia.game
             // 状态变化
             state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_CHALLENGE));
         }
-        public void LoginApple(string user, string identityTokenStr = "")
-        {
-            loginType = LoginType.Apple;
-
-            c2a_logon_apple pkt = new c2a_logon_apple();
-            pkt.UserIdentifier = user;
-            
-            string SessionKey = SDKManager.gi.AppleSessionKey;
-            if (!string.IsNullOrEmpty(SessionKey))
-            {
-                pkt.SessionKey = SessionKey;
-            }
-            Debug.Log("--pkt.SessionKey--"+pkt.SessionKey);
-            if (!string.IsNullOrEmpty(identityTokenStr))
-            {
-                pkt.IdentityToken = identityTokenStr;
-            }
-
-            NetworkManager.gi.SendPkt(AuthMsgID.AuthMsgC2ALogonApple, pkt);
-            // 状态变化
-            state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_CHALLENGE));
-        }
-        public void LoginGameCenter(c2a_logon_apple_gamecenter pkt)
-        {
-            loginType = LoginType.GameCenter;
-
-            //c2a_logon_apple_gamecenter pkt = new c2a_logon_apple_gamecenter();
-            //pkt.UserIdentifier = user;
-            //pkt.IdentityToken = identityTokenStr;
-
-            NetworkManager.gi.SendPkt(AuthMsgID.AuthMsgC2ALogonAppleGamecenter, pkt);
-            // 状态变化
-            state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_CHALLENGE));
-        }
-        public void LoginGoogle(string userID, string TokenStr)
-        {
-            c2a_logon_google pkt = new c2a_logon_google
-            {
-                GoogleId = userID,
-                IdToken = TokenStr
-            };
-            loginType = LoginType.Google;
-
-            NetworkManager.gi.SendPkt(AuthMsgID.AuthMsgC2ALogonGoogle, pkt);
-            // 状态变化
-            state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_CHALLENGE));
-        }
-        public void LoginFaceBook(string userID, string TokenStr)
-        {
-            c2a_logon_facebook pkt = new c2a_logon_facebook
-            {
-                FacebookId = userID,
-                AccessToken = TokenStr
-            };
-            loginType = LoginType.FaceBook;
-
-            NetworkManager.gi.SendPkt(AuthMsgID.AuthMsgC2ALogonFacebook, pkt);
-            // 状态变化
-            state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_CHALLENGE));
-        }
         public static byte[] BigInteger2ByteArray(BigInteger v)
         {
             byte[] result = v.ToByteArray();
@@ -249,7 +201,6 @@ namespace celia.game
         private void OnAuthMsgA2CLogonAsk(object sender, TcpClientEventArgs e)
         {
             a2c_logon_ask msg = a2c_logon_ask.Parser.ParseFrom(e.msg);
-            Debug.LogWarning("OnAuthMsgA2CLogonAsk: " + Newtonsoft.Json.JsonConvert.SerializeObject(msg));
 
             SRP6.B = BigInteger.Parse("0" + msg.PublicKey, NumberStyles.AllowHexSpecifier);
             SRP6.s = BigInteger.Parse("0" + msg.S, NumberStyles.AllowHexSpecifier);
@@ -370,16 +321,17 @@ namespace celia.game
         /// <summary>
         /// 通过SDK Token的登录接口
         /// </summary>
-        public void Login(string sdkType, string token, string appKey, string appID, string cchID)
+        public void Login(string sdkType, string token, string openId, string appKey, int appID, int cchID)
         {
             loginType = LoginType.SDKToken;
             c2a_logon_sdk pkt = new c2a_logon_sdk()
             {
+                OpenId = openId,
                 SdkType = sdkType,
                 AccessToken = token,
-                AppId = appID,
+                AppId = appID.ToString(),
                 AppKey = appKey,
-                CchId = cchID
+                CchId = cchID.ToString()
             };
 
             //Debug.LogWarning("SDK Login: \n" + Newtonsoft.Json.JsonConvert.SerializeObject(pkt));
@@ -400,12 +352,68 @@ namespace celia.game
             // 状态变化
             state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_PROOF));
         }
+        public void LoginApple(string user, string token)
+        {
+            loginType = LoginType.Apple;
 
+            c2a_logon_apple pkt = new c2a_logon_apple();
+            pkt.UserIdentifier = user;
+            string SessionKey = SDKManager.gi.AppleSessionKey;
+
+            if (!string.IsNullOrEmpty(SessionKey))
+            {
+                pkt.SessionKey = SessionKey;
+            }
+            if (!string.IsNullOrEmpty(token))
+            {
+                pkt.IdentityToken = token;
+            }
+            NetworkManager.gi.SendPkt(AuthMsgID.AuthMsgC2ALogonApple, pkt);
+            // 状态变化
+            state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_CHALLENGE));
+        }
+        public void LoginGameCenter(c2a_logon_apple_gamecenter pkt)
+        {
+            loginType = LoginType.GameCenter;
+
+            //c2a_logon_apple_gamecenter pkt = new c2a_logon_apple_gamecenter();
+            //pkt.UserIdentifier = user;
+            //pkt.IdentityToken = identityTokenStr;
+
+            NetworkManager.gi.SendPkt(AuthMsgID.AuthMsgC2ALogonAppleGamecenter, pkt);
+            // 状态变化
+            state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_CHALLENGE));
+        }
+        public void LoginGoogle(string userID, string TokenStr)
+        {
+            c2a_logon_google pkt = new c2a_logon_google
+            {
+                GoogleId = userID,
+                IdToken = TokenStr
+            };
+            loginType = LoginType.Google;
+
+            NetworkManager.gi.SendPkt(AuthMsgID.AuthMsgC2ALogonGoogle, pkt);
+            // 状态变化
+            state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_CHALLENGE));
+        }
+        public void LoginFaceBook(string userID, string TokenStr)
+        {
+            c2a_logon_facebook pkt = new c2a_logon_facebook
+            {
+                FacebookId = userID,
+                AccessToken = TokenStr
+            };
+            loginType = LoginType.FaceBook;
+
+            NetworkManager.gi.SendPkt(AuthMsgID.AuthMsgC2ALogonFacebook, pkt);
+            // 状态变化
+            state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_CHALLENGE));
+        }
         private void OnAuthMsgA2CLogonRep(object sender, TcpClientEventArgs e)
         {
             a2c_logon_rep msg = a2c_logon_rep.Parser.ParseFrom(e.msg);
-            Debug.LogWarning(Newtonsoft.Json.JsonConvert.SerializeObject(msg));
-
+            Debug.Log("---OnAuthMsgA2CLogonRep--->" + Newtonsoft.Json.JsonConvert.SerializeObject(msg));
             if (msg.Result != AccountOpResult.AorOk)
             {
                 switch (loginType)
@@ -413,40 +421,42 @@ namespace celia.game
                     case LoginType.Account:
                         // 登陆失败进行注册
                         RegistAccount(I, p);
-                        break;
-                    case LoginType.SDKToken:
-                    case LoginType.Super:
+                        return;
+                    case LoginType.Google:
                     case LoginType.Apple:
                         if (msg.Result == AccountOpResult.AorPassWrongError)
                         {
                             //apple 登陆auth失败  SessionKey过期 重新登陆
                             SDKManager.gi.AppleSessionKey = "";
-                            LoginApple(Account);
+                            SDKManager.gi.AppleUserIdentifier = "";
                         }
                         break;
-                    case LoginType.GameCenter:
-                    case LoginType.Google:
                     case LoginType.FaceBook:
+                    case LoginType.GameCenter:
+                    case LoginType.SDKToken:
+                    case LoginType.Super:
                     default:
-                        Messenger.DispatchEvent(Notif.LOGIN_FAIL);
+                        Messenger.DispatchEvent(Notif.LOGIN_FAIL, msg.Result, msg.AccountId, msg.UnlockTime);
                         break;
                 }
+                //PopupMessageManager.gi.ShowInfo(loginType.ToString() + " LoginAuth_FAIL Result:" + msg.Result.ToString());
+                Messenger.DispatchEvent(Notif.LoginAuth_FAIL);
             }
             else
             {
                 account_id = msg.AccountId;
                 I = msg.Username;
                 guid = msg.Guid;
+                SDKManager.gi.AcountBindType = msg.BindType;
                 if (loginType == LoginType.Apple)
                 {
                     string SessionKey = msg.SessionKey;
                     if (!string.IsNullOrEmpty(SessionKey))
                     {
                         SDKManager.gi.AppleSessionKey = SessionKey;
-                        //PlayerPrefs.SetString("AppleSessionKey", SessionKey);
                     }
                 }
-
+                Messenger.DispatchEvent(Notif.LoginAuth_SUCCESS);
                 // 状态变化
                 state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_WAIT_LOGIC_INFO));
             }
@@ -458,25 +468,36 @@ namespace celia.game
 
             logic_ip = msg.Ip;
             logic_port = msg.Port;
-
-            Debug.Log("认证服:获取到逻辑服IP, 即将连接逻辑服  IP : " + logic_ip + " Port: " + logic_port);
-
-            // 状态变化
-            state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_LOGIC_INFO));
-
-            Debug.Log("认证服:断开到认证服的连接");
-            GameTcpClient.gi.Close();
+            http_address = msg.HttpAddress;
+            if (SDKManager.gi.AcountBindSwitch)
+            {
+                TouristBind();
+            }
+            else
+            {
+                Debug.Log("认证服:获取到逻辑服IP, 即将连接逻辑服  IP : " + logic_ip + " Port: " + logic_port);
+                Debug.Log("http服：" + http_address);
+                // 状态变化
+                state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_AUTH_LOGIC_INFO));
+                Debug.Log("认证服:断开到认证服的连接");
+                GameTcpClient.gi.Close();
+            }
         }
+        //游客账号绑定
+        public void TouristBind()
+        {
 
+        }
+        //游客账号绑定结果
+        private void OnAuthMsgA2CBindRep(object sender, TcpClientEventArgs e)
+        {
+
+        }
         public void ConnectingLogic()
         {
-            Debug.LogWarningFormat("Logic {0}:{1} connecting...", logic_ip, logic_port);
-            
             // 状态变化
             state_callback?.Invoke(this, new AuthEventArgs(NetState.NET_STATE_LOGIC_CONNECTING));
-
             GameTcpClient.gi.Connect(logic_ip, logic_port);
-            
         }
     }
 }

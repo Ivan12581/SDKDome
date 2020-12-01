@@ -155,6 +155,12 @@ enum LogicMsgID {
 	
 	LOGIC_MSG_C2L_RANDOM_FISHING_RESULT		= 58719; // 随机钓鱼结果（用于连续钓鱼类型）
 	LOGIC_MSG_L2C_RANDOM_FISHING_RESULT		= 58720; // 随机钓鱼结果（所有钓鱼类型）
+	
+	LOGIC_MSG_C2L_FISHING_ACTIVITY_ENTER 		= 58730; // 开始钓鱼大赛
+	LOGIC_MSG_L2C_FISHING_ACTIVITY_ENTER		= 58731;
+	LOGIC_MSG_L2C_FISHING_ACTIVITY_END			= 58732; // 钓鱼大赛结束通知
+	LOGIC_MSG_L2C_FISHING_ACTIVITY_TASK_UPD		= 58733; // 钓鱼大赛任务进度更新
+	LOGIC_MSG_L2C_FISHING_ACTIVITY_ROUND_UPD	= 58734; // 钓鱼大赛轮次更新
 
 	// 百科585--
 	LOGIC_MSG_C2L_ENCYCLOPEDIA_INIT			= 58501; // 百科初始化
@@ -204,6 +210,10 @@ enum LogicMsgID {
 	LOGIC_MSG_C2L_IOS_RECHARGE_CLOSED		= 58121; // 已删除IOS交易订单信息
 	LOGIC_MSG_C2L_IOS_RECHARGE_FAIL			= 58122; // 订单失败
 	
+	LOGIC_MSG_C2L_RECHARGE_MYCARD_INIT		= 58130; // MYCARD订单信息
+	LOGIC_MSG_L2C_RECHARGE_MYCARD_INIT		= 58131;
+	LOGIC_MSG_L2C_RECHARGE_MYCARD_INFO		= 58132; // MYCARD在线订单
+	
 	// 换装小游戏579--
 	LOGIC_MSG_C2L_MINIGAME_CLOTHCHANGING_STAR		= 57901; // 换装
 	LOGIC_MSG_L2C_MINIGAME_CLOTHCHANGING_SUCCESS	= 57902; // 换装成功
@@ -222,6 +232,9 @@ enum LogicMsgID {
 	
 	LOGIC_MSG_L2C_STORE_GOODS_UPD		= 57706; // 商品更新
 	LOGIC_MSG_L2C_STORE_PACKAGE_UPD		= 57707; // 礼包更新
+	
+	LOGIC_MSG_C2L_STORE_REFRESH		= 57708;	// 手动刷新商店
+	LOGIC_MSG_L2C_STORE_REFRESH		= 57709;	// 
 
 	// 新手引導576--
 	LOGIC_MSG_C2L_GUIDE_INIT		= 57601; // 初始化
@@ -236,6 +249,7 @@ enum LogicMsgID {
 	LOGIC_MSG_L2C_MAIL_READ			= 57504; // 
 	
 	LOGIC_MSG_L2C_MAIL_SEND			= 57505; // 有新邮件
+	LOGIC_MSG_L2C_MAIL_WITHDRAW		= 57506; // 邮件撤回
 	
 	// 公告574
 	LOGIC_MSG_L2C_NOTICE_INIT		= 57401; // 公告初始化
@@ -255,6 +269,9 @@ enum LogicMsgID {
 	// 累计登录570
 	LOGIC_MSG_C2L_SEVENLOGIN_INIT			= 57001;
 	LOGIC_MSG_L2C_SEVENLOGIN_REWARD			= 57002;	// 累积登录奖励
+	LOGIC_MSG_C2L_ACTIVITYLOGIN_INIT		= 57003;	// 活动累计登录
+	LOGIC_MSG_L2C_ACTIVITYLOGIN_INIT		= 57004;	//
+	LOGIC_MSG_L2C_ACTIVITYLOGIN_UPD			= 57005;	// 跨天活动累计推送
 	
 	// 个性化设置568
 	LOGIC_MSG_L2C_OPTIONS_UPD	= 56801;	// 更新设置
@@ -269,6 +286,9 @@ enum LogicMsgID {
 	LOGIC_MSG_L2C_OPTIONS_BUY	= 56809; // 
 	
 	LOGIC_MSG_C2L_OPTIONS_DIY_HEADIMG_UPD	= 56810; // 自定义头像变更
+	
+	LOGIC_MSG_C2L_OPTIONS_BIND_EMAIL		= 56811; // 绑定邮箱
+	LOGIC_MSG_L2C_OPTIONS_BIND_EMAIL		= 56812; // 
 	
 	// 抽卡566
 	LOGIC_MSG_C2L_LOTTERY_COST	= 56601;	// 抽卡
@@ -306,6 +326,9 @@ enum LogicMsgID {
 
 	LOGIC_MSG_L2C_ACHIEVEMENT_UPD				= 56011;	// 成就系统更新(等级,经验)
 	LOGIC_MSG_L2C_ACHIEVEMENT_STAGE_UPD			= 56012;	// 成就任务状态更新
+	
+	LOGIC_MSG_C2L_ACHIEVEMENT_GET_ALL_REWARD	= 56013;	// 一键领奖
+	LOGIC_MSG_L2C_ACHIEVEMENT_GET_ALL_REWARD	= 56014;
 	
 	//  资源购买系统559
 	LOGIC_MSG_C2L_RESOURCE_PURCHASE_INIT		= 55900;	// 初始化
@@ -463,6 +486,40 @@ enum LogicMsgID {
 	LOGIC_MSG_L2C_GOOGLE_PURCHASE_CREATE	= 54405; // 
 	LOGIC_MSG_C2L_GOOGLE_PURCHASE_TOKEN		= 54407; // 验证token
 	LOGIC_MSG_L2C_GOOGLE_PURCHASE_TOKEN		= 54408; //
+	
+	// Version版本 543
+	LOGIC_MSG_C2L_VERSION_INIT 				= 54300; // 请求当前version
+	LOGIC_MSG_L2C_VERSION_INIT				= 54301;
+	
+	// 限时副本 542
+	LOGIC_MSG_C2L_ACTIVITY_STORY_INIT		= 54200; // 请求限时副本数据
+	LOGIC_MSG_L2C_ACTIVITY_STORY_INIT		= 54201;
+	
+	LOGIC_MSG_C2L_ACTIVITY_STORY_START		= 54202; // 限时副本开启
+	LOGIC_MSG_L2C_ACTIVITY_STORY_START		= 54203;
+	
+	LOGIC_MSG_C2L_ACTIVITY_STORY_RESULT		= 54204; // 限时副本结果
+	LOGIC_MSG_L2C_ACTIVITY_STORY_RESULT		= 54205;
+	
+	LOGIC_MSG_C2L_ACTIVITY_STORY_FAST		= 54206; // 限时副本扫荡
+	LOGIC_MSG_L2C_ACTIVITY_STORY_FAST		= 54207;
+	
+	LOGIC_MSG_L2C_ACTIVITY_STORY_UPD		= 54208; // 限时副本更新
+	
+	// 运营活动 541
+	LOGIC_MSG_C2L_ACTIVITY_INIT 			= 54101; // 请求开放的运营活动
+	LOGIC_MSG_L2C_ACTIVITY_INIT				= 54102; //
+	LOGIC_MSG_L2C_ACTIVITY_UPD				= 54103; //
+	
+	// 自选随机礼包 540
+	LOGIC_MSG_C2L_OPEN_PACKAGE				= 54000; // 打开礼包
+	LOGIC_MSG_L2C_OPEN_PACKAGE				= 54001;
+	
+	// 功能开启状态 539
+	LOGIC_MSG_C2L_FUNC_LOCK_INIT			= 53900; 
+	LOGIC_MSG_L2C_FUNC_LOCK_INIT			= 53901;
+	
+	LOGIC_MSG_L2C_FUNC_LOCK_UPD				= 53902;
 }
 
 // 错误返回--------------------------------------------------------------------------------------------------------------
@@ -501,11 +558,11 @@ enum GameElementType
 // 角色解锁状态
 enum CharacterRelation
 {
-	CHARACTER_RELATION_NULL					= 0;
+	CHARACTER_RELATION_NULL					= 0;	// 没有遇见
 
-	CHARACTER_RELATION_KNOW					= 1;	// 了解,开始建立好感度
-	CHARACTER_RELATION_DATE					= 2;	// 约会,
-	CHARACTER_RELATION_BOSOM				= 3;	// 挚交,可战斗
+	CHARACTER_RELATION_KNOW					= 1;	// 了解，开始建立好感度（初始化用）
+	CHARACTER_RELATION_DATE					= 2;	// 初见，可以约会
+	CHARACTER_RELATION_BOSOM				= 3;	// 入队，可以战斗
 }
 
 message PTGameElement
@@ -604,6 +661,7 @@ message l2c_no_character {
 
 // 服务器就绪通知
 message l2c_ready {
+	int64 local_time			= 1;	// 服务器当前时间
 }
 
 // 客户端就绪通知
@@ -1433,6 +1491,7 @@ message l2c_start_fishing {
 message c2l_fishing_success {
 	int32 fishing_space		= 1; // 渔场ID
 	RandomStageIndex	random_info = 2; // 随机钓鱼关卡索引
+	int32 result	= 3; // 钓鱼结果（0失败，1成功，2大成功）
 }
 
 message l2c_fishing_success {
@@ -1454,6 +1513,45 @@ message c2l_random_fishing_result {
 message l2c_random_fishing_result {
 	bool					result	= 1; // 流程更新结果
 	repeated PTGameElement	rewards	= 2; // 结算奖励
+}
+
+message c2l_fishing_activity_enter {
+	int32		activity_id	= 1;	// 进入的活动id
+	int32		space_id	= 2;	// 进入的鱼塘id（废弃）
+}
+
+message l2c_fishing_activity_enter {
+	message RoundInfo {
+		int32	round_id	= 1;	// 轮次id
+		bool	result		= 2;	// 轮次是否达成
+	}
+
+	bool									result			= 1;	// 是否进入成功
+	int32									cur_round		= 2;	// 当前轮次
+	int32									activity_secs	= 3;	// 活动剩余秒数
+	int32									round_secs		= 4;	// 轮次剩余秒数
+	
+	repeated RoundInfo						round_infos		= 5;	// 轮次信息
+	repeated l2c_fishing_activity_task_upd	tasks			= 6;	// 活动任务（初始信息）
+}
+
+message l2c_fishing_activity_end {
+	int32		activity_id	= 1;	// 进入的活动id
+	int32		space_id	= 2;	// 鱼塘id
+	
+	bool					result	= 3; // 结果
+	repeated PTGameElement	rewards	= 4; // 结算奖励
+}
+
+message l2c_fishing_activity_task_upd {
+	int32		task_id	= 1;	// 任务id
+	int32		value	= 2;	// 当前进度值
+}
+
+message l2c_fishing_activity_round_upd {
+	int32						activity_id		= 1;	// 活动ID
+	int32						cur_round		= 2;	// 当前轮次
+	int32						round_secs		= 3;	// 轮次剩余秒数
 }
 
 // ---------------------------------------------------------------------------------------------------------------钓鱼
@@ -1599,7 +1697,7 @@ message l2c_recharge_order_upd {
 message l2c_recharge_goods_upd {
 	message SumRechargeInfo {
 		int32			active_id		= 1;	// 活动ID，0:总累充 other:对应活动ID(总累充暂时没有档位奖励)
-		int64			sum_money		= 2;	// 累计充值点数
+		int64			recharge_point	= 2;	// 累计充值点数
 		repeated int32	can_award_id	= 3;	// 可领取奖励奖励档位ID
 		repeated int32	own_award_id	= 4;	// 已领取奖励奖励档位ID
 		int64			deadline		= 5;	// 剩余时间(单位:s，累充没有此值)
@@ -1608,6 +1706,7 @@ message l2c_recharge_goods_upd {
 	repeated SumRechargeInfo	sum_info		= 1;	// 累充信息
 	repeated int32				double_goods	= 2; 	// 已购买的首冲双倍商品
 	bool						is_cost			= 3;	// 首充奖励标记(0:玩家没领取 1:玩家领取过)
+	float						mon_recharge	= 4;	// 当月已充值金额
 }
 
 message c2l_recharge_goods_init {
@@ -1626,6 +1725,21 @@ message c2l_recharge_get_sum_award {
 message l2c_recharge_get_sum_award {
 	bool					result	= 1; // 领取结果
 	repeated PTGameElement 	awards 	= 2; // 奖励元素
+}
+
+message l2c_recharge_mycard_info {
+	string			plat_order_no	= 1; // 平台订单id
+	float			price			= 2; // 价格
+	string			currency		= 3; // 币种
+	string			product_id		= 4; // 产品id
+}
+
+message c2l_recharge_mycard_init {
+	
+}
+
+message l2c_recharge_mycard_init {
+	repeated l2c_recharge_mycard_info 	orders = 1; // 订单信息
 }
 //  -------------------------------------------------------------------------------------------------------充值
 
@@ -1738,10 +1852,10 @@ message c2l_stage_branchmodel
 
 message l2c_stage_branchmodel
 {
-	BranchmodelDailyRaid coinraid = 1;		// 金幣副本
-	BranchmodelDailyRaid expraid = 2;		// 經驗副本
-	BranchmodelDailyRaid huchengraid = 3;		// 材料副本
-	BranchmodelSingleRaid individualraid = 4;	// 單人副本
+	BranchmodelDailyRaid coinraid = 1;			// 金币副本
+	BranchmodelDailyRaid expraid = 2;			// 强化液副本（衣服经验）
+	BranchmodelDailyRaid huchengraid = 3;		// 思念精华副本（人物经验）
+	BranchmodelSingleRaid individualraid = 4;	// 单人副本
 }
 
 //---------------------------------------------------------------------------------------------------------副本界面
@@ -1758,6 +1872,9 @@ message StorePackages
 	int32	package_id		= 1; // 礼包ID
 	int32	remain_cnts		= 2; // 剩余可购买次数（不限制次数，不用此字段）
 	int32	refresh_secs	= 3; // 下次刷新剩余秒数（没有刷新需求，不用此字段）
+	bool	if_limited		= 4; // 是否为限时购买
+	int32   remain_start_secs	= 5; // 如果是限时购买,剩余开启秒数。若为0代表已开启。
+	int32 	remain_end_secs		= 6; // 如果是限时购买,剩余结束秒数。若为0代表已结束。
 }
 
 message c2l_store_init
@@ -1768,10 +1885,12 @@ message c2l_store_init
 message l2c_store_upd
 {
 	int32					store_id	= 1;	// 商店ID
-	int32					remaintimes	= 2;	// 剩余时间
+	int32					remaintimes	= 2;	// 剩余时间（商店刷新类型为123时,剩余刷新时间; 商店刷新类型为45时,为结束时间）
 	
 	repeated StoreGoods		goods		= 3;	// 商品信息（商店类型为商品时，用此字段）
 	repeated StorePackages	packages	= 4;	// 礼包信息（商店类型为礼包时，用此字段）
+	
+	int32					refresh_cnts	= 5;	// 已刷新次数
 }
 
 message l2c_store_init
@@ -1801,6 +1920,15 @@ message l2c_store_package_upd
 {
 	int32			store_id	= 1;	// 商店ID
 	StorePackages	package		= 2;	// 礼包信息
+}
+
+message c2l_store_refresh {
+	int32			store_id	= 1;	// 商店ID
+}
+
+message l2c_store_refresh {
+	bool			result	= 1;	// 结果
+	int32			cnts	= 2;	// 已刷新次数
 }
 
 //----------------------------------------------------------------------------------------------------------商城
@@ -1889,17 +2017,25 @@ message l2c_mail_send
 	MailInfo mail = 1;    // 这些新邮件信息
 }
 
+// LOGIC_MSG_L2C_MAIL_WITHDRAW
+message l2c_mail_withdraw
+{
+	int32 id = 1; // 撤回的邮件id
+}
+
 //--------------------------------------------------------------------------------------------------------------------邮箱
 
 //公告--------------------------------------------------------------------------------------------------------------------
 message NoticeInfo
 {
-	uint32 id         = 1; // id
-	uint64 start_time = 3; // 开始时间戳
-	uint64 end_time   = 4; // 结束时间戳
-	uint32 cycle_time = 5; // 循环分钟（废弃）
-	string title      = 6; // 标题
-	string content    = 7; // 内容
+	uint32 id			= 1; // id
+	uint64 start_time	= 3; // 开始时间戳
+	uint64 end_time		= 4; // 结束时间戳
+	uint32 cycle_time	= 5; // 循环分钟（废弃）
+	string title		= 6; // 标题
+	string content		= 7; // 内容
+	string picture		= 8; // 图片
+	string summary		= 9; // 简介
 }
 
 message c2l_notice_init
@@ -1909,12 +2045,15 @@ message c2l_notice_init
 
 message l2c_notice_init
 {	
-	NoticeInfo notices = 3;
+	int32		total_num	= 1; // 总公告数
+	int32		index		= 2; // 当前索引（从0开始）
+	NoticeInfo	notice		= 3; // 当前公告
 }
 
 message l2c_notice_send
 {
-	NoticeInfo notice = 1;
+	NoticeInfo	notice		= 1;
+	int32		opt_type	= 2; // 操作类型（1：添加 2：删除）
 }
 //--------------------------------------------------------------------------------------------------------------------公告
 
@@ -2002,7 +2141,7 @@ message l2c_exploration_award
 }
 //--------------------------------------------------------------------------------------------------------------------探索
 
-//七日累积登录------------------------------------------------------------------------------------------------------------
+//累积登录------------------------------------------------------------------------------------------------------------
 message c2l_sevenlogin_init
 {
 
@@ -2012,6 +2151,23 @@ message l2c_sevenlogin_reward
 {
 	int32 dayid = 1;			// 天数
 	repeated PTGameElement rewards = 2;	// 奖励
+}
+
+message c2l_activitylogin_init
+{
+	
+}
+
+message l2c_activitylogin_init
+{
+	repeated l2c_activitylogin_upd	infos	= 1; // 活动累计登录信息
+}
+
+message l2c_activitylogin_upd
+{
+	int32					activity_id		= 1; // 活动id
+	int32					total_days		= 2; // 累计天数
+	repeated PTGameElement	rewards			= 3; // 奖励
 }
 
 //------------------------------------------------------------------------------------------------------------七日累积登录
@@ -2028,6 +2184,7 @@ message l2c_options_upd {
 	int32	cur_background	= 7;	// 当前使用的背景
 	string 	phone_num		= 8;	// 当前绑定手机
 	bool	reward			= 9; 	// 是否已领奖
+	string	bind_email		= 10;	// 当前绑定邮箱
 }
 
 message c2l_options_init {
@@ -2070,6 +2227,15 @@ message c2l_options_diy_headimg_upd {
 	
 }
 
+message c2l_options_bind_email {
+	string		email	= 1;	// 邮箱地址
+}
+
+message l2c_options_bind_email {
+	bool					result	= 1; // 结果
+	repeated PTGameElement 	awards 	= 2; // 奖励元素（如果没有表示不是首次绑定，领不到此奖励）
+}
+
 //------------------------------------------------------------------------------------------------------------个性化设置
 
 //抽卡------------------------------------------------------------------------------------------------------------
@@ -2089,7 +2255,7 @@ message l2c_lottery_cost {
 	
 	repeated GachaInfo results	= 1; // 抽奖结果
 	bool	is_enable			= 2; // 卡池是否可抽（false时表示卡池结束，抽奖失败，其余情况为true）
-	int32	result				= 3; // 抽奖结果（0:异常  1：成功  2：券不足）
+	int32	result				= 3; // 抽奖结果（0:异常  1：成功  2：券不足 3:可抽次数不足）
 }
 
 message c2l_lottery_add {
@@ -2108,6 +2274,8 @@ message l2c_lottery_pool_upd {
 	
 	int32 end_secs		= 2; // 剩余秒数（常驻卡池没有此信息）
 	int64 end_time		= 3; // 截止时间戳（常驻卡池没有此信息）
+	int32 draw_num		= 4; // 今日抽取次数
+	int32 total_draw_num = 5; // 总抽取次数
 }
 
 message c2l_lottery_pool_init {
@@ -2199,6 +2367,7 @@ message l2c_achievement_upd
 }
 
 message l2c_achievement_stage_upd
+
 {
 	int32						stage_id				= 1;	// 成就任务ID
 	int32						complete_count			= 2;	// 完成进度(目前表示数量)
@@ -2206,6 +2375,19 @@ message l2c_achievement_stage_upd
 	int64						complete_time			= 4;	// 完成时间(完成状态有效)
 	int32						complete_proportion		= 5;	// 完成比例(放大10000倍)
 	int32 						progress_target			= 6;	// 完成目标		
+}
+
+// LOGIC_MSG_C2L_ACHIEVEMENT_GET_ALL_REWARD	= 56013;	// 一键领奖
+message c2l_achievement_get_all_reward
+{
+	int32	type = 1;
+}
+
+// LOGIC_MSG_L2C_ACHIEVEMENT_GET_ALL_REWARD	= 56014;
+message l2c_achievement_get_all_reward
+{
+	int32	type = 1;
+	repeated PTGameElement rewards = 2;
 }
 
 //------------------------------------------------------------------------------------------------------------成就系统
@@ -2291,13 +2473,14 @@ message l2c_resource_purchase_buy
 
 // -------------------------------------------------------------------------------------------------资源购买系统
 
-// 定时体力 ------------------------------------------------------------------------------------------------------
+// 限时体力领取 ------------------------------------------------------------------------------------------------------
 
+// 限时体力领取状态
 enum OntimeVitUpdateType
 {
-	ONTIME_VIT_TYPE_MORNING_OPEN	= 0;
-	ONTIME_VIT_TYPE_AFTERNOON_OPEN	= 1;
-	ONTIME_VIT_TYPE_END				= 2;
+	ONTIME_VIT_TYPE_MORNING_OPEN            = 0;	// 上午领取体力开启
+	ONTIME_VIT_TYPE_AFTERNOON_OPEN          = 1;	// 下午领取体力开启
+	ONTIME_VIT_TYPE_END                     = 2;	// 关闭
 }
 
 message c2l_ontime_vit_init
@@ -2306,8 +2489,8 @@ message c2l_ontime_vit_init
 
 message l2c_ontime_vit_init
 {
-	OntimeVitUpdateType type 	= 1;
-	int32 vit_num		 		= 2;
+	OntimeVitUpdateType type                = 1;	// 可领取状态
+	int32 vit_num                           = 2;	// 可领取数量
 }
 
 message c2l_ontime_vit_recv
@@ -2316,16 +2499,15 @@ message c2l_ontime_vit_recv
 
 message l2c_ontime_vit_recv
 {
-	int32 success_flag 	= 1;
+	int32 success_flag                      = 1;	// 领取结果(1:成功 0:失败)
 }
 
 message l2c_ontime_vit_upd
 {
-	
-	OntimeVitUpdateType type 	= 1;
-	int32 vit_num 				= 2;
+	OntimeVitUpdateType type                = 1;	// 可领取状态
+	int32 vit_num                           = 2;	// 可领取数量
 }
-// -------------------------------------------------------------------------------------------------定时体力
+// ------------------------------------------------------------------------------------------------- 限时体力领取
 
 // 使用体力道具--------------------------------------------------------------------------------------------
 
@@ -3050,3 +3232,189 @@ message l2c_google_purchase_token {
 }
 
 //  ------------------------------------------------------------------------------------------Google支付
+
+// Version版本 ------------------------------------------------------------------------------------------
+
+// LOGIC_MSG_C2L_VERSION_INIT
+message c2l_version_init
+{
+}
+
+// LOGIC_MSG_L2C_VERSION_INIT
+message l2c_version_init
+{
+	string version = 1;
+}
+
+// -------------------------------------------------------------------------------------------Version版本
+
+// 限时副本 ----------------------------------------------------------------------------------------------
+
+// LOGIC_MSG_C2L_ACTIVITY_STORY_INIT		= 54200; 
+message c2l_activity_story_init
+{
+	int32 act_id = 1; // 活动id
+}
+
+message ActivityStoryStage
+{
+	int32				stage_id			= 1;	// 关卡ID
+	repeated int32		front_ids			= 2;	// 前置连线关卡
+	StageState			state				= 3;	// 关卡状态(用于关卡操作)
+	bool				cost				= 6;	// 扣费状态(剧情关卡用 true:已扣费 false:未扣费)
+	
+	bool				plot_complete		= 10;	// 剧情完成状态
+	int32				finished_count		= 11;	// 节点完成数量
+	repeated int32		nodes				= 12;	// 剧情节点
+
+	CombatInfo			combate_result		= 14;	// 战斗信息
+	repeated StoryLockInfo	lock_infos		= 15;	// 关卡锁定信息(LOCK状态使用)
+}
+
+message ActivityStoryChapter
+{
+	int32 chapter_id = 1;
+	repeated ActivityStoryStage stage_info = 2;
+}
+
+// LOGIC_MSG_L2C_ACTIVITY_STORY_INIT		= 54201;
+message l2c_activity_story_init
+{
+	int32 act_id = 1;
+	int32 cur_max_id = 2; // 玩家当前通关的最大关卡ID
+	int32 cur_max_difficult_id = 3; // 当前通关的最大困难关卡
+	repeated ActivityStoryChapter chapter_info = 4; // 所有章节信息
+}
+
+// LOGIC_MSG_C2L_ACTIVITY_STORY_START		= 54202; // 限时副本开启
+message c2l_activity_story_start {
+	int32				stage_id		= 1;	// 关卡ID
+}
+
+// LOGIC_MSG_L2C_ACTIVITY_STORY_START		= 54203;
+message l2c_activity_story_start {
+	int32				stage_id		= 1;	// 关卡ID
+	StageStartResult	result			= 2;	// 关卡开始结果
+}
+
+// LOGIC_MSG_C2L_ACTIVITY_STORY_RESULT		= 54204; // 限时副本结果
+message c2l_activity_story_result {
+	int32				stage_id		= 1;	// 关卡ID（都发）
+	
+	bool				plot_complete	= 2;	// 剧情完成状态（剧情发）
+	int32				finshed_count	= 3;	// 节点完成数量（剧情发）
+	repeated int32		nodes			= 4;	// 剧情节点（剧情发）
+	repeated MutexNode	mutex_nodes		= 5;	// 互斥节点集合（剧情发）
+	
+	RandomStageIndex	random_info		= 7;	// 随机关卡信息（随机战斗发）
+
+	CombatInfo			combate_result		= 14;	// 战斗信息（战斗发）
+	int32 				settlement			= 15;	// 結算 1、戰鬥 2.劇情（都发）
+}
+	
+// LOGIC_MSG_L2C_ACTIVITY_STORY_RESULT		= 54205;
+message l2c_activity_story_result
+{
+	repeated PTGameElement reward = 1;
+	message CharacterLevel
+	{
+		int32					id					= 1;	// ID
+		int32					level				= 2;	// 等级
+	}
+	repeated CharacterLevel		character_level		= 2;	// 角色等级
+}
+
+// LOGIC_MSG_C2L_ACTIVITY_STORY_FAST		= 54206; // 限时副本扫荡
+message c2l_activity_story_fast
+{
+	int32				stage_id		= 1;	// 关卡ID
+	int32				times			= 2;	// 次数(>=1)
+}
+
+// LOGIC_MSG_L2C_ACTIVITY_STORY_FAST		= 54207;
+message l2c_activity_story_fast
+{
+	repeated l2c_story_reward reward = 1;
+}
+
+// LOGIC_MSG_L2C_ACTIVITY_STORY_UPD
+message l2c_activity_story_upd
+{
+	ActivityStoryStage stage_info = 1;
+}
+
+// ---------------------------------------------------------------------------------------------- 限时副本
+
+// 运营活动 ------------------------------------------------------------------------------------------
+message c2l_activity_init
+{
+
+}
+
+message l2c_activity_init
+{
+	repeated l2c_activity_upd	infos	= 1;	// 活动信息
+}
+
+message l2c_activity_upd
+{
+	message TriggerInfo 
+	{
+		int32			trigger_type	= 1; // 触发器类型
+		repeated int32	trigger_param	= 2; // 触发器参数
+	}
+
+	int32	id								= 1; // 活动ID
+	bool	is_open							= 2; // 玩家是否满足条件（如果是true，没有4和5两个字段）
+	int32	remains_secs					= 3; // 剩余秒数（当发送的秒数<=0，关闭此活动）
+	
+	repeated TriggerInfo	front_triggers	= 4; // 未满足的前置条件（MainStageId）
+	repeated TriggerInfo	limit_triggers	= 5; // 未满足的限制条件（Limit）
+}
+
+// -------------------------------------------------------------------------------------------运营活动
+
+
+// 礼包 -----------------------------------------------------------------------------------------------
+
+// LOGIC_MSG_C2L_OPEN_PACKAGE				= 54000; // 打开礼包
+message c2l_open_package
+{
+	int32 package_id = 1;
+	int32 count = 2;
+	PTGameElement element = 3; 					// 只有自选礼盒需要
+}
+
+// LOGIC_MSG_L2C_OPEN_PACKAGE				= 54001;
+message l2c_open_package
+{
+	repeated PTGameElement element = 1;
+}
+
+// ------------------------------------------------------------------------------------------------ 礼包
+
+// 功能状态 ----------------------------------------------------------------------------------------
+
+// LOGIC_MSG_C2L_FUNC_LOCK_INIT			= 53900;
+message c2l_func_lock_init
+{
+}
+
+// LOGIC_MSG_L2C_FUNC_LOCK_INIT			= 53901; 只发送关闭的功能
+message l2c_func_lock_init
+{
+	repeated int32 close_func = 1;
+}
+
+// LOGIC_MSG_L2C_FUNC_LOCK_UPD			= 53902;
+message l2c_func_lock_upd
+{
+	message FuncLockStatus
+	{
+		int32 id = 1;
+		bool status = 2;
+	}
+	repeated FuncLockStatus func_status = 1;
+}
+
+// -----------------------------------------------------------------------------------------功能状态

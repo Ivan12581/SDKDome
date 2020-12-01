@@ -43,16 +43,19 @@ namespace celia.game
     public enum LoginType
     {
         Account,
-        SDKToken,
+        SDKToken,//其实就是星辉
         Super,
-        Apple,
-        GameCenter,
+        Tourist,
         Google,
-        FaceBook
+        Apple,
+        FaceBook,
+        GameCenter,
     }
 
     public class NetworkManager : SingleMonoBehaviour<NetworkManager>
     {
+        bool debug = false;
+
         private const float WAIT_TIME = 3f;
         private const int RECONNECT_LIMIT = 12;
 
@@ -71,6 +74,7 @@ namespace celia.game
         string account;
         string password;
         string token;
+        string openId;
         c2a_logon_apple_gamecenter GCpkt;
         NetworkManager()
         {
@@ -99,68 +103,16 @@ namespace celia.game
 
             // 连接认证服
             state = NetState.NET_STATE_AUTH_CONNECTING;
-            Debug.Log(Utils.ip + "/" + Utils.port);
             GameTcpClient.gi.Connect(Utils.ip, Utils.port);
         }
-        public void ConnectAuth_LoginApple(string _UserID, string _token)
-        {
-            account = _UserID;
-            token = _token;
-            loginType = LoginType.Apple;
-            //AppleUserToken只有在第一次授权才会拿到 如果登陆认证服失败 就后续拿不到
-            if (string.IsNullOrEmpty(_token))
-            {
-                token = PlayerPrefs.GetString("AppleUserToken");
-            }
-            else
-            {
-                PlayerPrefs.SetString("AppleUserToken", _token);
-            }
-            // 连接认证服
-            state = NetState.NET_STATE_AUTH_CONNECTING;
-            Debug.Log(Utils.ip + "/" + Utils.port);
-            GameTcpClient.gi.Connect(Utils.ip, Utils.port);
-        }
-        public void ConnectAuth_LoginGoogle(string _UserID, string _token)
-        {
 
-            loginType = LoginType.Google;
-            account = _UserID;
-            token = _token;
-            // 连接认证服
-            state = NetState.NET_STATE_AUTH_CONNECTING;
-            Debug.Log(Utils.ip + "/" + Utils.port);
-            GameTcpClient.gi.Connect(Utils.ip, Utils.port);
-        }
-        public void ConnectAuth_LoginFaceBook(string _UserID, string _token)
-        {
-            account = _UserID;
-            token = _token;
-            loginType = LoginType.FaceBook;
-
-            // 连接认证服
-            state = NetState.NET_STATE_AUTH_CONNECTING;
-            Debug.Log(Utils.ip + "/" + Utils.port);
-            GameTcpClient.gi.Connect(Utils.ip, Utils.port);
-        }
-        public void ConnectAuth_LoginGameCenter(c2a_logon_apple_gamecenter args)
-        {
-            //account = _account;
-            //password = _password;
-
-            loginType = LoginType.GameCenter;
-            GCpkt = args;
-            // 连接认证服
-            state = NetState.NET_STATE_AUTH_CONNECTING;
-            Debug.Log(Utils.ip + "/" + Utils.port);
-            GameTcpClient.gi.Connect(Utils.ip, Utils.port);
-        }
         /// <summary>
         /// SDK Token登录
         /// </summary>
-        public void ConnectAuth_Login(string _token)
+        public void ConnectAuth_TokenLogin(string _token, string _openId)
         {
             token = _token;
+            openId = _openId;
             loginType = LoginType.SDKToken;
 
             // 连接认证服
@@ -180,7 +132,73 @@ namespace celia.game
             state = NetState.NET_STATE_AUTH_CONNECTING;
             GameTcpClient.gi.Connect(Utils.ip, Utils.port);
         }
+        public void ConnectAuth_FaceBook(string id, string _token)
+        {
+            Debug.Log(Utils.ip + "/" + Utils.port);
 
+            token = _token;
+            account = id;
+            loginType = LoginType.FaceBook;
+
+            // 连接认证服
+            state = NetState.NET_STATE_AUTH_CONNECTING;
+            GameTcpClient.gi.Connect(Utils.ip, Utils.port);
+        }
+        public void ConnectAuth_Google(string id, string _token)
+        {
+            Debug.Log(Utils.ip + "/" + Utils.port);
+
+            token = _token;
+            account = id;
+            loginType = LoginType.Google;
+
+            // 连接认证服
+            state = NetState.NET_STATE_AUTH_CONNECTING;
+            GameTcpClient.gi.Connect(Utils.ip, Utils.port);
+        }
+        public void ConnectAuth_Apple(string id, string _token)
+        {
+            Debug.Log(Utils.ip + "/" + Utils.port);
+            token = _token;
+            account = id;
+            loginType = LoginType.Apple;
+            //AppleUserToken只有在第一次授权才会拿到 如果登陆认证服失败 就后续拿不到
+            if (string.IsNullOrEmpty(id))
+            {
+                account = SDKManager.gi.AppleUserIdentifier;
+            }
+            else
+            {
+                SDKManager.gi.AppleUserIdentifier = id;
+                PlayerPrefs.SetString("AppleUserIdentifier", id);
+            }
+
+            if (string.IsNullOrEmpty(_token))
+            {
+                token = SDKManager.gi.AppleUserToken;
+            }
+            else
+            {
+                SDKManager.gi.AppleUserToken = _token;
+                PlayerPrefs.SetString("AppleUserToken", _token);
+            }
+
+            // 连接认证服
+            state = NetState.NET_STATE_AUTH_CONNECTING;
+            GameTcpClient.gi.Connect(Utils.ip, Utils.port);
+        }
+        public void ConnectAuth_LoginGameCenter(c2a_logon_apple_gamecenter args)
+        {
+            //account = _account;
+            //password = _password;
+
+            loginType = LoginType.GameCenter;
+            GCpkt = args;
+            // 连接认证服
+            state = NetState.NET_STATE_AUTH_CONNECTING;
+            Debug.Log(Utils.ip + "/" + Utils.port);
+            GameTcpClient.gi.Connect(Utils.ip, Utils.port);
+        }
         /// <summary>
         /// 注册服务器消息监听
         /// </summary>
@@ -229,7 +247,7 @@ namespace celia.game
         {
             EventHandler<TcpClientEventArgs> handler = (s, e) =>
             {
-                Debug.Log("客户端收到消息MSG" + msgId);
+                //Debug.Log("客户端收到消息MSG" + msgId);
                 callback?.Invoke(e);
             };
 
@@ -301,6 +319,7 @@ namespace celia.game
                 {
                     GameTcpClient.gi.rcv_callback[msgId] -= handler;
 
+                    LogHelper.Log("stop wait msg 247:" + msgId);
                     PopupMessageManager.gi.StopWait(type: PopupMessageManager.LoadingType.MSG);
                     callback?.Invoke(e);
                 };
@@ -311,6 +330,7 @@ namespace celia.game
                 msgId, handler = (s, e) =>
                 {
                     GameTcpClient.gi.rcv_callback[msgId] -= handler;
+                    LogHelper.Log("stop wait msg 258:" + msgId);
                     PopupMessageManager.gi.StopWait(type: PopupMessageManager.LoadingType.MSG);
                     callback?.Invoke(e);
                 });
@@ -374,7 +394,8 @@ namespace celia.game
             {
                 l2c_error msg = l2c_error.Parser.ParseFrom(args.msg);
 
-                Debug.Log("收到错误协议， ID为" + msg.Id);
+                Debug.LogError("收到错误协议， ID为" + msg.Id);
+                LogHelper.LogError("收到错误协议， ID为" + msg.Id);
 
                 GameTcpClient.gi.SetMsgState(send_msg.guid, MsgHandle.MsgHandleState.IS_OVER);
 
@@ -393,6 +414,7 @@ namespace celia.game
             {
                 GameTcpClient.gi.SetMsgState(send_msg.guid, MsgHandle.MsgHandleState.IS_OVER);
 
+                LogHelper.Log("收到成功返回的协议， ID为" + ((int)proto));
                 // 移除错误回调
                 RemoveMsgHandler(LogicMsgID.LogicMsgL2CError, errorCallback);
                 flag = true;
@@ -415,6 +437,7 @@ namespace celia.game
             () =>
             {
                 //remove msg handler
+                LogHelper.Log("stop wait msg 364:" + ((int)proto));
                 PopupMessageManager.gi.StopWait(type: PopupMessageManager.LoadingType.MSG);
                 flag = true;
                 RemoveMsgHandler(callbackProto, successCallback);
@@ -508,6 +531,8 @@ namespace celia.game
             var defaultFailedResult = new Dictionary<LogicMsgID, Dictionary<int, TcpClientEventArgs>>();
             void DealWithError()
             {
+
+                LogHelper.Log("stop wait msg 458:" + ((int)proto));
                 PopupMessageManager.gi.StopWait(type: PopupMessageManager.LoadingType.MSG);
 
                 flag = true;
@@ -547,7 +572,8 @@ namespace celia.game
                     if (countDic[callbackProto] != 0
                     && receivedDic[callbackProto] != countDic[callbackProto])
                     {
-                        Debug.Log("收到的数量和总数量不一致, 收到" + receivedDic[callbackProto] + "总数" + receivedDic[callbackProto]);
+                        if (debug)
+                            Debug.Log("收到的数量和总数量不一致, 收到" + receivedDic[callbackProto] + "总数" + receivedDic[callbackProto]);
                         return false;
                     }
                 }
@@ -589,7 +615,8 @@ namespace celia.game
                     }
 
                     var frameCount = countDic[callbackProto];
-                    Debug.Log("收到消息" + callbackProto.ToString() + "总数为" + frameCount);
+                    if (debug)
+                        Debug.Log("收到消息" + callbackProto.ToString() + "总数为" + frameCount);
 
                     var result = successResult[callbackProto];
                     if (!result.ContainsKey(frame.frameIndex))
@@ -609,7 +636,8 @@ namespace celia.game
                         {
                             if (GameTcpClient.gi.GetMsgHandleState(send_msg.guid) == MsgHandle.MsgHandleState.WAITING)
                             {
-                                Debug.Log("已处理分页消息: " + (int)proto + ":" + args.wrap.Id + " guid: " + args.wrap.OpId);
+                                if (debug)
+                                    Debug.Log("已处理分页消息: " + (int)proto + ":" + args.wrap.Id + " guid: " + args.wrap.OpId);
 
                                 GameTcpClient.gi.SetMsgState(send_msg.guid, MsgHandle.MsgHandleState.IS_OVER);
 
@@ -620,6 +648,7 @@ namespace celia.game
                                 flag = true;
 
                                 // 调用成功回调
+                                LogHelper.Log("stop wait msg 571:" + ((int)proto));
                                 PopupMessageManager.gi.StopWait(type: PopupMessageManager.LoadingType.MSG);
                                 callback?.Invoke((false, successResult));
                             }
@@ -633,7 +662,7 @@ namespace celia.game
                         DealWithError();
                         return;
                     }
-                });
+                }, false);
             }
 
             // 超时处理，如果超过3秒还为触发成功回调，则触发错误处理
@@ -653,6 +682,7 @@ namespace celia.game
                 //remove msg handler
                 // 一旦发生错误情况，直接清除全部的回调
 
+                LogHelper.Log("stop wait msg 605:" + ((int)proto));
                 PopupMessageManager.gi.StopWait(type: PopupMessageManager.LoadingType.MSG);
                 flag = true;
                 ClearSuccessHandlers();
@@ -710,11 +740,13 @@ namespace celia.game
                     }
                     else
                     {
+                        LogHelper.Log("不到3次的默认重发" + send_msg.proto);
                         ReSend();
                     }
                 }
                 else
                 {
+                    LogHelper.Log("准备弹出登录界面:" + send_msg.proto);
                     {
                         //提示回到登陆界面
                         reLoginHandler?.Invoke();
@@ -762,6 +794,10 @@ namespace celia.game
             }
         }
 
+        void Start()
+        {
+        }
+
         private void Gi_state_callback(object sender, AuthEventArgs e)
         {
             switch (state = e.state)
@@ -791,10 +827,9 @@ namespace celia.game
                             case LoginType.SDKToken:
                                 string sdkName = SDKManager.gi.IsOversea ? "oversea" : "chinese";
                                 string appKey = SDKManager.gi.SDKParams.AppKey;
-                                string appID = SDKManager.gi.PackageParams.AppID;
-                                string cchID = SDKManager.gi.PackageParams.CCHID;
-                                AuthProcessor.gi.Login(sdkName, token, appKey, appID, cchID);
-                                //AuthProcessor.gi.Login(sdkName, setting.Android.PakageName, setting.Android.AppKey, setting.Android.AppId, setting.Android.CchId);
+                                int appID = SDKManager.gi.SDKParams.AppId;
+                                int cchID = SDKManager.gi.SDKParams.CchId;
+                                AuthProcessor.gi.Login(sdkName, token, openId, appKey, appID, cchID);
                                 break;
                             case LoginType.Super:
                                 AuthProcessor.gi.Login(account);

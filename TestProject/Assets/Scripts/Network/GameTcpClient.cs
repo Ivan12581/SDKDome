@@ -970,7 +970,7 @@ namespace celia.game
                             }
                             else
                             {
-                                UnityEngine.Debug.Log("未监听的消息:" + wrap.Id.ToString());
+                                //Debug.Log("未监听的消息:" + wrap.Id.ToString());
                             }
                         }
                         else

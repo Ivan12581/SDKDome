@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+
 using UnityEngine;
 
 namespace celia.game
@@ -8,88 +9,18 @@ namespace celia.game
     public class SDKIosProxy : SDKProxy
     {
 #if UNITY_IOS
-        //[DllImport("__Internal")]
-        //private static extern void cInit();
-        //[DllImport("__Internal")]
-        //private static extern void cLogin(string jsonString);
-        //[DllImport("__Internal")]
-        //private static extern void cSwitch();
-        //[DllImport("__Internal")]
-        //private static extern void cPay(string jsonString);
-        //[DllImport("__Internal")]
-        //private static extern void cUpLoadInfo(string jsonString);
-        //[DllImport("__Internal")]
-        //private static extern void cOpenService();
-        //[DllImport("__Internal")]
-        //private static extern void cGetConfigInfo();
-        //[DllImport("__Internal")]
-        //private static extern void cCustomerService(string jsonString);
-        //[DllImport("__Internal")]
-        //private static extern void cShare(string jsonString);
+        [DllImport("__Internal")]
+        private static extern void CallFromUnity(int sDKResultType, string param);
 #endif
         public SDKIosProxy()
         {
 
         }
-
-        public override void Init()
+        public override void CallSDKMethod(SDKResultType sDKResultType, string param)
         {
 #if UNITY_IOS
-            //cInit();
+            CallFromUnity((int)sDKResultType, param);
 #endif
-        }
-
-        public override void Login(SDKLoginType t)
-        {
-            //TODO:需要修改之前IOS那边的接口
-#if UNITY_IOS
-            //cLogin(((int)type).ToString());
-#endif
-        }
-
-        public override void Switch()
-        {
-#if UNITY_IOS
-            //cSwitch();
-#endif
-        }
-
-        public override void Pay(string jsonString)
-        {
-#if UNITY_IOS
-            //cPay(jsonString);
-#endif
-        }
-
-        public override void GetConfigInfo()
-        {
-
-#if UNITY_IOS
-            //cGetConfigInfo();
-#endif
-        }
-
-        public override void UploadInfo(string jsonString)
-        {
-#if UNITY_IOS
-            //cUpLoadInfo(jsonString);
-#endif
-        }
-        public override void CustomerService(string jsonString)
-        {
-#if UNITY_IOS
-            //cCustomerService(jsonString);
-#endif
-        }
-        public override void Share(string jsonString)
-        {
-#if UNITY_IOS
-            //cShare(jsonString);
-#endif
-        }
-        public override void ExitGame()
-        {
-
         }
     }
 }

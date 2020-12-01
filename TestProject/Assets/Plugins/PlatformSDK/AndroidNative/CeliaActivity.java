@@ -99,6 +99,7 @@ public class CeliaActivity extends UnityPlayerActivity
                 Login();
                 break;
             case Logout:
+                Logout();
                 break;
             case Pay:
                 Pay(data);
@@ -228,7 +229,7 @@ public class CeliaActivity extends UnityPlayerActivity
                     put("token", bundle.getString("token"));
                 }
             };
-            SendMessageToUnity(MsgID.Switch.getCode(), dataMap);
+            SendMessageToUnity(MsgID.Login.getCode(), dataMap);
         }
 
         @Override
@@ -238,7 +239,7 @@ public class CeliaActivity extends UnityPlayerActivity
             //2.玩家切换失败：message会提示对应的原因
             //注意：CP不需要提示失败的具体原因，自行处理失败逻辑，如重新登录等
             ShowLog("SDK切换帐号失败：" + message);
-            SendMessageToUnity(MsgID.Switch.getCode(), new HashMap<String, String>(){ {put("state", "0"); put("message", message);} });
+            SendMessageToUnity(MsgID.Login.getCode(), new HashMap<String, String>(){ {put("state", "0"); put("message", message);} });
         }
 
         @Override
@@ -278,7 +279,7 @@ public class CeliaActivity extends UnityPlayerActivity
             //SDK注销成功，触发：SDK->悬浮球->更多->设置->切换帐号
             //【注意】游戏收到吃回调后，先回调游戏登录界面，再调用SDK切换帐号方法
             ShowLog("SDK注销成功！");
-            SJoyMSDK.getInstance().userSwitch(CeliaActivity.this);
+            // SJoyMSDK.getInstance().userSwitch(CeliaActivity.this);
             SendMessageToUnity(MsgID.Logout.getCode(), new HashMap<String, String>(){ {put("state", "1");} });
         }
 

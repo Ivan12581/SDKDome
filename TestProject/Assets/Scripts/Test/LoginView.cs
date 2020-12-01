@@ -1,10 +1,7 @@
 ﻿using System;
 using System.IO;
-using System.Net.NetworkInformation;
 
 using celia.game;
-
-using TMPro;
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,12 +9,8 @@ using UnityEngine.UI;
 public class LoginView : MonoBehaviour
 {
     public InputField accountName;
-    public GameObject GoTest;
     public InputField passWord;
-    public InputField rastarShareType;
-    //public InputField serverIP;
-    //public InputField serverPort;
-    //public TMP_Dropdown dropDown;
+
     /// <summary>
     /// 账号登陆
     /// </summary>
@@ -27,29 +20,52 @@ public class LoginView : MonoBehaviour
         Debug.Log("---accountName.text---" + accountName.text);
         Debug.Log("---passWord.text---" + passWord.text);
         Debug.Log("---SystemInfo.deviceUniqueIdentifier---" + SystemInfo.deviceUniqueIdentifier);
-        string name = SystemInfo.deviceUniqueIdentifier;
+        string name = accountName.text;
         NetworkManager.gi.ConnectAuth_Login(name, "");
     }
+
+    /// <summary>
+    /// Apple 内购支付
+    /// </summary>
+    public void ApplePay()
+    {
+        Debug.Log("---Unity---ApplePay---");
+        ApplePurchaseProxy.gi.Pay(20);
+    }
+
     public void AuthIPSetting()
     {
-        
     }
-    /// <summary>
-    /// Apple账号登陆
-    /// </summary>
-    public void AppleLogin()
+    public void CeliaLogin(int type)
     {
-        Debug.Log("---Unity---AppleLogin---");
-        SDKManager.gi.Login(SDKLoginType.Apple, (s, dataDict) =>
+        LoginType loginType = (LoginType)type;
+        Debug.Log("---Unity---CeliaLogin---" + type);
+        SDKManager.gi.CeliaLogin(loginType, (s, dataDict) =>
         {
-            Debug.Log("---Unity---AppleLogin--callback-");
+            Debug.Log("---Unity---CeliaLogin--callback-");
             int state = int.Parse(dataDict["state"]);
             if (state == 1)
             {
-                //第一次授权登陆 有identityTokenStr等信息
-                dataDict.TryGetValue("uid", out string uid);
-                dataDict.TryGetValue("token", out string token);
-                NetworkManager.gi.ConnectAuth_LoginApple(uid, token);
+                if (dataDict.TryGetValue("uid", out string uid) && dataDict.TryGetValue("token", out string token))
+                {
+                    if (loginType == LoginType.FaceBook)
+                    {
+                        NetworkManager.gi.ConnectAuth_FaceBook(uid, token);
+                    }
+                    else if (loginType == LoginType.Google)
+                    {
+                        NetworkManager.gi.ConnectAuth_Google(uid, token);
+                    }
+                    else if (loginType == LoginType.Apple)
+                    {
+                        NetworkManager.gi.ConnectAuth_Apple(uid, token);
+                    }
+                    Messenger.DispatchEvent(Notif.LOG_IN);
+                }
+                else
+                {
+                    Debug.Log("--userID is nil or token is nil--");
+                }
             }
             else
             {
@@ -58,14 +74,12 @@ public class LoginView : MonoBehaviour
         });
     }
 
-    /// <summary>
-    /// Apple 内购支付
-    /// </summary>
-    public void ApplePay()
+    public void CeliaLogout()
     {
-        Debug.Log("---Unity---SDKPay---");
-        //SDKPay.gi.Pay("test1");
-
+        Debug.Log("---Unity---CeliaLogout---");
+        SDKManager.gi.CeliaLogout(SDKManager.gi.loginType, (s, dataDict) =>
+         {
+         });
     }
 
     /// <summary>
@@ -74,152 +88,8 @@ public class LoginView : MonoBehaviour
     public void CustomerService()
     {
         Debug.Log("---Unity---CustomerService---");
-        SDKManager.gi.CustomerService((s, dataDict) =>
-        {
-            Debug.Log("---Unity---CustomerService--callback-");
-        });
+        SDKManager.gi.CustomerService();
     }
-
-    /// <summary>
-    /// 退出
-    /// </summary>
-    public void Exit()
-    {
-        Debug.Log("---Unity---Exit---");
-        SDKManager.gi.ExitGame((s, dataDict) =>
-        {
-        });
-    }
-
-    /// <summary>
-    /// FaceBook登陆
-    /// </summary>
-    public void FBLogin()
-    {
-        Debug.Log("---Unity---FBLogin---");
-        SDKManager.gi.Login(SDKLoginType.FaceBook, (s, dataDict) =>
-        {
-            Debug.Log("---Unity---FBLogin--callback-");
-            int state = int.Parse(dataDict["state"]);
-            if (state == 1)
-            {
-                if (dataDict.TryGetValue("uid", out string userID) && dataDict.TryGetValue("token", out string token))
-                {
-                    NetworkManager.gi.ConnectAuth_LoginFaceBook(userID, token);
-                }
-                else
-                {
-                    Debug.Log("--userID is nil or token is nil--");
-                }
-            }
-            else
-            {
-                Debug.Log("SDK login fail ----------------");
-            }
-        });
-    }
-
-    /// <summary>
-    /// FaceBook分享
-    /// </summary>
-    public void FBShare()
-    {
-        Debug.Log("---Unity---FBShare---");
-        GetScreenShot((imgPath) =>
-        {
-            SDKManager.gi.FBShare(imgPath, (s, dataDict) =>
-            {
-                Debug.Log("---Unity---LineShare--callback-");
-            });
-        });
-    }
-    /// <summary>
-    /// Line分享
-    /// </summary>
-    public void LineShare()
-    {
-        Debug.Log("---Unity---LineShare---");
-        GetScreenShot((imgPath) =>
-        {
-            SDKManager.gi.LineShare(imgPath,(s, dataDict) =>
-            {
-                Debug.Log("---Unity---LineShare--callback-");
-            });
-        });
-
-    }
-    /// <summary>
-    /// 微信分享
-    /// </summary>
-    public void WXShare()
-    {
-        Debug.Log("---Unity---WXShare---");
-        GetScreenShot((imgPath) =>
-        {
-            SDKManager.gi.LineShare(imgPath, (s, dataDict) =>
-            {
-                Debug.Log("---Unity---WXShare--callback-");
-            });
-        });
-
-    }
-    /// <summary>
-    /// Apple GameCenter登陆
-    /// </summary>
-    public void GCLogin()
-    {
-        Debug.Log("---Unity---GCLogin---");
-        SDKManager.gi.Login(SDKLoginType.GameCenter, (s, dataDict) =>
-        {
-            Debug.Log("---Unity---GCLogin--callback-");
-            int state = int.Parse(dataDict["state"]);
-            if (state == 1)
-            {
-                c2a_logon_apple_gamecenter arg = new c2a_logon_apple_gamecenter();
-                arg.UserIdentifier = dataDict["uid"];
-                NetworkManager.gi.ConnectAuth_LoginGameCenter(arg);
-            }
-            else if (state == 2)
-            {
-                c2a_logon_apple_gamecenter arg = new c2a_logon_apple_gamecenter();
-                arg.UserIdentifier = dataDict["uid"];
-                NetworkManager.gi.ConnectAuth_LoginGameCenter(arg);
-            }
-            else
-            {
-                Debug.Log("SDK login fail ----------------");
-            }
-        });
-    }
-
-    /// <summary>
-    /// Google 登陆
-    /// </summary>
-    public void GoogleLogin()
-    {
-        Debug.Log("---Unity---GoogleLogin---");
-        SDKManager.gi.Login(SDKLoginType.Google, (s, dataDict) =>
-        {
-            Debug.Log("---Unity---GoogleLogin--callback-");
-            int state = int.Parse(dataDict["state"]);
-            if (state == 1)
-            {
-                if (dataDict.TryGetValue("uid", out string userID) && dataDict.TryGetValue("token", out string token))
-                {
-                    NetworkManager.gi.ConnectAuth_LoginGoogle(userID, token);
-                }
-                else
-                {
-                    Debug.Log("--userID is nil or token is nil--");
-                }
-            }
-            else
-            {
-                Debug.Log("SDK login fail ----------------");
-            }
-        });
-    }
-
     /// <summary>
     /// SDK初始化
     /// </summary>
@@ -232,14 +102,26 @@ public class LoginView : MonoBehaviour
         //    SDKPay.gi.ApplePayInit();
         //});
         Application.OpenURL("www.baidu.com");
-
     }
 
+    public void RastarLogin()
+    {
+        Debug.Log("---Unity---RastarLogin---");
+        SDKManager.gi.RSLogin((s, dataDict) =>
+        {
+            string token = dataDict["token"];
+            string openid = dataDict["uid"];
+            //LoginService.gi.LogInWithToken(token, openID);
+        });
+    }
 
-
-    /// <summary>
-    /// 账号切换
-    /// </summary>
+    public void RastarLogout()
+    {
+        Debug.Log("---Unity---RastarLogout---");
+        SDKManager.gi.RSLogout((s, dataDict) =>
+        {
+        });
+    }
     public void RastarSwitch()
     {
         Debug.Log("---Unity---RastarSwitch---");
@@ -247,59 +129,21 @@ public class LoginView : MonoBehaviour
         {
         });
     }
-    /// <summary>
-    /// 账号切换
-    /// </summary>
-    public void RastarLogin()
+
+    public void Share(int type)
     {
-        Debug.Log("---Unity---RastarLogin---");
-        SDKManager.gi.RastarLogin((s, dataDict) =>
-        {
-        });
-    }
-    /// <summary>
-    /// 账号切换
-    /// </summary>
-    public void RastarShare()
-    {
-        Debug.Log("---Unity---RastarShare--rastarShareType.text--->" + rastarShareType.text);
-        int type = int.Parse(rastarShareType.text);
+        Debug.Log("---Unity---Share--type--->" + type);
+        SDKManager.gi.shareType = (ShareType)type;
         GetScreenShot((imgPath) =>
         {
-            SDKManager.gi.RastarShare(imgPath, type,(s, dataDict) =>
-            {
-                Debug.Log("---Unity---WXShare--callback-");
-            });
+            SDKManager.gi.Share(imgPath, "分享文本", (s, dataDict) =>
+             {
+                 Debug.Log("---Unity---WXShare--callback-");
+             });
         });
     }
 
-    // Start is called before the first frame update
-    private void Start()
-    {
-        Messenger.AddEventListener<int>(Notif.INHOUSE_LOGIN_INIT_DATA_COMPLETED, (m) =>
-        {
-            GoTest.SetActive(true);
-            gameObject.SetActive(false);
-
-            SDKPay.gi.GetServerPayInfo();
-        });
-
-        Messenger.AddEventListener(Notif.NO_NAME_LOG_IN, () =>
-        {
-            c2l_create_character_req pkt = new c2l_create_character_req();
-            pkt.CharacterName = "Cest";
-            NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LCreateCharacterReq, pkt, LogicMsgID.LogicMsgL2CCreateCharacterRep, (e) =>
-            {
-                l2c_create_character_rep msg = l2c_create_character_rep.Parser.ParseFrom(e.msg);
-                Debug.LogWarning(Newtonsoft.Json.JsonConvert.SerializeObject(msg));
-            });
-        });
-        Debug.Log("-Unity--LoginView Start--Application.version:" + Application.version+ " Application.productName:" + Application.productName);
-
-
-    }
-
-    async void GetScreenShot(Action<string> callback)
+    private async void GetScreenShot(Action<string> callback)
     {
         await new WaitForEndOfFrame();
         Texture2D t = new Texture2D(Screen.currentResolution.width, Screen.currentResolution.height, TextureFormat.RGB24, false);
@@ -322,5 +166,21 @@ public class LoginView : MonoBehaviour
         await new WaitForEndOfFrame();
         File.WriteAllBytes(sharePath, img);
         callback?.Invoke(sharePath);
+    }
+
+    // Start is called before the first frame update
+    private void Start()
+    {
+        Messenger.AddEventListener(Notif.NO_NAME_LOG_IN, () =>
+        {
+            c2l_create_character_req pkt = new c2l_create_character_req();
+            pkt.CharacterName = "Cest";
+            NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LCreateCharacterReq, pkt, LogicMsgID.LogicMsgL2CCreateCharacterRep, (e) =>
+            {
+                l2c_create_character_rep msg = l2c_create_character_rep.Parser.ParseFrom(e.msg);
+                Debug.LogWarning(Newtonsoft.Json.JsonConvert.SerializeObject(msg));
+            });
+        });
+        Debug.Log("-Unity--LoginView Start--Application.version:" + Application.version + " Application.productName:" + Application.productName);
     }
 }

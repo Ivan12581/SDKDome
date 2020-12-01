@@ -21,6 +21,8 @@ public class IPSetting : MonoBehaviour
             "182.254.192.79",
             "129.226.13.160",
             "34.80.39.1",
+            "thethroneofgirl-game.smartplay.com.tw",
+            "34.80.39.1",
         };
         dropDown.ClearOptions();
         for (int i = 0; i < ipLists.Count; i++)

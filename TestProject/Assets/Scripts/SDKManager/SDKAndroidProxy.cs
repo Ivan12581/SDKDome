@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 namespace celia.game
@@ -10,44 +11,13 @@ namespace celia.game
 
         public SDKAndroidProxy()
         {
-            var unityPlayer = new AndroidJavaClass("com.elex.girlsthrone.tw.gp.MainActivity");
+            var unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
             currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
         }
 
-        public override void Init()
+        public override void CallSDKMethod(SDKResultType sDKResultType, string param)
         {
-            currentActivity.Call("Init");
-        }
-
-        public override void Login(SDKLoginType type)
-        {
-            //TODO:需要修改之前Android那边的接口
-            currentActivity.Call("Login", ((int)type).ToString());
-        }
-
-        public override void Switch()
-        {
-            currentActivity.Call("Switch");
-        }
-
-        public override void Pay(string jsonString)
-        {
-            currentActivity.Call("Pay", jsonString);
-        }
-
-        public override void GetConfigInfo()
-        {
-            currentActivity.Call("GetConfigInfo");
-        }
-
-        public override void UploadInfo(string jsonString)
-        {
-            currentActivity.Call("UploadInfo", jsonString);
-        }
-
-        public override void ExitGame()
-        {
-            currentActivity.Call("ExitGame");
+            currentActivity.Call("CallFromUnity", (int)sDKResultType, param);
         }
     }
 }
