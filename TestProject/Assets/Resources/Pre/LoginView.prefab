@@ -3564,6 +3564,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   accountName: {fileID: 8400594282400878169}
   passWord: {fileID: 8400594282453055895}
+  CeliaSDK: {fileID: 1275407633776484743}
+  RastarSDK: {fileID: 5487094763839821234}
 --- !u!114 &8400594282398910085
 MonoBehaviour:
   m_ObjectHideFlags: 0

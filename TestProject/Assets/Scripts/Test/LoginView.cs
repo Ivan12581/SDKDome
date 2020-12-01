@@ -10,7 +10,25 @@ public class LoginView : MonoBehaviour
 {
     public InputField accountName;
     public InputField passWord;
-
+    public GameObject CeliaSDK;
+    public GameObject RastarSDK;
+    // Start is called before the first frame update
+    private void Start()
+    {
+        CeliaSDK.SetActive(SDKManager.gi.SDKParams.SDKType == SDKType.CeliaOversea);
+        RastarSDK.SetActive(SDKManager.gi.SDKParams.SDKType == SDKType.Native);
+        Messenger.AddEventListener(Notif.NO_NAME_LOG_IN, () =>
+        {
+            c2l_create_character_req pkt = new c2l_create_character_req();
+            pkt.CharacterName = "Cest";
+            NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LCreateCharacterReq, pkt, LogicMsgID.LogicMsgL2CCreateCharacterRep, (e) =>
+            {
+                l2c_create_character_rep msg = l2c_create_character_rep.Parser.ParseFrom(e.msg);
+                Debug.LogWarning(Newtonsoft.Json.JsonConvert.SerializeObject(msg));
+            });
+        });
+        Debug.Log("-Unity--LoginView Start--Application.version:" + Application.version + " Application.productName:" + Application.productName);
+    }
     /// <summary>
     /// 账号登陆
     /// </summary>
@@ -168,19 +186,5 @@ public class LoginView : MonoBehaviour
         callback?.Invoke(sharePath);
     }
 
-    // Start is called before the first frame update
-    private void Start()
-    {
-        Messenger.AddEventListener(Notif.NO_NAME_LOG_IN, () =>
-        {
-            c2l_create_character_req pkt = new c2l_create_character_req();
-            pkt.CharacterName = "Cest";
-            NetworkManager.gi.SendPktWithCallback(LogicMsgID.LogicMsgC2LCreateCharacterReq, pkt, LogicMsgID.LogicMsgL2CCreateCharacterRep, (e) =>
-            {
-                l2c_create_character_rep msg = l2c_create_character_rep.Parser.ParseFrom(e.msg);
-                Debug.LogWarning(Newtonsoft.Json.JsonConvert.SerializeObject(msg));
-            });
-        });
-        Debug.Log("-Unity--LoginView Start--Application.version:" + Application.version + " Application.productName:" + Application.productName);
-    }
+
 }
