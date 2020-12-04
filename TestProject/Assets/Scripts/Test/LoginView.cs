@@ -34,12 +34,8 @@ public class LoginView : MonoBehaviour
     /// </summary>
     public void AccountLogin()
     {
-        Debug.Log("---Unity---AccountLogin---");
-        Debug.Log("---accountName.text---" + accountName.text);
-        Debug.Log("---passWord.text---" + passWord.text);
-        Debug.Log("---SystemInfo.deviceUniqueIdentifier---" + SystemInfo.deviceUniqueIdentifier);
-        string name = accountName.text;
-        NetworkManager.gi.ConnectAuth_Login(name, "");
+        Debug.Log("---Unity---AccountLogin---"+ "  accountName:" + accountName.text);
+        NetworkManager.gi.ConnectAuth_Login(accountName.text, "");
     }
 
     /// <summary>
@@ -49,10 +45,6 @@ public class LoginView : MonoBehaviour
     {
         Debug.Log("---Unity---ApplePay---");
         ApplePurchaseProxy.gi.Pay(20);
-    }
-
-    public void AuthIPSetting()
-    {
     }
     public void CeliaLogin(int type)
     {

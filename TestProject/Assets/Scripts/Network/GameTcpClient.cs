@@ -108,7 +108,7 @@ namespace celia.game
 
         public void Connect(string ip, uint port)
         {
-            Debug.Log("Connect...");
+            Debug.Log("Connect...IP:"+ ip+"  Port:"+ port);
             Close();
 
             remote_ip = ip;

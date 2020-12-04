@@ -103,8 +103,11 @@ namespace celia.game.editor
         /// </summary>
         private void SetSDKFolderBack()
         {
-            DeleteFolder(pluginIOSPath);
-            
+            if (Directory.Exists(pluginIOSPath))
+            {
+                Directory.Delete(pluginIOSPath, true);
+            }
+
             SDKParams sdkParams = AssetDatabase.LoadAssetAtPath<SDKParams>("Assets/Resources/SDKParams.asset");
             sdkParams.SDKType = SDKType.None;
             sdkParams.AppKey = "";
@@ -322,7 +325,7 @@ namespace celia.game.editor
             plist.ReadFromFile(plistPath);
             PlistElementDict rootDict = plist.root;
             // 调整默认配置
-            rootDict.SetString("CFBundleDevelopmentRegion", "zh_CN");
+            rootDict.SetString("CFBundleDevelopmentRegion", "zh_TW");
             // 权限配置
             rootDict.SetString("NSCameraUsageDescription", "是否允许访问相机?");
             rootDict.SetString("NSMicrophoneUsageDescription", "是否允许使用麦克风?");
@@ -392,19 +395,20 @@ namespace celia.game.editor
             rootDict.SetString("UIUserInterfaceStyle", "Light");
             // SDK相关参数设置
             rootDict.SetString("RaStarUMKey", "5bc6b08af1f55681f30000da");
-            rootDict.SetString("RaStarWeChatKey", "wxf2d4d6ad6a49f086");
-            rootDict.SetString("RaStarWeChatSecret", "230b8ae7c5a98ff22222854a928c74c2");
-            rootDict.SetString("RaStarQQID", "");
-            rootDict.SetString("RaStarQQSecret", "");
-            rootDict.SetString("RaStarWeiboAppKey", "3524867471");
-            rootDict.SetString("RaStarWeiboSecret", "d62cb24becfbcc8ce657ba41632736f5");
+            rootDict.SetString("RaStarWeChatKey", "wxf4ea05dfad6b67f3");
+            rootDict.SetString("RaStarWeChatSecret", "ec8b3c05e2d81442c14bbc33450c24e1");
+            rootDict.SetString("RaStarQQID", "101908009");
+            rootDict.SetString("RaStarQQSecret", "5cbe0e16d98468e954e14087fb963ffe");
+            rootDict.SetString("RaStarWeiboAppKey", "2546046978");
+            rootDict.SetString("RaStarWeiboSecret", "ab014360f368b311739e5060256d4284");
             PlistElementArray RaStarShareTypeArray = rootDict.CreateArray("RaStarShareTypeArray");
             RaStarShareTypeArray.AddString("微信");
             RaStarShareTypeArray.AddString("朋友圈");
             RaStarShareTypeArray.AddString("微博");
-            //RaStarShareTypeArray.AddString("QQ");
-            //RaStarShareTypeArray.AddString("QQ空间");
-
+            RaStarShareTypeArray.AddString("QQ");
+            RaStarShareTypeArray.AddString("QQ空间");
+            //文件共享
+            rootDict.SetBoolean("UIFileSharingEnabled",true);
             // Set encryption usage boolean
             string encryptKey = "ITSAppUsesNonExemptEncryption";
             rootDict.SetBoolean(encryptKey, false);
@@ -421,25 +425,25 @@ namespace celia.game.editor
             wxUrl.SetString("CFBundleTypeRole", "Editor");
             wxUrl.SetString("CFBundleURLName", "weixin");
             PlistElementArray wxUrlScheme = wxUrl.CreateArray("CFBundleURLSchemes");
-            wxUrlScheme.AddString("wxf2d4d6ad6a49f086");
+            wxUrlScheme.AddString("wxf4ea05dfad6b67f3");
             //weibo
             PlistElementDict weibiUrl = URLTypes.AddDict();
             weibiUrl.SetString("CFBundleTypeRole", "Editor");
             weibiUrl.SetString("CFBundleURLName", "weibo");
             PlistElementArray weibiUrlScheme = weibiUrl.CreateArray("CFBundleURLSchemes");
-            weibiUrlScheme.AddString("wb3524867471");
+            weibiUrlScheme.AddString("wb2546046978");
             //tencent
-            //PlistElementDict tcUrl = URLTypes.AddDict();
-            //tcUrl.SetString("CFBundleTypeRole", "Editor");
-            //tcUrl.SetString("CFBundleURLName", "tencent");
-            //PlistElementArray tcUrlScheme = tcUrl.CreateArray("CFBundleURLSchemes");
-            //tcUrlScheme.AddString("tencent101539443");
+            PlistElementDict tcUrl = URLTypes.AddDict();
+            tcUrl.SetString("CFBundleTypeRole", "Editor");
+            tcUrl.SetString("CFBundleURLName", "tencent");
+            PlistElementArray tcUrlScheme = tcUrl.CreateArray("CFBundleURLSchemes");
+            tcUrlScheme.AddString("tencent101908009");
             //QQ
-            //PlistElementDict qqUrl = URLTypes.AddDict();
-            //qqUrl.SetString("CFBundleTypeRole", "Editor");
-            //qqUrl.SetString("CFBundleURLName", "QQ");
-            //PlistElementArray qqUrlScheme = qqUrl.CreateArray("CFBundleURLSchemes");
-            //qqUrlScheme.AddString("QQ60d5e73");
+            PlistElementDict qqUrl = URLTypes.AddDict();
+            qqUrl.SetString("CFBundleTypeRole", "Editor");
+            qqUrl.SetString("CFBundleURLName", "QQ");
+            PlistElementArray qqUrlScheme = qqUrl.CreateArray("CFBundleURLSchemes");
+            qqUrlScheme.AddString("QQ0612fe29");
         #endregion
 
         #region LSApplicationQueriesSchemes配置
@@ -504,10 +508,7 @@ namespace celia.game.editor
             proj.AddCapability(target, PBXCapabilityType.InAppPurchase);
             proj.AddCapability(target, PBXCapabilityType.AccessWiFiInformation, entitlementsFileName);
             proj.AddCapability(target, PBXCapabilityType.AssociatedDomains, entitlementsFileName);
-            //ProjectCapabilityManager projectCapabilityManager = new ProjectCapabilityManager(projPath, "sndwz.entitlements", PBXProject.GetUnityTargetName());
-            //projectCapabilityManager.AddAccessWiFiInformation();
-            //projectCapabilityManager.AddInAppPurchase();
-            //projectCapabilityManager.AddAssociatedDomains(new string[] { "applinks:3rd-sy.rastargame.com" });
+            proj.AddCapability(target, PBXCapabilityType.PushNotifications, entitlementsFileName);
             proj.WriteToFile(projPath);
             File.WriteAllText(projPath, proj.WriteToString());
         }
@@ -719,7 +720,9 @@ namespace celia.game.editor
             proj.AddFrameworkToProject(target, "storekit.framework", false);
             proj.AddFrameworkToProject(target, "AuthenticationServices.framework", false);
             proj.AddFrameworkToProject(target, "gamekit.framework", false);
-
+            // SDK依赖 --Adjust
+            proj.AddFrameworkToProject(target, "AdSupport.framework", false);
+            proj.AddFrameworkToProject(target, "iAd.framework", false);
 
             //EmbedFrameworks --Add to Embedded Binaries
             string defaultLocationInProj = "Plugins/iOS/SDK";
@@ -806,15 +809,25 @@ namespace celia.game.editor
             var filePath = Path.Combine("Assets/Plugins/iOS/SDK/FCM/", fileName);
             File.Copy(filePath, Path.Combine(option.PlayerOption.locationPathName, "GoogleService-Info.plist"), true);
             proj.AddFileToBuild(target, proj.AddFile(fileName, fileName, PBXSourceTree.Source));
-            #endregion
+        #endregion
+
+            //ProjectCapabilityManager projectCapabilityManager = new ProjectCapabilityManager(projPath, "tw.entitlements", PBXProject.GetUnityTargetName());
+            //projectCapabilityManager.AddGameCenter();
+            //projectCapabilityManager.AddInAppPurchase();
+            //projectCapabilityManager.AddPushNotifications(true);
+            //plist.WriteToFile(plistPath);
+            //proj.WriteToFile(projPath);
 
             // Capabilitise添加
-            ProjectCapabilityManager projectCapabilityManager = new ProjectCapabilityManager(projPath, "tw.entitlements", PBXProject.GetUnityTargetName());
-            projectCapabilityManager.AddGameCenter();
-            projectCapabilityManager.AddInAppPurchase();
-            projectCapabilityManager.AddPushNotifications(true);
+            var entitlementsFileName = "tw.entitlements";
+            var entitlementsFilePath = Path.Combine("Assets/Plugins/iOS/SDK/", entitlementsFileName);
+            File.Copy(entitlementsFilePath, Path.Combine(path, entitlementsFileName));
+            proj.AddFileToBuild(target, proj.AddFile(entitlementsFileName, entitlementsFileName, PBXSourceTree.Source));
+            proj.AddCapability(target, PBXCapabilityType.InAppPurchase);
+            proj.AddCapability(target, PBXCapabilityType.PushNotifications, entitlementsFileName);
             plist.WriteToFile(plistPath);
             proj.WriteToFile(projPath);
+            File.WriteAllText(projPath, proj.WriteToString());
         }
         #endregion
 #endif

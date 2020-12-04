@@ -34,11 +34,6 @@ public class IPSetting : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     /// <summary>
     /// 当点击后值改变是触发 (切换下拉选项)
     /// </summary>
@@ -46,7 +41,7 @@ public class IPSetting : MonoBehaviour
     public void OnValueChange(int v)
     {
         //切换选项 时处理其他的逻辑...
-        Debug.Log("点击下拉控件的索引是..." + v);
+        Debug.Log("点击下拉控件的索引是..." + v+ serverPort.text);
         serverIP.text = dropDown.options[v].text;
         GameSetting.gi.ip = serverIP.text;
         GameSetting.gi.port = uint.Parse(serverPort.text);

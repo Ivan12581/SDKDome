@@ -99,7 +99,6 @@ public class CeliaActivity extends UnityPlayerActivity
                 Login();
                 break;
             case Logout:
-                Logout();
                 break;
             case Pay:
                 Pay(data);

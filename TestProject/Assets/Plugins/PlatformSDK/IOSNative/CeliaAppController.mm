@@ -121,10 +121,14 @@ typedef NS_ENUM(NSInteger, MsgID)
      NSLog(@"->Celia Switch 注销\n");
     [[RaStarCommon sharedInstance] loginViewOut];
 }
+- (void)logoutAction{
+    NSLog(@"->Celia 退出登录:\n");
+    [[RaStarCommon sharedInstance] loginViewOut];
+}
 -(void)onCommonLoginOut{
     NSLog(@"->Celia 注销成功\n");
     [self SendMessageToUnity: eLogout DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:1], @"state",nil]];
-    [[RaStarCommon sharedInstance] showLoginView];
+    // [[RaStarCommon sharedInstance] showLoginView];
 }
 
 #pragma mark -- 支付
@@ -243,11 +247,7 @@ code-信息
 -(void)GetConfigInfo{
     [self SendMessageToUnity: eConfigInfo DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:1], @"state", [RaStarCommon sharedInstance].deviceID, @"deviceID",nil]];
 }
-#pragma mark -- 退出登录
-- (void)logoutAction{
-    NSLog(@"->Celia 退出登录:\n");
-    [[RaStarCommon sharedInstance] loginViewOut];
-}
+
 #pragma mark -- Unity To IOS
 -(void)Call:(int) type andJsonStr:(const char*) jsonstring{
     NSLog(@"-ios----CeliaAppController---Call----%i",type);

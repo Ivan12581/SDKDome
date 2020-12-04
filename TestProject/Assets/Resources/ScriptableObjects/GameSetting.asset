@@ -15,6 +15,6 @@ MonoBehaviour:
   VERSION: Develop
   CDN_ADDRESS: https://xlycs.res.rastargame.com
   NET_ASSETS: NetAssets_PublicNetwork
-  ip: 192.168.102.165
-  port: 52001
+  ip: thethroneofgirl-game.smartplay.com.tw
+  port: 52000
   serverType: 1

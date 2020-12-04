@@ -8,45 +8,63 @@ namespace celia.game.editor
 {
     public class CeliaBuilder
     {
+        static RuntimePlatform runtimePlatform = RuntimePlatform.XboxOne;
+        public static void GetCurPlatform() {
+#if UNITY_ANDROID
+        runtimePlatform = RuntimePlatform.Android;
+        return;
+#endif
+#if UNITY_IOS
+        runtimePlatform = RuntimePlatform.IPhonePlayer;
+        return;
+#endif
+        runtimePlatform = RuntimePlatform.XboxOne;
+        Log.Info_red("目前不支持打PC包 请注意平台信息");
+        }
         #region 打包菜单
-        //[MenuItem("Tools/Build/Android/Alpha版APK+无SDK  [所有打包项，服务器随项目当前设置]")]
-        //public static void BuildAndroidPreview()
-        //{
-        //    StartBuild(new string[] { "Platform:Android", "Level:Alpha", "Sign:Rastar" });
-        //}
-        [MenuItem("Tools/Build/Android/NoneSDK")]
-        public static void BuildAndroidBeta()
+        [MenuItem("Tools/Build/NoneSDK")]
+        public static void BuildNoneSDK()
         {
-            StartBuild(new string[] { "Platform:Android", "Level:Beta", "Sign:Rastar" , "SDK:None" });
-        }
-        [MenuItem("Tools/Build/IOS/NoneSDK")]
-        public static void BuildIOSNoneSDK_Beta()
-        {
-            StartBuild(new string[] { "Platform:IOS", "Level:Beta", "Sign:CeliaAdhoc", "SDK:None"});
-        }
-        [MenuItem("Tools/Build/Android/RastarSDK-->>101714")]
-        public static void BuildAndroidNativeBeta101714()
-        {
-            StartBuild(new string[] { "Platform:Android", "Level:Beta", "Sign:Rastar", "SDK:Native", "SDKParams:And_Rastar" });
-        }
-        [MenuItem("Tools/Build/IOS/RastarSDK-->>101714")]
-        public static void BuildIOSNativeBeta101714()
-        {
-            StartBuild(new string[] { "Platform:IOS", "Level:Beta", "Sign:RastarAhoc", "SDK:Native", "SDKParams:IOS_Rastar" });
+            GetCurPlatform();
+            if (runtimePlatform == RuntimePlatform.Android)
+            {
+                StartBuild(new string[] { "Platform:Android", "Level:Beta", "Sign:Rastar", "SDK:None" });
+            }
+            else if (runtimePlatform == RuntimePlatform.IPhonePlayer)
+            {
+                StartBuild(new string[] { "Platform:IOS", "Level:Beta", "Sign:CeliaAdhoc", "SDK:None" });
+            }
         }
 
-        [MenuItem("Tools/Build/Android/CeliaSDK")]
-        public static void BuildAndroidCeliaOversea_Beta()
+        [MenuItem("Tools/Build/RastarSDK-->>101714")]
+        public static void BuildRastarSDK101714()
         {
-            StartBuild(new string[] { "Platform:Android", "Level:Beta", "Sign:zmxt", "SDK:CeliaOversea", "SDKParams:And_Celia" , "CompanyName:EMG TECHNOLOGY LIMITED" });
+            GetCurPlatform();
+            if (runtimePlatform == RuntimePlatform.Android)
+            {
+                StartBuild(new string[] { "Platform:Android", "Level:Beta", "Sign:Rastar", "SDK:Native", "SDKParams:And_Rastar" });
+            }
+            else if (runtimePlatform == RuntimePlatform.IPhonePlayer)
+            {
+                StartBuild(new string[] { "Platform:IOS", "Level:Beta", "Sign:RastarAhoc", "SDK:Native", "SDKParams:IOS_Rastar" });
+            }
         }
-        [MenuItem("Tools/Build/IOS/CeliaSDK")]
-        public static void BuildIOSCeliaOversea_Beta()
+
+        [MenuItem("Tools/Build/CeliaSDK")]
+        public static void BuildCeliaSDK()
         {
-            StartBuild(new string[] { "Platform:IOS", "Level:Beta", "Sign:CeliaAdhoc", "SDK:CeliaOversea", "SDKParams:IOS_Celia", "CompanyName:EMG TECHNOLOGY LIMITED" });
+            GetCurPlatform();
+            if (runtimePlatform == RuntimePlatform.Android)
+            {
+                StartBuild(new string[] { "Platform:Android", "Level:Beta", "Sign:zmxt", "SDK:CeliaOversea", "SDKParams:And_Celia", "CompanyName:EMG TECHNOLOGY LIMITED" });
+            }
+            else if (runtimePlatform == RuntimePlatform.IPhonePlayer)
+            {
+                StartBuild(new string[] { "Platform:IOS", "Level:Beta", "Sign:CeliaAdhoc", "SDK:CeliaOversea", "SDKParams:IOS_Celia", "CompanyName:EMG TECHNOLOGY LIMITED" });
+            }
         }
         #endregion
-
+        
 
         static CeliaBuildOption buildOption;
         public static void StartBuild(string[] args = null)
@@ -152,7 +170,7 @@ namespace celia.game.editor
             BuildSummary summary = report.summary;
             if (summary.result == BuildResult.Succeeded)
             {
-                Log.Info_green("Building successed, the total size is" + summary.totalSize + " bytes");
+                Log.Info_green("Building successed, the total size is" + summary.totalSize/1000000 + " bytes" + " and  the totalTime is " + summary.totalTime);
             }
             else
             {
