@@ -348,7 +348,7 @@ namespace celia.game
             if (!msgHandleMap.ContainsKey(wrap.OpId))
             {
                 //真翔警告！！
-                Debug.LogWarning("真香警告！！理论上来说，应该很小几率走到这逻辑！！");
+                //Debug.LogWarning("真香警告！！理论上来说，应该很小几率走到这逻辑！！");
                 GameMessage msg = new GameMessage(wrap.ToByteArray())
                 {
                     proto = wrap.Id,
@@ -361,7 +361,7 @@ namespace celia.game
             }
             else
             {
-                Debug.Log("--An unhandled message was found: " + wrap.Id + " guid: " + wrap.OpId + " index: " + wrap.OpIdIdx);
+                //Debug.Log("--An unhandled message was found: " + wrap.Id + " guid: " + wrap.OpId + " index: " + wrap.OpIdIdx);
             }
             //opid 为空的应该是服务器主动推过来的登录询问协议之类的
             if (wrap.OpId != "")
@@ -949,7 +949,7 @@ namespace celia.game
                                 //在这里处理完成标识
                                 if (NetworkManager.gi.IsMultipleMsg(wrap) || CheckMsgHandle(wrap))
                                 {
-                                    Debug.Log("已处理消息: " + wrap.Id + " guid: " + wrap.OpId + " index: " + wrap.OpIdIdx);
+                                    //Debug.Log("已处理消息: " + wrap.Id + " guid: " + wrap.OpId + " index: " + wrap.OpIdIdx);
 
                                     //如果重连界面打开着，则关闭
                                     if (reconnectWaitForSel)

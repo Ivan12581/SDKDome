@@ -27,6 +27,8 @@ public class LoginView : MonoBehaviour
                 Debug.LogWarning(Newtonsoft.Json.JsonConvert.SerializeObject(msg));
             });
         });
+
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
         Debug.Log("-Unity--LoginView Start--Application.version:" + Application.version + " Application.productName:" + Application.productName);
     }
     /// <summary>
