@@ -97,7 +97,8 @@ namespace celia.game
             ServerOrders2.Clear();
             VoucherData = "";
         }
-        void SetLoadingViewState(bool state)
+
+        private void SetLoadingViewState(bool state)
         {
             if (state)
             {
@@ -108,21 +109,22 @@ namespace celia.game
                 Debug.Log("关闭支付遮罩");
             }
         }
-        public void Pay(int productID, Action success = null, Action fail=null)
+
+        public void Pay(int productID, Action success = null, Action fail = null)
         {
-    //"Id": 20,
-    //  "PID": "throneofgirl.gem.2",
-    //  "TWD": 170.0,
-    //  "Type": 0,
-    //  "Price": 170.0,
-    //  "Diamond": 300,
-    //  "ExtraDiamond": 15,
-    //  "Name": "300幻水晶",
-    //  "Desc": "您想以NT$170.00的價格購買300幻水晶嗎?",
-    //  "RechargeType": 0,
-    //  "RechargePoint": 170,
-    //  "FirstRechargeReturn": 600,
-    //  "NormalRechargeReturn": 410
+            //"Id": 20,
+            //  "PID": "throneofgirl.gem.2",
+            //  "TWD": 170.0,
+            //  "Type": 0,
+            //  "Price": 170.0,
+            //  "Diamond": 300,
+            //  "ExtraDiamond": 15,
+            //  "Name": "300幻水晶",
+            //  "Desc": "您想以NT$170.00的價格購買300幻水晶嗎?",
+            //  "RechargeType": 0,
+            //  "RechargePoint": 170,
+            //  "FirstRechargeReturn": 600,
+            //  "NormalRechargeReturn": 410
             onSuccess = success;
             onFail = fail;
             //请求充值商品
@@ -198,7 +200,6 @@ namespace celia.game
             }
             else if (result == IOSRechargeResult.RechargeSendGoods)
             {
-
             }
             else if (result == IOSRechargeResult.RechargeError)
             {
@@ -220,6 +221,7 @@ namespace celia.game
                     {
                         Debug.Log("---凭证收集完毕 等待连接逻辑服后 向服务器请求服务器订单 然后对比---");
                         VoucherData = data["encodeStr"];
+                        CheckOrderState();
                     }
                     else
                     {
@@ -440,140 +442,28 @@ namespace celia.game
         /// </summary>
         private void CheckOrderState()
         {
-            //其实应该以apple支付的为准 但是服务器非要这么做
-            bool NeedVoucher = false;
-            if (AppleOrders.Count == 0 && ServerOrders.Count == 0)
+            //appleOrder del
+            if (ServerOrders.Count > 0)
             {
-                Debug.Log("---岁月静好--->");
-            }
-            else if (AppleOrders.Count == 0)
-            {
-                //直接服务器数据原路返回
-                c2l_ios_recharge_closed pkg = new c2l_ios_recharge_closed();
-                foreach (string order in ServerOrders)
+                foreach (string sInfo in ServerOrders)
                 {
-                    pkg.OrderDeleted.Add(order);
+                    DelOrderInApple(sInfo);
                 }
-                NetworkManager.gi.SendPkt(LogicMsgID.LogicMsgC2LIosRechargeClosed, pkg);
+                ServerOrders.Clear();
             }
-            else if (ServerOrders.Count == 0)
-            {
-                //需要将AppleOrders全部发服务器就好了
-                NeedVoucher = true;
-                //VerifyVoucherData();
-            }
-            else
-            {
-                List<c2l_ios_recharge.Types.transaction_info> needVerifyData = new List<c2l_ios_recharge.Types.transaction_info>();
-                //需要check
-                bool IsFind = false;
-                foreach (var aInfo in AppleOrders)
-                {
-                    IsFind = false;
-                    foreach (string sInfo in ServerOrders)//服务器有 客户端也有 就去apple那边删掉apple订单
-                    {
-                        if (string.Equals(aInfo.TransactionId, sInfo))
-                        {
-                            DelOrderInApple(sInfo);
-                            IsFind = true;
-                            break;
-                        }
-                    }
-                    if (!IsFind)//客户端有 服务器没有 发过去验证
-                    {
-                        needVerifyData.Add(aInfo);
-                    }
-                }
-
-                c2l_ios_recharge_closed pkg = new c2l_ios_recharge_closed();
-                foreach (var order in ServerOrders)
-                {
-                    IsFind = false;
-                    foreach (var sInfo in AppleOrders)//还有服务器有 Apple没有的
-                    {
-                        if (string.Equals(order, sInfo.TransactionId))
-                        {
-                            IsFind = true;
-                            break;
-                        }
-                    }
-                    if (!IsFind)
-                    {
-                        pkg.OrderDeleted.Add(order);
-                    }
-                }
-                if (pkg.OrderDeleted.Count > 0)
-                {
-                    NetworkManager.gi.SendPkt(LogicMsgID.LogicMsgC2LIosRechargeClosed, pkg);
-                }
-                AppleOrders = needVerifyData;
-
-                //发给服务器
-                NeedVoucher = true;
-                //VerifyVoucherData();
-            }
-            //应服务器智障要求 还有另外操作他们自己的订单
+            //serverIndex del
             if (ServerOrders2.Count > 0)
             {
-                if (NeedVoucher)
+                foreach (var item in ServerOrders2)
                 {
-                    bool IsFind = false;
-                    List<c2l_ios_recharge.Types.transaction_info> needVerifyData = new List<c2l_ios_recharge.Types.transaction_info>();
-                    foreach (var item in AppleOrders)
-                    {
-                        IsFind = false;
-                        foreach (var item2 in ServerOrders2)
-                        {
-                            if (string.Equals(item2, item.OrderIndex))//服务器有 客户端也有的就发过去验证
-                            {
-                                needVerifyData.Add(item);
-                                IsFind = true;
-                                break;
-                            }
-                        }
-                        if (!IsFind)//客户端有但是服务器没有  服务器强烈要求直接删掉 会漏单
-                        {
-                            DelOrderInApple(item.TransactionId);
-                        }
-                    }
-                    foreach (var item in ServerOrders2)
-                    {
-                        IsFind = false;
-                        foreach (var item2 in AppleOrders)
-                        {
-                            if (string.Equals(item, item2.OrderIndex))
-                            {
-                                IsFind = true;
-                                break;
-                            }
-                        }
-                        if (!IsFind) //服务器有 客户端没有 就让服务器去删除
-                        {
-                            FailOrderToServer(item);
-                        }
-                    }
-                    AppleOrders = needVerifyData;
-                    VerifyVoucherData();
+                    FailOrderToServer(item);
                 }
-                else
-                {
-                    foreach (var item in ServerOrders2)
-                    {
-                        FailOrderToServer(item);
-                    }
-                }
+                ServerOrders2.Clear();
             }
-            else
+            //send appleOrder to server
+            if (AppleOrders.Count > 0)
             {
-                //AppleOrders.Count>0 ServerOrders.Count == 0 ServerOrders2.Count == 0
-                if (AppleOrders.Count > 0)
-                {
-                    //在测试阶段会经常切换服务器和账号 所以AppleOrders经常不是自己的 服务器又不要只能直接干掉 不然正式的支付流程都不能走
-                    foreach (var item in AppleOrders)
-                    {
-                        DelOrderInApple(item.TransactionId);
-                    }
-                }
+                VerifyVoucherData();
             }
         }
 
