@@ -821,9 +821,10 @@ namespace celia.game.editor
             // Capabilitise添加
             var entitlementsFileName = "tw.entitlements";
             var entitlementsFilePath = Path.Combine("Assets/Plugins/iOS/SDK/", entitlementsFileName);
-            File.Copy(entitlementsFilePath, Path.Combine(path, entitlementsFileName));
+            File.Copy(entitlementsFilePath, Path.Combine(option.PlayerOption.locationPathName, entitlementsFileName),true);
             proj.AddFileToBuild(target, proj.AddFile(entitlementsFileName, entitlementsFileName, PBXSourceTree.Source));
-            proj.AddCapability(target, PBXCapabilityType.InAppPurchase);
+            proj.AddCapability(target, PBXCapabilityType.InAppPurchase, entitlementsFileName);
+            proj.AddCapability(target, PBXCapabilityType.GameCenter);
             proj.AddCapability(target, PBXCapabilityType.PushNotifications, entitlementsFileName);
             plist.WriteToFile(plistPath);
             proj.WriteToFile(projPath);
