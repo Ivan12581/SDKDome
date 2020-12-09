@@ -221,7 +221,6 @@ namespace celia.game
                     {
                         Debug.Log("---凭证收集完毕 等待连接逻辑服后 向服务器请求服务器订单 然后对比---");
                         VoucherData = data["encodeStr"];
-                        CheckOrderState();
                     }
                     else
                     {
@@ -274,7 +273,9 @@ namespace celia.game
             }
             else
             {
-                Debug.Log("---钥匙串中没有---");
+                //初始化有的时候会返回2次 第二次是钥匙串中没有Extra 是因为前面一次已经正常处理过了
+                Debug.Log("---钥匙串中没有Extra---");
+                return;
             }
 
             c2l_ios_recharge.Types.transaction_info Info = new c2l_ios_recharge.Types.transaction_info
@@ -463,6 +464,7 @@ namespace celia.game
             //send appleOrder to server
             if (AppleOrders.Count > 0)
             {
+                Debug.LogError("---开始自动补单---UID:" + AuthProcessor.gi.ID);
                 VerifyVoucherData();
             }
         }
