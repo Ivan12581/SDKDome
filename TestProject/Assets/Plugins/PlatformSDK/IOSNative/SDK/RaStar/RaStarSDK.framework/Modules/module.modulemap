@@ -1,6 +1,0 @@
-framework module RaStarSDK {
-  umbrella header "RaStarSDK.h"
-
-  export *
-  module * { export * }
-}

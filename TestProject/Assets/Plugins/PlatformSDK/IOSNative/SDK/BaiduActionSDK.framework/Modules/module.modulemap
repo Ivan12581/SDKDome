@@ -1,6 +1,0 @@
-framework module BaiduActionSDK {
-  umbrella header "BaiduActionSDK.h"
-
-  export *
-  module * { export * }
-}
