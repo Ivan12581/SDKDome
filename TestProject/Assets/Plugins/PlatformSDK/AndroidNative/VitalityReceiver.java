@@ -26,11 +26,11 @@ public class VitalityReceiver extends BroadcastReceiver {
         {
             default:
             case 0:
-                return  Constant.Notification_Text_Full;
+                return  "体力已满";
             case 1:
-                return  Constant.Notification_Text_CollectMorning;
+                return  "公主殿下，可以上线领取体力了呦";
             case 2:
-                return  Constant.Notification_Text_CollectAfternoon;
+                return  "公主殿下，可以上线领取体力了呦";
         }
     }
 
@@ -40,11 +40,11 @@ public class VitalityReceiver extends BroadcastReceiver {
         {
             default:
             case 0:
-                return  Constant.Notification_Title_Full;
+                return  "体力溢出通知";
             case 1:
-                return  Constant.Notification_Title_CollectMorning;
+                return  "早餐时间到～";
             case 2:
-                return  Constant.Notification_Title_CollectAfternoon;
+                return  "下午茶时间到～";
         }
     }
 

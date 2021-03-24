@@ -20,15 +20,67 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9a31f6d8-b7b4-4176-8a4d-c3c0a33eade2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/PlatformSDK/AndroidNative/assets/sjoys_com.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/PlatformSDK/AndroidNative/assets/sjoys_com.ini.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/PlatformSDK/AndroidNative/libs/rastar_sdk_core_v5.7.1.aar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/PlatformSDK/AndroidNative/libs/rastar_sdk_core_v5.7.1.aar.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/PlatformSDK/AndroidNative/libs/rastar_sdk_libs_v5.7.1.aar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/PlatformSDK/AndroidNative/libs/rastar_sdk_libs_v5.7.1.aar.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/PlatformSDK/AndroidNative/libs/rastar_sdk_share_v5.7.1.aar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/PlatformSDK/AndroidNative/libs/rastar_sdk_share_v5.7.1.aar.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Editor/CeliaBuilder/PlatformActions/SetIOSSDK.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Editor/CeliaBuilder/PlatformActions/SetIOSSDK.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/PlatformSDK/IOSCeliaOversea/ApplePurchase.m" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/PlatformSDK/IOSCeliaOversea/ApplePurchase.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Btns.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Btns.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Btns/光环1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Btns/光环1.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Btns/光环2.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Btns/光环2.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Btns/对话框女主.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Btns/已激活.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Btns/已激活.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Btns/心1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Btns/心1.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Btns/进度条1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Btns/进度条1.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Btns/随机图标3-N约会.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Btns/随机图标3-N约会.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Btns/随机图标3-R约会.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Btns/随机图标3-R约会.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Btns/随机图标3-SR约会.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Btns/随机图标3-SR约会.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Btns/随机图标3-SSR约会.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Btns/随机图标3-SSR约会.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Icon.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Icon.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Icon/小人1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Icon/小人1.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Icon/小人2.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Icon/小人2.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Icon/插图.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Icon/插图.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/ALL.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/ALL.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/Bg_zy_007.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/Bg_zy_007.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/Bg_zy_010.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/Bg_zy_010.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/不开心2.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/不开心2.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/公司logo.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/公司logo.jpg.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/好感等级.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/好感等级.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/开心1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/开心1.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/我方头像底.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/我方头像底.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/按钮1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/按钮1.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/敌方头像底.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/敌方头像底.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/登录花纹.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/登录花纹.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/蓝底1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/蓝底1.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/蓝底2.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/蓝底2.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/蓝拖拉按钮1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/蓝拖拉按钮1.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/购买按钮1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/购买按钮1.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/选择框1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/选择框1.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/隐藏3.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/隐藏3.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/隐藏4.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/隐藏4.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/集火.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/集火.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/领取按钮.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/Login/领取按钮.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/Up.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/Up.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/Up/随机图标-N升星.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/Up/随机图标-N升星.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/Up/随机图标-R升星.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/Up/随机图标-R升星.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/Up/随机图标-SR升星.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/Up/随机图标-SR升星.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/Up/随机图标-SSR升星.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/Up/随机图标-SSR升星.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/chengjiu.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/chengjiu.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/chengjiu/1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/chengjiu/1.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/chengjiu/2.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/chengjiu/2.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/chengjiu/3.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/chengjiu/3.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/chengjiu/4.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/chengjiu/4.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/chengjiu/5.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/chengjiu/5.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/chengjiu/6.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/chengjiu/6.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/chengjiu/7.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/chengjiu/7.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/chengjiu/8.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Atlas/UI/dynamic/chengjiu/8.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/SDKParams.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/SDKParams.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SDKManager/SDKManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SDKManager/SDKManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SDKPay.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SDKPay.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TestProject.sln" beforeDir="false" afterPath="$PROJECT_DIR$/TestProject.sln" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +100,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="E:/GitDomeProject/trank/ddz" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -64,6 +116,7 @@
       <updated>1605748652805</updated>
       <workItem from="1605748653832" duration="50000" />
       <workItem from="1605748753581" duration="210000" />
+      <workItem from="1609903108362" duration="39000" />
     </task>
     <servers />
   </component>
@@ -83,6 +136,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="2660" y="274" key="FileChooserDialogImpl" timestamp="1609903145842">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2660" y="274" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1609903145842" />
     <state x="540" y="262" key="IDE.errors.dialog" timestamp="1605748945182">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

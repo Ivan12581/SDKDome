@@ -397,6 +397,7 @@ namespace celia.game.editor
             rootDict.SetString("RaStarUMKey", "5bc6b08af1f55681f30000da");
             rootDict.SetString("RaStarWeChatKey", "wxf4ea05dfad6b67f3");
             rootDict.SetString("RaStarWeChatSecret", "ec8b3c05e2d81442c14bbc33450c24e1");
+            rootDict.SetString("RaStarWeChatUniversalLink", "https://3rd-sy.rastargame.com/sndwz/");
             rootDict.SetString("RaStarQQID", "101908009");
             rootDict.SetString("RaStarQQSecret", "5cbe0e16d98468e954e14087fb963ffe");
             rootDict.SetString("RaStarWeiboAppKey", "2546046978");

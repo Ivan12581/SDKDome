@@ -78,14 +78,14 @@ namespace celia.game
             proxy = new SDKAndroidProxy();
 #elif UNITY_IOS
             proxy = new SDKIosProxy();
-            if (SDKParams.SDKType == SDKType.CeliaOversea)
-            {
-                Messenger.AddEventListener(Notif.LoginAuth_SUCCESS, () =>
-                {
-                    //登录认证服之后才有用户id
-                    ApplePurchaseProxy.gi.ApplePurchaseInit();
-                });
-            }
+            //if (SDKParams.SDKType == SDKType.CeliaOversea)
+            //{
+            //    Messenger.AddEventListener(Notif.LoginAuth_SUCCESS, () =>
+            //    {
+            //        //登录认证服之后才有用户id
+            //        ApplePurchaseProxy.gi.ApplePurchaseInit();
+            //    });
+            //}
 #endif
 
             InitListener();

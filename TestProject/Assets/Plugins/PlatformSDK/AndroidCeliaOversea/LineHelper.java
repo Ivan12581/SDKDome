@@ -89,26 +89,14 @@ public class LineHelper {
     }
 
     public void Share(String text,String imgPath){
-        if (!Utils.getInstance().checkApkExist(mainActivity,"jp.naver.line.android")) {
-            mainActivity.SendMessageToUnity(CeliaActivity.MsgID.Share.getCode(), new HashMap<String, String>(){
-                {
-                    put("state", "0");
-                }
-            });
-            return;
-        }
         Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-        ComponentName componentName = new ComponentName("jp.naver.line.android","jp.naver.line.android.activity.selectchat.SelectChatActivityLaunchActivity");
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
         Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(mainActivity.getContentResolver(), bitmap, null,null));
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("image/*"); //图片分享
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-        shareIntent.setType("image/jpeg"); //图片分享
-//        shareIntent.setType("text/plain"); // 纯文本
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, text);//分享的标题
-        shareIntent.putExtra(Intent.EXTRA_TEXT, text);//分享内容
-        shareIntent.setComponent(componentName);//跳到指定APP的Activity
         shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mainActivity.startActivity(Intent.createChooser(shareIntent,text));
+
         //Line没有分享回调 默认回调成功
         mainActivity.SendMessageToUnity(CeliaActivity.MsgID.Share.getCode(), new HashMap<String, String>(){
             {

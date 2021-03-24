@@ -144,8 +144,6 @@ typedef NS_ENUM(NSInteger, SDKLoginType)
 
 #pragma mark --init
 -(void)InitSDK{
-    NSDictionary *info= [[NSBundle mainBundle] infoDictionary];
-    NSLog(@"->Celia 初始化:%@",[NSString stringWithFormat:@"CFBundleShortVersionString--->%@&CFBundleVersion--->%@&",info[@"CFBundleShortVersionString"],info[@"CFBundleVersion"]]);
     [[AppleHelper sharedInstance] InitSDK:self];
     [[ApplePurchase sharedInstance] InitSDK:self];
     [[FBHelper sharedInstance] InitSDK:self];
@@ -216,12 +214,14 @@ typedef NS_ENUM(NSInteger, SDKLoginType)
 
 #pragma mark -- 获取设备UUID
 -(void)GetConfigInfo{
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *adId = [infoDictionary objectForKey:@"SKStoreProductParameterAdNetworkIdentifier"];
     NSString *UUID = [[Utils sharedInstance] GetUUID];
     BOOL *IsHighLevel = [[Utils sharedInstance] IsHighLevel];
     if (IsHighLevel) {
-        [self SendMessageToUnity: eConfigInfo DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",UUID, @"deviceID",@"1", @"IsHighLevel",nil]];
+        [self SendMessageToUnity: eConfigInfo DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",UUID, @"deviceID",@"1", @"IsHighLevel",adId, @"adId",nil]];
     }else{
-        [self SendMessageToUnity: eConfigInfo DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",UUID, @"deviceID",@"0", @"IsHighLevel",nil]];
+        [self SendMessageToUnity: eConfigInfo DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"state",UUID, @"deviceID",@"0", @"IsHighLevel",adId, @"adId",nil]];
     }
 }
 //cDelegate

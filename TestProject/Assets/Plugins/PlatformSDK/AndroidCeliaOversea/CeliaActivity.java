@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+import android.provider.Settings;
 
 import java.util.HashMap;
 
@@ -248,9 +249,9 @@ public class CeliaActivity extends UnityPlayerActivity {
         SendMessageToUnity(MsgID.ConfigInfo.getCode(), new HashMap<String, String>(){ {
             put("state", "1");
             put("deviceID", finalIMEIDeviceId);
+			put("adId", Settings.Secure.getString(CeliaActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID));
+            put("CurrencyCode", Utils.getInstance().getCurrencyInfo());
         } });
-//        Utils.getInstance().getKeyHash();
-        //Utils.getInstance().getCurrencyInfo();
         return finalIMEIDeviceId;
     }
 
@@ -270,7 +271,7 @@ public class CeliaActivity extends UnityPlayerActivity {
                     "-用於下載、解壓縮資源包和進行遊戲 \n" +
                     "2.電話權限(部分機型)\n" +
                     "-僅用於識別設備碼信息，用於保障遊客帳號數據安全”");
-            builder.setPositiveButton("确定", null);
+            builder.setPositiveButton("確定", null);
             builder.create().show();
         }
     }

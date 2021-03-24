@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// 分享结果通知 除复制链接及关闭页面外所有返回均为第三方应用的原始数据返回
 FOUNDATION_EXPORT NSNotificationName const _Nonnull RaStarShareResultNotificationName;
 
@@ -58,6 +60,17 @@ typedef NS_ENUM(int, RSShareType) {
     RSShareType_QZone,
 };
 
+typedef NS_ENUM(NSInteger, RSUserActionType){
+    /// 创角
+    RSUserActionType_CreateRole = 1,
+    /// 进入服务器
+    RSUserActionType_EnterServer,
+    /// 角色升级
+    RSUserActionType_RoleUpgrade,
+    /// 角色改名
+    RSUserActionType_ChangeRoleName,
+};
+
 @protocol RaStarInitDelegate,RaStarLoginDelegate,RaStarManagerDelegate,RaStarServiceDelegate;
 @interface RaStarCommon : NSObject
 @property (nonatomic,weak) id<RaStarInitDelegate> initCallback;
@@ -84,6 +97,7 @@ typedef NS_ENUM(int, RSShareType) {
 #pragma mark - 基本功能
 /**
  初始化
+ waring 请确认网络状态正常后再行调用初始化方法
  */
 -(void)registerSDK;
 -(void)addInitDelegate:(id)RaStarInitDelegate;
@@ -118,65 +132,19 @@ typedef NS_ENUM(int, RSShareType) {
 -(void)showService;
 -(void)addServiceDelegate:(id)delegate;
 #pragma mark - 聊天及数据上报
-/**
- 创建游戏角色的时候，上传角色信息
- 
- @param roleID 角色ID --必传
- @param roleName 角色名称 --必传
- @param roleLevel 角色等级 --必传
- @param serverID 服务器ID --必传
- @param serverName 服务器名称 --必传
- @param balance 账号余额 --非必传 传默认值0
- @param vip vip等级 --非必传 传默认值0
- @param partyName 公会名称 --非必传 传默认值“无”
- @param extra 扩展字段 --非必传 传默认值“0”
- */
--(void)uploadCreateInfoRoleID:(NSString *)roleID roleName:(NSString *)roleName roleLevel:(NSString *)roleLevel serverID:(NSString *)serverID serverName:(NSString *)serverName balance:(NSString *)balance vip:(NSString *)vip partyName:(NSString *)partyName extra:(NSString *)extra;
-
-/**
- 角色进入服务器,上传角色信息
- 
- @param roleID 角色ID --必传
- @param roleName 角色名称 --必传
- @param roleLevel 角色等级 --必传
- @param serverID 服务器ID --必传
- @param serverName 服务器名称 --必传
- @param balance 账号余额 --非必传 传默认值0
- @param vip vip等级 --非必传 传默认值0
- @param partyName 公会名称 --非必传 传默认值“无”
- @param extra 扩展字段 --非必传 传默认值“0”
- */
--(void)uploadEnterInfoRoleID:(NSString *)roleID roleName:(NSString *)roleName roleLevel:(NSString *)roleLevel serverID:(NSString *)serverID serverName:(NSString *)serverName balance:(NSString *)balance vip:(NSString *)vip partyName:(NSString *)partyName extra:(NSString *)extra;
-/**
- 角色升级的时候,上传角色信息
- 
- @param roleID 角色ID --必传
- @param roleName 角色名称 --必传
- @param roleLevel 角色等级 --必传
- @param serverID 服务器ID --必传
- @param serverName 服务器名称 --必传
- @param balance 账号余额 --非必传 传默认值0
- @param vip vip等级 --非必传 传默认值0
- @param partyName 公会名称 --非必传 传默认值“无”
- @param extra 扩展字段 --非必传 传默认值“0”
- */
-
--(void)uploadUp_levelInfoRoleID:(NSString *)roleID roleName:(NSString *)roleName roleLevel:(NSString *)roleLevel serverID:(NSString *)serverID serverName:(NSString *)serverName balance:(NSString *)balance vip:(NSString *)vip partyName:(NSString *)partyName extra:(NSString *)extra;
-/**
- 角色改名的时候,上传角色信息(如果游戏没有这一功能,可不调用)
- 
- @param roleID 角色ID --必传
- @param roleName 角色名称 --修改之后角色名称
- @param roleLevel 角色等级 --必传
- @param serverID 服务器ID --必传
- @param serverName 服务器名称 --必传
- @param balance 账号余额 --非必传 传默认值0
- @param vip vip等级 --非必传 传默认值0
- @param partyName 公会名称 --非必传 传默认值“无”
- @param extra 扩展字段 --旧的角色名称
- */
-
--(void)uploadUpdateInfoRoleID:(NSString *)roleID roleName:(NSString *)roleName roleLevel:(NSString *)roleLevel serverID:(NSString *)serverID serverName:(NSString *)serverName balance:(NSString *)balance vip:(NSString *)vip partyName:(NSString *)partyName extra:(NSString *)extra;
+/// 游戏角色上报
+/// @param createTime 创角时间，单位ms
+/// @param action 角色执行动作
+/// @param roleID 角色id
+/// @param roleName 角色名称
+/// @param roleLevel 角色等级
+/// @param serverID 角色选服的服务器id（可以是合服后的服务器id）
+/// @param serverName 角色选服的服务器名称（可以是合服后的服务器名称）
+/// @param realServerName 角色创建所在的服务器名称（非合服后的服务器名称)
+/// @param realServerID 角色创建所在的服务器id（非合服后的服务器id）
+/// @param vip 角色vip等级
+/// @param partyName 加入的公会名称
+- (void)uploadUserRoleCreateRoleTime:(UInt64)createTime Action:(RSUserActionType)action RoleID:(NSString *)roleID RoleName:(NSString *)roleName RoleLevel:(int)roleLevel ServerID:(NSString *)serverID ServerName:(NSString *)serverName RealServerName:(NSString *)realServerName RealServerID:(NSString *)realServerID Vip:(int)vip PartyName:(NSString *_Nullable)partyName;
 
 /**
  消息聊天
@@ -209,6 +177,13 @@ code -  信息
 
 /// 手动显示实名认证页面
 - (void)showUserVerifiedView:(void(^)(BOOL verifiedType))verifyType;
+
+#pragma mark - 游戏网络连接相关
+/// 游戏断线（非退出账号，仅游戏状态断线）
+- (void)gameOffline;
+
+/// 游戏重连（游戏状态断线后重新连接，非切换星辉账号重新登陆）
+-(void)gameBackOnline;
 #pragma mark - 分享
 #pragma mark 使用星辉分享UI
 /// 显示分享页面（链接） - 如参数传空则使用星辉默认模板
@@ -283,6 +258,10 @@ code -  信息
  - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
  */
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
+
+/// 设置系统 application: handleOpenURL: 方法
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url;
+
 /**
  设置游戏屏幕方向
  UIInterfaceOrientationMaskPortrait
@@ -384,3 +363,6 @@ code -  信息
  */
 -(void)serviceClose;
 @end
+
+
+NS_ASSUME_NONNULL_END

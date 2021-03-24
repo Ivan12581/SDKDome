@@ -1,0 +1,63 @@
+{
+    "tpns": {
+        "access_id": "1500017945",
+        "access_key": "ARFNDA5Z90KJ"
+    },
+    "com.xlycs.rastar": {
+        "channel": {
+            "enable": true
+        }
+    },
+    "com.tiantuo.wndjm.bilibili": {
+        "channel": {
+            "enable": false
+        }
+    },
+    "com.rastar.sndwz.nearme.gamecenter": {
+        "channel": {
+            "enable": false
+        }
+    },
+    "com.rastar.xlycs.vivo": {
+        "channel": {
+            "enable": false
+        }
+    },
+    "com.rastar.sndwz.huawei": {
+        "channel": {
+            "enable": false
+        }
+    },
+    "com.rastar.xlycs.mi": {
+        "channel": {
+            "enable": false
+        }
+    },
+    "com.tencent.tmgp.sndwz": {
+        "channel": {
+            "enable": false
+        }
+    },
+    "com.rastar.sndwz.aligames": {
+        "channel": {
+            "enable": false
+        }
+    },
+    "com.rastar.xlycs.kuaishou": {
+        "channel": {
+            "enable": false
+        }
+    },
+    "com.rastar.sndwz.maoer": {
+        "channel": {
+            "enable": false
+        }
+    },
+    "com.rastar.sndwz.kuaikan": {
+        "channel": {
+            "enable": false
+        }
+    },
+    "debug": false,
+    "version": "1.2.3.2"
+}

@@ -1,10 +1,13 @@
 #import "UnityAppController.h"
 #import <RaStarSDK/RaStarSDK.h>
-@interface CeliaAppController : UnityAppController<RaStarInitDelegate,RaStarLoginDelegate,RaStarManagerDelegate,RaStarServiceDelegate>
+#import "XGPush.h"
+@interface CeliaAppController : UnityAppController<RaStarInitDelegate,RaStarLoginDelegate,RaStarManagerDelegate,RaStarServiceDelegate,XGPushDelegate>
 
 @end
 
-@implementation CeliaAppController
+@implementation CeliaAppController{
+    bool isTPNSRegistSuccess;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [super application:application didFinishLaunchingWithOptions:launchOptions];
@@ -12,7 +15,7 @@
     [[RaStarCommon sharedInstance] setUserAgent];
     [[RaStarCommon sharedInstance] setScreenOrientation:UIInterfaceOrientationMaskAllButUpsideDown];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShareResult:) name:RaStarShareResultNotificationName object:nil];
-    [self InitSDK];
+    [self GetConfigInfo];
     return YES;
 }
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
@@ -71,26 +74,120 @@ typedef NS_ENUM(NSInteger, MsgID)
     eBind = 203,
     eShare = 204,
     eNaver = 205,
-    
+    eReview = 206,
+
     eConsumeGoogleOrder = 401,
     eCustomerService = 501,
     eFaceBookEvent = 601,
     eAdjustEvent = 602,
     ePurchase3rdEvent = 603,
 };
+/// 启动TPNS
+- (void)xgStart {
+    /// 控制台打印TPNS日志，开发调试建议开启
+    [[XGPush defaultManager] setEnableDebug:YES];
+    /// 自定义通知栏消息行为，有自定义消息行为需要使用
+    //    [self setNotificationConfigure];
+    /// 非广州集群，请开启对应集群配置（广州集群无需使用），此函数需要在startXGWithAccessID函数之前调用
+    //    [self configHost];
+    /// 启动TPNS服务
+    [[XGPush defaultManager] startXGWithAccessID:1600017944 accessKey:@"IBXZARNAVUOA" delegate:self];
+    /// 角标数目清零,通知中心清空
+    if ([XGPush defaultManager].xgApplicationBadgeNumber > 0) {
+//        TPNS_DISPATCH_MAIN_SYNC_SAFE(^{
+            [XGPush defaultManager].xgApplicationBadgeNumber = 0;
+//        });
+    }
+}
 
+#pragma mark *** XGPushDelegate ***
+
+/// 注册推送服务成功回调
+/// @param deviceToken APNs 生成的Device Token
+/// @param xgToken TPNS 生成的 Token，推送消息时需要使用此值。TPNS 维护此值与APNs 的 Device Token的映射关系
+/// @param error 错误信息，若error为nil则注册推送服务成功
+- (void)xgPushDidRegisteredDeviceToken:(nullable NSString *)deviceToken xgToken:(nullable NSString *)xgToken error:(nullable NSError *)error {
+    NSLog(@"%s, result %@, error %@", __FUNCTION__, error ? @"NO" : @"OK", error);
+    NSString *errorStr = !error ? NSLocalizedString(@"success", nil) : NSLocalizedString(@"failed", nil);
+    NSString *message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"register_app", nil), errorStr];
+    NSLog(@"---注册推送服务成功回调-->%@", message);
+    //在注册完成后上报角标数目
+    if (!error) {
+        //重置服务端自动+1基数
+        [[XGPush defaultManager] setBadge:0];
+    }
+    //设置是否注册成功
+    isTPNSRegistSuccess = error ? false : true;
+}
+
+/// 注册推送服务失败回调
+/// @param error 注册失败错误信息
+- (void)xgPushDidFailToRegisterDeviceTokenWithError:(nullable NSError *)error {
+    NSLog(@"%s, errorCode:%ld, errMsg:%@", __FUNCTION__, (long)error.code, error.localizedDescription);
+    NSLog(@"---注册推送服务失败回调-->%@", error.localizedDescription);
+}
+
+/// 注销推送服务回调
+- (void)xgPushDidFinishStop:(BOOL)isSuccess error:(nullable NSError *)error {
+    NSString *errorStr = !error ? NSLocalizedString(@"success", nil) : NSLocalizedString(@"failed", nil);
+    NSString *message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"unregister_app", nil), errorStr];
+    NSLog(@"---注销推送服务回调--->%@", message);
+    //设置是否注册成功
+    if (!error) {
+        isTPNSRegistSuccess = false;
+    }
+}
+
+/// 统一接收消息的回调
+/// @param notification 消息对象(有2种类型NSDictionary和UNNotification具体解析参考示例代码)
+/// @note 此回调为前台收到通知消息及所有状态下收到静默消息的回调（消息点击需使用统一点击回调）
+/// 区分消息类型说明：xg字段里的msgtype为1则代表通知消息,msgtype为2则代表静默消息,msgtype为9则代表本地通知
+- (void)xgPushDidReceiveRemoteNotification:(nonnull id)notification withCompletionHandler:(nullable void (^)(NSUInteger))completionHandler {
+    NSDictionary *notificationDic = nil;
+    if ([notification isKindOfClass:[UNNotification class]]) {
+        notificationDic = ((UNNotification *)notification).request.content.userInfo;
+        completionHandler(UNNotificationPresentationOptionBadge | UNNotificationPresentationOptionSound | UNNotificationPresentationOptionAlert);
+    } else if ([notification isKindOfClass:[NSDictionary class]]) {
+        notificationDic = notification;
+        completionHandler(UIBackgroundFetchResultNewData);
+    }
+    NSLog(@"receive notification dic: %@", notificationDic);
+}
+
+/// 统一点击回调
+/// @param response 如果iOS 10+/macOS 10.14+则为UNNotificationResponse，低于目标版本则为NSDictionary
+/// 区分消息类型说明：xg字段里的msgtype为1则代表通知消息,msgtype为9则代表本地通知
+- (void)xgPushDidReceiveNotificationResponse:(nonnull id)response withCompletionHandler:(nonnull void (^)(void))completionHandler {
+    NSLog(@"[TPNS Demo] click notification");
+    if ([response isKindOfClass:[UNNotificationResponse class]]) {
+        /// iOS10+消息体获取
+        NSLog(@"notification dic: %@", ((UNNotificationResponse *)response).notification.request.content.userInfo);
+    } else if ([response isKindOfClass:[NSDictionary class]]) {
+        /// <IOS10消息体获取
+        NSLog(@"notification dic: %@", response);
+    }
+    completionHandler();
+}
+
+/// 角标设置成功回调
+/// @param isSuccess 设置角标是否成功
+/// @param error 错误标识，若设置不成功会返回
+- (void)xgPushDidSetBadge:(BOOL)isSuccess error:(nullable NSError *)error {
+    NSLog(@"%s, 角标设置回调result %@, error %@", __FUNCTION__, error ? @"NO" : @"OK", error);
+}
 // SDK回调
 #pragma mark -- 初始化
 -(void)InitSDK{
-    NSDictionary *info= [[NSBundle mainBundle] infoDictionary];
-    
-    NSLog(@"->Celia 初始化:%@",[NSString stringWithFormat:@"CFBundleShortVersionString--->%@&CFBundleVersion--->%@&",info[@"CFBundleShortVersionString"],info[@"CFBundleVersion"]]);
+     NSLog(@"->Celia 初始化\n");
     [RaStarCommon sharedInstance].useSDKAlertView = YES;
     [RaStarCommon sharedInstance].mainBackGroundColor = [UIColor clearColor];
     
     [[RaStarCommon sharedInstance] addInitDelegate:self];
     [[RaStarCommon sharedInstance] registerSDK];
-    [self GetConfigInfo];
+
+    
+    
+    [self xgStart];
 }
 - (void)onInitSuccess {
     NSLog(@"->Celia 初始化成功\n");
@@ -170,15 +267,17 @@ typedef NS_ENUM(NSInteger, MsgID)
     NSInteger type = [[dict valueForKey:@"type"] integerValue];
     UIImage *image = [UIImage imageWithContentsOfFile:imgStr];
     [[RaStarCommon sharedInstance] shareWithImage:image ShareType:(RSShareType)type];
+    //伪分享回调 因为有些渠道分享没有回调
+    [self SendMessageToUnity: eShare DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:1], @"state",nil]];
 }
 #pragma mark -- 分享结果
 - (void)getShareResult:(NSNotification *)notification{
-    NSString *errMessage = notification.object[@"message"];
-    if (errMessage) {
-        [self SendMessageToUnity: eShare DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:0], @"state",errMessage,@"message",nil]];
-    }else{
-        [self SendMessageToUnity: eShare DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:1], @"state",nil]];
-    }
+    // NSString *errMessage = notification.object[@"message"];
+    // if (errMessage) {
+    //     [self SendMessageToUnity: eShare DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:0], @"state",errMessage,@"message",nil]];
+    // }else{
+    //     [self SendMessageToUnity: eShare DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:1], @"state",nil]];
+    // }
 
 }
 /*
@@ -206,7 +305,6 @@ code-信息
         if (verifiedType) {
             type = @"认证成功！";
         }
-//        self.textView.text = type;
     }];
 }
 
@@ -216,38 +314,27 @@ code-信息
     NSString *jsonNSString = [NSString stringWithUTF8String:jsonData];
     NSData *data = [jsonNSString dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    int uploadType = [dict[@"UploadType"] intValue];
-    switch (uploadType) {
-        case 0:// 角色创建
-            [[RaStarCommon sharedInstance] uploadCreateInfoRoleID:[dict valueForKey:@"RoleID"] roleName:[dict valueForKey:@"RoleName"] roleLevel:[dict valueForKey:@"RoleLevel"] serverID:[dict valueForKey:@"ServerID"] serverName:[dict valueForKey:@"ServerName"] balance:[dict valueForKey:@"Balance"] vip:[dict valueForKey:@"VIPLevel"] partyName:[dict valueForKey:@"PartyName"] extra:[dict valueForKey:@"Extra"]];
-            break;
-        case 1:// 进入游戏
-            [[RaStarCommon sharedInstance] uploadEnterInfoRoleID:[dict valueForKey:@"RoleID"] roleName:[dict valueForKey:@"RoleName"] roleLevel:[dict valueForKey:@"RoleLevel"] serverID:[dict valueForKey:@"ServerID"] serverName:[dict valueForKey:@"ServerName"] balance:[dict valueForKey:@"Balance"] vip:[dict valueForKey:@"VIPLevel"] partyName:[dict valueForKey:@"PartyName"] extra:[dict valueForKey:@"Extra"]];
-            break;
-        case 2:// 角色升级
-            [[RaStarCommon sharedInstance] uploadUp_levelInfoRoleID:[dict valueForKey:@"RoleID"] roleName:[dict valueForKey:@"RoleName"] roleLevel:[dict valueForKey:@"RoleLevel"] serverID:[dict valueForKey:@"ServerID"] serverName:[dict valueForKey:@"ServerName"] balance:[dict valueForKey:@"Balance"] vip:[dict valueForKey:@"VIPLevel"] partyName:[dict valueForKey:@"PartyName"] extra:[dict valueForKey:@"Extra"]];
-            break;
-        case 3:// 完成新手
-            break;
-        case 4:// 更名
-            [[RaStarCommon sharedInstance] uploadUpdateInfoRoleID:[dict valueForKey:@"RoleID"] roleName:[dict valueForKey:@"RoleName"] roleLevel:[dict valueForKey:@"RoleLevel"] serverID:[dict valueForKey:@"ServerID"] serverName:[dict valueForKey:@"ServerName"] balance:[dict valueForKey:@"Balance"] vip:[dict valueForKey:@"VIPLevel"] partyName:[dict valueForKey:@"PartyName"] extra:[dict valueForKey:@"OldName"]];
-            break;
-    }
+    [[RaStarCommon sharedInstance] uploadUserRoleCreateRoleTime:[dict[@"CreateTime"] intValue] Action:(RSUserActionType)[dict[@"UploadType"] intValue] RoleID:[dict valueForKey:@"RoleID"] RoleName:[dict valueForKey:@"RoleName"] RoleLevel:[dict[@"RoleLevel"] intValue] ServerID:[dict valueForKey:@"ServerID"] ServerName:[dict valueForKey:@"ServerName"] RealServerName:[dict valueForKey:@"RealServerName"] RealServerID:[dict valueForKey:@"RealServerID"] Vip:[dict[@"VIPLevel"] intValue] PartyName:[dict valueForKey:@"PartyName"]];
 }
 
 #pragma mark -- 展示客服界面
 -(void)OpenService{
     [[RaStarCommon sharedInstance] showService];
-    //[[RaStarCommon sharedInstance] addServiceDelegate:self];
 }
 -(void)serviceClose{
     NSLog(@"->Celia 关闭客服界面成功:\n");
 }
 
 -(void)GetConfigInfo{
-    [self SendMessageToUnity: eConfigInfo DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:1], @"state", [RaStarCommon sharedInstance].deviceID, @"deviceID",nil]];
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *adId = [infoDictionary objectForKey:@"SKStoreProductParameterAdNetworkIdentifier"];
+    [self SendMessageToUnity: eConfigInfo DictData:[NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:1], @"state", [RaStarCommon sharedInstance].deviceID, @"deviceID",adId, @"adId",nil]];
 }
 
+#pragma mark --  引导进入App Store评论（请与运营&广告商议后确定调用时机。*非必接，未上线前调用无效）
+-(void)guideToAppStoreReview{
+    [[RaStarCommon sharedInstance] guideToAppStoreReview];
+}
 #pragma mark -- Unity To IOS
 -(void)Call:(int) type andJsonStr:(const char*) jsonstring{
     NSLog(@"-ios----CeliaAppController---Call----%i",type);
@@ -264,9 +351,6 @@ code-信息
             case ePay:
                 [self Pay:jsonstring];
                 break;
-            case eGetDeviceId:
-                
-                break;
             case eShare:
                 [self share:jsonstring];
                 break;
@@ -278,6 +362,9 @@ code-信息
                 break;
 			case eCustomerService:
                 [self OpenService];
+                break;
+            case eReview:
+                [self guideToAppStoreReview];
                 break;
             default:
             NSLog(@"-ios----IOSBridgeHelper---该接口ios未实现----%i",type);

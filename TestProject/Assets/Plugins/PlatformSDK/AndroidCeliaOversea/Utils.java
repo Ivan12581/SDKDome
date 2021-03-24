@@ -110,14 +110,15 @@ public class Utils {
         }
     }
 //获取目标默认货币信息
-    public void getCurrencyInfo(){
+    public String getCurrencyInfo(){
         Currency curCurency = Currency.getInstance(Locale.getDefault());
-        mainActivity.ShowLog("---Build.VERSION_CODES.KITKAT-->"+Build.VERSION_CODES.KITKAT);
-        mainActivity.ShowLog("---curCurency.getCurrencyCode()-->"+curCurency.getCurrencyCode());
-//        mainActivity.ShowLog("---curCurency.getCurrencyCode()-->"+curCurency.getDisplayName());
-        mainActivity.ShowLog("---curCurency.getSymbol()-->"+curCurency.getSymbol());
-//        mainActivity.ShowLog("---curCurency.getCurrencyCode()-->"+curCurency.getNumericCode());
-        mainActivity.ShowLog("---curCurency.getDefaultFractionDigits()-->"+curCurency.getDefaultFractionDigits());
+        return curCurency.getCurrencyCode();
+       //  mainActivity.ShowLog("---Build.VERSION_CODES.KITKAT-->"+Build.VERSION_CODES.KITKAT);
+       //  mainActivity.ShowLog("---curCurency.getCurrencyCode()-->"+curCurency.getCurrencyCode());
+       // // mainActivity.ShowLog("---curCurency.getCurrencyCode()-->"+curCurency.getDisplayName());
+       //  mainActivity.ShowLog("---curCurency.getSymbol()-->"+curCurency.getSymbol());
+       // // mainActivity.ShowLog("---curCurency.getCurrencyCode()-->"+curCurency.getNumericCode());
+       //  mainActivity.ShowLog("---curCurency.getDefaultFractionDigits()-->"+curCurency.getDefaultFractionDigits());
 
     }
     public void saveCacheData(String key,String value){

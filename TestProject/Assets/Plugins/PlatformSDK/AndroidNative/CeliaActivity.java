@@ -14,7 +14,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 import android.graphics.BitmapFactory;
-
+import android.provider.Settings;
+//TPNs
+import com.tencent.android.tpush.XGIOperateCallback;
+import com.tencent.android.tpush.XGPushConfig;
+import com.tencent.android.tpush.XGPushManager;
 // SDK
 import com.starjoys.msdk.SJoyMSDK;
 import com.starjoys.msdk.SJoyMsdkCallback;
@@ -65,7 +69,7 @@ public class CeliaActivity extends UnityPlayerActivity
 
         FaceBookEvent(601),
         AdjustEvent(602),
-        Purchase3rdEvent(603),        
+        Purchase3rdEvent(603),
         ClearNotification(701),
         RegisterNotification(702);
 
@@ -114,7 +118,7 @@ public class CeliaActivity extends UnityPlayerActivity
             case ConfigInfo:
                 GetConfigInfo();
                 break;
-         	case Share:
+            case Share:
                 Share(data);
                 break;
             case UploadInfo:
@@ -124,10 +128,10 @@ public class CeliaActivity extends UnityPlayerActivity
                 CustomerService();
                 break;
             case ClearNotification:
-                vitalitySender.ClearNotification();
+//                vitalitySender.ClearNotification();
                 break;
             case RegisterNotification:
-                vitalitySender.RegisterNotification(data);
+//                vitalitySender.RegisterNotification(data);
                 break;
             default:
                 return;
@@ -161,7 +165,7 @@ public class CeliaActivity extends UnityPlayerActivity
     private int isDebug = 1;
     private Toast mToast;
 
-    VitalitySender vitalitySender;
+//    VitalitySender vitalitySender;
 
     public void SendMessageToUnity(int msgID, HashMap<String, String> dataMap)
     {
@@ -302,9 +306,29 @@ public class CeliaActivity extends UnityPlayerActivity
         appkey = ini.getProperty("app_key");
         // isDebug = Integer.parseInt(ini.getProperty("debug", "0"));
 
-        vitalitySender = new VitalitySender(this);
+//        vitalitySender = new VitalitySender(this);
 
         SJoyMSDK.getInstance().doInit(CeliaActivity.this, appkey, mSJoyMsdkCallback);
+        TPNSInit();
+    }
+    public void TPNSInit()
+    {
+        ShowLog("TPNSInit！");
+        XGPushConfig.enableDebug(CeliaActivity.this,true);
+        XGPushManager.registerPush(CeliaActivity.this, new XGIOperateCallback() {
+            @Override
+            public void onSuccess(Object data, int flag) {
+                //token在设备卸载重装的时候有可能会变
+                ShowLog("TPush注册成功，设备token为：" + data);
+                SendMessageToUnity(MsgID.Logout.getCode(), new HashMap<String, String>(){ {put("state", "1");} });
+            }
+
+            @Override
+            public void onFail(Object data, int errCode, String msg) {
+                ShowLog("TPush注册失败，错误码：" + errCode + ",错误信息：" + msg);
+                SendMessageToUnity(MsgID.Logout.getCode(), new HashMap<String, String>(){ {put("state", "0");} });
+            }
+        });
     }
 //region 基础SDK接口
 
@@ -382,12 +406,7 @@ public class CeliaActivity extends UnityPlayerActivity
             infos.put(MsdkConstant.SUBMIT_VIP, jsonObject.getString("VIPLevel"));
             //玩家帮派，没有传“无”
             infos.put(MsdkConstant.SUBMIT_PARTYNAME, jsonObject.getString("PartyName"));
-            //角色创建时间，单位：秒，获取服务器存储的时间，不可用手机本地时间
-            infos.put(MsdkConstant.SUBMIT_TIME_CREATE, jsonObject.getString("CreateTime"));
-            //角色升级时间，单位：秒，获取服务器存储的时间，不可用手机本地时间
-            infos.put(MsdkConstant.SUBMIT_TIME_LEVELUP, jsonObject.getString("UpgradeTime"));
-            //旧角色名称
-            infos.put(MsdkConstant.SUBMIT_LAST_ROLE_NAME, jsonObject.getString("OldName"));
+
             //拓展字段，传旧角色名，默认传""
             infos.put(MsdkConstant.SUBMIT_EXTRA, jsonObject.getString("Extra"));
 
@@ -397,18 +416,46 @@ public class CeliaActivity extends UnityPlayerActivity
                 @Override public void run() {
                     switch (uploadType)
                     {
-                        case 0:// 角色创建
+                        case 0:// 完成新手
+                            break;
+                        case 1:// 角色创建
+                            //角色创建时间，单位：秒，获取服务器存储的时间，不可用手机本地时间
+                            try {
+                                infos.put(MsdkConstant.SUBMIT_TIME_CREATE, jsonObject.getString("CreateTime"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             SJoyMSDK.getInstance().roleCreate(infos);
                             break;
-                        case 1:// 进入游戏
+                        case 2:// 进入游戏
+                            try {
+                                infos.put(MsdkConstant.SUBMIT_TIME_CREATE, jsonObject.getString("CreateTime"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             SJoyMSDK.getInstance().roleEnterGame(infos);
                             break;
-                        case 2:// 角色升级
+                        case 3:// 角色升级
+                            try {
+                                infos.put(MsdkConstant.SUBMIT_TIME_CREATE, jsonObject.getString("CreateTime"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            //角色升级时间，单位：秒，获取服务器存储的时间，不可用手机本地时间
+                            try {
+                                infos.put(MsdkConstant.SUBMIT_TIME_LEVELUP, jsonObject.getString("UpgradeTime"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             SJoyMSDK.getInstance().roleUpgrade(infos);
                             break;
-                        case 3:// 完成新手
-                            break;
                         case 4:// 更名
+                            //旧角色名称
+                            try {
+                                infos.put(MsdkConstant.SUBMIT_LAST_ROLE_NAME, jsonObject.getString("OldName"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             SJoyMSDK.getInstance().roleUpdate(infos);
                             break;
                     }
@@ -418,7 +465,7 @@ public class CeliaActivity extends UnityPlayerActivity
             e.printStackTrace();
         }
     }
-   // endregion
+    // endregion
 
     public void GetConfigInfo()
     {
@@ -440,6 +487,7 @@ public class CeliaActivity extends UnityPlayerActivity
                     put("sdkMac", SJoyMSDK.getInstance().getSdkMac(CeliaActivity.this));
                     put("sdkIMEI", SJoyMSDK.getInstance().getSdkIMEI(CeliaActivity.this));
                     put("uid", SJoyMSDK.getInstance().getSdkUserUid());
+                    put("adId", Settings.Secure.getString(CeliaActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID));
                 }
             });
         }else {
@@ -450,8 +498,8 @@ public class CeliaActivity extends UnityPlayerActivity
     public void CustomerService()
     {
         ShowLog("CustomerService...");
-		//打开独立的客服中心，可以嵌入在游戏设置界面中
-		SJoyMSDK.getInstance().openSdkCustomerService(CeliaActivity.this);
+        //打开独立的客服中心，可以嵌入在游戏设置界面中
+        SJoyMSDK.getInstance().openSdkCustomerService(CeliaActivity.this);
     }
     public void Share(String jsonStr){
         try {
@@ -494,7 +542,7 @@ public class CeliaActivity extends UnityPlayerActivity
 
         }
     }
-//region Activity生命周期
+    //region Activity生命周期
     @Override protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);

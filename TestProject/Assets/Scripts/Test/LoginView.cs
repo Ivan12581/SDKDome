@@ -12,6 +12,7 @@ public class LoginView : MonoBehaviour
     public InputField passWord;
     public GameObject CeliaSDK;
     public GameObject RastarSDK;
+    public Text ShareText;
     // Start is called before the first frame update
     private void Start()
     {
@@ -148,9 +149,12 @@ public class LoginView : MonoBehaviour
         SDKManager.gi.shareType = (ShareType)type;
         GetScreenShot((imgPath) =>
         {
+            //Application.OpenURL(string.Format("https://line.me/R/msg/{0}/{1}", "image", imgPath));
+
             SDKManager.gi.Share(imgPath, "分享文本", (s, dataDict) =>
              {
-                 Debug.Log("---Unity---WXShare--callback-");
+                 Debug.Log("---Unity---Share--callback-");
+                 ShareText.text = ShareText.text + "Share Code:" + s + "   ";
              });
         });
     }

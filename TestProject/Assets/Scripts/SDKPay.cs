@@ -15,6 +15,7 @@ namespace celia.game
         private List<string> ServerOrders;//从服务器那边拿到的所有需要删除Apple的订单
         private List<string> ServerOrders2;//从服务器那边拿到的服务器的订单
         private string VoucherData;//支付凭证
+
         public ApplePurchaseProxy()
         {
             AppleOrders = new List<c2l_ios_recharge.Types.transaction_info>();
@@ -23,6 +24,7 @@ namespace celia.game
             NetworkManager.gi.RegisterMsgHandler(LogicMsgID.LogicMsgL2CIosRechargeRep,
             new EventHandler<TcpClientEventArgs>(IosRechargeRep));
         }
+
         /// <summary>
         /// 游戏启动去apple那边拿未发送至服务器的订单
         /// </summary>
@@ -33,6 +35,7 @@ namespace celia.game
             jObj.Add("PayType", ((int)ApplePayType.Init).ToString());
             SDKManager.gi.Pay(jObj.ToString());
         }
+
         /// <summary>
         /// 从服务器初始化订单信息 应该连接逻辑服后就请求
         /// </summary>
@@ -55,7 +58,7 @@ namespace celia.game
                 {
                     ServerOrders2.Add(item);
                 }
-                CheckOrderState();
+                ApplePurchaseInit();
             });
         }
 
@@ -90,6 +93,7 @@ namespace celia.game
                 Debug.LogError("PayType is null From SDK");
             }
         }
+
         private void ResetData()
         {
             AppleOrders.Clear();
@@ -217,15 +221,8 @@ namespace celia.game
             {
                 case ApplePayState.Success:
                     Debug.Log("-InitCallBack--有未删除订单---");
-                    if (data.ContainsKey("encodeStr"))
-                    {
-                        Debug.Log("---凭证收集完毕 等待连接逻辑服后 向服务器请求服务器订单 然后对比---");
-                        VoucherData = data["encodeStr"];
-                    }
-                    else
-                    {
-                        AddAppleOrders(data);
-                    }
+                    AddAppleOrders(data);
+                    CheckOrderState();
                     break;
 
                 case ApplePayState.Fail:
@@ -248,44 +245,42 @@ namespace celia.game
 
         private void AddAppleOrders(Dictionary<string, string> data)
         {
+            VoucherData = data["encodeStr"];
             data.TryGetValue("product_id", out string product_id);
             data.TryGetValue("transaction_id", out string transaction_id);
             data.TryGetValue("quantity", out string quantity);
             data.TryGetValue("Extra", out string Extra);
-            string orderIndex = "";
             if (!string.IsNullOrEmpty(Extra))
             {
                 string[] Extras = Extra.Split('&');
                 if (Extras.Length == 2)
                 {
-                    orderIndex = Extras[0];
+                    string orderIndex = Extras[0];
                     string Uid = Extras[1];
                     if (!Uid.Equals(AuthProcessor.gi.ID.ToString()))
                     {
-                        Debug.Log("---该订单不是自己的-应服务器强烈要求 不要发给服务器--");
-                        //return;
+                        Debug.Log("---该订单不是自己的---");
                     }
+                    c2l_ios_recharge.Types.transaction_info Info = new c2l_ios_recharge.Types.transaction_info
+                    {
+                        TransactionId = transaction_id,
+                        CommodityId = product_id,
+                        OrderIndex = orderIndex,
+                        Num = int.Parse(quantity)
+                    };
+                    AppleOrders.Clear();
+                    AppleOrders.Add(Info);
                 }
                 else
                 {
-                    Debug.Log("---钥匙串保存Extra is error---");
+                    Debug.LogError("---钥匙串保存Extra is error---");
                 }
             }
             else
             {
                 //初始化有的时候会返回2次 第二次是钥匙串中没有Extra 是因为前面一次已经正常处理过了
-                Debug.Log("---钥匙串中没有Extra---");
-                return;
+                Debug.LogError("---钥匙串中没有Extra---");
             }
-
-            c2l_ios_recharge.Types.transaction_info Info = new c2l_ios_recharge.Types.transaction_info
-            {
-                TransactionId = transaction_id,
-                CommodityId = product_id,
-                OrderIndex = orderIndex,
-                Num = int.Parse(quantity)
-            };
-            AppleOrders.Add(Info);
         }
 
         /// <summary>
@@ -301,16 +296,11 @@ namespace celia.game
             }
             if (applePayState == ApplePayState.Success)
             {
-                if (data.ContainsKey("encodeStr"))
-                {
-                    onSuccess?.Invoke();
-                    VoucherData = data["encodeStr"];
-                    VerifyVoucherData();
-                }
-                else
-                {
-                    AddAppleOrders(data);
-                }
+                onSuccess?.Invoke();
+                AddAppleOrders(data);
+
+                VerifyVoucherData();
+
             }
             else
             {
