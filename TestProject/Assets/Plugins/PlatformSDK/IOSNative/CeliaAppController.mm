@@ -314,7 +314,23 @@ code-信息
     NSString *jsonNSString = [NSString stringWithUTF8String:jsonData];
     NSData *data = [jsonNSString dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    [[RaStarCommon sharedInstance] uploadUserRoleCreateRoleTime:[dict[@"CreateTime"] intValue] Action:(RSUserActionType)[dict[@"UploadType"] intValue] RoleID:[dict valueForKey:@"RoleID"] RoleName:[dict valueForKey:@"RoleName"] RoleLevel:[dict[@"RoleLevel"] intValue] ServerID:[dict valueForKey:@"ServerID"] ServerName:[dict valueForKey:@"ServerName"] RealServerName:[dict valueForKey:@"RealServerName"] RealServerID:[dict valueForKey:@"RealServerID"] Vip:[dict[@"VIPLevel"] intValue] PartyName:[dict valueForKey:@"PartyName"]];
+    int uploadType = [dict[@"UploadType"] intValue];
+    switch (uploadType) {
+        case 0:// 角色创建
+            [[RaStarCommon sharedInstance] uploadCreateInfoRoleID:[dict valueForKey:@"RoleID"] roleName:[dict valueForKey:@"RoleName"] roleLevel:[dict valueForKey:@"RoleLevel"] serverID:[dict valueForKey:@"ServerID"] serverName:[dict valueForKey:@"ServerName"] balance:[dict valueForKey:@"Balance"] vip:[dict valueForKey:@"VIPLevel"] partyName:[dict valueForKey:@"PartyName"] extra:[dict valueForKey:@"Extra"]];
+            break;
+        case 1:// 进入游戏
+            [[RaStarCommon sharedInstance] uploadEnterInfoRoleID:[dict valueForKey:@"RoleID"] roleName:[dict valueForKey:@"RoleName"] roleLevel:[dict valueForKey:@"RoleLevel"] serverID:[dict valueForKey:@"ServerID"] serverName:[dict valueForKey:@"ServerName"] balance:[dict valueForKey:@"Balance"] vip:[dict valueForKey:@"VIPLevel"] partyName:[dict valueForKey:@"PartyName"] extra:[dict valueForKey:@"Extra"]];
+            break;
+        case 2:// 角色升级
+            [[RaStarCommon sharedInstance] uploadUp_levelInfoRoleID:[dict valueForKey:@"RoleID"] roleName:[dict valueForKey:@"RoleName"] roleLevel:[dict valueForKey:@"RoleLevel"] serverID:[dict valueForKey:@"ServerID"] serverName:[dict valueForKey:@"ServerName"] balance:[dict valueForKey:@"Balance"] vip:[dict valueForKey:@"VIPLevel"] partyName:[dict valueForKey:@"PartyName"] extra:[dict valueForKey:@"Extra"]];
+            break;
+        case 3:// 完成新手
+            break;
+        case 4:// 更名
+            [[RaStarCommon sharedInstance] uploadUpdateInfoRoleID:[dict valueForKey:@"RoleID"] roleName:[dict valueForKey:@"RoleName"] roleLevel:[dict valueForKey:@"RoleLevel"] serverID:[dict valueForKey:@"ServerID"] serverName:[dict valueForKey:@"ServerName"] balance:[dict valueForKey:@"Balance"] vip:[dict valueForKey:@"VIPLevel"] partyName:[dict valueForKey:@"PartyName"] extra:[dict valueForKey:@"OldName"]];
+            break;
+    }
 }
 
 #pragma mark -- 展示客服界面

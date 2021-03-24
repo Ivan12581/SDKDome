@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: a01f002d6133248c2b52825d93d865b9
+<<<<<<< HEAD:TestProject/Assets/Editor/BuilderDome.meta
+guid: 4a26bbe5a90221c439868d517bd381b8
+=======
+guid: 87eadf0761d424c98b910223a896039e
+>>>>>>> bfb7ce32dedbaa4c8e8a5aa1fbabd619b91e1175:TestProject/Assets/Plugins/PlatformSDK/IOSNative/SDK/AFNetworking4.0.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

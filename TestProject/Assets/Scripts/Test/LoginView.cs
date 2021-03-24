@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-
+using System.Runtime.InteropServices;
 using celia.game;
 
 using UnityEngine;
@@ -16,6 +16,7 @@ public class LoginView : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        TouchScreenKeyboard.hideInput = true;
         CeliaSDK.SetActive(SDKManager.gi.SDKParams.SDKType == SDKType.CeliaOversea);
         RastarSDK.SetActive(SDKManager.gi.SDKParams.SDKType == SDKType.Native);
         Messenger.AddEventListener(Notif.NO_NAME_LOG_IN, () =>
@@ -89,10 +90,11 @@ public class LoginView : MonoBehaviour
 
     public void CeliaLogout()
     {
-        Debug.Log("---Unity---CeliaLogout---");
-        SDKManager.gi.CeliaLogout(SDKManager.gi.loginType, (s, dataDict) =>
-         {
-         });
+        Application.Quit();
+        //Debug.Log("---Unity---CeliaLogout---");
+        //SDKManager.gi.CeliaLogout(SDKManager.gi.loginType, (s, dataDict) =>
+        // {
+        // });
     }
 
     /// <summary>
@@ -109,12 +111,12 @@ public class LoginView : MonoBehaviour
     public void InitSDK()
     {
         Debug.Log("---Unity---InitSDK---");
-        //SDKManager.gi.InitSDK((s, dataDict) =>
-        //{
-        //    Debug.Log("---Unity---InitSDKCallBack---");
-        //    SDKPay.gi.ApplePayInit();
-        //});
-        Application.OpenURL("www.baidu.com");
+        SDKManager.gi.InitSDK((s, dataDict) =>
+        {
+            Debug.Log("---Unity---InitSDKCallBack---");
+            //SDKPay.gi.ApplePayInit();
+        });
+        //Application.OpenURL("www.baidu.com");
     }
 
     public void RastarLogin()
@@ -131,16 +133,22 @@ public class LoginView : MonoBehaviour
     public void RastarLogout()
     {
         Debug.Log("---Unity---RastarLogout---");
-        SDKManager.gi.RSLogout((s, dataDict) =>
-        {
-        });
+        Application.Quit();
+        //SDKManager.gi.RSLogout((s, dataDict) =>
+        //{
+        //});
     }
+#if UNITY_IOS
+    [DllImport("__Internal")]
+    private static extern void abort();
+#endif
     public void RastarSwitch()
     {
         Debug.Log("---Unity---RastarSwitch---");
-        SDKManager.gi.Switch((s, dataDict) =>
-        {
-        });
+        //abort();
+        //SDKManager.gi.Switch((s, dataDict) =>
+        //{
+        //});
     }
 
     public void Share(int type)
