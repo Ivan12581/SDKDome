@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<< HEAD:TestProject/Assets/Plugins/PlatformSDK/AndroidNative/assets/sjoys_com.ini.meta
-guid: 4fd6ef0fdbbecef46914d1477ac15ae1
-=======
-guid: 13ab088e5b37e49e089207325c42035b
->>>>>>> bfb7ce32dedbaa4c8e8a5aa1fbabd619b91e1175:TestProject/Assets/Plugins/PlatformSDK/IOSNative/SDK/AFNetworking4.0/AFNetworking.framework/AFNetworking.meta
+guid: 5101ca7d5c4c79d4791ecd883f6498c0
 DefaultImporter:
   externalObjects: {}
   userData: 

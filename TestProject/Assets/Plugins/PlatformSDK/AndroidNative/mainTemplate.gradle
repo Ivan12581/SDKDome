@@ -26,14 +26,12 @@ allprojects {
     }
 }
 
-
-
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation(name: 'rastar_sdk_core_v5.7.3', ext:'aar')
-    implementation(name: 'rastar_sdk_libs_v5.7.3', ext:'aar')
-    implementation(name: 'rastar_sdk_share_v5.7.3', ext:'aar')
+    implementation(name: 'rastar_sdk_core_v5.7.5', ext:'aar')
+    implementation(name: 'rastar_sdk_libs_v5.7.5', ext:'aar')
+    implementation(name: 'rastar_sdk_share_v5.7.5', ext:'aar')
+    implementation(name: 'rastar_sdk_track_v1.0.0', ext:'aar')
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation project(path: ':unity-android-resources')
 }
@@ -53,7 +51,6 @@ android {
         applicationId '**APPLICATIONID**'
         ndk {
             abiFilters **ABIFILTERS**
-            // abiFilters 'armeabi-v7a'
         }
         versionCode **VERSIONCODE**
         versionName '**VERSIONNAME**'

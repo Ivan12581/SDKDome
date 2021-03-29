@@ -62,7 +62,7 @@ public class CeliaActivity extends UnityPlayerActivity
         Bind(203),
         Share(204),
         Naver(205),
-
+        GameOnLine(207),
         ConsumeGoogleOrder(401),
 
         CustomerService(501),
@@ -121,6 +121,9 @@ public class CeliaActivity extends UnityPlayerActivity
             case Share:
                 Share(data);
                 break;
+            case GameOnLine:
+                GameOnLine(data);
+                break;
             case UploadInfo:
                 UploadInfo(data);
                 break;
@@ -128,10 +131,10 @@ public class CeliaActivity extends UnityPlayerActivity
                 CustomerService();
                 break;
             case ClearNotification:
-//                vitalitySender.ClearNotification();
+                vitalitySender.ClearNotification();
                 break;
             case RegisterNotification:
-//                vitalitySender.RegisterNotification(data);
+                vitalitySender.RegisterNotification(data);
                 break;
             default:
                 return;
@@ -165,7 +168,7 @@ public class CeliaActivity extends UnityPlayerActivity
     private int isDebug = 1;
     private Toast mToast;
 
-//    VitalitySender vitalitySender;
+    VitalitySender vitalitySender;
 
     public void SendMessageToUnity(int msgID, HashMap<String, String> dataMap)
     {
@@ -306,29 +309,9 @@ public class CeliaActivity extends UnityPlayerActivity
         appkey = ini.getProperty("app_key");
         // isDebug = Integer.parseInt(ini.getProperty("debug", "0"));
 
-//        vitalitySender = new VitalitySender(this);
+        vitalitySender = new VitalitySender(this);
 
         SJoyMSDK.getInstance().doInit(CeliaActivity.this, appkey, mSJoyMsdkCallback);
-        TPNSInit();
-    }
-    public void TPNSInit()
-    {
-        ShowLog("TPNSInit！");
-        XGPushConfig.enableDebug(CeliaActivity.this,true);
-        XGPushManager.registerPush(CeliaActivity.this, new XGIOperateCallback() {
-            @Override
-            public void onSuccess(Object data, int flag) {
-                //token在设备卸载重装的时候有可能会变
-                ShowLog("TPush注册成功，设备token为：" + data);
-                SendMessageToUnity(MsgID.Logout.getCode(), new HashMap<String, String>(){ {put("state", "1");} });
-            }
-
-            @Override
-            public void onFail(Object data, int errCode, String msg) {
-                ShowLog("TPush注册失败，错误码：" + errCode + ",错误信息：" + msg);
-                SendMessageToUnity(MsgID.Logout.getCode(), new HashMap<String, String>(){ {put("state", "0");} });
-            }
-        });
     }
 //region 基础SDK接口
 
@@ -349,15 +332,13 @@ public class CeliaActivity extends UnityPlayerActivity
             JSONObject jsonObject = new JSONObject(jsonString);
             HashMap<String, String> payInfo = new HashMap<String, String>();
             //充值金额，单位：元
-            //payInfos2.put(MsdkConstant.PAY_MONEY, "0");// 不定额支付
             payInfo.put(MsdkConstant.PAY_MONEY, jsonObject.getString("PayMoney"));
             //CP订单号（不得超过32个字符），全局唯一，不可重复
             payInfo.put(MsdkConstant.PAY_ORDER_NO, jsonObject.getString("OrderID"));
             //商品名称
             payInfo.put(MsdkConstant.PAY_ORDER_NAME, jsonObject.getString("GoodsName"));
-            //商品拓展数据，服务端支付结果回调，原样返回给游戏
+            //商品拓展数据，服务端支付结果回调。(不接受特殊字符串，请务必传入普通字符串或者使用base64加密)
             payInfo.put(MsdkConstant.PAY_ORDER_EXTRA, jsonObject.getString("Extra"));
-
             //角色ID，数字，必须大于0不得超过32个字符
             payInfo.put(MsdkConstant.PAY_ROLE_ID, jsonObject.getString("RoleID"));
             //角色名称
@@ -400,13 +381,16 @@ public class CeliaActivity extends UnityPlayerActivity
             infos.put(MsdkConstant.SUBMIT_SERVER_ID, jsonObject.getString("ServerID"));
             //服务器名称
             infos.put(MsdkConstant.SUBMIT_SERVER_NAME, jsonObject.getString("ServerName"));
+            //角色创建所在的服务器id（非合服后的服务器id)，数字，不得超过32个字符
+            infos.put(MsdkConstant.SUBMIT_REAL_SERVER_ID, jsonObject.getString("RealServerID"));
+            //服务器名称,角色创建所在的服务器名称（非合服后的服务器名称）
+            infos.put(MsdkConstant.SUBMIT_REAL_SERVER_NAME, jsonObject.getString("RealServerName"));
             //玩家余额，数字，默认0
             infos.put(MsdkConstant.SUBMIT_BALANCE, jsonObject.getString("Balance"));
             //玩家VIP等级，数字，默认0
             infos.put(MsdkConstant.SUBMIT_VIP, jsonObject.getString("VIPLevel"));
             //玩家帮派，没有传“无”
             infos.put(MsdkConstant.SUBMIT_PARTYNAME, jsonObject.getString("PartyName"));
-
             //拓展字段，传旧角色名，默认传""
             infos.put(MsdkConstant.SUBMIT_EXTRA, jsonObject.getString("Extra"));
 
@@ -463,6 +447,17 @@ public class CeliaActivity extends UnityPlayerActivity
             });
         }catch (JSONException e){
             e.printStackTrace();
+        }
+    }
+
+    public  void GameOnLine(String jsonStr){
+        if (jsonStr.equals("1")){
+            //角色在线连接接口，开启SDK长链接（当角色由离线状态，重新上线时调用）
+            SJoyMSDK.getInstance().onlineGameRole(CeliaActivity.this);
+        }
+        if (jsonStr.equals("0")){
+            //角色离线连接接口，断开SDK长链接（当角色从在线状态离开游戏或者下线时调用）
+            SJoyMSDK.getInstance().offlineGameRole();
         }
     }
     // endregion
@@ -542,12 +537,31 @@ public class CeliaActivity extends UnityPlayerActivity
 
         }
     }
-    //region Activity生命周期
+
+    public void TPNSInit()
+    {
+        ShowLog("TPNSInit！");
+        // XGPushConfig.enableDebug(CeliaActivity.this,true);
+        XGPushManager.registerPush(CeliaActivity.this, new XGIOperateCallback() {
+            @Override
+            public void onSuccess(Object data, int flag) {
+                //token在设备卸载重装的时候有可能会变
+                ShowLog("TPush注册成功，设备token为：" + data);
+            }
+
+            @Override
+            public void onFail(Object data, int errCode, String msg) {
+                ShowLog("TPush注册失败，错误码：" + errCode + ",错误信息：" + msg);
+            }
+        });
+    }
+//region Activity生命周期
     @Override protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         // 目前SDK必须在onCreate调用，不然会有初始化失败、登录失败的问题
         Init();
+        TPNSInit();
     }
 
     @Override protected void onStart()
