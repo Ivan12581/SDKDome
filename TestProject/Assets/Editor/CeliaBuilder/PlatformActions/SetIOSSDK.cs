@@ -529,7 +529,7 @@ namespace celia.game.editor
             //文件追加
             var entitlementsFileName = "sndwz.entitlements";
             var entitlementsFilePath = Path.Combine("Assets/Plugins/iOS/SDK/", entitlementsFileName);
-            File.Copy(entitlementsFilePath, Path.Combine(path, entitlementsFileName));
+            File.Copy(entitlementsFilePath, Path.Combine(path, entitlementsFileName),true);
             proj.AddFileToBuild(target, proj.AddFile(entitlementsFileName, entitlementsFileName, PBXSourceTree.Source));
             proj.AddCapability(target, PBXCapabilityType.InAppPurchase);
             proj.AddCapability(target, PBXCapabilityType.AccessWiFiInformation, entitlementsFileName);
