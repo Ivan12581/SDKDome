@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
-
+using Newtonsoft.Json.Linq;
+using UnityEditor;
+using System.IO;
+using System;
 #if UNITY_EDITOR_OSX
 using UnityEditor.iOS.Xcode;
 using UnityEditor.iOS.Xcode.Extensions;
