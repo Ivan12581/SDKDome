@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<< HEAD:TestProject/Assets/Plugins/PlatformSDK/IOSNative/SDK/AFNetworking4.0/AFNetworking.framework/AFNetworking.meta
-guid: 0b7241b5ce7284483a1ae2fedc4d1bf9
-=======
-guid: ad88522b7ef8a45ed9795c44a6d58533
->>>>>>> bfb7ce32dedbaa4c8e8a5aa1fbabd619b91e1175:TestProject/Assets/Plugins/PlatformSDK/IOSNative/SDK/AFNetworking4.0/AFNetworking.framework/Headers/AFAutoPurgingImageCache.h.meta
+guid: ad81ae5d4ae0c4012946b11180cc13c1
 DefaultImporter:
   externalObjects: {}
   userData: 
