@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
+
 using UnityEngine;
 
 namespace celia.game.editor
@@ -28,18 +27,15 @@ namespace celia.game.editor
             PlayerSettings.accelerometerFrequency = 60;
             if (option.SDKType == SDKType.CeliaOversea)
             {
-                PlayerSettings.iOS.appleDeveloperTeamID = "5HK243M76T";
                 PlayerSettings.iOS.targetOSVersionString = "10.0";
-                PlayerSettings.iOS.iOSManualProvisioningProfileID = "51f549e4-874d-4cb1-b528-78995ba62873";
             }
             else if (option.SDKType == SDKType.Native)
             {//星辉SDK要求
-                PlayerSettings.iOS.appleDeveloperTeamID = "Z67D6RDGWU";
                 PlayerSettings.iOS.targetOSVersionString = "11.0";
-                PlayerSettings.iOS.iOSManualProvisioningProfileID = "287a425a-d3c6-4b79-b27d-d581df0f906c";
             }
             Debug.Log("SetIOSOption PreExcuted!");
         }
+
         public override void PostExcute(CeliaBuildOption option)
         {
             //Debug.Log("SetIOSOption PostExcuted!");

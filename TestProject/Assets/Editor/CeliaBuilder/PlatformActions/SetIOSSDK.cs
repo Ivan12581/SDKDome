@@ -1,22 +1,19 @@
 ﻿using UnityEngine;
+
 #if UNITY_EDITOR_OSX
 using UnityEditor.iOS.Xcode;
 using UnityEditor.iOS.Xcode.Extensions;
 #endif
-using System.IO;
-using System.Linq;
-using UnityEditor;
-using System;
-using Newtonsoft.Json.Linq;
-
 
 namespace celia.game.editor
 {
     public class SetIOSSDK : PlatformAction, IIOSAction
     {
-        CeliaBuildOption option;
+        private CeliaBuildOption option;
+
         // SDK存放路径;因为是ScriptObject的原因不能调用Application.dataPath作为属性设置
         public string pluginIOSPath;
+
         public string pluginSavePath;
 
         public override void PreExcute(CeliaBuildOption option)
@@ -40,27 +37,30 @@ namespace celia.game.editor
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
 #endif
-
             Debug.Log("SetIOSSDK PreExcuted!");
         }
+
         public override void PostExcute(CeliaBuildOption option)
         {
-
 #if UNITY_EDITOR_OSX
             switch (option.SDKType)
             {
                 case SDKType.None:
                     SetNoneSDKProjectSetting();
                     break;
+
                 case SDKType.Native:
                     SetNativeSDK();
                     break;
+
                 case SDKType.NativeChukai:
                     SetNativeChukaiSDK();
                     break;
+
                 case SDKType.Oversea:
                     SetOverseaSDK(GetSDKParams(option));
                     break;
+
                 case SDKType.CeliaOversea:
                     SetCeliaOverseaSDK();
                     break;
@@ -76,6 +76,7 @@ namespace celia.game.editor
 #endif
         }
 
+#if UNITY_EDITOR_OSX
         bool IsRelativePath(string outputPath)
         {
             if (outputPath.Contains(":/") || outputPath.StartsWith("//"))
@@ -95,9 +96,9 @@ namespace celia.game.editor
                 return outputPath;
             }
         }
-#if UNITY_EDITOR_OSX
 
         #region PreExcute
+
         /// <summary>
         /// 删除Assets/Plugins/iOS文件夹文件，复原配置
         /// </summary>
@@ -158,15 +159,15 @@ namespace celia.game.editor
             //包名
             PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.iOS, signCfg["pakageName"].AsString());
             Debug.Log("Pakage Name: " + PlayerSettings.GetApplicationIdentifier(BuildTargetGroup.iOS));
-            ////签名文件
-            //PlayerSettings.iOS.appleEnableAutomaticSigning = false;
-            //PlayerSettings.iOS.appleDeveloperTeamID = signCfg["teamID"].AsString();
-            //PlayerSettings.iOS.iOSManualProvisioningProfileID = signCfg["provisioningProfileID"].AsString();
-            //PlayerSettings.iOS.iOSManualProvisioningProfileType = ProvisioningProfileType.Automatic;
+            //签名文件
+            PlayerSettings.iOS.appleEnableAutomaticSigning = false;
+            PlayerSettings.iOS.appleDeveloperTeamID = signCfg["teamID"].AsString();
+            PlayerSettings.iOS.iOSManualProvisioningProfileID = signCfg["provisioningProfileID"].AsString();
+            PlayerSettings.iOS.iOSManualProvisioningProfileType = ProvisioningProfileType.Automatic;
 
-            //Debug.Log($"ProvisioningProfileID: {PlayerSettings.iOS.iOSManualProvisioningProfileID} ProfileType: {PlayerSettings.iOS.iOSManualProvisioningProfileType}");
+            Debug.Log($"ProvisioningProfileID: {PlayerSettings.iOS.iOSManualProvisioningProfileID} ProfileType: {PlayerSettings.iOS.iOSManualProvisioningProfileType}");
         }
- 
+
         /// <summary>
         /// 把SDK信息写入配置文件
         /// </summary>
@@ -219,18 +220,17 @@ namespace celia.game.editor
             DirectoryInfo folder = new DirectoryInfo(path);
             if (!folder.Exists)
             {
-                folder = null;
                 return;
             }
             FileInfo[] files = folder.GetFiles();
-            foreach (var file in folder.GetFiles())
+            foreach (var file in files)
             {
                 PluginImporter importer = AssetImporter.GetAtPath(file.FullName.Replace(Application.dataPath.Replace('/', '\\'), "Assets")) as PluginImporter;
                 importer?.SetCompatibleWithPlatform(BuildTarget.iOS, add);
             }
 
             DirectoryInfo[] subFolders = folder.GetDirectories();
-            foreach (var subfolder in folder.GetDirectories())
+            foreach (var subfolder in subFolders)
             {
                 SetAndroidPluginImport(subfolder.FullName, add);
             }
@@ -239,6 +239,7 @@ namespace celia.game.editor
         }
 
         #region 文件操作
+
         public void CopyFolder(string sourcePath, string targetPath)
         {
             DirectoryInfo sourceFolder = new DirectoryInfo(sourcePath);
@@ -294,16 +295,19 @@ namespace celia.game.editor
             folder.Delete();
             AssetDatabase.Refresh();
         }
-        #endregion
 
-        #endregion
+        #endregion 文件操作
+
+        #endregion PreExcute
 
         #region PostExcute
+
         void SetNoneSDKProjectSetting()
         {
             string path = GetXcodeProjectPath(option.PlayerOption.locationPathName);
 
         #region 添加XCode引用的Framework
+
             string projPath = PBXProject.GetPBXProjectPath(path);
             PBXProject proj = new PBXProject();
             proj.ReadFromString(File.ReadAllText(projPath));
@@ -313,13 +317,15 @@ namespace celia.game.editor
             // Bugly依赖
             proj.AddFrameworkToProject(target, "libz.tbd", false);
             proj.AddFrameworkToProject(target, "libc++.tbd", false);
-        #endregion
+
+        #endregion 添加XCode引用的Framework
 
             // BuildSetting修改
             proj.SetBuildProperty(target, "ENABLE_BITCODE", "NO");
             proj.AddBuildProperty(target, "OTHER_LDFLAGS", "-ObjC");
 
         #region 修改Xcode工程Info.plist
+
             string plistPath = Path.Combine(path, "Info.plist");
             PlistDocument plist = new PlistDocument();
             plist.ReadFromFile(plistPath);
@@ -345,7 +351,8 @@ namespace celia.game.editor
                 rootDict.values.Remove(exitsOnSuspendKey);
             }
             plist.WriteToFile(plistPath);
-        #endregion
+
+        #endregion 修改Xcode工程Info.plist
 
             File.WriteAllText(projPath, proj.WriteToString());
         }
@@ -354,7 +361,8 @@ namespace celia.game.editor
         {
             string path = GetXcodeProjectPath(option.PlayerOption.locationPathName);
 
-            #region 添加XCode引用的Framework
+        #region 添加XCode引用的Framework
+
             string projPath = PBXProject.GetPBXProjectPath(path);
             PBXProject proj = new PBXProject();
             proj.ReadFromString(File.ReadAllText(projPath));
@@ -378,7 +386,8 @@ namespace celia.game.editor
             proj.AddFrameworkToProject(target, "UserNotifications.framework", false);
             proj.AddFrameworkToProject(target, "CoreData.framework", false);
             proj.AddFrameworkToProject(target, "CFNetwork.framework", false);
-            #endregion
+
+        #endregion 添加XCode引用的Framework
 
             // BuildSetting修改
             proj.SetBuildProperty(target, "ENABLE_BITCODE", "NO");
@@ -387,7 +396,8 @@ namespace celia.game.editor
             proj.AddBuildProperty(target, "OTHER_LDFLAGS", "-fprofile-instr-generate");
             proj.AddBuildProperty(target, "OTHER_LDFLAGS", "-all_load");
 
-            #region 修改Xcode工程Info.plist
+        #region 修改Xcode工程Info.plist
+
             string plistPath = Path.Combine(path, "Info.plist");
             PlistDocument plist = new PlistDocument();
             plist.ReadFromFile(plistPath);
@@ -418,7 +428,7 @@ namespace celia.game.editor
             RaStarShareTypeArray.AddString("QQ");
             RaStarShareTypeArray.AddString("QQ空间");
             //文件共享
-            rootDict.SetBoolean("UIFileSharingEnabled", true);
+            rootDict.SetBoolean("UIFileSharingEnabled",true);
             // Set encryption usage boolean
             string encryptKey = "ITSAppUsesNonExemptEncryption";
             rootDict.SetBoolean(encryptKey, false);
@@ -454,9 +464,11 @@ namespace celia.game.editor
             qqUrl.SetString("CFBundleURLName", "QQ");
             PlistElementArray qqUrlScheme = qqUrl.CreateArray("CFBundleURLSchemes");
             qqUrlScheme.AddString("QQ0612fe29");
-            #endregion
 
-            #region LSApplicationQueriesSchemes配置
+        #endregion 修改Xcode工程Info.plist
+
+        #region LSApplicationQueriesSchemes配置
+
             PlistElementArray LSApplicationQueriesSchemes = plist.root.CreateArray("LSApplicationQueriesSchemes");
             LSApplicationQueriesSchemes.AddString("wechat");
             LSApplicationQueriesSchemes.AddString("weixin");
@@ -508,27 +520,18 @@ namespace celia.game.editor
             LSApplicationQueriesSchemes.AddString("wtlogintimV1");
             LSApplicationQueriesSchemes.AddString("timpapiV1");
             plist.WriteToFile(plistPath);
-            #endregion
+
+        #endregion LSApplicationQueriesSchemes配置
 
             //文件追加
-
             var entitlementsFileName = "sndwz.entitlements";
             var entitlementsFilePath = Path.Combine("Assets/Plugins/iOS/SDK/", entitlementsFileName);
-            File.Copy(entitlementsFilePath, Path.Combine(path, entitlementsFileName), true);
+            File.Copy(entitlementsFilePath, Path.Combine(path, entitlementsFileName));
             proj.AddFileToBuild(target, proj.AddFile(entitlementsFileName, entitlementsFileName, PBXSourceTree.Source));
-
-            ProjectCapabilityManager projectCapabilityManager = new ProjectCapabilityManager(projPath, "sndwz.entitlements", PBXProject.GetUnityTargetName());
-            projectCapabilityManager.AddInAppPurchase();
-            projectCapabilityManager.AddAccessWiFiInformation();
-            projectCapabilityManager.AddPushNotifications(true);
-            projectCapabilityManager.AddBackgroundModes(BackgroundModesOptions.RemoteNotifications);
-            //projectCapabilityManager.AddAssociatedDomains();
-
-            //proj.AddCapability(target, PBXCapabilityType.InAppPurchase);
-            //proj.AddCapability(target, PBXCapabilityType.AccessWiFiInformation, entitlementsFileName);
-            //proj.AddCapability(target, PBXCapabilityType.AssociatedDomains, entitlementsFileName);
-            //proj.AddCapability(target, PBXCapabilityType.PushNotifications, entitlementsFileName);
-
+            proj.AddCapability(target, PBXCapabilityType.InAppPurchase);
+            proj.AddCapability(target, PBXCapabilityType.AccessWiFiInformation, entitlementsFileName);
+            proj.AddCapability(target, PBXCapabilityType.AssociatedDomains, entitlementsFileName);
+            proj.AddCapability(target, PBXCapabilityType.PushNotifications, entitlementsFileName);
             proj.WriteToFile(projPath);
             File.WriteAllText(projPath, proj.WriteToString());
         }
@@ -538,6 +541,7 @@ namespace celia.game.editor
             string path = GetXcodeProjectPath(option.PlayerOption.locationPathName);
 
         #region 添加XCode引用的Framework
+
             string projPath = PBXProject.GetPBXProjectPath(path);
             PBXProject proj = new PBXProject();
             proj.ReadFromString(File.ReadAllText(projPath));
@@ -547,7 +551,7 @@ namespace celia.game.editor
             // Bugly依赖
             proj.AddFrameworkToProject(target, "libz.tbd", false);
             proj.AddFrameworkToProject(target, "libc++.tbd", false);
-        
+
             // SDK依赖
             proj.AddFrameworkToProject(target, "libicucore.tbd", false);
             proj.AddFrameworkToProject(target, "StoreKit.framework", false);
@@ -556,19 +560,21 @@ namespace celia.game.editor
             proj.AddFrameworkToProject(target, "SafariServices.framework", true);
             proj.AddFrameworkToProject(target, "AdSupport.framework", false);
             proj.AddFrameworkToProject(target, "CoreTelephony.framework", false);
-            
+
             // 文件追加
             var fileName = "Rastar.plist";
             var filePath = Path.Combine("Assets/Plugins/iOS/SDK/", fileName);
             File.Copy(filePath, Path.Combine(path, fileName));
             proj.AddFileToBuild(target, proj.AddFile(fileName, fileName, PBXSourceTree.Source));
-        #endregion
+
+        #endregion 添加XCode引用的Framework
 
             // BuildSetting修改
             proj.SetBuildProperty(target, "ENABLE_BITCODE", "NO");
             proj.AddBuildProperty(target, "OTHER_LDFLAGS", "-ObjC");
 
         #region 修改Xcode工程Info.plist
+
             string plistPath = Path.Combine(path, "Info.plist");
             PlistDocument plist = new PlistDocument();
             plist.ReadFromFile(plistPath);
@@ -589,7 +595,8 @@ namespace celia.game.editor
             rootDict.SetString("package-id", pakageID);
 
             plist.WriteToFile(plistPath);
-        #endregion
+
+        #endregion 修改Xcode工程Info.plist
 
             File.WriteAllText(projPath, proj.WriteToString());
         }
@@ -607,6 +614,7 @@ namespace celia.game.editor
             string path = GetXcodeProjectPath(option.PlayerOption.locationPathName);
 
         #region 添加XCode引用的Framework
+
             string projPath = PBXProject.GetPBXProjectPath(path);
             PBXProject proj = new PBXProject();
             proj.ReadFromString(File.ReadAllText(projPath));
@@ -638,7 +646,8 @@ namespace celia.game.editor
             var filePath = Path.Combine("Assets/Plugins/iOS/SDK/", fileName);
             File.Copy(filePath, Path.Combine(path, fileName));
             proj.AddFileToBuild(target, proj.AddFile(fileName, fileName, PBXSourceTree.Source));
-        #endregion
+
+        #endregion 添加XCode引用的Framework
 
             // BuildSetting修改
             proj.SetBuildProperty(target, "ENABLE_BITCODE", "NO");
@@ -646,6 +655,7 @@ namespace celia.game.editor
             proj.AddBuildProperty(target, "OTHER_LDFLAGS", "-all_load");
 
         #region 修改Xcode工程Info.plist
+
             string plistPath = Path.Combine(path, "Info.plist");
             PlistDocument plist = new PlistDocument();
             plist.ReadFromFile(plistPath);
@@ -690,7 +700,8 @@ namespace celia.game.editor
             LSApplicationQueriesSchemes.AddString("line");
 
             plist.WriteToFile(plistPath);
-        #endregion
+
+        #endregion 修改Xcode工程Info.plist
 
             // Capabilitise添加
             var entitlementsFileName = "celia.entitlements";
@@ -726,7 +737,9 @@ namespace celia.game.editor
             proj.AddBuildProperty(target, "OTHER_LDFLAGS", "-ObjC");
             proj.SetBuildProperty(target, "EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE", "YES");//FB需要
             proj.SetBuildProperty(target, "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES", "YES");//FB需要
+
         #region 添加XCode引用的Framework
+
             // SDK依赖 --AIHelp
             proj.AddFrameworkToProject(target, "libsqlite3.tbd", false);
             proj.AddFrameworkToProject(target, "libresolv.tbd", false);
@@ -743,6 +756,7 @@ namespace celia.game.editor
             // SDK依赖 --Adjust
             proj.AddFrameworkToProject(target, "AdSupport.framework", false);
             proj.AddFrameworkToProject(target, "iAd.framework", false);
+
             //EmbedFrameworks --Add to Embedded Binaries
             string defaultLocationInProj = "Plugins/iOS/SDK";
             string[] frameworkNames = { "FaceBookSDK/FBSDKCoreKit.framework", "FaceBookSDK/FBSDKLoginKit.framework", "FaceBookSDK/FBSDKShareKit.framework", "AdjustSDK/AdjustSdk.framework" };
@@ -753,14 +767,16 @@ namespace celia.game.editor
                 PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
             }
             proj.SetBuildProperty(target, "LD_RUNPATH_SEARCH_PATHS", "$(inherited) @executable_path/Frameworks");
-        #endregion
 
+        #endregion 添加XCode引用的Framework
 
             string plistPath = Path.Combine(path, "Info.plist");
             PlistDocument plist = new PlistDocument();
             plist.ReadFromFile(plistPath);
             PlistElementDict rootDict = plist.root;
+
         #region 修改Xcode工程Info.plist
+
             /* 从iOS9开始所有的app对外http协议默认要求改成https 若需要添加http协议支持需要额外添加*/
             // Add value of NSAppTransportSecurity in Xcode plist
             PlistElementDict dictTmp = rootDict.CreateDict("NSAppTransportSecurity");
@@ -773,7 +789,6 @@ namespace celia.game.editor
             rootDict.SetString("NSLocationUsageDescription", "App需要您的同意,才能访问位置");
             rootDict.SetString("NSLocationWhenInUseUsageDescription", "App需要您的同意,才能在使用期间访问位置");
             rootDict.SetString("NSLocationAlwaysUsageDescription", "App需要您的同意,才能始终访问位置");
-
 
             rootDict.SetString("CFBundleDevelopmentRegion", "zh_TW");
             //rootDict.SetString("CFBundleVersion", "1");
@@ -811,7 +826,6 @@ namespace celia.game.editor
             PlistElementArray urlScheme = typeRole.CreateArray("CFBundleURLSchemes");
             urlScheme.AddString("com.googleusercontent.apps.554619719418-0hdrkdprcsksigpldvtr9n5lu2lvt5kn");
 
-
             // LSApplicationQueriesSchemes配置
             PlistElementArray LSApplicationQueriesSchemes = rootDict.CreateArray("LSApplicationQueriesSchemes");
             // facebook接入配置
@@ -828,15 +842,8 @@ namespace celia.game.editor
             var filePath = Path.Combine("Assets/Plugins/iOS/SDK/FCM/", fileName);
             File.Copy(filePath, Path.Combine(option.PlayerOption.locationPathName, "GoogleService-Info.plist"), true);
             proj.AddFileToBuild(target, proj.AddFile(fileName, fileName, PBXSourceTree.Source));
-            #endregion
 
-            ProjectCapabilityManager projectCapabilityManager = new ProjectCapabilityManager(projPath, "tw.entitlements", PBXProject.GetUnityTargetName());
-            projectCapabilityManager.AddGameCenter();
-            projectCapabilityManager.AddInAppPurchase();
-            projectCapabilityManager.AddPushNotifications(true);
-            projectCapabilityManager.AddBackgroundModes(BackgroundModesOptions.RemoteNotifications);
-            plist.WriteToFile(plistPath);
-            proj.WriteToFile(projPath);
+        #endregion 修改Xcode工程Info.plist
 
             // Capabilitise添加
             var entitlementsFileName = "tw.entitlements";
@@ -846,12 +853,13 @@ namespace celia.game.editor
             proj.AddCapability(target, PBXCapabilityType.InAppPurchase, entitlementsFileName);
             proj.AddCapability(target, PBXCapabilityType.GameCenter);
             proj.AddCapability(target, PBXCapabilityType.PushNotifications, entitlementsFileName);
-
             plist.WriteToFile(plistPath);
             proj.WriteToFile(projPath);
             File.WriteAllText(projPath, proj.WriteToString());
         }
-        #endregion
+
+        #endregion PostExcute
+
 #endif
     }
 }
