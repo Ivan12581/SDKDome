@@ -3,6 +3,8 @@ using System.IO;
 using System.Runtime.InteropServices;
 using celia.game;
 
+using Newtonsoft.Json.Linq;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -114,7 +116,6 @@ public class LoginView : MonoBehaviour
         SDKManager.gi.InitSDK((s, dataDict) =>
         {
             Debug.Log("---Unity---InitSDKCallBack---");
-            //SDKPay.gi.ApplePayInit();
         });
         //Application.OpenURL("www.baidu.com");
     }
@@ -150,7 +151,27 @@ public class LoginView : MonoBehaviour
         //{
         //});
     }
+    public void RastarPay()
+    {
+        Debug.Log("---Unity---RastarPay---");
+        JObject jObj = new JObject
+        {
+            { "PayMoney", "4" },
+            { "OrderID", "123789" },
 
+            { "GoodsName", "GoodsName" },
+            { "Extra", "" },
+
+            { "RoleID", "10" },
+            { "RoleName", "RoleName" },
+            { "RoleLevel", "5" },
+            { "ServerID", "52001"},
+            { "ServerName", "ServerName" }
+        };
+        SDKManager.gi.Pay(jObj.ToString(), (s, dataDict) => {
+            Debug.Log("---Unity---RastarPay--callback-");
+        });
+    }
     public void Share(int type)
     {
         Debug.Log("---Unity---Share--type--->" + type);

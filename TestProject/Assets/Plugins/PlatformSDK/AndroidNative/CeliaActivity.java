@@ -449,15 +449,20 @@ public class CeliaActivity extends UnityPlayerActivity
             e.printStackTrace();
         }
     }
-
+    private String isOnline = "1";
     public  void GameOnLine(String jsonStr){
+    	if (jsonStr.equals(isOnline)) {
+    		return;
+    	}
         if (jsonStr.equals("1")){
             //角色在线连接接口，开启SDK长链接（当角色由离线状态，重新上线时调用）
             SJoyMSDK.getInstance().onlineGameRole(CeliaActivity.this);
+            isOnline = "1";
         }
         if (jsonStr.equals("0")){
             //角色离线连接接口，断开SDK长链接（当角色从在线状态离开游戏或者下线时调用）
             SJoyMSDK.getInstance().offlineGameRole();
+            isOnline = "0";
         }
     }
     // endregion
