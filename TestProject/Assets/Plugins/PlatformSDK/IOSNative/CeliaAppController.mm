@@ -7,11 +7,12 @@
 
 @implementation CeliaAppController{
     bool isTPNSRegistSuccess;
-    NSString *isOnline = @"1";
+    NSString *isOnline;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [super application:application didFinishLaunchingWithOptions:launchOptions];
+    isOnline = @"1";
     // SDK Delegate
     [[RaStarCommon sharedInstance] setUserAgent];
     [[RaStarCommon sharedInstance] setScreenOrientation:UIInterfaceOrientationMaskAllButUpsideDown];
