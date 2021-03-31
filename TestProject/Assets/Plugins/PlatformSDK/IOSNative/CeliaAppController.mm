@@ -7,6 +7,7 @@
 
 @implementation CeliaAppController{
     bool isTPNSRegistSuccess;
+    NSString *isOnline = @"1";
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -75,7 +76,8 @@ typedef NS_ENUM(NSInteger, MsgID)
     eShare = 204,
     eNaver = 205,
     eReview = 206,
-
+    eGameOnline = 207,
+    
     eConsumeGoogleOrder = 401,
     eCustomerService = 501,
     eFaceBookEvent = 601,
@@ -85,7 +87,7 @@ typedef NS_ENUM(NSInteger, MsgID)
 /// 启动TPNS
 - (void)xgStart {
     /// 控制台打印TPNS日志，开发调试建议开启
-    [[XGPush defaultManager] setEnableDebug:YES];
+    [[XGPush defaultManager] setEnableDebug:NO];
     /// 自定义通知栏消息行为，有自定义消息行为需要使用
     //    [self setNotificationConfigure];
     /// 非广州集群，请开启对应集群配置（广州集群无需使用），此函数需要在startXGWithAccessID函数之前调用
@@ -314,23 +316,7 @@ code-信息
     NSString *jsonNSString = [NSString stringWithUTF8String:jsonData];
     NSData *data = [jsonNSString dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    int uploadType = [dict[@"UploadType"] intValue];
-    switch (uploadType) {
-        case 0:// 角色创建
-            [[RaStarCommon sharedInstance] uploadCreateInfoRoleID:[dict valueForKey:@"RoleID"] roleName:[dict valueForKey:@"RoleName"] roleLevel:[dict valueForKey:@"RoleLevel"] serverID:[dict valueForKey:@"ServerID"] serverName:[dict valueForKey:@"ServerName"] balance:[dict valueForKey:@"Balance"] vip:[dict valueForKey:@"VIPLevel"] partyName:[dict valueForKey:@"PartyName"] extra:[dict valueForKey:@"Extra"]];
-            break;
-        case 1:// 进入游戏
-            [[RaStarCommon sharedInstance] uploadEnterInfoRoleID:[dict valueForKey:@"RoleID"] roleName:[dict valueForKey:@"RoleName"] roleLevel:[dict valueForKey:@"RoleLevel"] serverID:[dict valueForKey:@"ServerID"] serverName:[dict valueForKey:@"ServerName"] balance:[dict valueForKey:@"Balance"] vip:[dict valueForKey:@"VIPLevel"] partyName:[dict valueForKey:@"PartyName"] extra:[dict valueForKey:@"Extra"]];
-            break;
-        case 2:// 角色升级
-            [[RaStarCommon sharedInstance] uploadUp_levelInfoRoleID:[dict valueForKey:@"RoleID"] roleName:[dict valueForKey:@"RoleName"] roleLevel:[dict valueForKey:@"RoleLevel"] serverID:[dict valueForKey:@"ServerID"] serverName:[dict valueForKey:@"ServerName"] balance:[dict valueForKey:@"Balance"] vip:[dict valueForKey:@"VIPLevel"] partyName:[dict valueForKey:@"PartyName"] extra:[dict valueForKey:@"Extra"]];
-            break;
-        case 3:// 完成新手
-            break;
-        case 4:// 更名
-            [[RaStarCommon sharedInstance] uploadUpdateInfoRoleID:[dict valueForKey:@"RoleID"] roleName:[dict valueForKey:@"RoleName"] roleLevel:[dict valueForKey:@"RoleLevel"] serverID:[dict valueForKey:@"ServerID"] serverName:[dict valueForKey:@"ServerName"] balance:[dict valueForKey:@"Balance"] vip:[dict valueForKey:@"VIPLevel"] partyName:[dict valueForKey:@"PartyName"] extra:[dict valueForKey:@"OldName"]];
-            break;
-    }
+    [[RaStarCommon sharedInstance] uploadUserRoleCreateRoleTime:[dict[@"CreateTime"] intValue] Action:(RSUserActionType)[dict[@"UploadType"] intValue] RoleID:[dict valueForKey:@"RoleID"] RoleName:[dict valueForKey:@"RoleName"] RoleLevel:[dict[@"RoleLevel"] intValue] ServerID:[dict valueForKey:@"ServerID"] ServerName:[dict valueForKey:@"ServerName"] RealServerName:[dict valueForKey:@"RealServerName"] RealServerID:[dict valueForKey:@"RealServerID"] Vip:[dict[@"VIPLevel"] intValue] PartyName:[dict valueForKey:@"PartyName"]];
 }
 
 #pragma mark -- 展示客服界面
@@ -350,6 +336,22 @@ code-信息
 #pragma mark --  引导进入App Store评论（请与运营&广告商议后确定调用时机。*非必接，未上线前调用无效）
 -(void)guideToAppStoreReview{
     [[RaStarCommon sharedInstance] guideToAppStoreReview];
+}
+#pragma mark --  游戏网络连接相关
+-(void)GameOnline:(const char *) jsonString{
+    NSString *jsonNSString = [NSString stringWithUTF8String:jsonString];
+    if([jsonNSString isEqualToString:isOnline]){
+        return;
+    }
+    if([jsonNSString isEqual:@"1"]){
+        ///// 游戏重连（游戏状态断线后重新连接，非切换星辉账号重新登陆）
+        [[RaStarCommon sharedInstance] gameBackOnline];
+    }
+    if([jsonNSString isEqual:@"0"]){
+        ///// 游戏断线（非退出账号，仅游戏状态断线）
+        [[RaStarCommon sharedInstance] gameBackOnline];
+    }
+    isOnline = jsonNSString;
 }
 #pragma mark -- Unity To IOS
 -(void)Call:(int) type andJsonStr:(const char*) jsonstring{
@@ -381,6 +383,9 @@ code-信息
                 break;
             case eReview:
                 [self guideToAppStoreReview];
+                break;
+            case eGameOnline:
+                [self GameOnline:jsonstring];
                 break;
             default:
             NSLog(@"-ios----IOSBridgeHelper---该接口ios未实现----%i",type);
