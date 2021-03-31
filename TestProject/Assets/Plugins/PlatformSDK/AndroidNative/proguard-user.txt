@@ -50,5 +50,24 @@
 -keep class com.samsung.android.deviceidservice.** {*;}
 -keep class com.zui.** {*;}
 
+# trackcore module
+-keep class com.starjoys.module.trackcore.RastarTrackHelper{*;}
+-keep interface com.starjoys.module.trackcore.RastarTrackHttpCallback{*;}
+-keep public class com.starjoys.module.trackcore.RastarEventType{*;}
+-keep class com.starjoys.module.trackcore.bean.**{*;}
+-dontnote com.starjoys.module.trackcore.TrackAction
+
+# protobuf 包不混淆
+-keep class com.google.protobuf.**{*;}
+-keep class google.protobuf.**{*;}
+
 
 #--------------- RaStar sdk proguard config end ---------------
+
+#TPNS SDK
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep class com.tencent.android.tpush.** {*;}
+-keep class com.tencent.tpns.baseapi.** {*;}
+-keep class com.tencent.tpns.mqttchannel.** {*;}
+-keep class com.tencent.tpns.dataacquisition.** {*;}

@@ -11,7 +11,7 @@
 	<key>provisioningProfiles</key>
 	<dict>
 		<key>com.rastargame.sndwz</key>
-		<string>sndwz_dis_20190606</string>
+		<string>sndwz_dis_0927</string>
 	</dict>
 	<key>signingCertificate</key>
 	<string>iPhone Distribution</string>
@@ -28,6 +28,6 @@
     <key>pakageName</key>
     <string>com.rastargame.sndwz</string>
     <key>provisioningProfileID</key>
-    <string>6af0d946-dfbb-4d01-b2ba-dff96bbaebc3</string>
+    <string>e3f2977a-aa3b-4da3-8877-ab0f175d9347</string>
 </dict>
 </plist>

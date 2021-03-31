@@ -16,5 +16,5 @@ MonoBehaviour:
   CDN_ADDRESS: https://ttog-cdn.smartplay.com.tw/Official
   NET_ASSETS: NetAssets_OB
   ip: thethroneofgirl-game.smartplay.com.tw
-  port: 52000
+  port: 52001
   serverType: 1
