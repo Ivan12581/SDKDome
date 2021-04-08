@@ -49,12 +49,17 @@ namespace celia.game.editor
 
         private string GetPakageName(CeliaBuildOption option)
         {
-            string signFileName = CeliaBuilder.GetInputParam("Sign:", option.Args);
-            signFileName = string.IsNullOrEmpty(signFileName) ? "None" : signFileName;
-            string paramsFileName = CeliaBuilder.GetInputParam("SDKParams:", option.Args);
-            paramsFileName = string.IsNullOrEmpty(paramsFileName) ? "None" : paramsFileName;
             string IP = GameSetting.gi.ip.Replace(".", "-");
-            return $"{DateTime.Now.ToString("MMdd_HHmm")}_{option.ReleaseLevel}_Sign{signFileName}_SDK{option.SDKType}_{paramsFileName}_{GameSetting.gi.VERSION}_{IP}";
+            if (option.PlayerOption.target == BuildTarget.Android)
+            {
+                return DateTime.Now.ToString("MMdd_HHmm") +"_"+ option.SDKType.ToString() +"_"+ GameSetting.gi.VERSION.ToString() + "_" + IP + "_" + Application.version + "(" + PlayerSettings.Android.bundleVersionCode + ")";
+
+                //return $"{DateTime.Now.ToString("MMdd_HHmm")}_{option.SDKType}_{GameSetting.gi.VERSION}_{IP}_{Application.version}({PlayerSettings.Android.bundleVersionCode})";
+            }
+            else {
+                return $"{DateTime.Now.ToString("MMdd_HHmm")}_{option.SDKType}_{GameSetting.gi.VERSION}_{IP}";
+            }
+
         }
 
         public static void DeleteFolder(string deletePath)

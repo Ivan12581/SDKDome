@@ -1,0 +1,8 @@
+﻿<configuration>
+    <system.webServer>
+        <modules>
+            <remove name="StackifyHttpModule_Net40" />        
+            <add name="StackifyHttpModule_Net40" type="StackifyHttpTracer.StackifyHttpModule,StackifyHttpTracer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=93c44ce23f2048dd" preCondition="managedHandler,runtimeVersionv4.0" />
+        </modules>
+    </system.webServer>
+</configuration>

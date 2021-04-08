@@ -57,6 +57,15 @@ android {
         multiDexEnabled true
     }
 
+    dexOptions {
+        javaMaxHeapSize "4g"
+        preDexLibraries = false
+        additionalParameters = ['--multi-dex',
+                                '--main-dex-list=maindexlist.txt',
+                                '--minimal-main-dex',
+                                '--set-max-idx-number=35000']
+	}
+
      sourceSets {
         main {
             manifest.srcFile 'src/main/AndroidManifest.xml'
@@ -129,6 +138,7 @@ task copyJsonFile {
         from('src/main/assets')
         into('./')
         include("tpns-configs.json")
+        include("maindexlist.txt")
     }
 }
 preBuild.dependsOn copyJsonFile

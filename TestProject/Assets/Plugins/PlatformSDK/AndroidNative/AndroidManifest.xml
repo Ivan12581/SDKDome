@@ -14,6 +14,11 @@
       </intent-filter>
       <meta-data android:name="celia.sdk.CeliaActivity" android:value="true" />
     </activity>
+    
+<!--在非华为手机上安装了华为移动服务，且在 App 中集成了 TPNS SDK，会导致华为推送及其它组件功能失效，如何解决?-->
+    <meta-data android:name="tpns-disable-component-huawei-v2" android:value="false" />
+    <meta-data android:name="tpns-disable-component-huawei-v4" android:value="false" />
+<!--文档中心 > 移动推送 TPNS > 常见问题 > Android 常见问题-->
 
 <!-- RaStarSDK 组件 start -->
     <activity
@@ -102,8 +107,6 @@
   <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
   <!--asus permisstion-->
   <uses-permission android:name="com.asus.msa.SupplementaryDID.ACCESS" />
-
-  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 <!-- RaStarSDK 权限 end -->
 
 </manifest>

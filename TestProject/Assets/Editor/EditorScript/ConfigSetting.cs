@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
+//using StackifyHttpTracer;
+
 using UnityEditor;
 
 using UnityEngine;
@@ -16,16 +18,13 @@ namespace celia.game.editor
 
         [MenuItem("Tool/test1")]
         public static void test1() {
-            //DirectoryInfo pathInfo = new DirectoryInfo(Application.dataPath);
-            //string newPath = pathInfo.Parent.FullName;
-            //Log.Info_blue(newPath);
-            //Util.Instance.GetTimeStamp();
-            Log.Info_blue(Util.Instance.GetTimeStamp());
-            Log.Info_blue(Util.Instance.GetTimeStamp());
-            Log.Info_blue(Util.Instance.GetTimeStamp());
-            Log.Info_blue(Util.Instance.GetTimeStamp());
-            Log.Info_blue(Util.Instance.GetTimeStamp());
-            Log.Info_blue(Util.Instance.GetTimeStamp());
+            INIParser ini = new INIParser();
+            ini.Open($"D:/SDKDomeProject/TestProject/Outputs/Android/sjoys_app.ini");
+            ini.WriteValue("Player", "app_id", "123");
+            ini.WriteValue("Player", "sdkversion", "5.3.3");
+            ini.WriteValue("Player", "debug", 1);
+            ini.Close();
+
         }
         [MenuItem("Tool/test")]
         public static void test() {

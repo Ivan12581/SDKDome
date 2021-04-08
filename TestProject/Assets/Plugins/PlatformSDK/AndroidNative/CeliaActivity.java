@@ -3,10 +3,15 @@ package celia.sdk;
 // Unity3D
 import com.unity3d.player.*;
 // Android
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -312,6 +317,24 @@ public class CeliaActivity extends UnityPlayerActivity
         vitalitySender = new VitalitySender(this);
 
         SJoyMSDK.getInstance().doInit(CeliaActivity.this, appkey, mSJoyMsdkCallback);
+        TPNSInit();
+    }
+    public void TPNSInit()
+    {
+        ShowLog("TPNSInit！");
+        XGPushConfig.enableDebug(CeliaActivity.this,false);
+        XGPushManager.registerPush(CeliaActivity.this, new XGIOperateCallback() {
+            @Override
+            public void onSuccess(Object data, int flag) {
+                //token在设备卸载重装的时候有可能会变
+                ShowLog("TPush注册成功，设备token为：" + data);
+            }
+
+            @Override
+            public void onFail(Object data, int errCode, String msg) {
+                ShowLog("TPush注册失败，错误码：" + errCode + ",错误信息：" + msg);
+            }
+        });
     }
 //region 基础SDK接口
 
@@ -542,30 +565,40 @@ public class CeliaActivity extends UnityPlayerActivity
         }
     }
 
-    public void TPNSInit()
-    {
-        ShowLog("TPNSInit！");
-        // XGPushConfig.enableDebug(CeliaActivity.this,true);
-        XGPushManager.registerPush(CeliaActivity.this, new XGIOperateCallback() {
-            @Override
-            public void onSuccess(Object data, int flag) {
-                //token在设备卸载重装的时候有可能会变
-                ShowLog("TPush注册成功，设备token为：" + data);
-            }
-
-            @Override
-            public void onFail(Object data, int errCode, String msg) {
-                ShowLog("TPush注册失败，错误码：" + errCode + ",错误信息：" + msg);
-            }
-        });
+    private void showWaringDialog() {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("警告！")
+                .setMessage("游戏内部分功能需要授权才能正常运行，若想体验全部功能请前往设置→应用→少女的王座→权限中手动打开相关权限！")
+                .setPositiveButton("前往设置", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // 调转至设置界面
+                        getAppDetailSettingIntent(CeliaActivity.this);
+                    }
+                }).show();
     }
-//region Activity生命周期
+    /*
+     * 跳转到权限设置界面
+     */
+    private void getAppDetailSettingIntent(Context context){
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if(Build.VERSION.SDK_INT >= 9){
+            intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+            intent.setData(Uri.fromParts("package", getPackageName(), null));
+        } else if(Build.VERSION.SDK_INT <= 8){
+            intent.setAction(Intent.ACTION_VIEW);
+            intent.setClassName("com.android.settings","com.android.settings.InstalledAppDetails");
+            intent.putExtra("com.android.settings.ApplicationPkgName", getPackageName());
+        }
+        startActivity(intent);
+    }
+    //region Activity生命周期
     @Override protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         // 目前SDK必须在onCreate调用，不然会有初始化失败、登录失败的问题
         Init();
-        TPNSInit();
     }
 
     @Override protected void onStart()

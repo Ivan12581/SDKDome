@@ -1,0 +1,8 @@
+﻿<configuration>
+    <system.webServer>
+        <modules> 
+            <remove name="StackifyHttpModule_Net20" />
+            <add name="StackifyHttpModule_Net20" type="StackifyHttpTracer.StackifyHttpModule,StackifyHttpTracer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=23bb7f512c6bf076" preCondition="managedHandler,runtimeVersionv2.0" />
+        </modules>
+    </system.webServer>
+</configuration>
