@@ -14,6 +14,7 @@ namespace celia.game.editor
             string outputPath = CeliaBuilder.GetInputParam("Path:", option.Args);
 
             EditorUserBuildSettings.exportAsGoogleAndroidProject = option.OutputProject;
+            CeliaBuilder.GetPakageName();
             // iOS不能成包
             if (option.OutputProject || option.ProcessCfg.Target == UnityEditor.BuildTarget.iOS)
             {
@@ -24,7 +25,7 @@ namespace celia.game.editor
                 }
                 else
                 {
-                    option.PlayerOption.locationPathName = $"Outputs/{option.ProcessCfg.Target}/{GetPakageName(option)}_Project";
+                    option.PlayerOption.locationPathName = $"Outputs/{option.ProcessCfg.Target}/{CeliaBuilder.ApkName}_Project";
                 }
             }
             else
@@ -36,31 +37,22 @@ namespace celia.game.editor
                 }
                 else
                 {
-                    option.PlayerOption.locationPathName = $"Outputs/{option.ProcessCfg.Target}/{GetPakageName(option)}{suffix}";
+                    option.PlayerOption.locationPathName = $"Outputs/{option.ProcessCfg.Target}/{CeliaBuilder.ApkName}{suffix}";
                 }
             }
 
-            Debug.Log("SetOutputPath PreExcuted!");
+            //Debug.Log("SetOutputPath PreExcuted!");
         }
         public override void PostExcute(CeliaBuildOption option)
         {
             Debug.Log("SetOutputPath PostExcute!");
         }
 
-        private string GetPakageName(CeliaBuildOption option)
-        {
-            string IP = GameSetting.gi.ip.Replace(".", "-");
-            if (option.PlayerOption.target == BuildTarget.Android)
-            {
-                return DateTime.Now.ToString("MMdd_HHmm") +"_"+ option.SDKType.ToString() +"_"+ GameSetting.gi.VERSION.ToString() + "_" + IP + "_" + Application.version + "(" + PlayerSettings.Android.bundleVersionCode + ")";
-
-                //return $"{DateTime.Now.ToString("MMdd_HHmm")}_{option.SDKType}_{GameSetting.gi.VERSION}_{IP}_{Application.version}({PlayerSettings.Android.bundleVersionCode})";
-            }
-            else {
-                return $"{DateTime.Now.ToString("MMdd_HHmm")}_{option.SDKType}_{GameSetting.gi.VERSION}_{IP}";
-            }
-
-        }
+        //private string GetPakageName(CeliaBuildOption option)
+        //{
+        //    string IP = GameSetting.gi.ip.Replace(".", "-");
+        //    return $"{DateTime.Now:MMdd_HHmm}_{option.SDKType}_{GameSetting.gi.VERSION}_{IP}";
+        //}
 
         public static void DeleteFolder(string deletePath)
         {

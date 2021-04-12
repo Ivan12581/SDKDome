@@ -1,27 +1,33 @@
 using System;
-using System.Collections.Generic;
-using UnityEngine;
+using System.IO;
+
 using UnityEditor;
 using UnityEditor.Build.Reporting;
+
+using UnityEngine;
 
 namespace celia.game.editor
 {
     public class CeliaBuilder
     {
-        static RuntimePlatform runtimePlatform = RuntimePlatform.XboxOne;
-        public static void GetCurPlatform() {
+        private static RuntimePlatform runtimePlatform = RuntimePlatform.XboxOne;
+
+        public static void GetCurPlatform()
+        {
 #if UNITY_ANDROID
-        runtimePlatform = RuntimePlatform.Android;
-        return;
+            runtimePlatform = RuntimePlatform.Android;
+            return;
 #endif
 #if UNITY_IOS
         runtimePlatform = RuntimePlatform.IPhonePlayer;
         return;
 #endif
-        runtimePlatform = RuntimePlatform.XboxOne;
-        Log.Info_red("目前不支持打PC包 请注意平台信息");
+            runtimePlatform = RuntimePlatform.XboxOne;
+            Log.Info_red("目前不支持打PC包 请注意平台信息");
         }
+
         #region 打包菜单
+
         [MenuItem("Tools/Build/NoneSDK")]
         public static void BuildNoneSDK()
         {
@@ -63,10 +69,11 @@ namespace celia.game.editor
                 StartBuild(new string[] { "Platform:IOS", "Level:Beta", "Sign:CeliaAdhoc", "SDK:CeliaOversea", "SDKParams:IOS_Celia", "CompanyName:EMG TECHNOLOGY LIMITED" });
             }
         }
-        #endregion
-        
 
-        static CeliaBuildOption buildOption;
+        #endregion 打包菜单
+
+        public static CeliaBuildOption buildOption;
+
         public static void StartBuild(string[] args = null)
         {
             if (GenerateBuildOtions(args))
@@ -80,9 +87,10 @@ namespace celia.game.editor
                 DoPostExcute(ActionLevel.Platform);
 
                 DoPostExcute(ActionLevel.Common);
+
             }
         }
-        
+
         /// <summary>
         /// 从args读取生成打包配置
         /// </summary>
@@ -125,7 +133,16 @@ namespace celia.game.editor
             return "";
         }
 
+        public static string ApkName { set; get; }
+
+        public static void GetPakageName()
+        {
+            string IP = GameSetting.gi.ip.Replace(".", "-");
+            ApkName = $"{DateTime.Now:MMdd_HHmm}_{buildOption.SDKType}_{GameSetting.gi.VERSION}_{IP}";
+        }
+
         #region Excute
+
         public static void DoPreExcute(ActionLevel actionLevel)
         {
             ProcessCfg processCfg = buildOption.ProcessCfg;
@@ -161,8 +178,9 @@ namespace celia.game.editor
                 actions[i].PostExcute(buildOption);
             }
         }
-        #endregion
-        
+
+        #endregion Excute
+
         public static void BuildPlayer()
         {
             BuildReport report = BuildPipeline.BuildPlayer(buildOption.PlayerOption);
@@ -170,11 +188,46 @@ namespace celia.game.editor
             BuildSummary summary = report.summary;
             if (summary.result == BuildResult.Succeeded)
             {
-                Log.Info_green("Building successed, the total size is" + summary.totalSize/1000000 + " bytes" + " and  the totalTime is " + summary.totalTime);
+                Log.Info_green("Building successed, the total size is" + summary.totalSize / 1000000 + " bytes" + " and  the totalTime is " + summary.totalTime);
             }
             else
             {
                 Log.Info_yellow($"Building {summary.result}!");
+            }
+            //BuildStep[] buildSteps = report.steps;
+            //foreach (var item in buildSteps)
+            //{
+            //    Log.Info_blue("name:" + item.name + "   depth:" + item.depth + "  duration:" + item.duration);
+            //    foreach (var item1 in item.messages)
+            //    {
+            //        if (item1.type != LogType.Warning)
+            //        {
+            //            Log.Info_blue("messages type:" + item1.type + "  content type:" + item1.content);
+            //        }
+            //    }
+            //}
+            if (buildOption.PlayerOption.target == BuildTarget.Android && PlayerSettings.Android.useAPKExpansionFiles)
+            {
+                ChangeObbName();
+            }
+        }
+
+        private static void ChangeObbName()
+        {
+            string apkParentDir = Directory.GetParent(buildOption.PlayerOption.locationPathName).FullName;
+            apkParentDir = apkParentDir.Replace(@"\", "/");
+            string obbName_old = ApkName + ".main.obb";
+            string sourceName = Path.Combine(apkParentDir, obbName_old);
+            if (File.Exists(sourceName))
+            {
+                string obbName_new = "main." + PlayerSettings.Android.bundleVersionCode + "." + Application.identifier + ".obb";
+                string destName = Path.Combine(apkParentDir, obbName_new);
+                if (File.Exists(destName))
+                {
+                    File.Delete(destName);
+                }
+                File.Move(sourceName, destName);
+                Log.Info_green("Obb Change Name:" + obbName_old + " To " + obbName_new);
             }
         }
     }

@@ -338,6 +338,15 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>D:/SDKDomeProject/TestProject/Assets/UnityPackages/JsonNet/Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="UPR.Cecil">
+      <HintPath>D:/SDKDomeProject/TestProject/Assets/UPRTools/Editor/ILProfiler/Cecil/UPR.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="UPRBinary">
+      <HintPath>D:/SDKDomeProject/TestProject/Assets/UPRTools/UPRProfilerClient/Plugins/UPRBinary.dll</HintPath>
+    </Reference>
+    <Reference Include="UPRHook">
+      <HintPath>D:/SDKDomeProject/TestProject/Assets/UPRTools/UPRProfilerClient/Plugins/UPRHook.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Analytics.Editor">
       <HintPath>D:/SDKDomeProject/TestProject/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
@@ -347,14 +356,8 @@
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>D:/SDKDomeProject/TestProject/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
-    <Reference Include="UPRBinary">
-      <HintPath>D:/SDKDomeProject/TestProject/Assets/UPRTools/UPRProfilerClient/Plugins/UPRBinary.dll</HintPath>
-    </Reference>
-    <Reference Include="UPR.Cecil">
-      <HintPath>D:/SDKDomeProject/TestProject/Assets/UPRTools/Editor/ILProfiler/Cecil/UPR.Cecil.dll</HintPath>
-    </Reference>
-    <Reference Include="UPRHook">
-      <HintPath>D:/SDKDomeProject/TestProject/Assets/UPRTools/UPRProfilerClient/Plugins/UPRHook.dll</HintPath>
+    <Reference Include="ConsoleE">
+      <HintPath>D:/SDKDomeProject/TestProject/Assets/Plugins/ConsoleE/Editor/ConsoleE.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/2018.4.27f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

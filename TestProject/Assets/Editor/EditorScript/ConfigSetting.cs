@@ -16,6 +16,44 @@ namespace celia.game.editor
         static string configPath_jianti = "/Config/Config_jianti";
         static string configPath_fanti = "/Config/Config_fanti";
 
+        [MenuItem("Tool/test2测试文件改名")]
+        public static void test2()
+        {
+            string path = "0409_1613_CeliaOversea_Devlopment_thethroneofgirl - game - smartplay - com - tw.main.obb";
+            path = path.Replace(" ", "");
+            string ApkName = "0409_1631_CeliaOversea_Devlopment_thethroneofgirl-game-smartplay-com-tw";
+            string Dir = $"D:/SDKDomeProject/TestProject/Outputs/Android";
+
+
+            string sourceName = $"D:/SDKDomeProject/TestProject/Outputs/Android/0409_1707_CeliaOversea_Devlopment_thethroneofgirl-game-smartplay-com-tw.main.obb";
+            if (File.Exists(sourceName))
+            {
+                string obbName = "main." + PlayerSettings.Android.bundleVersionCode + "." + Application.identifier + ".obb";
+                string destName = Path.Combine(Dir, obbName);
+                Debug.Log("------destName----------" + destName);
+                if (File.Exists(destName))
+                {
+                    Debug.Log("------destName-----123-----"+ destName);
+                    File.Delete(destName);
+                }
+                Directory.Move(sourceName, destName);
+
+                Debug.Log("Obb Change Name:" + sourceName + " To " + destName);
+            }
+
+            //path = path.Replace(" ", "");
+            //Log.Info_green("----path----" + path);
+            //Log.Info_green("----path----" + path);
+            //if (path.StartsWith(ApkName))
+            //{
+            //    Log.Info_green("---StartsWith-----");
+            //}
+            //if (path.EndsWith(".obb"))
+            //{
+            //    Log.Info_green("----EndsWith----");
+            //}
+        }
+
         [MenuItem("Tool/test1")]
         public static void test1() {
             INIParser ini = new INIParser();
@@ -29,11 +67,22 @@ namespace celia.game.editor
         [MenuItem("Tool/test")]
         public static void test() {
 
+
+            string s = "0409_1840_CeliaOversea_Devlopment_thethroneofgirl-game-smartplay-com-tw.main.obb";
+            string s1 = Path.Combine(streamPath,s);
+
+            if (File.Exists(s1))
+            {
+                Debug.Log("----s1-----" + s1);
+            }
+            return;
             string configPath = new DirectoryInfo(Application.dataPath).Parent.FullName + configPath_jianti;
             //string configPath = Path.Combine(new DirectoryInfo(Application.dataPath).Parent.FullName,configPath_jianti);
+            Debug.Log("-----streamPath----"+streamPath);
             //1.delel
             if (Directory.Exists(streamPath))
             {
+                Debug.Log("---------");
                 Directory.Delete(streamPath, true);
             }
             Directory.CreateDirectory(streamPath);
