@@ -1,13 +1,86 @@
-﻿using UnityEngine;
+﻿using System.IO;
 using UnityEditor;
-using System.IO;
+using UnityEngine;
 
 public class AppIconSetting : Editor
 {
-    [MenuItem("IconSet/SetSplash")]
-    public static void SetSplash()
+    private static readonly string logo1_Path = @"Assets/Res/Icons/Splash/公司logo.png";
+    private static readonly string logo2_Path = @"Assets/Res/Icons/Splash/星辉logo.png";
+    private static readonly string splash_Path = @"Assets/Res/Icons/Splash/公司splash.jpg";
+    [MenuItem("IconSet/SetSplashImages")]
+    public static void SetSplashImages()
     {
+        PlayerSettings.SplashScreen.show = true;
+        PlayerSettings.SplashScreen.showUnityLogo = false;
+        SDKParams sdkParams = AssetDatabase.LoadAssetAtPath<SDKParams>("Assets/Resources/SDKParams.asset");
+        if (sdkParams.SDKType == celia.game.SDKType.Native)
+        {
+            SetLogos(true);
+            SetSplash(false);
+        }
+        else
+        {
+            SetLogos(false);
+            SetSplash(true);
+        }
+    }
 
+    public static void SetLogos(bool show)
+    {
+        if (!show)
+        {
+            PlayerSettings.SplashScreen.logos = null;
+            PlayerSettings.SplashScreen.backgroundColor = Color.black;
+            return;
+        }
+
+        //设置闪屏背景颜色
+        PlayerSettings.SplashScreen.backgroundColor = Color.white;
+        var logo1 = new PlayerSettings.SplashScreenLogo
+        {
+            duration = 2f,
+            //设置闪屏logo
+            logo = AssetDatabase.LoadAssetAtPath<Sprite>(logo1_Path)
+        };
+        var logo2 = new PlayerSettings.SplashScreenLogo
+        {
+            duration = 2f,
+            //设置闪屏logo
+            logo = AssetDatabase.LoadAssetAtPath<Sprite>(logo2_Path)
+        };
+        PlayerSettings.SplashScreen.logos = new PlayerSettings.SplashScreenLogo[2] { logo1, logo2 };
+    }
+
+    public static void SetSplash(bool Show)
+    {
+        Texture2D tex = AssetDatabase.LoadAssetAtPath<Texture2D>(splash_Path);
+
+        //加载ProjectSettings
+        string projectSettingsPath = "ProjectSettings/ProjectSettings.asset";
+        UnityEngine.Object obj = AssetDatabase.LoadAllAssetsAtPath(projectSettingsPath)[0];
+        SerializedObject psObj = new SerializedObject(obj);
+        //获取到androidSplashScreen Property
+        string propertyPath = "";
+#if UNITY_ANDROID
+        propertyPath = "androidSplashScreen.m_FileID";
+#endif
+#if UNITY_IOS
+        propertyPath = "iPhoneSplashScreen.m_FileID";
+#endif
+        SerializedProperty SplashFileId = psObj.FindProperty(propertyPath);
+        if (SplashFileId != null)
+        {
+            SplashFileId.intValue = Show ? tex.GetInstanceID() : 0;
+        }
+        //保存修改
+        psObj.ApplyModifiedProperties();
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+#if UNITY_ANDROID
+        PlayerSettings.Android.splashScreenScale = AndroidSplashScreenScale.ScaleToFill;
+#endif
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
     }
 
     #region IconSet
@@ -105,5 +178,6 @@ public class AppIconSetting : Editor
         AssetDatabase.SaveAssets();
         Debug.LogFormat("Set {0}/{1} Icon Complete", platform, kind);
     }
+
     #endregion IconSet
 }
