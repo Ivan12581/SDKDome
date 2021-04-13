@@ -14,14 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Target: 9
   CommonActions:
-  - {fileID: 114795177244484070}
-  - {fileID: 114348839456820732}
-  - {fileID: 114038267142931296}
-  - {fileID: 114098835978246664}
-  - {fileID: 114255432469862384}
-  - {fileID: 114140326518334850}
-  - {fileID: 114168226212905330}
   - {fileID: 114362192473370516}
+  - {fileID: 114795177244484070}
+  - {fileID: 114038267142931296}
+  - {fileID: 114140326518334850}
   PlatformActions:
   - {fileID: 114090375994231128}
   - {fileID: 114141047087434038}
@@ -49,18 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 291d2e39cc5aa70429f3b6d1b67bc6aa, type: 3}
   m_Name: SetIOSOption
   m_EditorClassIdentifier: 
---- !u!114 &114098835978246664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0346ba7f3cfa2114f95e15a61e1e335a, type: 3}
-  m_Name: SetStoryResPath
-  m_EditorClassIdentifier: 
 --- !u!114 &114140326518334850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,42 +71,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pluginIOSPath: 
   pluginSavePath: 
---- !u!114 &114168226212905330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 519caf273234a6944b42594e21796e44, type: 3}
-  m_Name: SetStoryData
-  m_EditorClassIdentifier: 
---- !u!114 &114255432469862384
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4546fa1b20fef2542873a8f97c5eed93, type: 3}
-  m_Name: SetOutputPath
-  m_EditorClassIdentifier: 
---- !u!114 &114348839456820732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bf4f82a760020f48b97e54cbc2e90e3, type: 3}
-  m_Name: SetDefineSymbols
-  m_EditorClassIdentifier: 
 --- !u!114 &114362192473370516
 MonoBehaviour:
   m_ObjectHideFlags: 0

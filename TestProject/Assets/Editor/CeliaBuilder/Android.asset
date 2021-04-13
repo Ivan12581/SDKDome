@@ -14,15 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Target: 13
   CommonActions:
-  - {fileID: 114380382705913488}
-  - {fileID: 114715617346363374}
-  - {fileID: 114958657490617146}
-  - {fileID: 114724595085996202}
-  - {fileID: 114796013593157260}
-  - {fileID: 114558881520405826}
-  - {fileID: 114599868829918756}
-  - {fileID: 114553090005210540}
   - {fileID: 114362192473370516, guid: fb7aa0c504bd1604f83e98515dd5bd2c, type: 2}
+  - {fileID: 114380382705913488}
+  - {fileID: 114958657490617146}
+  - {fileID: 114599868829918756}
   PlatformActions:
   - {fileID: 114335584409553164}
   - {fileID: 114744982512740170}
@@ -62,30 +57,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5934e88b34b4b554b89d6161ef4ecc1a, type: 3}
   m_Name: SetJsonData
   m_EditorClassIdentifier: 
---- !u!114 &114553090005210540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 519caf273234a6944b42594e21796e44, type: 3}
-  m_Name: SetStoryData
-  m_EditorClassIdentifier: 
---- !u!114 &114558881520405826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4546fa1b20fef2542873a8f97c5eed93, type: 3}
-  m_Name: SetOutputPath
-  m_EditorClassIdentifier: 
 --- !u!114 &114599868829918756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,30 +68,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c7f8730e0e614645b68a03dad659967, type: 3}
   m_Name: SetScenes
-  m_EditorClassIdentifier: 
---- !u!114 &114715617346363374
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bf4f82a760020f48b97e54cbc2e90e3, type: 3}
-  m_Name: SetDefineSymbols
-  m_EditorClassIdentifier: 
---- !u!114 &114724595085996202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0346ba7f3cfa2114f95e15a61e1e335a, type: 3}
-  m_Name: SetStoryResPath
   m_EditorClassIdentifier: 
 --- !u!114 &114744982512740170
 MonoBehaviour:
@@ -134,20 +81,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bddc828a9740c5540a5f9f92bbb528b6, type: 3}
   m_Name: SetAndroidSDK
   m_EditorClassIdentifier: 
-  pluginAndroidPath: 
-  pluginSavePath: 
---- !u!114 &114796013593157260
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb4309dc6c646c046baf1ff85d08493d, type: 3}
-  m_Name: SetSplash
-  m_EditorClassIdentifier: 
+  pluginAndroidPath: D:/SDKDomeProject/TestProject/Assets/Plugins/Android
+  pluginSavePath: D:/SDKDomeProject/TestProject/Assets/Plugins/PlatformSDK/
 --- !u!114 &114958657490617146
 MonoBehaviour:
   m_ObjectHideFlags: 0
