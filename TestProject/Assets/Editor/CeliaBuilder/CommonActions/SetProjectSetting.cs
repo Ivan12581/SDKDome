@@ -164,9 +164,6 @@ namespace celia.game.editor
             {
                 PlayerSettings.Android.splashScreenScale = AndroidSplashScreenScale.ScaleToFill;
             }
-
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
         }
 
         public override void PostExcute(CeliaBuildOption option)
