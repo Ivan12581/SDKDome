@@ -18,6 +18,7 @@ MonoBehaviour:
   - {fileID: 114715617346363374}
   - {fileID: 114958657490617146}
   - {fileID: 114724595085996202}
+  - {fileID: 114796013593157260}
   - {fileID: 114558881520405826}
   - {fileID: 114599868829918756}
   - {fileID: 114553090005210540}
@@ -135,6 +136,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pluginAndroidPath: 
   pluginSavePath: 
+--- !u!114 &114796013593157260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb4309dc6c646c046baf1ff85d08493d, type: 3}
+  m_Name: SetSplash
+  m_EditorClassIdentifier: 
 --- !u!114 &114958657490617146
 MonoBehaviour:
   m_ObjectHideFlags: 0

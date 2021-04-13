@@ -16,12 +16,12 @@ public class AppIconSetting : Editor
         if (sdkParams.SDKType == celia.game.SDKType.Native)
         {
             SetLogos(true);
-            SetSplash(false);
+            SetStaticSplash(false);
         }
         else
         {
             SetLogos(false);
-            SetSplash(true);
+            SetStaticSplash(true);
         }
     }
 
@@ -51,7 +51,7 @@ public class AppIconSetting : Editor
         PlayerSettings.SplashScreen.logos = new PlayerSettings.SplashScreenLogo[2] { logo1, logo2 };
     }
 
-    public static void SetSplash(bool Show)
+    public static void SetStaticSplash(bool Show)
     {
         Texture2D tex = AssetDatabase.LoadAssetAtPath<Texture2D>(splash_Path);
 
