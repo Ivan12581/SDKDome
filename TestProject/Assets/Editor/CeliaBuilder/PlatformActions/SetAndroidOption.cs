@@ -15,7 +15,7 @@ namespace celia.game.editor
             option.PlayerOption.options = isBetaVersion ? BuildOptions.None : (BuildOptions.AllowDebugging | BuildOptions.Development | BuildOptions.ConnectWithProfiler | BuildOptions.AllowDebugging);
             if (option.OutputProject)
             {
-                option.PlayerOption.options = option.PlayerOption.options | BuildOptions.AcceptExternalModificationsToPlayer;
+                option.PlayerOption.options |= BuildOptions.AcceptExternalModificationsToPlayer;
             }
             if (option.SDKType == SDKType.Native)
             {
@@ -34,13 +34,14 @@ namespace celia.game.editor
 
             EditorUserBuildSettings.androidCreateSymbolsZip = true;
 
-            Debug.Log("-SetAndroidOption--PlayerSettings.Android.targetSdkVersion--->" + PlayerSettings.Android.targetSdkVersion.ToString());
-            Debug.Log("SetAndroidOption PreExcuted!");
+            //Debug.Log("-SetAndroidOption--PlayerSettings.Android.targetSdkVersion--->" + PlayerSettings.Android.targetSdkVersion.ToString());
+            //Debug.Log("SetAndroidOption PreExcuted!");
         }
 
         public override void PostExcute(CeliaBuildOption option)
         {
-            Debug.Log("SetAndroidOption PostExcuted!");
+            PlayerSettings.Android.useAPKExpansionFiles = false;
+            //Debug.Log("SetAndroidOption PostExcuted!");
         }
     }
 }

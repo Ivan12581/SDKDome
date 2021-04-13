@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Btns
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 61951afd6ed4b4541816158f7818e590, type: 3}
+    totalSpriteSurfaceArea: 1855496
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 387f96810b8271b469ea43789839ff12, type: 3}
+  - {fileID: 21300000, guid: a38fcab2cddf06449b34ad629358cc25, type: 3}
+  - {fileID: 21300000, guid: 5dd0dbb7a12c4f944bd41217304af126, type: 3}
+  - {fileID: 21300000, guid: 97293098b5126414e9fc386797841fcf, type: 3}
+  - {fileID: 21300000, guid: df8aa41aa64d4bb4abc0372a442c15dd, type: 3}
+  - {fileID: 21300000, guid: 80bd218b169257c41ae38dba9b840f62, type: 3}
+  - {fileID: 21300000, guid: 73a16a8c76661ba4db43a997b4d1af7f, type: 3}
+  - {fileID: 21300000, guid: 15b1149ca2d8a344e8eea8c5ad5df2c6, type: 3}
+  - {fileID: 21300000, guid: 397f1ead5aad2384fa7cd60f6db7dc3f, type: 3}
+  - {fileID: 21300000, guid: c74b4d0e68bca3646b0500e36fa383f8, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - "\u968F\u673A\u56FE\u68073-SR\u7EA6\u4F1A"
+  - "\u5BF9\u8BDD\u6846\u5973\u4E3B"
+  - "\u968F\u673A\u56FE\u68073-N\u7EA6\u4F1A"
+  - "\u5149\u73AF1"
+  - "\u8FDB\u5EA6\u67611"
+  - "\u968F\u673A\u56FE\u68073-SSR\u7EA6\u4F1A"
+  - "\u5DF2\u6FC0\u6D3B"
+  - "\u5FC31"
+  - "\u5149\u73AF2"
+  - "\u968F\u673A\u56FE\u68073-R\u7EA6\u4F1A"
+  m_Tag: Btns
+  m_IsVariant: 0

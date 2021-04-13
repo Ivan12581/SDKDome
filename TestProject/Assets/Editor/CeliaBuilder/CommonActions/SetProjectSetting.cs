@@ -51,7 +51,6 @@ namespace celia.game.editor
 
         public override void PostExcute(CeliaBuildOption option)
         {
-            
             Debug.Log("SetProjectSetting PostExcuted!");
         }
     }

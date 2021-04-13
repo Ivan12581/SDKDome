@@ -10,64 +10,51 @@ namespace celia.game.editor
 {
     public class CeliaBuilder
     {
-        private static RuntimePlatform runtimePlatform = RuntimePlatform.XboxOne;
-
-        public static void GetCurPlatform()
-        {
-#if UNITY_ANDROID
-            runtimePlatform = RuntimePlatform.Android;
-            return;
-#endif
-#if UNITY_IOS
-        runtimePlatform = RuntimePlatform.IPhonePlayer;
-        return;
-#endif
-            runtimePlatform = RuntimePlatform.XboxOne;
-            Log.Info_red("目前不支持打PC包 请注意平台信息");
-        }
-
         #region 打包菜单
 
         [MenuItem("Tools/Build/NoneSDK")]
         public static void BuildNoneSDK()
         {
-            GetCurPlatform();
-            if (runtimePlatform == RuntimePlatform.Android)
-            {
-                StartBuild(new string[] { "Platform:Android", "Level:Beta", "Sign:Rastar", "SDK:None" });
-            }
-            else if (runtimePlatform == RuntimePlatform.IPhonePlayer)
-            {
-                StartBuild(new string[] { "Platform:IOS", "Level:Beta", "Sign:CeliaAdhoc", "SDK:None" });
-            }
+#if UNITY_ANDROID
+            StartBuild(new string[] { "Platform:Android", "Level:Beta", "Sign:Rastar", "SDK:None" });
+#endif
+#if UNITY_IOS
+            StartBuild(new string[] { "Platform:IOS", "Level:Beta", "Sign:CeliaAdhoc", "SDK:None" });
+#endif
         }
 
-        [MenuItem("Tools/Build/RastarSDK-->>101714")]
-        public static void BuildRastarSDK101714()
+        [MenuItem("Tools/Build/RastarSDK")]
+        public static void BuildRastarSDK()
         {
-            GetCurPlatform();
-            if (runtimePlatform == RuntimePlatform.Android)
-            {
-                StartBuild(new string[] { "Platform:Android", "Level:Beta", "Sign:Rastar", "SDK:Native", "SDKParams:And_Rastar" });
-            }
-            else if (runtimePlatform == RuntimePlatform.IPhonePlayer)
-            {
-                StartBuild(new string[] { "Platform:IOS", "Level:Beta", "Sign:RastarAhoc", "SDK:Native", "SDKParams:IOS_Rastar" });
-            }
+#if UNITY_ANDROID
+            StartBuild(new string[] { "Platform:Android", "Level:Beta", "Sign:Rastar", "SDK:Native", "SDKParams:And_Rastar" });
+#endif
+#if UNITY_IOS
+            StartBuild(new string[] { "Platform:IOS", "Level:Beta", "Sign:RastarAdhoc", "SDK:Native", "SDKParams:IOS_Rastar" });
+#endif
         }
 
         [MenuItem("Tools/Build/CeliaSDK")]
         public static void BuildCeliaSDK()
         {
-            GetCurPlatform();
-            if (runtimePlatform == RuntimePlatform.Android)
-            {
-                StartBuild(new string[] { "Platform:Android", "Level:Beta", "Sign:zmxt", "SDK:CeliaOversea", "SDKParams:And_Celia", "CompanyName:EMG TECHNOLOGY LIMITED" });
-            }
-            else if (runtimePlatform == RuntimePlatform.IPhonePlayer)
-            {
-                StartBuild(new string[] { "Platform:IOS", "Level:Beta", "Sign:CeliaAdhoc", "SDK:CeliaOversea", "SDKParams:IOS_Celia", "CompanyName:EMG TECHNOLOGY LIMITED" });
-            }
+#if UNITY_ANDROID
+            StartBuild(new string[] { "Platform:Android", "Level:Beta", "Sign:zmxt", "SDK:CeliaOversea", "SDKParams:And_Celia", "CompanyName:EMG TECHNOLOGY LIMITED" });
+#endif
+#if UNITY_IOS
+            StartBuild(new string[] { "Platform:IOS", "Level:Beta", "Sign:CeliaAdhoc", "SDK:CeliaOversea", "SDKParams:IOS_Celia", "CompanyName:EMG TECHNOLOGY LIMITED" });
+#endif
+        }
+
+        [MenuItem("Tools/Build/CeliaSDK(only for android apk with obb)")]
+        public static void BuildCeliaSDKOBB()
+        {
+#if UNITY_ANDROID
+            PlayerSettings.Android.useAPKExpansionFiles = true;
+            StartBuild(new string[] { "Platform:Android", "Level:Beta", "Sign:zmxt", "SDK:CeliaOversea", "SDKParams:And_Celia", "CompanyName:EMG TECHNOLOGY LIMITED" });
+#endif
+#if UNITY_IOS
+            StartBuild(new string[] { "Platform:IOS", "Level:Beta", "Sign:CeliaAdhoc", "SDK:CeliaOversea", "SDKParams:IOS_Celia", "CompanyName:EMG TECHNOLOGY LIMITED" });
+#endif
         }
 
         #endregion 打包菜单
@@ -87,7 +74,6 @@ namespace celia.game.editor
                 DoPostExcute(ActionLevel.Platform);
 
                 DoPostExcute(ActionLevel.Common);
-
             }
         }
 
@@ -133,12 +119,18 @@ namespace celia.game.editor
             return "";
         }
 
-        public static string ApkName { set; get; }
+        private static string _ApkName;
 
-        public static void GetPakageName()
+        public static string ApkName
         {
-            string IP = GameSetting.gi.ip.Replace(".", "-");
-            ApkName = $"{DateTime.Now:MMdd_HHmm}_{buildOption.SDKType}_{GameSetting.gi.VERSION}_{IP}";
+            get
+            {
+                if (string.IsNullOrEmpty(_ApkName))
+                {
+                    _ApkName = $"{DateTime.Now:MMdd_HHmm}_{buildOption.SDKType}_{GameSetting.gi.VERSION}_{GameSetting.gi.ip.Replace(".", "-")}";
+                }
+                return _ApkName;
+            }
         }
 
         #region Excute
@@ -189,6 +181,10 @@ namespace celia.game.editor
             if (summary.result == BuildResult.Succeeded)
             {
                 Log.Info_green("Building successed, the total size is" + summary.totalSize / 1000000 + " bytes" + " and  the totalTime is " + summary.totalTime);
+                if (buildOption.PlayerOption.target == BuildTarget.Android && PlayerSettings.Android.useAPKExpansionFiles)
+                {
+                    ChangeObbName();
+                }
             }
             else
             {
@@ -206,10 +202,6 @@ namespace celia.game.editor
             //        }
             //    }
             //}
-            if (buildOption.PlayerOption.target == BuildTarget.Android && PlayerSettings.Android.useAPKExpansionFiles)
-            {
-                ChangeObbName();
-            }
         }
 
         private static void ChangeObbName()

@@ -333,6 +333,9 @@
     <Reference Include="IFix.Core">
       <HintPath>D:/SDKDomeProject/TestProject/Assets/Plugins/IFix.Core.dll</HintPath>
     </Reference>
+    <Reference Include="ConsoleE">
+      <HintPath>D:/SDKDomeProject/TestProject/Assets/Plugins/ConsoleE/Editor/ConsoleE.dll</HintPath>
+    </Reference>
     <Reference Include="JetBrains.Rider.Unity.Editor.Plugin.Repacked">
       <HintPath>D:/SDKDomeProject/TestProject/Assets/Plugins/Editor/JetBrains/JetBrains.Rider.Unity.Editor.Plugin.Repacked.dll</HintPath>
     </Reference>
@@ -356,9 +359,6 @@
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>D:/SDKDomeProject/TestProject/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
-    </Reference>
-    <Reference Include="ConsoleE">
-      <HintPath>D:/SDKDomeProject/TestProject/Assets/Plugins/ConsoleE/Editor/ConsoleE.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/2018.4.27f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

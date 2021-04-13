@@ -14,7 +14,6 @@ namespace celia.game.editor
             string outputPath = CeliaBuilder.GetInputParam("Path:", option.Args);
 
             EditorUserBuildSettings.exportAsGoogleAndroidProject = option.OutputProject;
-            CeliaBuilder.GetPakageName();
             // iOS不能成包
             if (option.OutputProject || option.ProcessCfg.Target == UnityEditor.BuildTarget.iOS)
             {
@@ -47,12 +46,6 @@ namespace celia.game.editor
         {
             Debug.Log("SetOutputPath PostExcute!");
         }
-
-        //private string GetPakageName(CeliaBuildOption option)
-        //{
-        //    string IP = GameSetting.gi.ip.Replace(".", "-");
-        //    return $"{DateTime.Now:MMdd_HHmm}_{option.SDKType}_{GameSetting.gi.VERSION}_{IP}";
-        //}
 
         public static void DeleteFolder(string deletePath)
         {

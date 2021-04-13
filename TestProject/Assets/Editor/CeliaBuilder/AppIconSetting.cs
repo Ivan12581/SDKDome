@@ -4,6 +4,14 @@ using System.IO;
 
 public class AppIconSetting : Editor
 {
+    [MenuItem("IconSet/SetSplash")]
+    public static void SetSplash()
+    {
+
+    }
+
+    #region IconSet
+
     private static readonly string Icon_Path = @"Assets\Res\Icons\{0}\{1}\{2}.png";
 
     [MenuItem("IconSet/Android/Adaptive")]
@@ -97,4 +105,5 @@ public class AppIconSetting : Editor
         AssetDatabase.SaveAssets();
         Debug.LogFormat("Set {0}/{1} Icon Complete", platform, kind);
     }
+    #endregion IconSet
 }
