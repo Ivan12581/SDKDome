@@ -185,15 +185,16 @@ public class AppIconSetting : Editor
     [MenuItem("IconSet/Test")]
     public static void test()
     {
-        string path = "Assets/Res/Icons/Android/1024.png";
+        string path = "Assets/Res/Icons/Android/Adaptive/1024.png";
         Texture2D tex_1024 = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
 
-        int[] newTex = new int[] { 512,256,128,64,32};
+        int[] newTex = new int[] { 1024,512,256,128,64,48,36,32};
         for (int i = 0; i < newTex.Length; i++)
         {
             int size = newTex[i];
             Texture2D tex_new = ReSetTextureSize(tex_1024, size, size);
-            SaveTexture(tex_new, "Assets/Res/Icons/IOS/"+ size+".png");
+
+            SaveTexture(tex_new, "Assets/Res/Icons/IOS/" + size+".png");
         }
 
     }
@@ -224,7 +225,7 @@ public class AppIconSetting : Editor
         GL.End();
         GL.PopMatrix();
 
-        var finalTex = new Texture2D(rendTex.width, rendTex.height, TextureFormat.ARGB32, false);
+        var finalTex = new Texture2D(rendTex.width, rendTex.height, TextureFormat.ASTC_RGBA_8x8, false);
         RenderTexture.active = rendTex;
         finalTex.ReadPixels(new Rect(0, 0, finalTex.width, finalTex.height), 0, 0);
         finalTex.Apply();
