@@ -74,8 +74,6 @@ public class BuildWindow : EditorWindow
     {
         ReadSetting();
         InitSysConfig();
-        //setting = new Setting();
-        //keystoreCnf = new KeystoreConfig();
     }
 
     public void ReadSetting()
@@ -306,6 +304,8 @@ public class BuildWindow : EditorWindow
                 string openPath =
                     Path.GetFullPath(path + "/build/outputs/apk/release/".Replace("/", Path.AltDirectorySeparatorChar.ToString()));
                 Process.Start("explorer.exe", openPath);
+
+
 
                 if (!string.IsNullOrEmpty(gitCommitID))
                 {                    

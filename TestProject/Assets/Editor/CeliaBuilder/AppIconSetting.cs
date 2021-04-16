@@ -1,6 +1,8 @@
 ﻿using System.IO;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class AppIconSetting : Editor
 {
@@ -147,10 +149,11 @@ public class AppIconSetting : Editor
             //不需要再通过GetIconSizesForTargetGroup了来获得Icon尺寸数组，
             //直接由对应的PlatformIcon.width来获取Icon大小
             int iconSize = icons[i].width;
+            Debug.Log("iconSize:" + iconSize);
             filename = string.Format(Icon_Path, target, folder, iconSize);
             if (!File.Exists(filename))
             {
-                Debug.LogErrorFormat("图片文件不存在, 路径为:{0}", filename);
+                Debug.LogErrorFormat("图片文件不存在, 1路径为:{0}", filename);
                 continue;
             }
             Texture2D tex2D = AssetDatabase.LoadAssetAtPath(filename,
@@ -179,5 +182,61 @@ public class AppIconSetting : Editor
         Debug.LogFormat("Set {0}/{1} Icon Complete", platform, kind);
     }
 
+    [MenuItem("IconSet/Test")]
+    public static void test()
+    {
+        string path = "Assets/Res/Icons/Android/1024.png";
+        Texture2D tex_1024 = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+
+        int[] newTex = new int[] { 512,256,128,64,32};
+        for (int i = 0; i < newTex.Length; i++)
+        {
+            int size = newTex[i];
+            Texture2D tex_new = ReSetTextureSize(tex_1024, size, size);
+            SaveTexture(tex_new, "Assets/Res/Icons/IOS/"+ size+".png");
+        }
+
+    }
+    public static Texture2D ReSetTextureSize(Texture2D tex, int width, int height)
+    {
+        var rendTex = new RenderTexture(width, height, 24, RenderTextureFormat.ARGB32);
+        rendTex.Create();
+        Graphics.SetRenderTarget(rendTex);
+        GL.PushMatrix();
+        GL.Clear(true, true, Color.clear);
+        GL.PopMatrix();
+
+        var mat = new Material(Shader.Find("Unlit/Transparent"));
+        mat.mainTexture = tex;
+        Graphics.SetRenderTarget(rendTex);
+        GL.PushMatrix();
+        GL.LoadOrtho();
+        mat.SetPass(0);
+        GL.Begin(GL.QUADS);
+        GL.TexCoord2(0, 0);
+        GL.Vertex3(0, 0, 0);
+        GL.TexCoord2(0, 1);
+        GL.Vertex3(0, 1, 0);
+        GL.TexCoord2(1, 1);
+        GL.Vertex3(1, 1, 0);
+        GL.TexCoord2(1, 0);
+        GL.Vertex3(1, 0, 0);
+        GL.End();
+        GL.PopMatrix();
+
+        var finalTex = new Texture2D(rendTex.width, rendTex.height, TextureFormat.ARGB32, false);
+        RenderTexture.active = rendTex;
+        finalTex.ReadPixels(new Rect(0, 0, finalTex.width, finalTex.height), 0, 0);
+        finalTex.Apply();
+        return finalTex;
+    }
+    public static void SaveTexture(Texture2D tex, string toPath)
+    {
+        using (var fs = File.OpenWrite(toPath))
+        {
+            var bytes = tex.EncodeToPNG();
+            fs.Write(bytes, 0, bytes.Length);
+        }
+    }
     #endregion IconSet
 }
