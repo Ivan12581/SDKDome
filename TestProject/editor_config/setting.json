@@ -1,0 +1,15 @@
+{
+    "appName": "少女的王座",
+    "version": "2.0.0",
+    "serverHost": "https://dcdn-beta-services.5i-games.com",
+    "resouceHost": "https://dcdn-beta-u3d-resource.5i-games.com",
+    "umengAndroidKey": "59704b381c5dd04372000e47",
+    "umengIOSKey": "5c905651203657d42a0010bf",
+    "quickProductCode": "46446572427464685373690794268262",
+    "selfChannelID": "1000",
+    "isDevMode": false,
+    "isChannel": false,
+    "touristLogin": true,
+    "weChatLogin": true,
+    "channelLogin": true
+}

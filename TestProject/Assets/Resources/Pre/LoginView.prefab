@@ -3592,6 +3592,7 @@ GameObject:
   - component: {fileID: 8400594282398910084}
   - component: {fileID: 8400594282398910085}
   - component: {fileID: 8398626110276075972}
+  - component: {fileID: 3725942113392636089}
   m_Layer: 5
   m_Name: LoginView
   m_TagString: Untagged
@@ -3672,6 +3673,30 @@ MonoBehaviour:
   serverIP: {fileID: 7463675040045830224}
   serverPort: {fileID: 7463675040601036709}
   dropDown: {fileID: 7463675040303221040}
+--- !u!114 &3725942113392636089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8400594282398910086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0608b4cee22e7e478de230dbd1ec834, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  header: 
+  speed: 100
+  length: 108
+  hide: 
+  serializeField: 123
+  multiline: 
+  range: 3.47
+  color: {r: 0, g: 0, b: 0, a: 0}
+  textArea: 
+  img: {fileID: 0}
+  playerBiography: 
+  delay: 0
 --- !u!1 &8400594282400878171
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-//using CSObjectWrapEditor;
+using Debug = UnityEngine.Debug;
 
 public class BuildWindow : EditorWindow
 {
@@ -51,7 +51,7 @@ public class BuildWindow : EditorWindow
     }
 
     private KeystoreConfig keystoreCnf;
-    //private Setting setting;
+    private Setting setting;
     private static string SettingPath
     {
         get
@@ -78,8 +78,8 @@ public class BuildWindow : EditorWindow
 
     public void ReadSetting()
     {
-        //setting = EditorTools.LoadObjectFromJsonFile<Setting>(SettingPath);
-        //keystoreCnf = EditorTools.LoadObjectFromJsonFile<KeystoreConfig>(KeystorePath);
+        setting = EditorTools.LoadObjectFromJsonFile<Setting>(SettingPath);
+        keystoreCnf = EditorTools.LoadObjectFromJsonFile<KeystoreConfig>(KeystorePath);
     }
 
     public void InitSysConfig()
@@ -87,8 +87,6 @@ public class BuildWindow : EditorWindow
         string tmp = keystoreCnf.bundleIdentifier == "" ? PlayerSettings.GetApplicationIdentifier(BuildTargetGroup.Standalone) : keystoreCnf.bundleIdentifier;
         keystoreCnf.bundleIdentifier = tmp;
         PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android | BuildTargetGroup.iOS | BuildTargetGroup.Standalone, keystoreCnf.bundleIdentifier);
-
-        //PlayerSettings.bundleVersion = setting.version;
 
         if (keystoreCnf.keystore == "")
         {
@@ -107,121 +105,124 @@ public class BuildWindow : EditorWindow
         tmp = keystoreCnf.keyalipass == "" ? PlayerSettings.Android.keyaliasPass : keystoreCnf.keyalipass;
         PlayerSettings.Android.keyaliasPass = keystoreCnf.keyalipass = tmp;
     }
+
     Vector2 scroll_pos;
     //绘制窗口时调用
-    //void OnGUI()
-    //{
-    //    scroll_pos = EditorGUILayout.BeginScrollView(scroll_pos);
-    //    //输入框控件
-    //    GUILayout.Space(10);
-    //    setting.appName = EditorGUILayout.TextField("项目名称:", setting.appName);
-    //    GUILayout.Space(5);
-    //    keystoreCnf.bundleIdentifier = EditorGUILayout.TextField("项目包名:", keystoreCnf.bundleIdentifier);
-    //    GUILayout.Space(5);
-    //    setting.version = EditorGUILayout.TextField("版本号:", setting.version);
-    //    GUILayout.Space(5);
-    //    setting.serverHost = EditorGUILayout.TextField("服务器地址:", setting.serverHost);
-    //    GUILayout.Space(5);
-    //    setting.resouceHost = EditorGUILayout.TextField("热更资源地址:", setting.resouceHost);
-    //    GUILayout.Space(5);
-    //    setting.umengAndroidKey = EditorGUILayout.TextField("友盟Android key:", setting.umengAndroidKey);
-    //    GUILayout.Space(5);
-    //    setting.umengIOSKey = EditorGUILayout.TextField("友盟iOS key:", setting.umengIOSKey);
-    //    GUILayout.Space(5);
-    //    setting.quickProductCode = EditorGUILayout.TextField("Quick ProductCode:", setting.quickProductCode);
-    //    GUILayout.Space(5);
-    //    setting.selfChannelID = EditorGUILayout.TextField("默认渠道ID:", setting.selfChannelID);
-    //    GUILayout.Space(5);
-    //    //setting.weChatAppId = EditorGUILayout.TextField("WeChatAppId:", setting.weChatAppId);
-    //    //GUILayout.Space(5);
-    //    //setting.weChatSecret = EditorGUILayout.TextField("WeChatSecret:", setting.weChatSecret);
-    //    //GUILayout.Space(5);
-    //    setting.isDevMode = EditorGUILayout.Toggle("测试模式", setting.isDevMode);
-    //    GUILayout.Space(5);
-    //    setting.isChannel = EditorGUILayout.Toggle("渠道包", setting.isChannel);
-    //    GUILayout.Space(5);
+    void OnGUI()
+    {
+        scroll_pos = EditorGUILayout.BeginScrollView(scroll_pos);
+        //输入框控件
+        GUILayout.Space(10);
+        setting.appName = EditorGUILayout.TextField("项目名称:", setting.appName);
+        GUILayout.Space(5);
+        keystoreCnf.bundleIdentifier = EditorGUILayout.TextField("项目包名:", keystoreCnf.bundleIdentifier);
+        GUILayout.Space(5);
+        setting.version = EditorGUILayout.TextField("版本号:", setting.version);
+        GUILayout.Space(5);
+        setting.serverHost = EditorGUILayout.TextField("服务器地址:", setting.serverHost);
+        GUILayout.Space(5);
+        setting.resouceHost = EditorGUILayout.TextField("热更资源地址:", setting.resouceHost);
+        GUILayout.Space(5);
+        setting.umengAndroidKey = EditorGUILayout.TextField("友盟Android key:", setting.umengAndroidKey);
+        GUILayout.Space(5);
+        setting.umengIOSKey = EditorGUILayout.TextField("友盟iOS key:", setting.umengIOSKey);
+        GUILayout.Space(5);
+        setting.quickProductCode = EditorGUILayout.TextField("Quick ProductCode:", setting.quickProductCode);
+        GUILayout.Space(5);
+        setting.selfChannelID = EditorGUILayout.TextField("默认渠道ID:", setting.selfChannelID);
+        GUILayout.Space(5);
+        //setting.weChatAppId = EditorGUILayout.TextField("WeChatAppId:", setting.weChatAppId);
+        //GUILayout.Space(5);
+        //setting.weChatSecret = EditorGUILayout.TextField("WeChatSecret:", setting.weChatSecret);
+        //GUILayout.Space(5);
+        setting.isDevMode = EditorGUILayout.Toggle("测试模式", setting.isDevMode);
+        GUILayout.Space(5);
+        setting.isChannel = EditorGUILayout.Toggle("渠道包", setting.isChannel);
+        GUILayout.Space(5);
 
-    //    GUILayout.BeginHorizontal();
-    //    GUILayout.Label("登录方式:", GUILayout.Width(146));
-    //    setting.touristLogin = EditorGUILayout.Toggle("游客登录", setting.touristLogin, GUILayout.Width(220));
-    //    GUILayout.Space(5);
-    //    setting.channelLogin = EditorGUILayout.Toggle("渠道登录", setting.channelLogin, GUILayout.Width(220));
-    //    GUILayout.Space(5);
-    //    setting.weChatLogin = EditorGUILayout.Toggle("微信登录", setting.weChatLogin, GUILayout.Width(220));
-    //    GUILayout.Space(5);
-    //    GUILayout.EndHorizontal();
-    //    GUILayout.Space(5);
-    //    GUILayout.BeginHorizontal();
-    //    GUILayout.Space(5);
-    //    GUILayout.Label("keystore", GUILayout.Width(146), GUILayout.Height(18f));
-    //    GUILayout.Label(keystoreCnf.keystore, "HelpBox", GUILayout.Height(18f));
-    //    if (GUILayout.Button(new GUIContent("浏览", "浏览文件夹")))
-    //    {
-    //        string path = EditorUtility.OpenFilePanel("keystore", keystoreCnf.keystore, "keystore");
-    //        keystoreCnf.keystore = path.Replace(System.Environment.CurrentDirectory.Replace("\\", "/"), ".");
-    //        SaveSetting();
-    //        SaveKeystoreSetting();
-    //    }
-    //    GUILayout.EndHorizontal();
-    //    GUILayout.Space(5);
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("登录方式:", GUILayout.Width(146));
+        setting.touristLogin = EditorGUILayout.Toggle("游客登录", setting.touristLogin, GUILayout.Width(220));
+        GUILayout.Space(5);
+        setting.channelLogin = EditorGUILayout.Toggle("渠道登录", setting.channelLogin, GUILayout.Width(220));
+        GUILayout.Space(5);
+        setting.weChatLogin = EditorGUILayout.Toggle("微信登录", setting.weChatLogin, GUILayout.Width(220));
+        GUILayout.Space(5);
+        GUILayout.EndHorizontal();
+        GUILayout.Space(5);
+        GUILayout.BeginHorizontal();
+        GUILayout.Space(5);
+        GUILayout.Label("keystore", GUILayout.Width(146), GUILayout.Height(18f));
+        GUILayout.Label(keystoreCnf.keystore, "HelpBox", GUILayout.Height(18f));
+        if (GUILayout.Button(new GUIContent("浏览", "浏览文件夹")))
+        {
+            string path = EditorUtility.OpenFilePanel("keystore", keystoreCnf.keystore, "keystore");
+            keystoreCnf.keystore = path.Replace(System.Environment.CurrentDirectory.Replace("\\", "/"), ".");
+            SaveSetting();
+            SaveKeystoreSetting();
+        }
+        GUILayout.EndHorizontal();
+        GUILayout.Space(5);
 
-    //    keystoreCnf.keypass = EditorGUILayout.TextField("keypass:", keystoreCnf.keypass);
-    //    GUILayout.Space(5);
-    //    keystoreCnf.keyaliname = EditorGUILayout.TextField("keyaliname:", keystoreCnf.keyaliname);
-    //    GUILayout.Space(5);
-    //    keystoreCnf.keyalipass = EditorGUILayout.TextField("keyalipass:", keystoreCnf.keyalipass);
-    //    GUILayout.Space(5);
-    //    gitCommitID = EditorGUILayout.TextField("git报告提交ID:", gitCommitID);
-    //    GUILayout.Space(5);
+        keystoreCnf.keypass = EditorGUILayout.TextField("keypass:", keystoreCnf.keypass);
+        GUILayout.Space(5);
+        keystoreCnf.keyaliname = EditorGUILayout.TextField("keyaliname:", keystoreCnf.keyaliname);
+        GUILayout.Space(5);
+        keystoreCnf.keyalipass = EditorGUILayout.TextField("keyalipass:", keystoreCnf.keyalipass);
+        GUILayout.Space(5);
+        gitCommitID = EditorGUILayout.TextField("git报告提交ID:", gitCommitID);
+        GUILayout.Space(5);
 
-    //    PlayerSettings.productName = setting.appName;
-    //    PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android | BuildTargetGroup.iOS | BuildTargetGroup.Standalone, keystoreCnf.bundleIdentifier);
-    //    PlayerSettings.bundleVersion = setting.version;
-    //    PlayerSettings.Android.keystoreName = keystoreCnf.keystore;
-    //    PlayerSettings.Android.keystorePass = keystoreCnf.keypass;
-    //    PlayerSettings.Android.keyaliasName = keystoreCnf.keyaliname;
-    //    PlayerSettings.Android.keyaliasPass = keystoreCnf.keyalipass;
+        PlayerSettings.productName = setting.appName;
+        PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android | BuildTargetGroup.iOS | BuildTargetGroup.Standalone, keystoreCnf.bundleIdentifier);
+        PlayerSettings.bundleVersion = setting.version;
+        PlayerSettings.Android.keystoreName = keystoreCnf.keystore;
+        PlayerSettings.Android.keystorePass = keystoreCnf.keypass;
+        PlayerSettings.Android.keyaliasName = keystoreCnf.keyaliname;
+        PlayerSettings.Android.keyaliasPass = keystoreCnf.keyalipass;
 
-    //    GUILayout.Space(5);
+        GUILayout.Space(5);
 
-    //    if (GUILayout.Button("清理C#Warp代码"))
-    //    {
-    //        //Generator.ClearAll();
-    //        AssetDatabase.Refresh();
-    //    }
+        //if (GUILayout.Button("清理C#Warp代码"))
+        //{
+        //    AssetDatabase.Refresh();
+        //}
 
-    //    if (GUILayout.Button("生成C#Warp代码"))
-    //    {
-    //        if (EditorApplication.isCompiling)
-    //        {
-    //            EditorUtility.DisplayDialog("提示", "请等待编译完成后执行!", "OK");
-    //        }
-    //        else
-    //        {
-    //            //Generator.GenAll();
-    //        }
-    //    }
+        //if (GUILayout.Button("生成C#Warp代码"))
+        //{
+        //    if (EditorApplication.isCompiling)
+        //    {
+        //        EditorUtility.DisplayDialog("提示", "请等待编译完成后执行!", "OK");
+        //    }
+        //    else
+        //    {
+        //        //Generator.GenAll();
+        //    }
+        //}
 
-    //    if (GUILayout.Button("一键打AssetBundle"))
-    //    {
-    //        AssetBundleTool.QuickBuildAssetBundle();
-    //        SaveSetting();
-    //    }
+        if (GUILayout.Button("一键打AssetBundle"))
+        {
+            AssetBundleTool.QuickBuildAssetBundle();
+            SaveSetting();
+        }
 
-    //    if (GUILayout.Button("快速构建（不打ab）"))
-    //    {
-    //        SaveSetting();
-    //        Build();
-    //    }
+        if (GUILayout.Button("快速构建（不打ab）"))
+        {
+            SaveSetting();
+            Build();
+        }
 
-    //    if (GUILayout.Button("导出Gradle工程"))
-    //    {
-    //        SaveSetting();
-    //        ExportGradle();
-    //    }
-
-    //    EditorGUILayout.EndScrollView();
-    //}
+        if (GUILayout.Button("导出Gradle工程"))
+        {
+            SaveSetting();
+            ExportGradle();
+        }
+        if (GUILayout.Button("SaveSetting"))
+        {
+            SaveSetting();
+        }
+        EditorGUILayout.EndScrollView();
+    }
 
     private static void ExportGradle()
     {
@@ -304,6 +305,8 @@ public class BuildWindow : EditorWindow
                     Path.GetFullPath(path + "/build/outputs/apk/release/".Replace("/", Path.AltDirectorySeparatorChar.ToString()));
                 Process.Start("explorer.exe", openPath);
 
+
+
                 if (!string.IsNullOrEmpty(gitCommitID))
                 {                    
                     Process pro = new Process();
@@ -381,9 +384,10 @@ public class BuildWindow : EditorWindow
         string timeFilePath = Application.streamingAssetsPath + "/time.txt";
         File.WriteAllText(timeFilePath, time, Encoding.UTF8);
 
-        //string jsonStr = JsonUtility.ToJson(setting, true);
-        //EditorTools.WriteFileWithCode(SettingPath, jsonStr, null);
-        EnCodeSetting();
+        string jsonStr = JsonUtility.ToJson(setting, true);
+        EditorTools.WriteFileWithCode(SettingPath, jsonStr, null);
+        //EnCodeSetting();
+        Debug.Log("--SaveSetting--");
     }
 
     void OnInspectorUpdate()
@@ -514,4 +518,26 @@ public class BuildWindow : EditorWindow
         //data = Setting.EnCode(data);
         //File.WriteAllBytes(Application.streamingAssetsPath + "/setting.json", data);
     }
+
+
+}
+
+public class Setting {
+    private static Setting setting;
+    public string appName;
+    public string version;
+    public string serverHost;
+    public string resouceHost;
+
+    //public string weChatAppId;
+    //public string weChatSecret;
+    public string umengAndroidKey;
+    public string umengIOSKey;
+    public string quickProductCode;
+    public string selfChannelID;
+    public bool isDevMode;
+    public bool isChannel;
+    public bool touristLogin;
+    public bool weChatLogin;
+    public bool channelLogin;
 }

@@ -1,13 +1,88 @@
-﻿using UnityEngine;
+﻿using System.IO;
 using UnityEditor;
-using System.IO;
+using UnityEngine;
+using UnityEngine.UI;
+
 
 public class AppIconSetting : Editor
 {
-    [MenuItem("IconSet/SetSplash")]
-    public static void SetSplash()
+    private static readonly string logo1_Path = @"Assets/Res/Icons/Splash/公司logo.png";
+    private static readonly string logo2_Path = @"Assets/Res/Icons/Splash/星辉logo.png";
+    private static readonly string splash_Path = @"Assets/Res/Icons/Splash/公司splash.jpg";
+    [MenuItem("IconSet/SetSplashImages")]
+    public static void SetSplashImages()
     {
+        PlayerSettings.SplashScreen.show = true;
+        PlayerSettings.SplashScreen.showUnityLogo = false;
+        SDKParams sdkParams = AssetDatabase.LoadAssetAtPath<SDKParams>("Assets/Resources/SDKParams.asset");
+        if (sdkParams.SDKType == celia.game.SDKType.Native)
+        {
+            SetLogos(true);
+            SetStaticSplash(false);
+        }
+        else
+        {
+            SetLogos(false);
+            SetStaticSplash(true);
+        }
+    }
 
+    public static void SetLogos(bool show)
+    {
+        if (!show)
+        {
+            PlayerSettings.SplashScreen.logos = null;
+            PlayerSettings.SplashScreen.backgroundColor = Color.black;
+            return;
+        }
+
+        //设置闪屏背景颜色
+        PlayerSettings.SplashScreen.backgroundColor = Color.white;
+        var logo1 = new PlayerSettings.SplashScreenLogo
+        {
+            duration = 2f,
+            //设置闪屏logo
+            logo = AssetDatabase.LoadAssetAtPath<Sprite>(logo1_Path)
+        };
+        var logo2 = new PlayerSettings.SplashScreenLogo
+        {
+            duration = 2f,
+            //设置闪屏logo
+            logo = AssetDatabase.LoadAssetAtPath<Sprite>(logo2_Path)
+        };
+        PlayerSettings.SplashScreen.logos = new PlayerSettings.SplashScreenLogo[2] { logo1, logo2 };
+    }
+
+    public static void SetStaticSplash(bool Show)
+    {
+        Texture2D tex = AssetDatabase.LoadAssetAtPath<Texture2D>(splash_Path);
+
+        //加载ProjectSettings
+        string projectSettingsPath = "ProjectSettings/ProjectSettings.asset";
+        UnityEngine.Object obj = AssetDatabase.LoadAllAssetsAtPath(projectSettingsPath)[0];
+        SerializedObject psObj = new SerializedObject(obj);
+        //获取到androidSplashScreen Property
+        string propertyPath = "";
+#if UNITY_ANDROID
+        propertyPath = "androidSplashScreen.m_FileID";
+#endif
+#if UNITY_IOS
+        propertyPath = "iPhoneSplashScreen.m_FileID";
+#endif
+        SerializedProperty SplashFileId = psObj.FindProperty(propertyPath);
+        if (SplashFileId != null)
+        {
+            SplashFileId.intValue = Show ? tex.GetInstanceID() : 0;
+        }
+        //保存修改
+        psObj.ApplyModifiedProperties();
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+#if UNITY_ANDROID
+        PlayerSettings.Android.splashScreenScale = AndroidSplashScreenScale.ScaleToFill;
+#endif
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
     }
 
     #region IconSet
@@ -74,10 +149,11 @@ public class AppIconSetting : Editor
             //不需要再通过GetIconSizesForTargetGroup了来获得Icon尺寸数组，
             //直接由对应的PlatformIcon.width来获取Icon大小
             int iconSize = icons[i].width;
+            Debug.Log("iconSize:" + iconSize);
             filename = string.Format(Icon_Path, target, folder, iconSize);
             if (!File.Exists(filename))
             {
-                Debug.LogErrorFormat("图片文件不存在, 路径为:{0}", filename);
+                Debug.LogErrorFormat("图片文件不存在, 1路径为:{0}", filename);
                 continue;
             }
             Texture2D tex2D = AssetDatabase.LoadAssetAtPath(filename,
@@ -104,6 +180,64 @@ public class AppIconSetting : Editor
 
         AssetDatabase.SaveAssets();
         Debug.LogFormat("Set {0}/{1} Icon Complete", platform, kind);
+    }
+
+    [MenuItem("IconSet/Test")]
+    public static void test()
+    {
+        string path = "Assets/Res/Icons/Android/Adaptive/1024.png";
+        Texture2D tex_1024 = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+
+        int[] newTex = new int[] { 1024,512,256,128,64,48,36,32};
+        for (int i = 0; i < newTex.Length; i++)
+        {
+            int size = newTex[i];
+            Texture2D tex_new = ReSetTextureSize(tex_1024, size, size);
+
+            SaveTexture(tex_new, "Assets/Res/Icons/IOS/" + size+".png");
+        }
+
+    }
+    public static Texture2D ReSetTextureSize(Texture2D tex, int width, int height)
+    {
+        var rendTex = new RenderTexture(width, height, 24, RenderTextureFormat.ARGB32);
+        rendTex.Create();
+        Graphics.SetRenderTarget(rendTex);
+        GL.PushMatrix();
+        GL.Clear(true, true, Color.clear);
+        GL.PopMatrix();
+
+        var mat = new Material(Shader.Find("Unlit/Transparent"));
+        mat.mainTexture = tex;
+        Graphics.SetRenderTarget(rendTex);
+        GL.PushMatrix();
+        GL.LoadOrtho();
+        mat.SetPass(0);
+        GL.Begin(GL.QUADS);
+        GL.TexCoord2(0, 0);
+        GL.Vertex3(0, 0, 0);
+        GL.TexCoord2(0, 1);
+        GL.Vertex3(0, 1, 0);
+        GL.TexCoord2(1, 1);
+        GL.Vertex3(1, 1, 0);
+        GL.TexCoord2(1, 0);
+        GL.Vertex3(1, 0, 0);
+        GL.End();
+        GL.PopMatrix();
+
+        var finalTex = new Texture2D(rendTex.width, rendTex.height, TextureFormat.ASTC_RGBA_8x8, false);
+        RenderTexture.active = rendTex;
+        finalTex.ReadPixels(new Rect(0, 0, finalTex.width, finalTex.height), 0, 0);
+        finalTex.Apply();
+        return finalTex;
+    }
+    public static void SaveTexture(Texture2D tex, string toPath)
+    {
+        using (var fs = File.OpenWrite(toPath))
+        {
+            var bytes = tex.EncodeToPNG();
+            fs.Write(bytes, 0, bytes.Length);
+        }
     }
     #endregion IconSet
 }
