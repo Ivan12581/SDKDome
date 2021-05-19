@@ -121,7 +121,7 @@ PlayerSettings:
   switchNVNMaxPublicTextureIDCount: 0
   switchNVNMaxPublicSamplerIDCount: 0
   vulkanEnableSetSRGBWrite: 0
-  useSecurityBuild: 0
+  useSecurityBuild: 1
   m_SupportedAspectRatios:
     4:3: 1
     5:4: 1
@@ -509,7 +509,9 @@ PlayerSettings:
   - m_BuildTarget: WebGL
     m_StaticBatching: 0
     m_DynamicBatching: 0
-  m_BuildTargetEncrypting: []
+  m_BuildTargetEncrypting:
+  - m_BuildTarget: Android
+    m_UseSecurityBuild: 1
   m_BuildTargetGraphicsAPIs:
   - m_BuildTarget: AndroidPlayer
     m_APIs: 150000000b000000
