@@ -188,8 +188,6 @@ typedef NS_ENUM(NSInteger, MsgID)
     [[RaStarCommon sharedInstance] addInitDelegate:self];
     [[RaStarCommon sharedInstance] registerSDK];
 
-    
-    
     [self xgStart];
 }
 - (void)onInitSuccess {
@@ -379,7 +377,7 @@ code-信息
             case eUploadInfo:
                 [self UploadInfo:jsonstring];
                 break;
-			case eCustomerService:
+            case eCustomerService:
                 [self OpenService];
                 break;
             case eReview:
