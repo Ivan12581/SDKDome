@@ -33,6 +33,16 @@ namespace celia.game.editor
             StartBuild(new string[] { "Platform:IOS", "Level:Beta", "Sign:RastarAdhoc", "SDK:Native", "SDKParams:IOS_Rastar" });
 #endif
         }
+        [MenuItem("Tools/Build/RastarSDK_Alpha")]
+        public static void BuildRastarSDKAlpha()
+        {
+#if UNITY_ANDROID
+            StartBuild(new string[] { "Platform:Android", "Level:Alpha", "Sign:Rastar", "SDK:Native", "SDKParams:And_Rastar" });
+#endif
+#if UNITY_IOS
+            StartBuild(new string[] { "Platform:IOS", "Level:Alpha", "Sign:RastarAdhoc", "SDK:Native", "SDKParams:IOS_Rastar" });
+#endif
+        }
 
         [MenuItem("Tools/Build/CeliaSDK")]
         public static void BuildCeliaSDK()
