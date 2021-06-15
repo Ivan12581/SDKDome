@@ -412,6 +412,7 @@ namespace celia.game.editor
             rootDict.SetString("NSMicrophoneUsageDescription", "是否允许使用麦克风?");
             rootDict.SetString("NSPhotoLibraryAddUsageDescription", "是否允许添加照片?");
             rootDict.SetString("NSMicrophoneUsageDescription", "是否允许访问相册?");
+            rootDict.SetString("NSUserTrackingUsageDescription", "请放心选择允许，该权限仅用于获取您的设备标识，以便未来找回账号");
 
             //星辉SDK默认为暗黑模式 但是开启之后隐私协议会看不到 所以要关闭暗黑模式
             //rootDict.SetString("UIUserInterfaceStyle", "Light");
