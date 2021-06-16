@@ -85,11 +85,6 @@ PluginImporter:
       enabled: 0
       settings:
         CPU: None
-  - first:
-      iPhone: iOS
-    second:
-      enabled: 0
-      settings: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
