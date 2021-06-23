@@ -62,6 +62,11 @@
             android:path="/launch/app"/>
       </intent-filter>
     </activity>
+    <!--以下是涉及到第三方登录和分享所需组件，若不需第三方登录和分享可不添加 start-->
+    <!--针对 Android 9 第三方登录时拉起手Q 闪退的处理(接入第三方登录或者分享时必须配置)-->
+    <uses-library
+        android:name="org.apache.http.legacy"
+        android:required="false" />
    <!--友盟QQ登录分享-->
 	<activity
 		android:name="com.tencent.tauth.AuthActivity"
@@ -85,6 +90,17 @@
 		android:configChanges="keyboardHidden|orientation|screenSize"
 		android:exported="true"
 		android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+  <!-- 分区存储适配 Android 11设备分享-->
+  <!--组件名：android:authorities="包名.fileprovider"-->
+    <provider
+        android:name="androidx.core.content.FileProvider"
+        android:authorities="com.xlycs.rastar.fileprovider"
+        android:exported="false"
+        android:grantUriPermissions="true" >
+      <meta-data
+          android:name="android.support.FILE_PROVIDER_PATHS"
+          android:resource="@xml/rsdk_share_filepaths" />
+    </provider>
 <!-- RaStarSDK组件 end -->
   </application>
   <uses-feature android:glEsVersion="0x00020000" />
