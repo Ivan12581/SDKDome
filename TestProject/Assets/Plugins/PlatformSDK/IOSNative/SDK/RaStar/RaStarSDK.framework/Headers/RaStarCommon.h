@@ -362,6 +362,19 @@ code -  信息
  关闭客服界面
  */
 -(void)serviceClose;
+
+/**
+ 提交客服的问题描述信息
+
+ 返回一个字典数据 对应key value 值如下：
+ openid   对应返回openid
+ role_id 对应返回角色ID
+ question_title 对应返回问题标题
+ question_desc 对应返回问题描述
+ image_url 图片地址数组 可能为空数组 研发拿数组值前先判断数组元素 避免发生不必要的闪退
+ */
+- (void)callBackServiceIssueSubmitWithMsgDict:(NSDictionary *)msgDict;
+
 @end
 
 

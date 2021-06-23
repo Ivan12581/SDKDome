@@ -352,6 +352,35 @@ code-信息
     }
     isOnline = jsonNSString;
 }
+
+- (void)callBackServiceIssueSubmitWithMsgDict:(NSDictionary *)msgDict {
+    NSLog(@"收到客服回调 --- %@",msgDict);
+    /*
+     返回一个字典数据 对应key value 值如下：
+     openid   对应返回openid
+     role_id 对应返回角色ID
+     question_title 对应返回问题标题
+     question_desc 对应返回问题描述
+     image_url 图片地址数组 可能为空数组 研发拿数组值前先判断数组元素 避免发生不必要的闪退
+     */
+//    NSLog(@"openid --- %@",[NSString stringWithFormat:@"%@",msgDict[@"openid"]]);
+//    NSLog(@"角色ID role_id --- %@",[NSString stringWithFormat:@"%@",msgDict[@"role_id"]]);
+//    NSLog(@"问题标题 --- %@",[NSString stringWithFormat:@"%@",msgDict[@"question_title"]]);
+//    NSLog(@"问题描述 --- %@",[NSString stringWithFormat:@"%@",msgDict[@"question_desc"]]);
+//
+//    NSString *openid = [NSString stringWithFormat:@"%@",msgDict[@"openid"]];
+//    NSString *role_id = [NSString stringWithFormat:@"%@",msgDict[@"role_id"]];
+//    NSString *question_title = [NSString stringWithFormat:@"%@",msgDict[@"question_title"]];
+//    NSString *question_desc = [NSString stringWithFormat:@"%@",msgDict[@"question_desc"]];
+//    NSArray *image_url = msgDict[@"image_url"];
+//    NSLog(@"图片数组中有 --- %ld个元素",image_url.count);
+//    UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"客服提单信息" message:[NSString stringWithFormat:@"openid:%@ role_id:%@ question_title:%@ question_desc:%@ image_url:%@",openid,role_id,question_title,question_desc,image_url] preferredStyle:UIAlertControllerStyleAlert];
+//    UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//        NSLog(@"关闭");
+//    }];
+//    [alertC addAction:sureAction];
+
+}
 #pragma mark -- Unity To IOS
 -(void)Call:(int) type andJsonStr:(const char*) jsonstring{
     NSLog(@"-ios----CeliaAppController---Call----%i",type);
