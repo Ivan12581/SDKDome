@@ -6,12 +6,24 @@ using UnityEngine.UI;
 
 public class AppIconSetting : Editor
 {
-    private static readonly string logo1_Path = @"Assets/Res/Icons/Splash/公司logo.png";
-    private static readonly string logo2_Path = @"Assets/Res/Icons/Splash/星辉logo.png";
-    private static readonly string splash_Path = @"Assets/Res/Icons/Splash/公司splash.jpg";
+    private static string logo1_Path = @"Assets/Res/Icons/Splash/星辉logo.png";
+    private static string logo2_Path = @"Assets/Res/Icons/Splash/公司logo.png";
+    private static string splash_Path = @"Assets/Res/Icons/Splash/公司splash.jpg";
     [MenuItem("IconSet/SetSplashImages")]
     public static void SetSplashImages()
     {
+        if (!File.Exists(logo1_Path))
+        {
+            Debug.LogError($"{logo1_Path} is null");
+        }
+        if (!File.Exists(logo2_Path))
+        {
+            Debug.LogError($"{logo2_Path} is null");
+        }
+        if (!File.Exists(splash_Path))
+        {
+            Debug.LogError($"{splash_Path} is null");
+        }
         PlayerSettings.SplashScreen.show = true;
         PlayerSettings.SplashScreen.showUnityLogo = false;
         SDKParams sdkParams = AssetDatabase.LoadAssetAtPath<SDKParams>("Assets/Resources/SDKParams.asset");

@@ -48,6 +48,8 @@ namespace celia.game.editor
         public static void BuildCeliaSDK()
         {
 #if UNITY_ANDROID
+            PlayerSettings.Android.useAPKExpansionFiles = false;
+            EditorUserBuildSettings.buildAppBundle = false;
             StartBuild(new string[] { "Platform:Android", "Level:Beta", "Sign:zmxt", "SDK:CeliaOversea", "SDKParams:And_Celia", "CompanyName:EMG TECHNOLOGY LIMITED" });
 #endif
 #if UNITY_IOS
@@ -60,6 +62,20 @@ namespace celia.game.editor
         {
 #if UNITY_ANDROID
             PlayerSettings.Android.useAPKExpansionFiles = true;
+            EditorUserBuildSettings.buildAppBundle = false;
+            StartBuild(new string[] { "Platform:Android", "Level:Beta", "Sign:zmxt", "SDK:CeliaOversea", "SDKParams:And_Celia", "CompanyName:EMG TECHNOLOGY LIMITED" });
+#endif
+#if UNITY_IOS
+            StartBuild(new string[] { "Platform:IOS", "Level:Beta", "Sign:CeliaAdhoc", "SDK:CeliaOversea", "SDKParams:IOS_Celia", "CompanyName:EMG TECHNOLOGY LIMITED" });
+#endif
+        }
+
+        [MenuItem("Tools/Build/CeliaSDK(New Type :Android App Bundle)")]
+        public static void BuildCeliaSDKAAB()
+        {
+#if UNITY_ANDROID
+            PlayerSettings.Android.useAPKExpansionFiles = false;
+            EditorUserBuildSettings.buildAppBundle = true;
             StartBuild(new string[] { "Platform:Android", "Level:Beta", "Sign:zmxt", "SDK:CeliaOversea", "SDKParams:And_Celia", "CompanyName:EMG TECHNOLOGY LIMITED" });
 #endif
 #if UNITY_IOS

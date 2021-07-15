@@ -214,7 +214,8 @@ public class CeliaActivity extends UnityPlayerActivity
                 }
             };
             SendMessageToUnity(MsgID.Login.getCode(), dataMap);
-                        //当用户在客服系统提交游戏异常的提单时回调
+            
+            //当用户在客服系统提交游戏异常的提单时回调
             SJoyMSDK.getInstance().setServiceIssueListener(new RSServiceIssueCallback() {
                 @Override
                 public void onSubmitSuccess(IssueContent issue) {//注意对返回值的判空处理

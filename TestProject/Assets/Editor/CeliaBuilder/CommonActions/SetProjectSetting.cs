@@ -1,3 +1,5 @@
+using System.IO;
+
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -6,13 +8,17 @@ namespace celia.game.editor
 {
     public class SetProjectSetting : CommonAction
     {
-        private readonly string logo1_Path = @"Assets/Res/Icons/Splash/公司logo.png";
-        private readonly string logo2_Path = @"Assets/Res/Icons/Splash/星辉logo.png";
+        private readonly string logo1_Path = @"Assets/Res/Icons/Splash/星辉logo.png"; 
+        private readonly string logo2_Path = @"Assets/Res/Icons/Splash/公司logo.png";
         private readonly string splash_Path = @"Assets/Res/Icons/Splash/公司splash.jpg";
         private BuildTargetGroup buildTargetGroup;
 
         public override void PreExcute(CeliaBuildOption option)
         {
+            if (File.Exists(logo1_Path))
+            {
+
+            }
             buildTargetGroup = BuildPipeline.GetBuildTargetGroup(option.ProcessCfg.Target);
             SetProSetting(option);
             SetDefineSymbols(option);
