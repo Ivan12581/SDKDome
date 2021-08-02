@@ -214,6 +214,22 @@ public class CeliaActivity extends UnityPlayerActivity
                 }
             };
             SendMessageToUnity(MsgID.Login.getCode(), dataMap);
+            
+            //当用户在客服系统提交游戏异常的提单时回调
+            SJoyMSDK.getInstance().setServiceIssueListener(new RSServiceIssueCallback() {
+                @Override
+                public void onSubmitSuccess(IssueContent issue) {//注意对返回值的判空处理
+                    if (issue!=null){
+                        // ShowLog("RaStar-onSubmitSuccess"+"issue：\n"
+                        //         + "openid:" + issue.getOpenid()/*用户uid*/
+                        //         + "\nroleId:" + issue.getRoleId()/*角色id*/
+                        //         + "\nquestion_title:" + issue.getIssueTitle()/*问题标题*/
+                        //         + "\nquestion_desc:" + issue.getIssueDesc()/*问题描述*/
+                        //         + "\nimage_url:" + issue.getImageUrls().toString());/*问题相关图片地址，若无提交则返回空集合*/
+                    }
+                    }
+
+            });
         }
 
         @Override
@@ -651,6 +667,11 @@ public class CeliaActivity extends UnityPlayerActivity
     @Override public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         SJoyMSDK.getInstance().onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        SJoyMSDK.getInstance().onWindowFocusChanged(hasFocus);
     }
 //endregion
 }

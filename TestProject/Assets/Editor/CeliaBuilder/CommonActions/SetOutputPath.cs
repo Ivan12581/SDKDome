@@ -12,7 +12,7 @@ namespace celia.game.editor
         public override void PreExcute(CeliaBuildOption option)
         {
             string outputPath = CeliaBuilder.GetInputParam("Path:", option.Args);
-
+     
             EditorUserBuildSettings.exportAsGoogleAndroidProject = option.OutputProject;
             // iOS不能成包
             if (option.OutputProject || option.ProcessCfg.Target == UnityEditor.BuildTarget.iOS)

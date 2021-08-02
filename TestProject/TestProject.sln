@@ -4,13 +4,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityWebSocket.Runtime", "UnityWebSocket.Runtime.csproj", "{00B11835-48FD-2DAE-88FE-929DC2631AAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XAsset.Runtime", "XAsset.Runtime.csproj", "{75741707-436F-EF21-824A-E0334AED3A29}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass", "Assembly-CSharp-firstpass.csproj", "{055FB646-A6E6-CA58-5F61-7C45A8B19076}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{08040F8A-BE5E-F84B-7CE2-9F08EB1167BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XAsset.Editor", "XAsset.Editor.csproj", "{377A7133-9676-FAF9-908D-6AE25E617E38}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Google.Android.AppBundle.Editor", "Google.Android.AppBundle.Editor.csproj", "{CFC7CB53-FE0C-4892-0B44-0142C82710D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,10 +24,6 @@ Global
 		{00B11835-48FD-2DAE-88FE-929DC2631AAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00B11835-48FD-2DAE-88FE-929DC2631AAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00B11835-48FD-2DAE-88FE-929DC2631AAB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{75741707-436F-EF21-824A-E0334AED3A29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{75741707-436F-EF21-824A-E0334AED3A29}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{75741707-436F-EF21-824A-E0334AED3A29}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{75741707-436F-EF21-824A-E0334AED3A29}.Release|Any CPU.Build.0 = Release|Any CPU
 		{055FB646-A6E6-CA58-5F61-7C45A8B19076}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{055FB646-A6E6-CA58-5F61-7C45A8B19076}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{055FB646-A6E6-CA58-5F61-7C45A8B19076}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -38,10 +32,10 @@ Global
 		{08040F8A-BE5E-F84B-7CE2-9F08EB1167BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08040F8A-BE5E-F84B-7CE2-9F08EB1167BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08040F8A-BE5E-F84B-7CE2-9F08EB1167BF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{377A7133-9676-FAF9-908D-6AE25E617E38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{377A7133-9676-FAF9-908D-6AE25E617E38}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{377A7133-9676-FAF9-908D-6AE25E617E38}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{377A7133-9676-FAF9-908D-6AE25E617E38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFC7CB53-FE0C-4892-0B44-0142C82710D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFC7CB53-FE0C-4892-0B44-0142C82710D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFC7CB53-FE0C-4892-0B44-0142C82710D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFC7CB53-FE0C-4892-0B44-0142C82710D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
